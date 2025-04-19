@@ -1,11 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Combined Page: Directory Tree & Inertia Tensor Examples</title>
-
-    <!-- MathJax Configuration and Loading (from Code 2) -->
+    <title>Solutions des Exemples - Tenseur d'Inertie</title>
     <script>
         MathJax = {
           tex: {
@@ -21,108 +19,16 @@
     <script type="text/javascript" id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
-
-    <!-- Combined Styles from Code 1 and Code 2 -->
     <style>
-        /* --- Styles from Code 1 (Directory Tree) --- */
-        body { /* Combined from both files */
+        body {
             font-family: sans-serif;
+            line-height: 1.3; /* Reduced line spacing */
             margin: 2em;
-            line-height: 1.3; /* Added from Code 2 */
         }
-        /* Basic Tree Styling */
-        .tree ul {
-            padding-left: 1.5em; /* Indentation for sub-levels */
-            list-style-type: none; /* Remove default bullets */
-            position: relative; /* Needed for connecting lines */
-        }
-
-        .tree li {
-            margin: 0.5em 0;
-            position: relative; /* Needed for connecting lines */
-        }
-
-        /* Simple Connectors (Optional but enhances tree look) */
-        .tree ul ul { /* Deeper levels */
-             margin-left: .5em; /* Add space for connector */
-        }
-        .tree li::before { /* Vertical line */
-            content: "";
-            position: absolute;
-            top: -0.3em;
-            left: -1em;
-            width: 1px;
-            height: calc(100% + 0.3em);
-            background-color: #ccc;
-            z-index: -1; /* Put behind content */
-        }
-        .tree li:last-child::before { /* Shorten line for last item */
-             height: 1.1em;
-        }
-        .tree li::after { /* Horizontal line */
-            content: "";
-            position: absolute;
-            top: 0.8em; /* Adjust vertical position */
-            left: -1em;
-            width: 0.8em; /* Length of horizontal line */
-            height: 1px;
-            background-color: #ccc;
-            z-index: -1; /* Put behind content */
-        }
-        .tree > li::before, .tree > li::after { /* Remove connectors for top-level items */
-             content: none;
-        }
-
-
-        /* Icons (using simple text characters) */
-        .tree .folder::before {
-            content: "📁 "; /* Folder icon */
-            margin-right: 0.3em;
-            /* Remove connector pseudo-element if icon is used */
-            /* display: inline-block; */
-        }
-        .tree .file::before {
-            content: "📄 "; /* File icon */
-            margin-right: 0.3em;
-            /* Remove connector pseudo-element if icon is used */
-             /* display: inline-block; */
-        }
-         /* Adjust if using icons AND connectors */
-         .tree li::before, .tree li::after {
-            left: -1.5em; /* Move connectors left to make space for icons */
-         }
-         .tree li::after {
-            width: 1.3em;
-         }
-          .tree > li::before, .tree > li::after {
-             content: none;
-          }
-           .tree ul {
-               padding-left: 2em; /* Increase padding if icons + connectors used */
-           }
-
-
-        /* Link Styling */
-        .tree a {
-            text-decoration: none;
-            color: #0066cc;
-        }
-        .tree a:hover {
-            text-decoration: underline;
-            color: #004080;
-        }
-        .folder { /* Note: Selects the span with class folder */
-             font-weight: bold; /* Make folders stand out */
-             color: #333;
-        }
-
-        /* --- Styles from Code 2 (Math Examples) --- */
         h1, h2, h3 {
             margin-top: 1.5em;
             margin-bottom: 0.5em;
         }
-        /* Note: The generic p, li styles below might affect the tree. */
-        /* The specificity of .tree li should override the generic li for the tree itself */
         p, li {
             margin-top: 0.3em;
             margin-bottom: 0.3em;
@@ -139,14 +45,9 @@
         img {
             max-width: 80%;
             height: auto;
-            /* Added border for missing images */
-            border: 1px dashed #ccc;
-            min-height: 50px; /* So missing image placeholders are visible */
         }
-        /* Note: Generic ul style might affect the tree */
-        /* The specificity of .tree ul should override this for the tree itself */
         ul {
-            padding-left: 20px; /* General list padding */
+            padding-left: 20px;
         }
         strong {
             font-weight: bold;
@@ -175,62 +76,27 @@
             margin-top: 1em;
             margin-bottom: 1em;
         }
+                iframe {
+            width: 100%; /* Make iframe take full width */
+            height: 400px; /* Example height - adjust as needed */
+            border: 1px solid #ccc; /* Optional border */
+            display: block; /* Ensure it's treated as a block element */
+            margin-bottom: 20px; /* Optional space below the iframe */
+        }
+        
     </style>
 </head>
 <body>
 
-    <!-- Content from Code 1 (Directory Tree) -->
-    <h1>Directory Structure</h1>
-
-    <ul class="tree">
-        <!-- Items directly in the root directory -->
-        <li class="file"><a href="page1.html">page1.html</a></li>
-        <li class="file"><a href="about.html">about.html</a></li>
-
-        <!-- project_files Folder -->
-        <li>
-            <span class="folder">Série N°4 Les Torseurs</span> <!-- Folder Name (not a link itself) -->
-            <ul> <!-- Files inside project_files -->
-                <li class="file"><a href="SérieN°4LesTorseurs/new11.html">new11.html</a></li>
-                <li class="file"><a href="project_files/details.html">details.html</a></li>
-                <!-- You could add non-html assets too, maybe without a link or styled differently -->
-                <li><span style="color: #888;">└── assets/ (contains non-html)</span></li>
-            </ul>
-        </li>
-
-        <!-- documents Folder -->
-        <li>
-            <span class="folder">documents</span>
-            <ul> <!-- Files/Folders inside documents -->
-                <li class="file"><a href="documents/doc1.html">doc1.html</a></li>
-                <li>
-                    <span class="folder">reports</span> <!-- Sub-folder -->
-                    <ul> <!-- Files inside reports -->
-                        <li class="file"><a href="documents/reports/report_q1.html">report_q1.html</a></li>
-                        <!-- Add more files in reports here -->
-                    </ul>
-                </li>
-                <!-- Add more files directly in documents here -->
-            </ul>
-        </li>
-
-         <!-- Add more root files or folders here -->
-         <!-- Example: <li class="file"><a href="another_root_file.html">another_root_file.html</a></li> -->
-
-    </ul>
-
-    <p><em>Note: This directory tree is manually maintained. You need to update this HTML file if the directory structure or filenames change.</em></p>
-
-    <hr style="margin: 3em 0;"> <!-- Separator between the two content sections -->
-
-    <!-- Content from Code 2 (Math Examples) -->
+<iframe src="index.html" title="Content from index.html">
+        Your browser does not support iframes.
+    </iframe>
 
     <h1>Solutions des Exemples</h1>
 
     <h2 class="figure-title">Figure 1.1 : Tige centrée en O sur l'axe OX</h2>
 
     <figure>
-        <!-- Base64 image will display -->
         <img src="data:image/png;base64,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" alt="Tige centrée en O sur l'axe OX">
         <figcaption>FIGURE 1 - Tige centrée en O sur l'axe OX</figcaption>
     </figure>
@@ -343,7 +209,6 @@
     <h2 class="figure-title">Figure 1.2 : Tige parallèle à OX, décalée en Y</h2>
 
     <figure>
-        <!-- NOTE: This image requires 'figure2.png' to be in the same directory as the HTML file -->
         <img src="figure2.png" alt="Tige parallèle à OX, décalée en Y">
         <figcaption>FIGURE 2 - Tige parallèle à OX, décalée en Y</figcaption>
     </figure>
@@ -447,7 +312,6 @@
     <h2 class="figure-title">Figure 1.3 : Tige parallèle à OX, décalée en X et Y</h2>
 
     <figure>
-        <!-- NOTE: This image requires 'figure3.png' to be in the same directory as the HTML file -->
         <img src="figure3.png" alt="Tige parallèle à OX, décalée en X et Y">
         <figcaption>FIGURE 3 - Tige parallèle à OX, décalée en X et Y</figcaption>
     </figure>
@@ -566,7 +430,6 @@
      <h2 class="figure-title">Figure 1.4 : Cadre rectangulaire centré en O</h2>
 
     <figure>
-        <!-- NOTE: This image requires 'figure4.png' to be in the same directory as the HTML file -->
         <img src="figure4.png" alt="Cadre rectangulaire centré en O">
         <figcaption>FIGURE 4 - Cadre rectangulaire centré en O</figcaption>
     </figure>
@@ -679,7 +542,6 @@
      <h2 class="figure-title">Figure 1.5 : Corps composé de trois tiges dans le plan XY</h2>
 
     <figure>
-        <!-- NOTE: This image requires 'figure5.png' to be in the same directory as the HTML file -->
         <img src="figure5.png" alt="Corps composé de trois tiges dans le plan XY">
         <figcaption>FIGURE 5 - Corps composé de trois tiges dans le plan XY</figcaption>
     </figure>
@@ -881,7 +743,6 @@
      <h2 class="figure-title">Figure 1.6 : Anneau circulaire centré en O</h2>
 
     <figure>
-        <!-- NOTE: This image requires 'figure6.png' to be in the same directory as the HTML file -->
         <img src="figure6.png" alt="Anneau circulaire centré en O">
         <figcaption>FIGURE 6 - Anneau circulaire centré en O</figcaption>
     </figure>

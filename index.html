@@ -3,166 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Directory Tree with Frame</title>
+    <title>Combined Page: Directory Tree & Inertia Tensor Examples</title>
+
+    <!-- MathJax Configuration and Loading (from Code 2) -->
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+        </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+
+    <!-- Combined Styles from Code 1 and Code 2 -->
     <style>
-        body {
+        /* --- Styles from Code 1 (Directory Tree) --- */
+        body { /* Combined from both files */
             font-family: sans-serif;
-            margin: 1em; /* Reduced margin slightly */
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack tree and frame vertically */
-            height: calc(100vh - 2em); /* Calculate height based on viewport */
+            margin: 2em;
+            line-height: 1.3; /* Added from Code 2 */
         }
-
-        h1 {
-            margin-bottom: 0.5em;
-            flex-shrink: 0; /* Prevent heading from shrinking */
-        }
-
-        /* --- Tree Styles (mostly unchanged) --- */
-        .tree-container {
-            overflow-y: auto; /* Add scroll if tree is too tall */
-            padding: 0.5em;
-            border: 1px solid #ccc;
-            margin-bottom: 1em;
-            flex-shrink: 0; /* Prevent tree container from shrinking excessively */
-            max-height: 40vh; /* Limit tree height, adjust as needed */
-        }
-
+        /* Basic Tree Styling */
         .tree ul {
-            padding-left: 1.5em;
-            list-style-type: none;
-            position: relative;
+            padding-left: 1.5em; /* Indentation for sub-levels */
+            list-style-type: none; /* Remove default bullets */
+            position: relative; /* Needed for connecting lines */
         }
+
         .tree li {
             margin: 0.5em 0;
-            position: relative;
+            position: relative; /* Needed for connecting lines */
         }
-        .tree ul ul {
-             margin-left: .5em;
+
+        /* Simple Connectors (Optional but enhances tree look) */
+        .tree ul ul { /* Deeper levels */
+             margin-left: .5em; /* Add space for connector */
         }
         .tree li::before { /* Vertical line */
             content: "";
             position: absolute;
             top: -0.3em;
-            left: -1.5em; /* Adjusted for icon space */
+            left: -1em;
             width: 1px;
             height: calc(100% + 0.3em);
             background-color: #ccc;
-            z-index: -1;
+            z-index: -1; /* Put behind content */
         }
-        .tree li:last-child::before {
+        .tree li:last-child::before { /* Shorten line for last item */
              height: 1.1em;
         }
         .tree li::after { /* Horizontal line */
             content: "";
             position: absolute;
-            top: 0.8em;
-            left: -1.5em; /* Adjusted for icon space */
-            width: 1.3em; /* Adjusted for icon space */
+            top: 0.8em; /* Adjust vertical position */
+            left: -1em;
+            width: 0.8em; /* Length of horizontal line */
             height: 1px;
             background-color: #ccc;
-            z-index: -1;
+            z-index: -1; /* Put behind content */
         }
-        .tree > li::before, .tree > li::after {
+        .tree > li::before, .tree > li::after { /* Remove connectors for top-level items */
              content: none;
         }
+
+
+        /* Icons (using simple text characters) */
         .tree .folder::before {
-            content: "📁 ";
+            content: "📁 "; /* Folder icon */
             margin-right: 0.3em;
+            /* Remove connector pseudo-element if icon is used */
+            /* display: inline-block; */
         }
         .tree .file::before {
-            content: "📄 ";
+            content: "📄 "; /* File icon */
             margin-right: 0.3em;
+            /* Remove connector pseudo-element if icon is used */
+             /* display: inline-block; */
         }
-        .tree ul {
-            padding-left: 2em; /* Increase padding if icons + connectors used */
-        }
+         /* Adjust if using icons AND connectors */
+         .tree li::before, .tree li::after {
+            left: -1.5em; /* Move connectors left to make space for icons */
+         }
+         .tree li::after {
+            width: 1.3em;
+         }
+          .tree > li::before, .tree > li::after {
+             content: none;
+          }
+           .tree ul {
+               padding-left: 2em; /* Increase padding if icons + connectors used */
+           }
+
+
+        /* Link Styling */
         .tree a {
             text-decoration: none;
             color: #0066cc;
-            display: inline-block; /* Helps with clicking */
         }
         .tree a:hover {
             text-decoration: underline;
             color: #004080;
         }
-        .folder {
-             font-weight: bold;
+        .folder { /* Note: Selects the span with class folder */
+             font-weight: bold; /* Make folders stand out */
              color: #333;
         }
 
-        /* --- Frame Styles --- */
-        #contentFrame {
-            flex-grow: 1; /* Allow frame to take remaining vertical space */
-            border: 1px solid #aaa;
-            width: 100%; /* Take full available width */
-            /* height is determined by flex-grow */
+        /* --- Styles from Code 2 (Math Examples) --- */
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
-
+        /* Note: The generic p, li styles below might affect the tree. */
+        /* The specificity of .tree li should override the generic li for the tree itself */
+        p, li {
+            margin-top: 0.3em;
+            margin-bottom: 0.3em;
+        }
+        figure {
+            text-align: center;
+            margin: 2em 0;
+        }
+        figcaption {
+            margin-top: 0.5em;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            /* Added border for missing images */
+            border: 1px dashed #ccc;
+            min-height: 50px; /* So missing image placeholders are visible */
+        }
+        /* Note: Generic ul style might affect the tree */
+        /* The specificity of .tree ul should override this for the tree itself */
+        ul {
+            padding-left: 20px; /* General list padding */
+        }
+        strong {
+            font-weight: bold;
+        }
+        .figure-title {
+            text-align: center;
+            font-weight: bold;
+        }
+        /* Style for vertical vectors/points */
+        .vector {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 0.2em;
+        }
+        .vector span {
+            display: block;
+        }
+        /* Ensure math expressions are not too small */
+        .mjx-chtml {
+           font-size: 105%; /* Slightly larger math font */
+        }
+        /* Ensure display math takes space */
+         mjx-container[display="true"] {
+            display: block;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
     </style>
 </head>
 <body>
 
-    <h1>TD Mécanique rationnelle</h1>
+    <!-- Content from Code 1 (Directory Tree) -->
+    <h1>Directory Structure</h1>
 
-    <!-- Container for the scrollable tree -->
-    <div class="tree-container">
-        <ul class="tree">
-            <!--
-                IMPORTANT:
-                Add target="contentFrame" to EVERY <a> link that should load in the frame below.
-                Update href paths as needed for your structure.
-            -->
+    <ul class="tree">
+        <!-- Items directly in the root directory -->
+        <li class="file"><a href="page1.html">page1.html</a></li>
+        <li class="file"><a href="about.html">about.html</a></li>
 
-            <!-- Items directly in the root directory -->
-            <li class="file"><a href="page1.html" target="contentFrame">page1.html</a></li>
-            <li class="file"><a href="about.html" target="contentFrame">about.html</a></li>
+        <!-- project_files Folder -->
+        <li>
+            <span class="folder">Série N°4 Les Torseurs</span> <!-- Folder Name (not a link itself) -->
+            <ul> <!-- Files inside project_files -->
+                <li class="file"><a href="SérieN°4LesTorseurs/new11.html">new11.html</a></li>
+                <li class="file"><a href="project_files/details.html">details.html</a></li>
+                <!-- You could add non-html assets too, maybe without a link or styled differently -->
+                <li><span style="color: #888;">└── assets/ (contains non-html)</span></li>
+            </ul>
+        </li>
 
-            <!-- project_files Folder -->
-            <li>
-                <span class="folder">Série N°4 Les Torseurs</span>
-                <ul>
-                    <li class="file"><a href="SérieN°4LesTorseurs/new11.html" target="contentFrame">new11.html</a></li>
-                    <li class="file"><a href="project_files/details.html" target="contentFrame">details.html</a></li>
-                    <li><span style="color: #888;">└── assets/ (contains non-html)</span></li>
-                </ul>
-            </li>
+        <!-- documents Folder -->
+        <li>
+            <span class="folder">documents</span>
+            <ul> <!-- Files/Folders inside documents -->
+                <li class="file"><a href="documents/doc1.html">doc1.html</a></li>
+                <li>
+                    <span class="folder">reports</span> <!-- Sub-folder -->
+                    <ul> <!-- Files inside reports -->
+                        <li class="file"><a href="documents/reports/report_q1.html">report_q1.html</a></li>
+                        <!-- Add more files in reports here -->
+                    </ul>
+                </li>
+                <!-- Add more files directly in documents here -->
+            </ul>
+        </li>
 
-            <!-- documents Folder -->
-            <li>
-                <span class="folder">documents</span>
-                <ul>
-                    <li class="file"><a href="documents/doc1.html" target="contentFrame">doc1.html</a></li>
-                    <li>
-                        <span class="folder">reports</span>
-                        <ul>
-                            <li class="file"><a href="documents/reports/report_q1.html" target="contentFrame">report_q1.html</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+         <!-- Add more root files or folders here -->
+         <!-- Example: <li class="file"><a href="another_root_file.html">another_root_file.html</a></li> -->
 
-            <!-- Add more root files or folders here, remembering target="contentFrame" -->
-             <!-- Example: <li class="file"><a href="another_root_file.html" target="contentFrame">another_root_file.html</a></li> -->
+    </ul>
 
-        </ul>
-    </div> <!-- End of tree-container -->
+    <p><em>Note: This directory tree is manually maintained. You need to update this HTML file if the directory structure or filenames change.</em></p>
 
-    <!-- The IFrame where content will be loaded -->
-    <iframe
-        name="contentFrame"
-        id="contentFrame"
-        srcdoc="<p style='padding:2em; font-family: sans-serif; color: #555;'>Select a file from the tree above to view its content here.</p>"
-        title="Content Display Area"
-        frameborder="0"
-        >
-        Your browser does not support iframes.
-    </iframe>
+    <hr style="margin: 3em 0;"> <!-- Separator between the two content sections -->
 
 
-    <p style="font-size: 0.8em; margin-top: 1em; flex-shrink: 0;">
-        <em>Note: This directory tree is manually maintained. You need to update this HTML file if the directory structure or filenames change. Ensure all links meant for the frame have `target="contentFrame"`.</em>
-    </p>
 
 </body>
 </html>

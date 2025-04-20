@@ -23,16 +23,32 @@
         src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
     <style>
-        body {
-            /* Use Computer Modern Sans font */
+        html, body {
+            margin: 0; /* Remove default margins */
+            padding: 0; /* Remove default padding */
+            /* Use Computer Modern Sans font globally */
             font-family: "Computer Modern Sans", sans-serif;
-            line-height: 1.2; /* Reduced line spacing */
-            margin: 20px;
-            max-width: 800px; /* Ensure single column on wider screens */
-            margin-left: auto;
-            margin-right: auto;
+            line-height: 1.2;
             font-size: 16px; /* Adjust base font size if needed */
         }
+
+        #nav-iframe {
+            width: 100%; /* Make iframe span full width */
+            height: 25vh; /* Responsive height (25% of viewport height - adjust as needed) */
+            border: none; /* Remove iframe border */
+            display: block; /* Ensure it takes block layout */
+            margin-bottom: 20px; /* Add some space below the iframe */
+        }
+
+        .main-content {
+            max-width: 800px; /* Ensure single column on wider screens for readability */
+            margin-left: auto; /* Center the content block */
+            margin-right: auto; /* Center the content block */
+            padding: 0 20px; /* Add padding so text doesn't touch edges on narrow screens */
+            margin-top: 20px; /* Space above the content */
+            margin-bottom: 20px; /* Space below the content */
+        }
+
         h1, h2, h3 {
             text-align: center;
             font-weight: bold; /* Ensure headings are bold */
@@ -41,8 +57,6 @@
         }
         h2 {
            font-size: 1.4em; /* Adjust heading size relative to body */
-           /* Override font for specific headings if needed */
-           /* font-family: "Computer Modern Sans", sans-serif; */
         }
         p, li {
             margin-top: 0.3em;
@@ -80,101 +94,106 @@
              margin-top: 0.5em;
              margin-bottom: 0.5em;
         }
-        /* Ensure MathJax output scales well with the body font */
+        /* Ensure MathJax output scales well */
         mjx-container {
-            /* MathJax uses its own fonts, but scaling can be adjusted if needed */
-             font-size: 1.0em; /* Match MathJax size more closely if needed */
+             font-size: 1.0em;
         }
     </style>
 </head>
 <body>
 
-<iframe src="../index.html" title="Content from index.html">
+    <!-- Added ID to the iframe -->
+    <iframe id="nav-iframe" src="../index.html" title="Content from index.html">
         Your browser does not support iframes.
     </iframe>
 
-    <div class="school-info">High National School of Public Works Kouba Algiers</div>
-    <div class="school-info">Preparatory Class in Sciences and Techniques (2nd Year)</div>
+    <!-- Wrap main content in a div -->
+    <div class="main-content">
 
-    <div class="series-info">SERIE N4</div>
-    <div class="title">Les Torseurs</div>
-    <div class="year">2024/2025</div>
+        <div class="school-info">High National School of Public Works Kouba Algiers</div>
+        <div class="school-info">Preparatory Class in Sciences and Techniques (2nd Year)</div>
 
-    <div class="exercise-block">
-        <h2>Exercice 1</h2>
-        <p>
-            Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$ liés respectivement aux points $A(1, 0, 0)$ et $B(1, 1, 0)$ et les torseurs $[G1]$ et $[G2]$ associés aux moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
-        </p>
-        <ol>
-            <li>Calculer la résultante de $[G]$ et son moment en A. En déduire la nature de $[G]$.</li>
-            <li>Déterminer l'équation cartésienne de l'axe central de $[G]$.</li>
-        </ol>
-    </div>
+        <div class="series-info">SERIE N4</div>
+        <div class="title">Les Torseurs</div>
+        <div class="year">2024/2025</div>
 
-    <div class="exercise-block">
-        <h2>Exercice 2</h2>
-        <p>
-            Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$, $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement aux points $A(0,1,2)$, $B(1,0,2)$, $C(1,2,2)$.
-        </p>
-        <ol>
-            <li>Construire le torseur $[T]$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li>
-            <li>En déduire l'auto moment.</li>
-            <li>Calculer le pas du torseur.</li>
-            <li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li>
-        </ol>
-    </div>
-
-    <div class="exercise-block">
-        <h2>Exercice 3</h2>
-        <p>
-            Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$ dont les composantes sont définies en fonction des coordonnées $(x, y, z)$ de M par :
-        </p>
-        <div class="system-eq">
-        $$
-        \left\{
-        \begin{aligned}
-        V_x &= 1 + 3y - tz \\
-        V_y &= -3x + 2tz \\
-        V_z &= 2 + tx - t^2y
-        \end{aligned}
-        \right.
-        $$
+        <div class="exercise-block">
+            <h2>Exercice 1</h2>
+            <p>
+                Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$ liés respectivement aux points $A(1, 0, 0)$ et $B(1, 1, 0)$ et les torseurs $[G1]$ et $[G2]$ associés aux moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
+            </p>
+            <ol>
+                <li>Calculer la résultante de $[G]$ et son moment en A. En déduire la nature de $[G]$.</li>
+                <li>Déterminer l'équation cartésienne de l'axe central de $[G]$.</li>
+            </ol>
         </div>
-        <ol>
-            <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
-            <li>Pour quelles valeurs de t, ce champ est antisymétrique ?</li>
-            <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
-            <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
-            <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
-        </ol>
-    </div>
 
-    <div class="exercise-block">
-        <h2>Exercice 4</h2>
-        <ol>
-            <li>Pour quelle condition le moment d'un torseur $[T]$ est constant le long d'une droite ?</li>
-            <li>Les éléments de réduction d'un torseur sont
-            $$ \vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad \text{et} \quad \vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} $$
-            dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$.</li>
-        </ol>
-    </div>
+        <div class="exercise-block">
+            <h2>Exercice 2</h2>
+            <p>
+                Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$, $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement aux points $A(0,1,2)$, $B(1,0,2)$, $C(1,2,2)$.
+            </p>
+            <ol>
+                <li>Construire le torseur $[T]$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li>
+                <li>En déduire l'auto moment.</li>
+                <li>Calculer le pas du torseur.</li>
+                <li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li>
+            </ol>
+        </div>
 
-    <div class="exercise-block">
-        <h2>Exercice 5</h2>
-        <p>
-            Dans un repère $(O,x,y,z)$, on considère les trois glisseurs définis par les vecteurs
-            $\vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$ d'origine $A(1,0,0)$,
-            $\vec{V}_2 = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ d'origine $B(0,1,0)$ et
-            $\vec{V}_3 = \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix}$ d'origine $C(0,0,1)$.
-            Soit $[T]$ la somme des trois glisseurs.
-        </p>
-        <ol>
-            <li>Déterminer $(\lambda, \mu, \nu)$ pour que $[T]$ soit un couple et trouver son moment ?</li>
-            <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que $[T]$ soit un glisseur ?</li>
-            <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de $[T]$.</li>
-            <li>Que peut-on dire de la direction de l'axe central ?</li>
-        </ol>
-    </div>
+        <div class="exercise-block">
+            <h2>Exercice 3</h2>
+            <p>
+                Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$ dont les composantes sont définies en fonction des coordonnées $(x, y, z)$ de M par :
+            </p>
+            <div class="system-eq">
+            $$
+            \left\{
+            \begin{aligned}
+            V_x &= 1 + 3y - tz \\
+            V_y &= -3x + 2tz \\
+            V_z &= 2 + tx - t^2y
+            \end{aligned}
+            \right.
+            $$
+            </div>
+            <ol>
+                <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
+                <li>Pour quelles valeurs de t, ce champ est antisymétrique ?</li>
+                <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
+                <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
+                <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-block">
+            <h2>Exercice 4</h2>
+            <ol>
+                <li>Pour quelle condition le moment d'un torseur $[T]$ est constant le long d'une droite ?</li>
+                <li>Les éléments de réduction d'un torseur sont
+                $$ \vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad \text{et} \quad \vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} $$
+                dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$.</li>
+            </ol>
+        </div>
+
+        <div class="exercise-block">
+            <h2>Exercice 5</h2>
+            <p>
+                Dans un repère $(O,x,y,z)$, on considère les trois glisseurs définis par les vecteurs
+                $\vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$ d'origine $A(1,0,0)$,
+                $\vec{V}_2 = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ d'origine $B(0,1,0)$ et
+                $\vec{V}_3 = \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix}$ d'origine $C(0,0,1)$.
+                Soit $[T]$ la somme des trois glisseurs.
+            </p>
+            <ol>
+                <li>Déterminer $(\lambda, \mu, \nu)$ pour que $[T]$ soit un couple et trouver son moment ?</li>
+                <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que $[T]$ soit un glisseur ?</li>
+                <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de $[T]$.</li>
+                <li>Que peut-on dire de la direction de l'axe central ?</li>
+            </ol>
+        </div>
+
+    </div> <!-- End of main-content div -->
 
 </body>
 </html>

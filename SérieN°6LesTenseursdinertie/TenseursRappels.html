@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Les Torseurs</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <!-- Add the font link -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        /* Add iframe CSS */
+        #nav-iframe {
+            width: 100%; /* Make iframe span full width */
+            /* Height will be set by JavaScript */
+            border: none; /* Remove iframe border */
+            display: block; /* Ensure it takes block layout */
+            margin-bottom: 20px; /* Add some space below the iframe */
+            overflow: hidden; /* Hide potential scrollbars if calculation is slightly off */
+            vertical-align: top; /* Helps prevent extra space below in some layouts */
+        }
+
+        body {
+            /* Apply the font */
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6; /* Adjusted line spacing for readability */
+            margin: 2em;
+        }
+        h1, h2, h3 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        p, li {
+            margin-top: 0.5em; /* Slightly increased spacing */
+            margin-bottom: 0.5em;
+        }
+        figure {
+            text-align: center;
+            margin: 2em 0;
+        }
+        figcaption {
+            margin-top: 0.5em;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+        }
+        ul, ol { /* Applied styles to ordered lists as well */
+            padding-left: 40px; /* Increased indent for lists */
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .figure-title {
+            text-align: center;
+            font-weight: bold;
+        }
+        /* Style for vertical vectors/points */
+        .vector {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 0.2em;
+        }
+        .vector span {
+            display: block;
+        }
+        /* Ensure math expressions are not too small */
+        .mjx-chtml {
+           font-size: 105%; /* Slightly larger math font */
+        }
+        /* Ensure display math takes space */
+         mjx-container[display="true"] {
+            display: block;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        section { /* Add spacing between exercises */
+            margin-bottom: 2em;
+            padding-bottom: 1em;
+            border-bottom: 1px solid #eee; /* Optional separator */
+        }
+        header {
+             text-align: center;
+             margin-bottom: 2.5em;
+             border-bottom: 2px solid #ccc;
+             padding-bottom: 1em;
+        }
+        header h1 { margin-bottom: 0.2em; }
+        header p { margin-top: 0.2em; margin-bottom: 0.2em; font-size: 1.1em; }
+        header h2 { margin-top: 0.5em; margin-bottom: 0.1em; }
+    </style>
+</head>
+<body>
+
+    <!-- Add the iframe -->
+    <iframe id="nav-iframe" src="../index.html" title="Content from index.html">
+        Your browser does not support iframes.
+    </iframe>
+
+    <!-- PDF Content Start -->
+    <h1>Objectif</h1>
+    <p>Déterminer les tenseurs d'inertie au point O, relativement au repère orthonormé $\mathcal{R}(O, X, Y, Z)$, des corps décrits par les figures 1.1 à 3.4, en utilisant les méthodes spécifiées.</p>
+
+    <h2>Rappels Théoriques</h2>
+
+    <h3>Définition du Tenseur d'Inertie</h3>
+    <p>Pour un système matériel (S) continu (linéaire, surfacique ou volumique), le tenseur d'inertie en un point O, noté $[I_O]$, est un opérateur linéaire symétrique qui caractérise la répartition de la masse par rapport au point O et aux axes du repère $\mathcal{R}(O, X, Y, Z)$. Sa matrice dans la base $(X, Y, Z)$ est donnée par :
+    \[
+    [I_O]_{\mathcal{R}} =
+    \begin{pmatrix}
+    A & -D & -E \\
+    -D & B & -F \\
+    -E & -F & C
+    \end{pmatrix}
+    \]
+    où les moments d'inertie (diagonaux) et produits d'inertie (hors diagonale) sont définis par des intégrales sur le domaine occupé par le système (S) :
+    \[ A = I_{xx} = \int_{(S)} (y^2 + z^2) dm \]
+    \[ B = I_{yy} = \int_{(S)} (x^2 + z^2) dm \]
+    \[ C = I_{zz} = \int_{(S)} (x^2 + y^2) dm \]
+    \[ D = I_{xy} = \int_{(S)} xy \, dm \]
+    \[ E = I_{xz} = \int_{(S)} xz \, dm \]
+    \[ F = I_{yz} = \int_{(S)} yz \, dm \]
+    L'élément de masse $dm$ dépend de la nature du corps.</p>
+
+    <h3>Élément de Masse et Intégration</h3>
+    <p>L'élément de masse $dm$ est défini en fonction de la dimensionnalité du corps et de sa densité :</p>
+    <ul>
+        <li><strong>Corps Volumiques (3D)</strong> : $dm = \rho(x, y, z) dV$, où $\rho$ est la densité volumique et $dV$ est l'élément de volume (par exemple, $dV = dxdydz$ en coordonnées cartésiennes). Les intégrales sont des intégrales triples sur le volume (V) du corps.
+        \[ A = \iiint_{(V)} (y^2 + z^2) \rho dV, \quad D = \iiint_{(V)} xy \rho dV, \text{ etc.} \]
+        </li>
+        <li><strong>Corps Surfaciques (2D)</strong> : $dm = \sigma(x, y) dS$, où $\sigma$ est la densité surfacique et $dS$ est l'élément d'aire (par exemple, $dS = dx dy$ pour une surface plane, $dS = r dr d\theta$ en coordonnées polaires planes). Les intégrales sont des intégrales doubles sur la surface (S) du corps.
+        \[ A = \iint_{(S)} (y^2 + z^2) \sigma dS, \quad D = \iint_{(S)} xy \sigma dS, \text{ etc.} \]
+        <p>Cas particulier (plaques planes dans $z=0$) : Si le corps est une plaque mince située dans le plan $z=0$, alors $z=0$ et $dz=0$ pour tous les points. Les termes $E$ et $F$ sont nuls. Les moments d'inertie deviennent $A = \iint_{(S)} y^2 \sigma dS$, $B = \iint_{(S)} x^2 \sigma dS$, et $C = A + B$ (théorème de l'axe perpendiculaire). Le tenseur prend la forme
+        \[
+        \begin{pmatrix}
+        A & -D & 0 \\
+        -D & B & 0 \\
+        0 & 0 & (A+B)
+        \end{pmatrix}
+        \]
+        </p>
+        </li>
+        <li><strong>Corps Linéiques (1D)</strong> : $dm = \lambda(l) dl$, où $\lambda$ est la densité linéique et $dl$ est l'élément de longueur (par exemple, $dl = dx$ pour un fil le long de l'axe Ox). Les intégrales sont des intégrales simples le long de la courbe (L).
+        \[ A = \int_{(L)} (y^2 + z^2) \lambda dl, \quad D = \int_{(L)} xy \lambda dl, \text{ etc.} \]
+        </li>
+    </ul>
+
+    <h3>Homogénéité et Masse Totale</h3>
+    <p>Si le corps est homogène, sa densité ($\rho$, $\sigma$, ou $\lambda$) est constante sur tout le domaine. La masse totale M est alors : $M = \rho V_{total}$ (pour un corps volumique) $M = \sigma S_{total}$ (pour un corps surfacique) $M = \lambda L_{total}$ (pour un corps linéique)</p>
+    <p>La densité constante peut être sortie des intégrales lors du calcul des moments et produits d'inertie.</p>
+
+    <h3>Théorème de Huygens (Transport du Tenseur d'Inertie)</h3>
+    <p>Ce théorème est général et s'applique à tout type de corps. Soit G le centre de masse d'un système matériel (S) de masse totale M. Le tenseur d'inertie $[I_O]$ au point O est lié au tenseur d'inertie $[I_G]$ au point G (calculé dans une base parallèle à celle en O) par :
+    \[ [I_O] = [I_G] + [I_{O/G}] \]
+    où $[I_{O/G}]$ est le tenseur d'inertie du point matériel G (affecté de la masse totale M) par rapport au point O. Si $\vec{OG} = (x_G, y_G, z_G)$, sa matrice dans $\mathcal{R}(O, X, Y, Z)$ est :
+    \[
+    [I_{O/G}] = M
+    \begin{pmatrix}
+    (y_G^2 + z_G^2) & -x_G y_G & -x_G z_G \\
+    -x_G y_G & (x_G^2 + z_G^2) & -y_G z_G \\
+    -x_G z_G & -y_G z_G & (x_G^2 + y_G^2)
+    \end{pmatrix}
+    \]
+    <p><strong>Important :</strong> Les matrices $[I_O]$, $[I_G]$ et $[I_{O/G}]$ doivent être exprimées dans des bases dont les axes sont parallèles.</p>
+
+    <h3>Principe d'Additivité</h3>
+    <p>Ce principe est général. Pour un système matériel (S) composé de plusieurs sous-systèmes disjoints $(S_1), (S_2), ..., (S_n)$, le tenseur d'inertie du système complet en un point O est la somme des tenseurs d'inertie de chaque sous-système au même point O :
+    \[ [I_O](S) = \sum_{i=1}^{n} [I_O](S_i) \]
+    <p>Toutes les matrices doivent être exprimées dans la même base.</p>
+
+    <h3>Simplifications par Symétrie</h3>
+    <p>Les symétries matérielles du corps simplifient le tenseur d'inertie. Ces règles sont générales.</p>
+    <ul>
+        <li>Si un plan de coordonnée est un plan de symétrie matérielle pour la distribution de masse :
+            <ul>
+                <li>Plan $xOy$ ($z=0$) $\implies I_{xz} = 0, I_{yz} = 0$ (soit $E=0, F=0$). L'intégrale de $xz dm$ ou $yz dm$ sur (S) est nulle car pour chaque $dm$ en $(x, y, z)$, il existe un $dm$ équivalent en $(x, y, -z)$.</li>
+                <li>Plan $xOz$ ($y=0$) $\implies I_{xy} = 0, I_{yz} = 0$ (soit $D=0, F=0$). Symétrie par rapport à $y=0$.</li>
+                <li>Plan $yOz$ ($x=0$) $\implies I_{xy} = 0, I_{xz} = 0$ (soit $D=0, E=0$). Symétrie par rapport à $x=0$.</li>
+            </ul>
+        </li>
+        <li>Si deux plans de coordonnées sont des plans de symétrie, les trois produits d'inertie sont nuls ($D=E=F=0$) et le tenseur d'inertie est <strong>diagonal</strong> dans cette base. C'est notamment le cas si un axe de coordonnée est un axe de symétrie matérielle.</li>
+        <li>Si le corps admet une <strong>symétrie de révolution</strong> (axiale) autour d'un axe de coordonnée (par ex. Oz), alors le tenseur est diagonal et les moments d'inertie par rapport aux axes perpendiculaires sont égaux. Pour une symétrie autour de Oz : $I_{xx} = I_{yy}$ ($A=B$) et $D=E=F=0$. Le tenseur est
+        \[
+        \begin{pmatrix}
+        A & 0 & 0 \\
+        0 & A & 0 \\
+        0 & 0 & C
+        \end{pmatrix}
+        \]
+        </li>
+    </ul>
+    <!-- PDF Content End -->
+
+    <script>
+        function resizeIframeToFitContent(iframe) {
+            console.log('Attempting to resize iframe:', iframe.id);
+            try {
+                // Check if contentWindow and document are accessible
+                if (!iframe.contentWindow || !iframe.contentWindow.document || !iframe.contentWindow.document.body) {
+                    console.warn('Iframe content window or document not accessible. Possible loading or cross-origin issue.');
+                    return; // Stop if not accessible
+                }
+
+                const iframeDoc = iframe.contentWindow.document;
+                const iframeBody = iframeDoc.body;
+                const iframeHtml = iframeDoc.documentElement;
+
+                // Reset height to allow accurate scrollHeight measurement
+                iframe.style.height = 'auto';
+
+                // Calculate height using both body and documentElement scrollHeight
+                // and take the maximum. Add a small buffer (e.g., 5px) sometimes helps.
+                const bodyHeight = iframeBody.scrollHeight;
+                const docHeight = iframeHtml.scrollHeight;
+                const contentHeight = Math.max(bodyHeight, docHeight) + 5; // Added 5px buffer
+
+                console.log(`Measured heights - body: ${bodyHeight}px, documentElement: ${docHeight}px. Setting iframe height to: ${contentHeight}px`);
+
+                if (contentHeight > 10) { // Only set if height seems valid (greater than a small threshold)
+                     iframe.style.height = contentHeight + 'px';
+                     console.log('Iframe height set.');
+                } else {
+                     console.warn('Calculated content height is zero or very small. Not setting height.');
+                     // Optional: Set a minimum default height as fallback if needed
+                     // iframe.style.height = '100px';
+                }
+
+            } catch (e) {
+                console.error('ERROR resizing iframe:', e);
+                console.error('This often indicates a Same-Origin Policy violation. Ensure the parent page and iframe src are served from the exact same domain, protocol, and port.');
+                // Provide fallback or visual indication, e.g.:
+                // iframe.style.border = '2px solid red';
+                // iframe.style.height = '100px'; // Set a fallback height
+            }
+        }
+
+        const myIframe = document.getElementById('nav-iframe');
+
+        if (myIframe) {
+            console.log('Found iframe with ID:', myIframe.id);
+
+            // --- Event Listener for Load ---
+            myIframe.addEventListener('load', function() {
+                console.log('Iframe detected LOAD event.');
+                // Use setTimeout to allow content potentially rendering *after* load event
+                setTimeout(() => resizeIframeToFitContent(this), 150); // Delay slightly
+                // Add a second check slightly later in case of slow rendering elements
+                setTimeout(() => resizeIframeToFitContent(this), 500);
+                 // Add a third check even later for complex pages
+                setTimeout(() => resizeIframeToFitContent(this), 1500);
+            });
+
+            // --- Event Listener for Window Resize ---
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                console.log('Window resize detected.');
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                    if (myIframe) { // Ensure iframe still exists
+                        resizeIframeToFitContent(myIframe);
+                    }
+                }, 250); // Debounce resize
+            });
+
+            // --- Initial Check (in case already loaded) ---
+             // Check document.readyState inside the iframe more reliably
+            try {
+                 // Need to check if contentWindow exists first
+                if (myIframe.contentWindow && myIframe.contentWindow.document && myIframe.contentWindow.document.readyState === 'complete') {
+                    console.log('Iframe already loaded (readyState complete), attempting initial resize.');
+                    // Use setTimeout here too for consistency and timing
+                    setTimeout(() => resizeIframeToFitContent(myIframe), 150);
+                } else if (myIframe.contentWindow) {
+                     console.log(`Iframe not yet complete on initial script run. Current readyState: ${myIframe.contentWindow.document ? myIframe.contentWindow.document.readyState : 'document not accessible'}`);
+                } else {
+                    console.log('Iframe contentWindow not accessible on initial check (might be loading or cross-origin). Waiting for load event.')
+                }
+            } catch(e) {
+                 // Catch potential cross-origin errors even during the check
+                 console.warn('Initial readyState check failed, likely cross-origin before load event or iframe not fully initialized yet.', e.message);
+            }
+
+
+        } else {
+            console.error('Iframe with ID "nav-iframe" not found in the DOM.');
+        }
+    </script>
+</body>
+</html>

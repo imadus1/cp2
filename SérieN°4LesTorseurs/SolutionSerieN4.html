@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Série N4 - Solutions Torseurs</title>
+    <title>Série N4 - Les Torseurs - Solutions</title> <!-- Adjusted title -->
     <script>
         MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
             processEscapes: true,
-            tags: 'ams' // Add automatic equation numbering
+            tags: 'ams' // Enable equation numbering
           },
           svg: {
             fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Default tags to skip
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
           }
         };
     </script>
@@ -35,16 +40,21 @@
             vertical-align: top; /* Helps prevent extra space below in some layouts */
         }
 
-body {
-  /* Apply the font */
-  font-family: "Computer Modern Serif", serif; /* Changed to Serif, added serif fallback */
-  line-height: 1.6;
-  margin: 2em;
-}
-        h1, h2, h3 {
+        body {
+            /* Apply the font */
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6; /* Adjusted line spacing for readability */
+            margin: 2em;
+        }
+        h1, h2, h3, h4 { /* Added h4 */
             margin-top: 1.5em;
             margin-bottom: 0.5em;
+            font-weight: bold; /* Ensure headings are bold */
         }
+        h2 { font-size: 1.5em; }
+        h3 { font-size: 1.3em; }
+        h4 { font-size: 1.1em; } /* Style for sub-parts */
+
         p, li {
             margin-top: 0.5em; /* Slightly increased spacing */
             margin-bottom: 0.5em;
@@ -74,16 +84,9 @@ body {
             text-align: center;
             font-weight: bold;
         }
-        /* Style for vertical vectors/points */
-        .vector {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            margin: 0 0.2em;
-        }
-        .vector span {
-            display: block;
-        }
+        /* Style for vertical vectors/points - Use MathJax pmatrix instead */
+        /* .vector { ... } */
+
         /* Ensure math expressions are not too small */
         .mjx-chtml {
            font-size: 105%; /* Slightly larger math font */
@@ -93,11 +96,13 @@ body {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
+            overflow-x: auto; /* Allow scrolling for wide equations */
+            overflow-y: hidden;
         }
-        section { /* Add spacing between exercises */
-            margin-bottom: 2em;
-            padding-bottom: 1em;
-            border-bottom: 1px solid #eee; /* Optional separator */
+        section { /* Add spacing between sections within a solution */
+            margin-bottom: 1.5em;
+            padding-bottom: 0.5em;
+            /* border-bottom: 1px solid #eee; /* Optional separator within solutions */
         }
         header {
              text-align: center;
@@ -108,6 +113,24 @@ body {
         header h1 { margin-bottom: 0.2em; }
         header p { margin-top: 0.2em; margin-bottom: 0.2em; font-size: 1.1em; }
         header h2 { margin-top: 0.5em; margin-bottom: 0.1em; }
+
+        /* Styles for page separation */
+         .page-separator {
+            page-break-before: always; /* For printing */
+            border-top: 1px dashed #ccc;
+            margin-top: 2em;
+            padding-top: 1em;
+        }
+        .page-number {
+            text-align: right;
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 1em;
+            font-weight: bold;
+        }
+        .page-content {
+            /* Add padding or margins if needed for content within a page */
+        }
     </style>
 </head>
 <body>
@@ -118,448 +141,465 @@ body {
     </iframe>
 
     <!-- PDF Content Start -->
-    <section>
-        <h1>Solution 01</h1>
 
-        <h2>1) Calculer la résultante de [G] et son moment en A. En déduire la nature de [G].</h2>
+    <!-- Start Page 1 (2/9) -->
+    <div class="page-content">
+        <div class="page-number">2/9</div>
+        <h2>Solution 01</h2>
+        <section>
+            <h3>1) Calculer la résultante de [G] et son moment en A. En déduire la nature de [G].</h3>
 
-        <h3>Résultante de [G]</h3>
-        <p>La résultante de [G] est la somme des résultantes de [G1] et [G2]. Les résultantes de [G1] et [G2] sont respectivement les vecteurs $\vec{u}$ et $\vec{v}$. Donc, la résultante de [G], notée $\vec{R}$, est :</p>
-        $$ \vec{R} = \vec{u} + \vec{v} = (a \vec{i} + b\vec{j}) + \vec{j} = a\vec{i} + (b+1)\vec{j} $$
-        <p>En composantes cartésiennes : $\vec{R} = (a, b+1, 0)$</p>
+            <h4>Résultante de [G]</h4>
+            <p>La résultante de [G] est la somme des résultantes de [G1] et [G2]. Les résultantes de [G1] et [G2] sont respectivement les vecteurs $\vec{u}$ et $\vec{v}$. Donc, la résultante de [G], notée $\vec{R}$, est :</p>
+            $$ \vec{R} = \vec{u} + \vec{v} = (a\vec{i} + b\vec{j}) + \vec{j} = a\vec{i} + (b+1)\vec{j} $$
+            <p>En composantes cartésiennes : $\vec{R} = (a, b+1, 0)$</p>
 
-        <h3>Moment de [G] en A</h3>
-        <p>Le moment de [G] en A, noté $\vec{M}_A([G])$, est la somme des moments de [G1] et [G2] en A.</p>
-        <p>Le moment de [G1] en A est le moment du vecteur $\vec{u}$ appliqué au point A par rapport au point A, qui est nul car le point et le point d'application coïncident. Donc :</p>
-        $$ \vec{M}_A([G1]) = \vec{AA} \wedge \vec{u} = \vec{0} $$
-        <p>Le moment de [G2] en A est le moment du vecteur $\vec{v}$ appliqué au point B par rapport au point A. On utilise la formule du moment d'un vecteur par rapport à un point :</p>
-        $$ \vec{M}_A(\vec{v}) = \vec{AB} \wedge \vec{v} $$
-        <p>Calculons le vecteur $\vec{AB}$ :</p>
-        $$ \vec{AB} = B - A = (1-1, 1-0, 0-0) = (0, 1, 0) = \vec{j} $$
-        <p>Le vecteur $\vec{v}$ est donné comme $\vec{v} = \vec{j} = (0, 1, 0)$.</p>
-        $$ \vec{M}_A([G2]) = \vec{AB} \wedge \vec{v} = \vec{j} \wedge \vec{j} = \vec{0} $$
-        <p>Donc, le moment de [G] en A est :</p>
-        $$ \vec{M}_A([G]) = \vec{M}_A([G1]) + \vec{M}_A([G2]) = \vec{0} $$
+            <h4>Moment de [G] en A</h4>
+            <p>Le moment de [G] en A, noté $\vec{M}_A([G])$, est la somme des moments de [G1] et [G2] en A.</p>
+            <p>Le moment de [G1] en A est le moment du vecteur $\vec{u}$ appliqué au point A par rapport au point A, qui est nul car le point et le point d'application coïncident. Donc :</p>
+            $$ \vec{M}_A([G_1]) = \vec{AA} \wedge \vec{u} = \vec{0} $$
+            <p>Le moment de [G2] en A est le moment du vecteur $\vec{v}$ appliqué au point B par rapport au point A. On utilise la formule du moment d'un vecteur par rapport à un point :</p>
+            $$ \vec{M}_A(\vec{v}) = \vec{AB} \wedge \vec{v} $$
+            <p>Calculons le vecteur</p>
+            $$ \vec{AB} = B - A = (1-1, 1-0, 0-0) = (0, 1, 0) = \vec{j} $$
+            $$ \vec{v} = \vec{j} = (0,1,0) $$
+            $$ \vec{M}_A([G_2]) = \vec{AB} \wedge \vec{v} = \vec{j} \wedge \vec{j} = \vec{0} $$
+            <p>Donc, le moment de [G] en A est :</p>
+            $$ \vec{M}_A([G]) = \vec{M}_A([G_1]) + \vec{M}_A([G_2]) = \vec{0} $$
 
-        <h3>Nature de [G]</h3>
-        <p>Puisque le moment de [G] en A est nul ($\vec{M}_A([G]) = \vec{0}$) et la résultante $\vec{R} = (a, b+1, 0)$ est généralement non nulle (sauf si $a=0$ et $b=-1$), le torseur [G] est un <strong>glisseur</strong> (ou force unique).</p>
-        <p>Si $\vec{R} = \vec{0}$ (c'est-à-dire si $a=0$ et $b=-1$), alors [G] est un torseur nul car son moment en A est aussi nul.</p>
-        <p>Donc, en général, [G] est un glisseur.</p>
+            <h4>Nature de [G]</h4>
+            <p>Puisque le moment de [G] en A est nul et la résultante est non nulle, le torseur [G] est un <strong>glisseur</strong> (ou force unique). Si $\vec{R} = \vec{0}$ alors [G] est un torseur nul. En général, pour des valeurs arbitraires de $a$ et $b$, $\vec{R}=(a, b+1, 0)$ n'est pas nul (sauf si $a=0$ et $b=-1$). Donc, en général, [G] est un glisseur.</p>
+        </section>
+        <section>
+             <h3>2) Déterminer l'équation cartésienne de l'axe central de [G]</h3>
+             <p>L'axe central d'un glisseur est la ligne d'action de la force résultante où le moment est minimal (et colinéaire à la résultante, ici le moment minimal est nul). Puisque le moment en A est déjà nul, le point A appartient à l'axe central. L'axe central est la droite passant par A et de direction la résultante $\vec{R}$. Point $A = (1,0,0)$ Vecteur directeur $\vec{R} = (a, b+1, 0)$</p>
+             <p>L'équation paramétrique de l'axe central est :</p>
+             $$ \begin{cases} x = 1 + a \cdot t \\ y = 0 + (b+1) \cdot t \\ z = 0 + 0 \cdot t = 0 \end{cases} $$
+             <p>Pour obtenir l'équation cartésienne, nous éliminons le paramètre $t$. De la troisième équation, on a $z=0$.</p>
+             <p>Si $a \neq 0$, on peut exprimer $t = (x-1)/a$. En substituant dans la deuxième équation :</p>
+             $$ y = (b+1) \frac{(x-1)}{a} $$
+             $$ a \cdot y = (b+1)(x-1) $$
+             $$ a \cdot y = (b+1)x - (b+1) $$
+             $$ (b+1)x - a \cdot y - (b+1) = 0 $$
+             <p>Si $a=0$, alors la première équation devient $x=1$, et $y=(b+1)t, z=0$.</p>
+             <p>En conclusion, l'équation cartésienne de l'axe central est dans le plan $z=0$, et est donnée par :</p>
+             <ul>
+                <li>Si $a \neq 0$ : $(b+1)x - a \cdot y - (b+1) = 0$ et $z=0$</li>
+                <li>Si $a = 0$ : $x=1$ et $z=0$</li>
+             </ul>
+             <p>On peut combiner ces deux cas en notant que si $a \neq 0$ on a une droite dans le plan $z=0$. Si $a=0$, c'est une droite verticale dans le plan $z=0$ (parallèle à l'axe des y). Dans tous les cas, l'axe central est dans le plan $z=0$. L'équation générale peut être écrite comme :</p>
+             $$ \begin{cases} (b+1)(x-1) - a \cdot y = 0 \\ z = 0 \end{cases} $$
+        </section>
+    </div>
+    <!-- End Page 1 (2/9) -->
 
-        <h2>2) Déterminer l'équation cartésienne de l'axe central de [G]</h2>
-        <p>L'axe central d'un glisseur est la ligne d'action de la force résultante où le moment est minimal (et colinéaire à la résultante). Ici, le moment minimal est nul. Puisque le moment en A est déjà nul ($\vec{M}_A([G]) = \vec{0}$), le point A appartient à l'axe central.</p>
-        <p>L'axe central est la droite passant par A et de direction la résultante $\vec{R}$.</p>
-        <ul>
-            <li>Point A = (1, 0, 0)</li>
-            <li>Vecteur directeur $\vec{R} = (a, b+1, 0)$</li>
-        </ul>
-        <p>L'équation paramétrique de l'axe central est, pour un point $P(x,y,z)$ sur l'axe :
-        $\vec{OP} = \vec{OA} + t \vec{R}$</p>
-        $$
-        \begin{cases}
-        x = 1 + a \cdot t \\
-        y = 0 + (b+1) \cdot t \\
-        z = 0 + 0 \cdot t = 0
-        \end{cases}
-        $$
-        <p>Pour obtenir l'équation cartésienne, nous éliminons le paramètre $t$. De la troisième équation, on a $z = 0$.</p>
-        <p><strong>Si $a \neq 0$</strong>, on peut exprimer $t = \frac{x-1}{a}$. En substituant dans la deuxième équation :</p>
-        $$ y = (b+1) \frac{(x-1)}{a} $$
-        $$ a y = (b+1)(x-1) $$
-        $$ a y = (b+1)x - (b+1) $$
-        $$ (b+1)x - a y - (b+1) = 0 $$
-        <p>L'équation cartésienne est donc $ (b+1)x - a y - (b+1) = 0 $ et $z=0$.</p>
-        <p><strong>Si $a = 0$</strong>, alors la première équation devient $x = 1$. La deuxième est $y = (b+1)t$ et $z=0$. L'équation cartésienne est $x = 1$ et $z=0$. (Ceci est une droite verticale dans le plan $z=0$, parallèle à l'axe des y).</p>
-        <p>On peut combiner ces deux cas. L'équation $ a y = (b+1)(x-1) $ peut s'écrire $ (b+1)(x-1) - a y = 0 $.</p>
-        <ul>
-            <li>Si $a \neq 0$, c'est l'équation de la droite trouvée.</li>
-            <li>Si $a = 0$, l'équation devient $(b+1)(x-1) - 0 \cdot y = 0$. Si $b+1 \neq 0$, cela donne $x-1=0 \implies x=1$. Si $b+1 = 0$, l'équation est $0=0$, mais on sait aussi $a=0$, donc $\vec{R}=(0,0,0)$ (torseur nul, cas exclu si on parle d'axe central).</li>
-        </ul>
-        <p>En conclusion, l'équation cartésienne de l'axe central est dans le plan $z=0$, et est donnée par le système :</p>
-        $$
-        \begin{cases}
-        (b+1)(x-1) - a y = 0 \\
-        z = 0
-        \end{cases}
-        $$
-        (En supposant que $\vec{R} \neq \vec{0}$, c'est-à-dire non simultanément $a=0$ et $b=-1$).
-    </section>
+    <div class="page-separator"></div>
 
-    <section>
-        <h1>Solution 02</h1>
+    <!-- Start Page 2 (3/9) -->
+    <div class="page-content">
+        <div class="page-number">3/9</div>
+        <h2>Solution 02</h2>
+        <section>
+             <h3>1) Construire le torseur $[T]_O$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$</h3>
+             <p>Le torseur $[T]_O$ en l'origine O est défini par sa résultante $\vec{R}$ et son moment résultant $\vec{M}_O$.</p>
 
-        <h2>1) Construire le torseur $[T]_O$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$</h2>
-        <p>Le torseur $[T]_O$ en l'origine O est défini par sa résultante $\vec{R}$ et son moment résultant $\vec{M}_O$.</p>
+             <h4>Résultante $\vec{R}$</h4>
+             <p>La résultante est la somme vectorielle des vecteurs :</p>
+             $$ \vec{R} = \vec{V}_1 + \vec{V}_2 + \vec{V}_3 $$
+             $$ = (-\vec{i}+\vec{j}+\vec{k}) + (\vec{j}+2\vec{k}) + (\vec{i}-\vec{j}) $$
+             $$ \vec{R} = \vec{j} + 3\vec{k} $$
+             <p>En composantes : $\vec{R} = (0, 1, 3)$</p>
 
-        <h3>Résultante $\vec{R}$</h3>
-        <p>La résultante est la somme vectorielle des vecteurs :</p>
-        $$ \vec{R} = \vec{V}_1 + \vec{V}_2 + \vec{V}_3 $$
-        <!-- Assuming V1, V2, V3 vectors were defined in the problem statement. Using the OCR intermediate calculation: -->
-        $$ \vec{R} = (-\vec{i}+\vec{j}+\vec{k}) + (\vec{j}+2\vec{k}) + (\vec{i}-\vec{j}) $$
-        $$ \vec{R} = ( -1 + 0 + 1)\vec{i} + (1 + 1 - 1)\vec{j} + (1 + 2 + 0)\vec{k} $$
-        $$ \vec{R} = 0\vec{i} + 1\vec{j} + 3\vec{k} = \vec{j} + 3\vec{k} $$
-        <p>En composantes : $\vec{R} = (0, 1, 3)$ ou $\vec{R} = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix}$.</p>
+             <h4>Moment résultant $\vec{M}_O$ au point O</h4>
+             <p>Le moment résultant en O est la somme des moments de chaque vecteur par rapport à O.</p>
+             $$ \vec{M}_O = \vec{OA} \wedge \vec{V}_1 + \vec{OB} \wedge \vec{V}_2 + \vec{OC} \wedge \vec{V}_3 $$
+             <p>Les moments individuels sont donnés (ou calculés séparément) comme :</p>
+             $$ \vec{OA} \wedge \vec{V}_1 = \begin{pmatrix} -1 \\ -2 \\ 1 \end{pmatrix} \quad \vec{OB} \wedge \vec{V}_2 = \begin{pmatrix} -2 \\ -2 \\ 1 \end{pmatrix} $$
+             $$ \vec{OC} \wedge \vec{V}_3 = \begin{pmatrix} 2 \\ 2 \\ -3 \end{pmatrix} $$
+             <p>Additionnons ces moments</p>
+             $$ \vec{M}(O) = \begin{pmatrix} -1 + (-2) + 2 \\ -2 + (-2) + 2 \\ 1 + 1 + (-3) \end{pmatrix} = \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} $$
+             <p>Le torseur $[T]$ associé au système, réduit à l'origine O, noté $[T]_O$, a pour éléments de réduction :</p>
+             $$ [T]_O = \left\{ \vec{R} = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix}, \vec{M}(O) = \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} \right\} $$
+        </section>
+        <section>
+             <h3>2) En déduire l'automoment</h3>
+             <p>L'auto moment $I$ (ou invariant scalaire) d'un torseur [T] est défini par le produit scalaire de la résultante et du moment en un point P quelconque : $I = \vec{R} \cdot \vec{M}(P)$. Cette valeur est indépendante du point P choisi. Calculons-le en O.</p>
+             $$ I = \vec{R} \cdot \vec{M}(O) $$
+             <p>L'automoment du torseur [T] :</p>
+             $$ I = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} = (0)(-1) + (1)(-2) + (3)(-1) $$
+             $$ I = 0 - 2 - 3 = -5 $$
+        </section>
+        <section>
+             <h3>3) Calculer le pas du torseur</h3>
+             <p>Le pas $p$ d'un torseur [T] dont la résultante $\vec{R}$ est non nulle est défini par :</p>
+             $$ p = \frac{I}{\|\vec{R}\|^2} = \frac{\vec{R} \cdot \vec{M}(O)}{\vec{R} \cdot \vec{R}} $$
+             <p>Calculons $\|\vec{R}\|^2$:</p>
+             $$ \|\vec{R}\|^2 = \vec{R} \cdot \vec{R} = (0)^2 + (1)^2 + (3)^2 = 0 + 1 + 9 = 10 $$
+             <p>Donc, le pas est :</p>
+             $$ p = \frac{-5}{10} = -\frac{1}{2} $$
+        </section>
+        <section>
+            <h3>4) Déterminer l'axe central du torseur (paramétrique et cartésienne)</h3>
+            <p>L'axe central ($\Delta$) est l'ensemble des points P de l'espace où le moment $\vec{M}(P)$ est colinéaire à la résultante $\vec{R}$. C'est une droite dirigée par $\vec{R}$. Pour la définir, il suffit (en plus du vecteur directeur) de trouver un point H appartenant à cet axe. La relation entre $\vec{M}(H)$ et $\vec{R}$ est $\vec{M}(H) = p\vec{R}$.</p>
+            <p><strong>Trouver un point H de l'axe:</strong> Un point H de l'axe central peut être trouvé via la formule donnant le point $H_0$ de l'axe le plus proche de O:</p>
+            $$ \vec{OH}_0 = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
+            <p>Calculons le produit vectoriel $\vec{R} \wedge \vec{M}(O)$ :</p>
+            $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} \wedge \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} $$
+            $$ = \begin{pmatrix} (1)(-1) - (3)(-2) \\ (3)(-1) - (0)(-1) \\ (0)(-2) - (1)(-1) \end{pmatrix} = \begin{pmatrix} -1+6 \\ -3-0 \\ 0+1 \end{pmatrix} = \begin{pmatrix} 5 \\ -3 \\ 1 \end{pmatrix} $$
+            <p>Donc,</p>
+            $$ \vec{OH}_0 = \frac{1}{10} \begin{pmatrix} 5 \\ -3 \\ 1 \end{pmatrix} = \begin{pmatrix} 5/10 \\ -3/10 \\ 1/10 \end{pmatrix} = \begin{pmatrix} 1/2 \\ -3/10 \\ 1/10 \end{pmatrix} $$
+        </section>
+    </div>
+    <!-- End Page 2 (3/9) -->
 
-        <h3>Moment résultant $\vec{M}_O$ au point O</h3>
-        <p>Le moment résultant en O est la somme des moments de chaque vecteur par rapport à O :</p>
-        $$ \vec{M}_O = \vec{OA} \wedge \vec{V}_1 + \vec{OB} \wedge \vec{V}_2 + \vec{OC} \wedge \vec{V}_3 $$
-        <p>Les moments individuels sont donnés (ou calculés séparément) comme :</p>
-        $$ \vec{OA} \wedge \vec{V}_1 = \begin{pmatrix} -1 \\ -2 \\ 1 \end{pmatrix} \quad \vec{OB} \wedge \vec{V}_2 = \begin{pmatrix} -2 \\ -2 \\ 1 \end{pmatrix} \quad \vec{OC} \wedge \vec{V}_3 = \begin{pmatrix} 2 \\ 2 \\ -3 \end{pmatrix} $$
-        <p>Additionnons ces moments :</p>
-        $$ \vec{M}(O) = \begin{pmatrix} -1 \\ -2 \\ 1 \end{pmatrix} + \begin{pmatrix} -2 \\ -2 \\ 1 \end{pmatrix} + \begin{pmatrix} 2 \\ 2 \\ -3 \end{pmatrix} = \begin{pmatrix} -1 - 2 + 2 \\ -2 - 2 + 2 \\ 1 + 1 - 3 \end{pmatrix} = \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} $$
-        <p>Le torseur [T] associé au système, réduit à l'origine O, noté $[T]_O$, a pour éléments de réduction :</p>
-        $$ [T]_O = \left\{ \vec{R} = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} , \vec{M}(O) = \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} \right\} $$
+    <div class="page-separator"></div>
 
-        <h2>2) En déduire l'automoment</h2>
-        <p>L'auto moment $I$ (ou invariant scalaire) d'un torseur [T] est défini par le produit scalaire de la résultante et du moment en un point P quelconque : $I = \vec{R} \cdot \vec{M}(P)$. Cette valeur est indépendante du point P choisi. Calculons-le en O.</p>
-        $$ I = \vec{R} \cdot \vec{M}(O) $$
-        <p>L'automoment du torseur [T] :</p>
-        $$ I = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} \cdot \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} = (0)(-1) + (1)(-2) + (3)(-1) $$
-        $$ I = 0 - 2 - 3 = -5 $$
-
-        <h2>3) Calculer le pas du torseur</h2>
-        <p>Le pas $p$ d'un torseur [T] dont la résultante $\vec{R}$ est non nulle est défini par :</p>
-        $$ p = \frac{I}{\|\vec{R}\|^2} = \frac{\vec{R} \cdot \vec{M}(O)}{\vec{R} \cdot \vec{R}} $$
-        <p>Calculons $\|\vec{R}\|^2$:</p>
-        $$ \|\vec{R}\|^2 = \vec{R} \cdot \vec{R} = (0)^2 + (1)^2 + (3)^2 = 0 + 1 + 9 = 10 $$
-        <p>Donc, le pas est :</p>
-        $$ p = \frac{-5}{10} = -\frac{1}{2} $$
-
-        <h2>4) Déterminer l'axe central du torseur (paramétrique et cartésienne)</h2>
-        <p>L'axe central $(\Delta)$ est l'ensemble des points P de l'espace où le moment $\vec{M}(P)$ est colinéaire à la résultante $\vec{R}$. C'est une droite dirigée par $\vec{R}$. Pour la définir, il suffit (en plus du vecteur directeur) de trouver un point H appartenant à cet axe. La relation entre $\vec{M}(H)$ et $\vec{R}$ est $\vec{M}(H) = p\vec{R}$.</p>
-        <p><strong>Trouver un point H de l'axe:</strong> Un point $H_0$ de l'axe central peut être trouvé via la formule donnant le point de l'axe le plus proche de O :</p>
-        $$ \vec{OH_0} = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
-        <p>Calculons le produit vectoriel $\vec{R} \wedge \vec{M}(O)$ :</p>
-        $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} \wedge \begin{pmatrix} -1 \\ -2 \\ -1 \end{pmatrix} = \begin{pmatrix} (1)(-1) - (3)(-2) \\ (3)(-1) - (0)(-1) \\ (0)(-2) - (1)(-1) \end{pmatrix} = \begin{pmatrix} -1 + 6 \\ -3 - 0 \\ 0 + 1 \end{pmatrix} = \begin{pmatrix} 5 \\ -3 \\ 1 \end{pmatrix} $$
-        <p>Donc,</p>
-        $$ \vec{OH_0} = \frac{1}{10} \begin{pmatrix} 5 \\ -3 \\ 1 \end{pmatrix} = \begin{pmatrix} 5/10 \\ -3/10 \\ 1/10 \end{pmatrix} = \begin{pmatrix} 1/2 \\ -3/10 \\ 1/10 \end{pmatrix} $$
-        <p>L'axe central $(\Delta)$ est la droite passant par $H_0(1/2, -3/10, 1/10)$ et de vecteur directeur $\vec{R} = (0, 1, 3)$.</p>
-
-        <h3>Représentation paramétrique de l'axe central $(\Delta)$ :</h3>
-        <p>Un point $P(x, y, z)$ appartient à $(\Delta)$ si $\vec{OP} = \vec{OH_0} + \lambda \vec{R}$, où $\lambda \in \mathbb{R}$.</p>
+    <!-- Start Page 3 (4/9) -->
+    <div class="page-content">
+        <div class="page-number">4/9</div>
+        <p>L'axe central ($\Delta$) est la droite passant par $H_0(1/2, -3/10, 1/10)$ et de vecteur directeur $\vec{R} = (0, 1, 3)$.</p>
+        <h4>Représentation paramétrique de l'axe central ($\Delta$) :</h4>
+        <p>Un point $P(x, y, z)$ appartient à ($\Delta$) si $\vec{OP} = \vec{OH}_0 + \lambda \vec{R}$, où $\lambda \in \mathbb{R}$.</p>
         $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1/2 \\ -3/10 \\ 1/10 \end{pmatrix} + \lambda \begin{pmatrix} 0 \\ 1 \\ 3 \end{pmatrix} $$
         <p>Ce qui donne le système d'équations paramétriques :</p>
         $$ (\Delta) : \begin{cases} x = 1/2 \\ y = -3/10 + \lambda \\ z = 1/10 + 3\lambda \end{cases} \quad (\lambda \in \mathbb{R}) $$
-
-        <h3>Représentation cartésienne de l'axe central $(\Delta)$ :</h3>
+        <h4>Représentation cartésienne de l'axe central ($\Delta$) :</h4>
         <p>On élimine le paramètre $\lambda$ des équations paramétriques. La première équation $x = 1/2$ est déjà une équation cartésienne. Elle signifie que l'axe est contenu dans le plan parallèle au plan $(O, \vec{j}, \vec{k})$ passant par $x = 1/2$.</p>
-        <p>Pour les deux autres équations, on peut exprimer $\lambda$ :</p>
-        <p>De $y = -3/10 + \lambda \implies \lambda = y + 3/10$.</p>
-        <p>De $z = 1/10 + 3\lambda \implies 3\lambda = z - 1/10 \implies \lambda = \frac{z - 1/10}{3}$.</p>
+        <p>Pour les deux autres équations, on peut exprimer $\lambda$: De $y = -3/10 + \lambda \implies \lambda = y + 3/10$. De $z = 1/10 + 3\lambda \implies \lambda = \frac{z-1/10}{3}$.</p>
         <p>En égalant les expressions de $\lambda$ et en ajoutant la première équation, on obtient le système d'équations cartésiennes :</p>
-        $$ (\Delta) : \begin{cases} x = 1/2 \\ y + 3/10 = \frac{z - 1/10}{3} \end{cases} $$
+        $$ (\Delta) : \begin{cases} x = 1/2 \\ y + 3/10 = \frac{z-1/10}{3} \end{cases} $$
         <p>Simplifions la deuxième équation :</p>
-        $$ 3(y + 3/10) = z - 1/10 $$
-        $$ 3y + 9/10 = z - 1/10 $$
-        $$ 3y - z = -1/10 - 9/10 $$
-        $$ 3y - z = -10/10 = -1 $$
+         $$ 3(y + 3/10) = z - 1/10 $$
+         $$ 3y + 9/10 = z - 1/10 $$
+         $$ 3y - z = -1/10 - 9/10 = -10/10 $$
+         $$ 3y - z = -1 $$
         <p>Le système cartésien est donc :</p>
         $$ (\Delta) : \begin{cases} x = 1/2 \\ 3y - z = -1 \end{cases} $$
         <p>Ceci représente l'intersection de deux plans : le plan $x = 1/2$ et le plan $3y - z = -1$.</p>
-    </section>
+    </div>
+    <!-- End Page 3 (4/9) -->
 
-    <section>
-        <h1>Solution 03</h1>
+    <div class="page-separator"></div>
+
+    <!-- Start Page 4 (5/9) -->
+    <div class="page-content">
+        <div class="page-number">5/9</div>
+        <h2>Solution 03</h2>
         <p>Le champ de vecteurs $\vec{V}(M)$ est donné en fonction des coordonnées $(x, y, z)$ du point M dans le repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$ par :</p>
-        $$
-        \begin{cases}
-        v_x = 1 + 3y - tz \\
-        v_y = -3x + 2tz \\
-        v_z = 2 + tx - t^2y
-        \end{cases}
-        $$
+        $$ \begin{cases} v_x = 1 + 3y - tz \\ v_y = -3x + 2tz \\ v_z = 2 + tx - t^2y \end{cases} $$
         <p>où $t$ est un paramètre réel.</p>
+        <section>
+            <h3>1) Calculer le vecteur $\vec{V}(M)$ au point O</h3>
+            <p><strong>Concept :</strong> Évaluer un champ de vecteurs en un point consiste à substituer les coordonnées de ce point dans les composantes du champ. Le point O est l'origine, ses coordonnées sont $(0,0,0)$. En substituant :</p>
+            <p> $v_x(O) = 1 + 3(0) - t(0) = 1$ <br>
+                $v_y(O) = -3(0) + 2t(0) = 0$ <br>
+                $v_z(O) = 2 + t(0) - t^2(0) = 2$ </p>
+            <p>Le vecteur $\vec{V}(O)$ est donc :</p>
+            $$ \vec{V}(O) = 1\vec{i} + 0\vec{j} + 2\vec{k} = \vec{i} + 2\vec{k} $$
+        </section>
+        <section>
+            <h3>2) Pour quelles valeurs de t, ce champ est antisymétrique ?</h3>
+            <p><strong>Concept :</strong> Un champ de vecteurs $\vec{V}$ est dit antisymétrique ssi il est équiprojectif. Pour tous points A et B:</p>
+            $$ \vec{V}(A) \cdot \vec{AB} = \vec{V}(B) \cdot \vec{AB} $$
+            <p>Choisissons $A = O(0, 0, 0)$ et $B = M(x, y, z)$. Alors $\vec{AB} = \vec{OM} = x\vec{i} + y\vec{j} + z\vec{k}$. L'équiprojectivité s'écrit :</p>
+            $$ \vec{V}(O) \cdot \vec{OM} = \vec{V}(M) \cdot \vec{OM} $$
+            <p>Calculons le membre de gauche :</p>
+            $$ \vec{V}(O) \cdot \vec{OM} = (\vec{i} + 2\vec{k}) \cdot (x\vec{i} + y\vec{j} + z\vec{k}) = x + 2z $$
+            <p>Calculons le membre de droite :</p>
+            $$ \vec{V}(M) \cdot \vec{OM} = v_x x + v_y y + v_z z $$
+            $$ = (1 + 3y - tz)x + (-3x + 2tz)y + (2 + tx - t^2y)z $$
+            $$ = x + 3xy - txz - 3xy + 2tyz + 2z + txz - t^2yz $$
+            $$ = x + 2z + (2t - t^2)yz \quad \text{(après simplification)} $$
+            <p>Égalons les deux membres :</p>
+            $$ x + 2z = x + 2z + (2t - t^2)yz $$
+            <p>Cette égalité doit être vraie pour tout M(x, y, z), donc :</p>
+            $$ (2t - t^2)yz = 0 \quad \forall y, z $$
+            <p>Ceci impose que le coefficient $(2t - t^2)$ soit nul :</p>
+            $$ 2t - t^2 = 0 \implies t(2 - t) = 0 $$
+            <p>Les valeurs de $t$ pour lesquelles le champ $\vec{V}(M)$ est antisymétrique sont donc :</p>
+            $$ t=0 \text{ et } t=2 $$
+        </section>
+        <section>
+            <h3>3) Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur</h3>
+            <p><strong>Concept :</strong> Un champ de vecteurs antisymétrique $\vec{V}(M)$ définit un torseur. Les éléments de réduction en un point A sont sa résultante $\vec{R}$ (constante) et son moment en ce point $\vec{M}_A = \vec{V}(A)$. La formule de transport du moment est :</p>
+            $$ \vec{V}(M) = \vec{V}(A) + \vec{R} \wedge \vec{AM} $$
+            <p>Utilisons le point O comme point de réduction. $\vec{M}_O = \vec{V}(O)$.</p>
+            $$ \vec{V}(M) = \vec{V}(O) + \vec{R} \wedge \vec{OM} $$
+            <p>Soit $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$. Le produit vectoriel est :</p>
+            $$ \vec{R} \wedge \vec{OM} = (R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k} $$
+            <p>Substituons dans la formule de transport :</p>
+            $$ \vec{V}(M) = (\vec{i} + 2\vec{k}) + (R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k} $$
+            $$ = (1 + R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (2 + R_x y - R_y x)\vec{k} $$
+            <p>Comparons avec l'expression initiale de $\vec{V}(M)$:</p>
+            $$ \vec{V}(M) = (1 + 3y - tz)\vec{i} + (-3x + 2tz)\vec{j} + (2 + tx - t^2y)\vec{k} $$
+            <p>Par identification des composantes (valide pour tout x, y, z) :</p>
+            <ul>
+                <li>Comp. $\vec{i}$: $3y - tz = -R_z y + R_y z \implies R_z = -3, R_y = -t$</li>
+                <li>Comp. $\vec{j}$: $-3x + 2tz = R_z x - R_x z \implies R_z = -3, -R_x = 2t \implies R_x = -2t$</li>
+                <li>Comp. $\vec{k}$: $tx - t^2y = R_x y - R_y x \implies R_x = -t^2, -R_y = t \implies R_y = -t$</li>
+            </ul>
+            <p>La cohérence pour $R_x$ demande $-2t = -t^2 \implies t^2 - 2t = 0 \implies t(t - 2) = 0$. Ceci redonne bien $t=0$ ou $t=2$. La résultante du torseur est $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$:</p>
+            $$ \vec{R} = -2t\vec{i} - t\vec{j} - 3\vec{k} $$
+        </section>
+    </div>
+    <!-- End Page 4 (5/9) -->
 
-        <h2>1) Calculer le vecteur $\vec{V}(M)$ au point O</h2>
-        <p><strong>Concept:</strong> Évaluer un champ de vecteurs en un point consiste à substituer les coordonnées de ce point dans les composantes du champ. Le point O est l'origine, ses coordonnées sont (0, 0, 0). En substituant :</p>
-        <ul>
-            <li>$v_x(O) = 1 + 3(0) - t(0) = 1$</li>
-            <li>$v_y(O) = -3(0) + 2t(0) = 0$</li>
-            <li>$v_z(O) = 2 + t(0) - t^2(0) = 2$</li>
-        </ul>
-        <p>Le vecteur $\vec{V}(O)$ est donc :</p>
-        $$ \vec{V}(O) = 1\vec{i} + 0\vec{j} + 2\vec{k} = \vec{i} + 2\vec{k} $$
+    <div class="page-separator"></div>
 
-        <h2>2) Pour quelles valeurs de t, ce champ est antisymétrique ?</h2>
-        <p><strong>Concept:</strong> Un champ de vecteurs $\vec{V}$ est dit antisymétrique ssi il est équiprojectif. Pour tous points A et B :</p>
-        $$ \vec{V}(A) \cdot \vec{AB} = \vec{V}(B) \cdot \vec{AB} $$
-        <p>Choisissons A = O(0, 0, 0) et B = M(x, y, z). Alors $\vec{AB} = \vec{OM} = x\vec{i} + y\vec{j} + z\vec{k}$. L'équiprojectivité s'écrit :</p>
-        $$ \vec{V}(O) \cdot \vec{OM} = \vec{V}(M) \cdot \vec{OM} $$
-        <p>Calculons le membre de gauche :</p>
-        $$ \vec{V}(O) \cdot \vec{OM} = (\vec{i} + 2\vec{k}) \cdot (x\vec{i} + y\vec{j} + z\vec{k}) = 1 \cdot x + 0 \cdot y + 2 \cdot z = x + 2z $$
-        <p>Calculons le membre de droite :</p>
-        $$ \vec{V}(M) \cdot \vec{OM} = v_x x + v_y y + v_z z $$
-        $$ = (1 + 3y - tz)x + (-3x + 2tz)y + (2 + tx - t^2y)z $$
-        $$ = x + 3xy - txz - 3xy + 2tyz + 2z + txz - t^2yz $$
-        <p>Simplifions le membre de droite :</p>
-        $$ = x + 2z + (3xy - 3xy) + (-txz + txz) + (2tyz - t^2yz) $$
-        $$ = x + 2z + (2t - t^2)yz $$
-        <p>Égalons les deux membres :</p>
-        $$ x + 2z = x + 2z + (2t - t^2)yz $$
-        <p>Cette égalité doit être vraie pour tout M(x, y, z), donc :</p>
-        $$ (2t - t^2)yz = 0 \quad \forall y, z $$
-        <p>Ceci impose que le coefficient $(2t - t^2)$ soit nul :</p>
-        $$ 2t - t^2 = 0 \implies t(2 - t) = 0 $$
-        <p>Les valeurs de $t$ pour lesquelles le champ $\vec{V}(M)$ est antisymétrique sont donc :</p>
-        $$ t = 0 \text{ et } t = 2 $$
-
-        <h2>3) Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur</h2>
-        <p><strong>Concept:</strong> Un champ de vecteurs antisymétrique $\vec{V}(M)$ définit un torseur. Les éléments de réduction en un point A sont sa résultante $\vec{R}$ (constante) et son moment en ce point $\vec{M}_A = \vec{V}(A)$. La formule de transport du moment est :</p>
-        $$ \vec{V}(M) = \vec{V}(A) + \vec{R} \wedge \vec{AM} $$
-        <p>Utilisons le point O comme point de réduction. Le moment en O est $\vec{M}_O = \vec{V}(O)$. La formule devient :</p>
-        $$ \vec{V}(M) = \vec{V}(O) + \vec{R} \wedge \vec{OM} $$
-        <p>Soit $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$. Le produit vectoriel est :</p>
-        $$ \vec{R} \wedge \vec{OM} = \vec{R} \wedge (x\vec{i} + y\vec{j} + z\vec{k}) = \begin{pmatrix} R_x \\ R_y \\ R_z \end{pmatrix} \wedge \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} R_y z - R_z y \\ R_z x - R_x z \\ R_x y - R_y x \end{pmatrix} $$
-        $$ \vec{R} \wedge \vec{OM} = (R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k} $$
-        <p>Substituons dans la formule de transport :</p>
-        $$ \vec{V}(M) = (\vec{i} + 2\vec{k}) + [(R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k}] $$
-        $$ \vec{V}(M) = (1 + R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (2 + R_x y - R_y x)\vec{k} $$
-        <p>Comparons avec l'expression initiale de $\vec{V}(M)$ :</p>
-        $$ \vec{V}(M) = (1 + 3y - tz)\vec{i} + (-3x + 2tz)\vec{j} + (2 + tx - t^2y)\vec{k} $$
-        <p>Par identification des composantes (valide pour tout x, y, z) :</p>
-        <ul>
-            <li>Composante $\vec{i}$: $1 + 3y - tz = 1 + R_y z - R_z y \implies 3y - tz = -R_z y + R_y z$. En identifiant les coefficients de $y$ et $z$: $3 = -R_z \implies R_z = -3$, et $-t = R_y \implies R_y = -t$.</li>
-            <li>Composante $\vec{j}$: $-3x + 2tz = R_z x - R_x z$. En identifiant les coefficients de $x$ et $z$: $-3 = R_z$ (cohérent), et $2t = -R_x \implies R_x = -2t$.</li>
-            <li>Composante $\vec{k}$: $2 + tx - t^2y = 2 + R_x y - R_y x$. En identifiant les coefficients de $x$ et $y$: $t = -R_y$ (cohérent avec $R_y=-t$), et $-t^2 = R_x \implies R_x = -t^2$.</li>
-        </ul>
-        <p>La cohérence pour $R_x$ demande $-2t = -t^2 \implies t^2 - 2t = 0 \implies t(t-2)=0$. Ceci redonne bien les valeurs $t=0$ ou $t=2$.</p>
-        <p>La résultante du torseur est $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$:</p>
-        $$ \vec{R} = -2t\vec{i} - t\vec{j} - 3\vec{k} $$
-        <p>Le moment du torseur au point O est:</p>
+     <!-- Start Page 5 (6/9) -->
+    <div class="page-content">
+        <div class="page-number">6/9</div>
+        <p>Le moment du torseur au point O est :</p>
         $$ \vec{M}_O = \vec{V}(O) = \vec{i} + 2\vec{k} $$
         <p>Étudions les deux cas :</p>
+        <p><strong>Cas t = 0 :</strong></p>
         <ul>
-            <li><strong>Cas t = 0:</strong>
-                <ul>
-                    <li>Résultante: $\vec{R}_0 = -2(0)\vec{i} - (0)\vec{j} - 3\vec{k} = -3\vec{k}$</li>
-                    <li>Moment en O: $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$</li>
-                    <li>Éléments de réduction pour t=0 en O : $\{T_0\}_O = \{ \vec{R}_0 = -3\vec{k}; \vec{M}_{O,0} = \vec{i} + 2\vec{k} \}$</li>
-                </ul>
-            </li>
-            <li><strong>Cas t = 2:</strong>
-                <ul>
-                    <li>Résultante: $\vec{R}_2 = -2(2)\vec{i} - (2)\vec{j} - 3\vec{k} = -4\vec{i} - 2\vec{j} - 3\vec{k}$</li>
-                    <li>Moment en O: $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$ (inchangé)</li>
-                    <li>Éléments de réduction pour t=2 en O : $\{T_2\}_O = \{ \vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{O,2} = \vec{i} + 2\vec{k} \}$</li>
-                </ul>
-            </li>
+            <li>Résultante : $\vec{R}_0 = -2(0)\vec{i} - (0)\vec{j} - 3\vec{k} = -3\vec{k}$</li>
+            <li>Moment en O : $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$</li>
         </ul>
-
-        <h2>4) Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur</h2>
-        <p><strong>Concept:</strong> Tout torseur $\{ \vec{R}, \vec{M}(O) \}$ peut être décomposé de manière unique en la somme d'un couple $\{ \vec{0}, \vec{M}_{||} \}$ et d'un glisseur $\{ \vec{R}, \vec{M}_{\perp}(O) \}$.</p>
-        <p>Le moment parallèle (axial moment) est :</p>
-        $$ \vec{M}_{||} = (\vec{M}(O) \cdot \frac{\vec{R}}{\|\vec{R}\|}) \frac{\vec{R}}{\|\vec{R}\|} = \frac{\vec{M}(O) \cdot \vec{R}}{\|\vec{R}\|^2} \vec{R} $$
-        <p>Le moment orthogonal (moment du glisseur au point O) est :</p>
-        $$ \vec{M}_{\perp}(O) = \vec{M}(O) - \vec{M}_{||} $$
-
-        <ul>
-            <li><strong>Cas t = 0:</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$.
-                <ul>
-                    <li>$\vec{M}_{O,0} \cdot \vec{R}_0 = (\vec{i} + 2\vec{k}) \cdot (-3\vec{k}) = (1)(0) + (0)(0) + (2)(-3) = -6$</li>
-                    <li>$\|\vec{R}_0\|^2 = (0)^2 + (0)^2 + (-3)^2 = 9$</li>
-                    <li>$\vec{M}_{||,0} = \frac{-6}{9} (-3\vec{k}) = -\frac{2}{3} (-3\vec{k}) = 2\vec{k}$</li>
-                    <li>$\vec{M}_{\perp,0}(O) = \vec{M}_{O,0} - \vec{M}_{||,0} = (\vec{i} + 2\vec{k}) - (2\vec{k}) = \vec{i}$</li>
-                    <li><strong>Décomposition pour t = 0 :</strong>
-                        <ul>
-                            <li>Couple : $\{ \vec{0}; \vec{M}_{||,0} = 2\vec{k} \}$</li>
-                            <li>Glisseur : $\{ \vec{R}_0 = -3\vec{k}; \vec{M}_{\perp,0}(O) = \vec{i} \}_O$</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li><strong>Cas t = 2:</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$.
-                <ul>
-                    <li>$\vec{M}_{O,2} \cdot \vec{R}_2 = (\vec{i} + 2\vec{k}) \cdot (-4\vec{i} - 2\vec{j} - 3\vec{k}) = (1)(-4) + (0)(-2) + (2)(-3) = -4 - 6 = -10$</li>
-                    <li>$\|\vec{R}_2\|^2 = (-4)^2 + (-2)^2 + (-3)^2 = 16 + 4 + 9 = 29$</li>
-                    <li>$\vec{M}_{||,2} = \frac{-10}{29} \vec{R}_2 = \frac{-10}{29} (-4\vec{i} - 2\vec{j} - 3\vec{k}) = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}$</li>
-                    <li>$\vec{M}_{\perp,2}(O) = \vec{M}_{O,2} - \vec{M}_{||,2} = (\vec{i} + 2\vec{k}) - (\frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k})$</li>
-                    <li>$\vec{M}_{\perp,2}(O) = (1 - \frac{40}{29})\vec{i} - \frac{20}{29}\vec{j} + (2 - \frac{30}{29})\vec{k} = (\frac{29-40}{29})\vec{i} - \frac{20}{29}\vec{j} + (\frac{58-30}{29})\vec{k}$</li>
-                    <li>$\vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k}$</li>
-                    <li><strong>Décomposition pour t = 2 :</strong>
-                         <ul>
-                            <li>Couple : $\{ \vec{0}; \vec{M}_{||,2} = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k} \}$</li>
-                            <li>Glisseur : $\{ \vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k} \}_O$</li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
+        <p>Éléments de réduction pour t=0 en O :</p>
+        $$ \{T_0\}_O = \{\vec{R}_0 = -3\vec{k}; \vec{M}_{O,0} = \vec{i} + 2\vec{k}\} $$
+        <p><strong>Cas t = 2 :</strong></p>
+         <ul>
+            <li>Résultante : $\vec{R}_2 = -2(2)\vec{i} - (2)\vec{j} - 3\vec{k} = -4\vec{i} - 2\vec{j} - 3\vec{k}$</li>
+            <li>Moment en O : $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$ (inchangé)</li>
         </ul>
+        <p>Éléments de réduction pour t=2 en O :</p>
+        $$ \{T_2\}_O = \{\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{O,2} = \vec{i} + 2\vec{k}\} $$
+        <section>
+            <h3>4) Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur</h3>
+            <p><strong>Concept :</strong> Tout torseur $\{\vec{R}, \vec{M}(O)\}$ peut être décomposé de manière unique en la somme d'un couple $\{0, \vec{M}_{\|}\}$ et d'un glisseur $\{\vec{R}, \vec{M}_{\perp}(O)\}$.</p>
+            $$ \vec{M}_{\|} = \frac{\vec{M}(O) \cdot \vec{R}}{\|\vec{R}\|^2} \vec{R} \quad \text{(Moment parallèle)} $$
+            $$ \vec{M}_{\perp}(O) = \vec{M}(O) - \vec{M}_{\|} \quad \text{(Moment orthogonal)} $$
+            <p><strong>Cas t = 0 :</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$.</p>
+            <p> $\vec{M}_{O,0} \cdot \vec{R}_0 = (\vec{i} + 2\vec{k}) \cdot (-3\vec{k}) = -6$ <br>
+                $\|\vec{R}_0\|^2 = (-3)^2 = 9$ <br>
+                $\vec{M}_{\|,0} = \frac{-6}{9}(-3\vec{k}) = 2\vec{k}$ <br>
+                $\vec{M}_{\perp,0}(O) = (\vec{i} + 2\vec{k}) - (2\vec{k}) = \vec{i}$ </p>
+            <p>Décomposition pour t = 0 :</p>
+            <ul>
+                <li>Couple : $\{0; \vec{M}_{\|,0} = 2\vec{k}\}$</li>
+                <li>Glisseur : $\{\vec{R}_0 = -3\vec{k}; \vec{M}_{\perp,0}(O) = \vec{i}\}_O$</li>
+            </ul>
+             <p><strong>Cas t = 2 :</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$.</p>
+             <p> $\vec{M}_{O,2} \cdot \vec{R}_2 = (\vec{i} + 2\vec{k}) \cdot (-4\vec{i} - 2\vec{j} - 3\vec{k}) = (1)(-4) + (0)(-2) + (2)(-3) = -4 - 6 = -10$ <br>
+                 $\|\vec{R}_2\|^2 = (-4)^2 + (-2)^2 + (-3)^2 = 16 + 4 + 9 = 29$ <br>
+                 $\vec{M}_{\|,2} = \frac{-10}{29}(-4\vec{i} - 2\vec{j} - 3\vec{k}) = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}$ <br>
+                 $\vec{M}_{\perp,2}(O) = (\vec{i} + 2\vec{k}) - \left(\frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}\right)$ <br>
+                 $\vec{M}_{\perp,2}(O) = \left(1 - \frac{40}{29}\right)\vec{i} - \frac{20}{29}\vec{j} + \left(2 - \frac{30}{29}\right)\vec{k}$ <br>
+                 $\vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k}$ </p>
+             <p>Décomposition pour t = 2 :</p>
+             <ul>
+                 <li>Couple : $\{0; \vec{M}_{\|,2} = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}\}$</li>
+                 <li>Glisseur : $\{\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k}\}_O$</li>
+             </ul>
+        </section>
+        <section>
+            <h3>5) Déterminer la position de l'axe central du torseur pour t=0 et t=2</h3>
+             <p><strong>Concept :</strong> L'axe central d'un torseur $T = (\vec{R}, \vec{M}_O)$ est l'ensemble des points P où le moment $\vec{M}_P$ est colinéaire à $\vec{R}$. Si $\vec{R} \ne \vec{0}$, l'axe central est une droite dirigée par $\vec{R}$. Un point P appartient à l'axe central si son vecteur position $\vec{OP}$ satisfait :</p>
+            $$ \vec{OP} = \vec{OP}_0 + \lambda \vec{R} \quad (\lambda \in \mathbb{R}) $$
+            <p>Le premier terme $\vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}_O}{\|\vec{R}\|^2}$ est le vecteur position du point $P_0$ de l'axe central le plus proche de l'origine O.</p>
+            <p><strong>Cas t = 0 :</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$, $\|\vec{R}_0\|^2 = 9$.</p>
+            <p> $\vec{R}_0 \wedge \vec{M}_{O,0} = (-3\vec{k}) \wedge (\vec{i} + 2\vec{k}) = -3(\vec{k} \wedge \vec{i}) - 6(\vec{k} \wedge \vec{k}) = -3\vec{j} - \vec{0} = -3\vec{j}$ <br>
+                $\vec{OP}_0 = \frac{-3\vec{j}}{9} = -\frac{1}{3}\vec{j}$ </p>
+            <p>Le point $P_0$ a pour coordonnées $(0, -1/3, 0)$. L'axe central pour t = 0 est la droite passant par $P_0(0, -1/3, 0)$ et de vecteur directeur $\vec{R}_0 = -3\vec{k}$. Équation paramétrique : $\vec{OP} = (0, -1/3, 0) + \lambda(0, 0, -3)$. Équations cartésiennes :</p>
+            $$ \text{Axe central (t=0) :} \quad x = 0, \quad y = -1/3 $$
+             <p><strong>Cas t = 2 :</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$, $\|\vec{R}_2\|^2 = 29$.</p>
+             <p> $\vec{R}_2 \wedge \vec{M}_{O,2} = (-4\vec{i} - 2\vec{j} - 3\vec{k}) \wedge (\vec{i} + 2\vec{k})$ <br>
+                $= -4(\vec{i} \wedge \vec{i}) - 8(\vec{i} \wedge \vec{k}) - 2(\vec{j} \wedge \vec{i}) - 4(\vec{j} \wedge \vec{k}) - 3(\vec{k} \wedge \vec{i}) - 6(\vec{k} \wedge \vec{k})$ <br>
+                $= \vec{0} - 8(-\vec{j}) - 2(-\vec{k}) - 4(\vec{i}) - 3(\vec{j}) - \vec{0} = 8\vec{j} + 2\vec{k} - 4\vec{i} - 3\vec{j} = -4\vec{i} + 5\vec{j} + 2\vec{k}$ <br>
+                $\vec{OP}_0 = \frac{-4\vec{i} + 5\vec{j} + 2\vec{k}}{29} = -\frac{4}{29}\vec{i} + \frac{5}{29}\vec{j} + \frac{2}{29}\vec{k}$ </p>
+             <p>Le point $P_0$ a pour coordonnées $(-4/29, 5/29, 2/29)$. L'axe central pour t = 2 est la droite passant par $P_0$ et de vecteur directeur $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$. Équation paramétrique : $\vec{OP} = (-\frac{4}{29}, \frac{5}{29}, \frac{2}{29}) + \lambda(-4, -2, -3)$. Équations cartésiennes (en éliminant $\lambda$) :</p>
+             $$ \text{Axe central (t=2):} \quad \frac{x + 4/29}{-4} = \frac{y - 5/29}{-2} = \frac{z - 2/29}{-3} $$
+        </section>
+    </div>
+    <!-- End Page 5 (6/9) -->
 
-        <h2>5) Déterminer la position de l'axe central du torseur pour t=0 et t=2</h2>
-        <p><strong>Concept:</strong> L'axe central d'un torseur $T = (\vec{R}, \vec{M}_O)$ est l'ensemble des points P où le moment $\vec{M}(P)$ est colinéaire à $\vec{R}$. Si $\vec{R} \neq \vec{0}$, l'axe central est une droite dirigée par $\vec{R}$. Un point $P_0$ de l'axe central (le plus proche de l'origine O) est donné par le vecteur position :</p>
-        $$ \vec{OP_0} = \frac{\vec{R} \wedge \vec{M}_O}{\|\vec{R}\|^2} $$
-        <p>L'axe central est la droite passant par $P_0$ et de direction $\vec{R}$.</p>
+    <div class="page-separator"></div>
 
-        <ul>
-            <li><strong>Cas t = 0:</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$, $\|\vec{R}_0\|^2 = 9$.
-                <ul>
-                    <li>$\vec{R}_0 \wedge \vec{M}_{O,0} = (-3\vec{k}) \wedge (\vec{i} + 2\vec{k}) = -3 (\vec{k} \wedge \vec{i}) - 6 (\vec{k} \wedge \vec{k}) = -3 (\vec{j}) - 6 (\vec{0}) = -3\vec{j}$</li>
-                    <li>$\vec{OP_0} = \frac{-3\vec{j}}{9} = -\frac{1}{3}\vec{j}$</li>
-                    <li>Le point $P_0$ a pour coordonnées $(0, -1/3, 0)$.</li>
-                    <li>L'axe central pour t = 0 est la droite passant par $P_0(0, -1/3, 0)$ et de vecteur directeur $\vec{R}_0 = -3\vec{k}$ (ou simplement $\vec{k}$).</li>
-                    <li>Équation paramétrique : $\vec{OP} = (0, -1/3, 0) + \lambda (0, 0, -3)$.</li>
-                    <li>Équations cartésiennes : $x = 0$, $y = -1/3$.</li>
-                </ul>
-            </li>
-            <li><strong>Cas t = 2:</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$, $\|\vec{R}_2\|^2 = 29$.
-                <ul>
-                    <li>$\vec{R}_2 \wedge \vec{M}_{O,2} = (-4\vec{i} - 2\vec{j} - 3\vec{k}) \wedge (\vec{i} + 2\vec{k})$</li>
-                    <li>$= -4(\vec{i} \wedge \vec{i}) - 8(\vec{i} \wedge \vec{k}) - 2(\vec{j} \wedge \vec{i}) - 4(\vec{j} \wedge \vec{k}) - 3(\vec{k} \wedge \vec{i}) - 6(\vec{k} \wedge \vec{k})$</li>
-                    <li>$= \vec{0} - 8(-\vec{j}) - 2(-\vec{k}) - 4(\vec{i}) - 3(\vec{j}) - \vec{0}$</li>
-                    <li>$= 8\vec{j} + 2\vec{k} - 4\vec{i} - 3\vec{j} = -4\vec{i} + 5\vec{j} + 2\vec{k}$</li>
-                    <li>$\vec{OP_0} = \frac{1}{29}(-4\vec{i} + 5\vec{j} + 2\vec{k})$</li>
-                    <li>Le point $P_0$ a pour coordonnées $(-4/29, 5/29, 2/29)$.</li>
-                    <li>L'axe central pour t = 2 est la droite passant par $P_0(-4/29, 5/29, 2/29)$ et de vecteur directeur $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$.</li>
-                    <li>Équation paramétrique : $\vec{OP} = (-\frac{4}{29}, \frac{5}{29}, \frac{2}{29}) + \lambda (-4, -2, -3)$.</li>
-                    <li>Équations cartésiennes (en éliminant $\lambda$) :
-                    $$ \frac{x - (-4/29)}{-4} = \frac{y - 5/29}{-2} = \frac{z - 2/29}{-3} $$
-                    $$ \frac{x + 4/29}{-4} = \frac{y - 5/29}{-2} = \frac{z - 2/29}{-3} $$
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </section>
+    <!-- Start Page 6 (7/9) -->
+    <div class="page-content">
+        <div class="page-number">7/9</div>
+         <!-- Content from Solution 04 calculation section moved here -->
+         <section>
+             <h4>Calculs préliminaires pour Solution 04 (axe central)</h4>
+             <p><strong>Concept :</strong> L'axe central ($\Delta$) est l'ensemble des points $P(x, y, z)$ tels que le moment $\vec{M}(P)$ est colinéaire à la résultante $\vec{R}$. Un point P appartient à ($\Delta$) si $\vec{OP} = \vec{OP}_0 + \lambda \vec{R}$, où $P_0$ est le point de l'axe le plus proche de O, donné par $\vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2}$.</p>
+             <p>Données (implicites de la Solution 04, non explicitement données sur cette page mais nécessaires pour la Q2) : $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$, $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$.</p>
+             <p>Calculons $\vec{R} \wedge \vec{M}(O)$:</p>
+             $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \wedge \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} = \begin{pmatrix} (6)(-6) - (4)(3) \\ (4)(6) - (10)(-6) \\ (10)(3) - (6)(6) \end{pmatrix} = \begin{pmatrix} -36 - 12 \\ 24 + 60 \\ 30 - 36 \end{pmatrix} = \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} $$
+             <p>Calculons $\|\vec{R}\|^2$:</p>
+             $$ \|\vec{R}\|^2 = 10^2 + 6^2 + 4^2 = 100 + 36 + 16 = 152 $$
+             <p>Le vecteur position du point $P_0$ est :</p>
+             $$ \vec{OP}_0 = \frac{1}{152} \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} = \begin{pmatrix} -48/152 \\ 84/152 \\ -6/152 \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} $$
+             <p>L'équation paramétrique de l'axe central ($\Delta$) est :</p>
+             $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} + \lambda \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad (\lambda \in \mathbb{R}) $$
+        </section>
 
-    <section>
-        <h1>Solution 04</h1>
+        <h2>Solution 04</h2>
+        <section>
+            <h3>1) Pour quelle condition le moment d'un torseur [T] est constant le long d'une droite ?</h3>
+            <p>Soit $[T] = \{\vec{R}, \vec{M}(A)\}$ un torseur défini par sa résultante $\vec{R}$ et son moment $\vec{M}(A)$ en un point A. Soit (D) une droite passant par un point A et de vecteur directeur $\vec{u}$. Un point P quelconque sur la droite (D) peut s'écrire $P = A + t\vec{u}$, où $t \in \mathbb{R}$.</p>
+            <p>Le moment du torseur au point P est donné par la formule de Varignon :</p>
+            $$ \vec{M}(P) = \vec{M}(A) + \vec{PA} \wedge \vec{R} $$
+            <p>Comme $\vec{PA} = A - P = A - (A + t\vec{u}) = -t\vec{u}$, on a :</p>
+            $$ \vec{M}(P) = \vec{M}(A) + (-t\vec{u}) \wedge \vec{R} = \vec{M}(A) - t(\vec{u} \wedge \vec{R}) $$
+            <p>Pour que le moment $\vec{M}(P)$ soit constant le long de la droite (D), il faut qu'il soit indépendant du paramètre $t$. Cela signifie que le terme dépendant de $t$ doit être nul :</p>
+            $$ -t(\vec{u} \wedge \vec{R}) = \vec{0} \quad \text{pour tout } t $$
+            <p>Ceci est vrai si et seulement si :</p>
+            $$ \vec{u} \wedge \vec{R} = \vec{0} $$
+            <p>Cette condition signifie que le vecteur directeur $\vec{u}$ de la droite est colinéaire à la résultante $\vec{R}$ du torseur (ou que $\vec{R} = \vec{0}$, auquel cas le torseur est un couple et son moment est constant partout).</p>
+            <p><strong>Conclusion :</strong> Le moment d'un torseur est constant le long d'une droite si et seulement si cette droite est parallèle à la résultante $\vec{R}$ du torseur (ou si $\vec{R} = \vec{0}$). Les droites parallèles à la résultante sont appelées les lignes de champ du moment vectoriel. L'axe central est un cas particulier de ces lignes.</p>
+        </section>
+        <section>
+            <h3>2) Déterminer le point I où l'axe central ($\Delta$) rencontre le plan (O, $\vec{k}$, $\vec{i}$)</h3>
+             <p>Données : $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$, $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$. Le plan $(O, \vec{k}, \vec{i})$ est le plan d'équation $y=0$ (plan xz).</p>
+             <p>Le point d'intersection $I(x_I, y_I, z_I)$ de l'axe ($\Delta$) avec le plan $y = 0$ doit satisfaire les équations de l'axe et l'équation du plan. Donc, $y_I = 0$. En utilisant l'équation paramétrique pour $y$ (dérivée ci-dessus) :</p>
+             $$ y_I = \frac{21}{38} + 6\lambda = 0 $$
+             $$ 6\lambda = -\frac{21}{38} \implies \lambda = -\frac{21}{38 \times 6} = -\frac{7}{38 \times 2} = -\frac{7}{76} $$
+             <p>Maintenant, substituons cette valeur de $\lambda$ dans les équations pour $x$ et $z$ pour trouver les coordonnées $x_I$ et $z_I$ du point I:</p>
+             $$ x_I = -\frac{6}{19} + 10\lambda = -\frac{6}{19} + 10\left(-\frac{7}{76}\right) = -\frac{6}{19} - \frac{70}{76} $$
+             $$ x_I = -\frac{6 \times 4}{19 \times 4} - \frac{70}{76} = -\frac{24}{76} - \frac{70}{76} = -\frac{94}{76} = -\frac{47}{38} $$
+             $$ z_I = -\frac{3}{76} + 4\lambda = -\frac{3}{76} + 4\left(-\frac{7}{76}\right) = -\frac{3}{76} - \frac{28}{76} = -\frac{31}{76} $$
+             <p>Le point I où l'axe central rencontre le plan $(O, \vec{k}, \vec{i})$ (plan $y=0$) a pour coordonnées :</p>
+             $$ I\left(-\frac{47}{38}, 0, -\frac{31}{76}\right) $$
+        </section>
+    </div>
+    <!-- End Page 6 (7/9) -->
 
-        <h2>1) Pour quelle condition le moment d'un torseur [T] est constant le long d'une droite?</h2>
-        <p>Soit $[T] = \{ \vec{R}, \vec{M}(A) \}$ un torseur défini par sa résultante $\vec{R}$ et son moment $\vec{M}(A)$ en un point A. Soit $(D)$ une droite passant par un point A et de vecteur directeur $\vec{u}$. Un point P quelconque sur la droite $(D)$ peut s'écrire $P = A + t\vec{u}$, où $t \in \mathbb{R}$.</p>
-        <p>Le moment du torseur au point P est donné par la formule de Varignon (formule de transport du moment) :</p>
-        $$ \vec{M}(P) = \vec{M}(A) + \vec{PA} \wedge \vec{R} $$
-        <p>Comme $\vec{PA} = A - P = A - (A + t\vec{u}) = -t\vec{u}$, on a :</p>
-        $$ \vec{M}(P) = \vec{M}(A) + (-t\vec{u}) \wedge \vec{R} = \vec{M}(A) - t(\vec{u} \wedge \vec{R}) $$
-        <p>Pour que le moment $\vec{M}(P)$ soit constant le long de la droite $(D)$, il faut qu'il soit indépendant du paramètre $t$. Cela signifie que le terme dépendant de $t$ doit être nul :</p>
-        $$ -t(\vec{u} \wedge \vec{R}) = \vec{0} \quad \text{pour tout } t $$
-        <p>Ceci est vrai si et seulement si :</p>
-        $$ \vec{u} \wedge \vec{R} = \vec{0} $$
-        <p>Cette condition signifie que le vecteur directeur $\vec{u}$ de la droite est colinéaire à la résultante $\vec{R}$ du torseur (ou que $\vec{R} = \vec{0}$, auquel cas le torseur est un couple et son moment est constant partout).</p>
-        <p><strong>Conclusion:</strong> Le moment d'un torseur est constant le long d'une droite si et seulement si cette droite est parallèle à la résultante $\vec{R}$ du torseur (ou si $\vec{R} = \vec{0}$). Les droites parallèles à la résultante sont appelées les lignes de champ du moment vectoriel. L'axe central est un cas particulier de ces lignes.</p>
+    <div class="page-separator"></div>
 
-        <h2>2) Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$</h2>
-        <p>Données : $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$, $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$. Le plan $(O, \vec{k}, \vec{i})$ est le plan d'équation $y = 0$ (plan xz).</p>
-        <p><strong>Concept:</strong> L'axe central $(\Delta)$ est l'ensemble des points P$(x, y, z)$ tels que le moment $\vec{M}(P)$ est colinéaire à la résultante $\vec{R}$. Un point P appartient à $(\Delta)$ si $\vec{OP} = \vec{OP_0} + \lambda \vec{R}$, où $P_0$ est le point de l'axe le plus proche de O, donné par</p>
-        $$ \vec{OP_0} = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
-        <p>Calculons $\|\vec{R}\|^2$ :</p>
-        $$ \|\vec{R}\|^2 = 10^2 + 6^2 + 4^2 = 100 + 36 + 16 = 152 $$
-        <p>Calculons $\vec{R} \wedge \vec{M}(O)$ :</p>
-        $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \wedge \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} = \begin{pmatrix} (6)(-6) - (4)(3) \\ (4)(6) - (10)(-6) \\ (10)(3) - (6)(6) \end{pmatrix} = \begin{pmatrix} -36 - 12 \\ 24 + 60 \\ 30 - 36 \end{pmatrix} = \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} $$
-        <p>Le vecteur position du point $P_0$ est :</p>
-        $$ \vec{OP_0} = \frac{1}{152} \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} = \begin{pmatrix} -48/152 \\ 84/152 \\ -6/152 \end{pmatrix} = \begin{pmatrix} -12/38 \\ 21/38 \\ -3/76 \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} $$
-        <p>L'équation paramétrique de l'axe central $(\Delta)$ est :</p>
-        $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} + \lambda \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad (\lambda \in \mathbb{R}) $$
-        <p>Le point d'intersection $I(x_I, y_I, z_I)$ de l'axe $(\Delta)$ avec le plan $y = 0$ doit satisfaire les équations de l'axe et l'équation du plan. Donc, $y_I = 0$. En utilisant l'équation paramétrique pour $y$:</p>
-        $$ y_I = 0 = \frac{21}{38} + 6\lambda $$
-        $$ 6\lambda = -\frac{21}{38} \implies \lambda = -\frac{21}{6 \times 38} = -\frac{7 \times 3}{2 \times 3 \times 38} = -\frac{7}{76} $$
-        <p>Maintenant, substituons cette valeur de $\lambda$ dans les équations pour $x$ et $z$ pour trouver les coordonnées $x_I$ et $z_I$ du point I:</p>
-        $$ x_I = -\frac{6}{19} + 10 \lambda = -\frac{6}{19} + 10 \left(-\frac{7}{76}\right) = -\frac{6}{19} - \frac{70}{76} $$
-        $$ x_I = -\frac{6 \times 4}{19 \times 4} - \frac{70}{76} = -\frac{24}{76} - \frac{70}{76} = -\frac{94}{76} = -\frac{47}{38} $$
-        $$ z_I = -\frac{3}{76} + 4 \lambda = -\frac{3}{76} + 4 \left(-\frac{7}{76}\right) = -\frac{3}{76} - \frac{28}{76} = -\frac{31}{76} $$
-        <p>Le point I où l'axe central rencontre le plan $y = 0$ a pour coordonnées :</p>
-        $$ I = \left(-\frac{47}{38}, 0, -\frac{31}{76}\right) $$
-    </section>
-
-    <section>
-        <h1>Solution 05</h1>
+    <!-- Start Page 7 (8/9) -->
+    <div class="page-content">
+        <div class="page-number">8/9</div>
+        <h2>Solution 05</h2>
         <p>On considère trois glisseurs $[G_1], [G_2], [G_3]$ définis par :</p>
         <ul>
-            <li>$\vec{V}_1 = (1, 0, -1)$ en $A(1, 0, 0)$</li>
-            <li>$\vec{V}_2 = (1, 2, 2)$ en $B(0, 1, 0)$</li>
+            <li>$\vec{V}_1 = (1,0,-1)$ en $A(1,0,0)$</li>
+            <li>$\vec{V}_2 = (1,2,2)$ en $B(0,1,0)$</li>
             <li>$\vec{V}_3 = (\lambda, \mu, \nu)$ en $C(0, 0, 1)$</li>
         </ul>
-        <p>Le torseur $[T]$ est la somme de ces trois glisseurs : $[T] = [G_1] + [G_2] + [G_3]$. Calculons les éléments de réduction de $[T]$ en O(0, 0, 0).</p>
-
-        <h3>Résultante $\vec{R}$</h3>
+        <p>Le torseur $[T]$ est la somme de ces trois glisseurs : $[T] = [G_1] + [G_2] + [G_3]$. Calculons les éléments de réduction de $[T]$ en $O(0,0,0)$.</p>
+        <h4>Résultante $\vec{R}$</h4>
         $$ \vec{R} = \vec{V}_1 + \vec{V}_2 + \vec{V}_3 = (1 + 1 + \lambda, 0 + 2 + \mu, -1 + 2 + \nu) $$
         $$ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu) $$
-
-        <h3>Moment $\vec{M}(O)$</h3>
+        <h4>Moment $\vec{M}(O)$</h4>
         $$ \vec{M}(O) = \vec{M}_1(O) + \vec{M}_2(O) + \vec{M}_3(O) $$
-        <p>où $\vec{M}_i(O) = \vec{OP}_i \wedge \vec{V}_i$ est le moment du glisseur $[G_i]$ en O (avec $P_1=A, P_2=B, P_3=C$).</p>
-        $$ \vec{M}_1(O) = \vec{OA} \wedge \vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} = \begin{pmatrix} (0)(-1) - (0)(0) \\ (0)(1) - (1)(-1) \\ (1)(0) - (0)(1) \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} = \vec{j} $$
-        $$ \vec{M}_2(O) = \vec{OB} \wedge \vec{V}_2 = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix} = \begin{pmatrix} (1)(2) - (0)(2) \\ (0)(1) - (0)(2) \\ (0)(2) - (1)(1) \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -1 \end{pmatrix} = 2\vec{i} - \vec{k} $$
-        $$ \vec{M}_3(O) = \vec{OC} \wedge \vec{V}_3 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \wedge \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix} = \begin{pmatrix} (0)(\nu) - (1)(\mu) \\ (1)(\lambda) - (0)(\nu) \\ (0)(\mu) - (0)(\lambda) \end{pmatrix} = \begin{pmatrix} -\mu \\ \lambda \\ 0 \end{pmatrix} = -\mu\vec{i} + \lambda\vec{j} $$
+        <p>où $\vec{M}_i(O)$ est le moment du glisseur $[G_i]$ en O.</p>
+        $$ \vec{M}_1(O) = \vec{OA} \wedge \vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} = \begin{pmatrix} (0)(-1)-(0)(0) \\ (0)(1)-(1)(-1) \\ (1)(0)-(0)(1) \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} = \vec{j} $$
+        $$ \vec{M}_2(O) = \vec{OB} \wedge \vec{V}_2 = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix} = \begin{pmatrix} (1)(2)-(0)(2) \\ (0)(1)-(0)(2) \\ (0)(2)-(1)(1) \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -1 \end{pmatrix} = 2\vec{i} - \vec{k} $$
+        $$ \vec{M}_3(O) = \vec{OC} \wedge \vec{V}_3 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \wedge \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix} = \begin{pmatrix} (0)(\nu)-(1)(\mu) \\ (1)(\lambda)-(0)(\nu) \\ (0)(\mu)-(0)(\lambda) \end{pmatrix} = \begin{pmatrix} -\mu \\ \lambda \\ 0 \end{pmatrix} = -\mu\vec{i} + \lambda\vec{j} $$
         <p>Donc, le moment total en O est :</p>
-        $$ \vec{M}(O) = (\vec{j}) + (2\vec{i} - \vec{k}) + (-\mu\vec{i} + \lambda\vec{j}) $$
-        $$ \vec{M}(O) = (2 - \mu)\vec{i} + (1 + \lambda)\vec{j} + (-1)\vec{k} = (2 - \mu, 1 + \lambda, -1) $$
-        <p>Les éléments de réduction de [T] en O sont :</p>
-        $$ [T]_O = \{ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu), \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) \} $$
+        $$ \vec{M}(O) = (0 + 2 - \mu)\vec{i} + (1 + 0 + \lambda)\vec{j} + (0 - 1 + 0)\vec{k} $$
+        $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) $$
+        <p>Les éléments de réduction de $[T]$ en O sont :</p>
+        $$ [T]_O = \{\vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu), \vec{M}(O) = (2 - \mu, 1 + \lambda, -1)\} $$
+        <section>
+            <h3>1) Déterminer $(\lambda, \mu, \nu)$ pour que [T] soit un couple et trouver son moment ?</h3>
+            <p><strong>Condition :</strong> Le torseur [T] est un couple si sa résultante est nulle ($\vec{R} = \vec{0}$) et son moment est non nul ($\vec{M}(O) \ne \vec{0}$).</p>
+            $$ \vec{R} = \vec{0} \implies (2 + \lambda, 2 + \mu, 1 + \nu) = (0,0,0) $$
+            <p>Cela donne le système :</p>
+            $$ \begin{cases} 2 + \lambda = 0 \implies \lambda = -2 \\ 2 + \mu = 0 \implies \mu = -2 \\ 1 + \nu = 0 \implies \nu = -1 \end{cases} $$
+            <p>Donc, $(\lambda, \mu, \nu) = (-2, -2, -1)$. Vérifions que le moment n'est pas nul pour ces valeurs :</p>
+            $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - (-2), 1 + (-2), -1) $$
+            $$ = (4, -1, -1) $$
+            <p>Comme $\vec{M}(O) = (4, -1, -1) \ne \vec{0}$, le torseur [T] est bien un couple. Le moment du couple est constant et égal à $\vec{M}(O)$.</p>
+            <p><strong>Résultat :</strong> Pour que [T] soit un couple, il faut que $(\lambda, \mu, \nu) = (-2, -2, -1)$. Le moment du couple est $\vec{M} = (4, -1, -1)$.</p>
+        </section>
+        <section>
+            <h3>2) Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que [T] soit un glisseur ?</h3>
+            <p><strong>Condition :</strong> Le torseur [T] est un glisseur si son automoment (invariant scalaire) est nul ($I = \vec{R} \cdot \vec{M}(O) = 0$) et sa résultante est non nulle ($\vec{R} \ne \vec{0}$).</p>
+            $$ I = \vec{R} \cdot \vec{M}(O) = (2 + \lambda, 2 + \mu, 1 + \nu) \cdot (2 - \mu, 1 + \lambda, -1) = 0 $$
+            <p>Développons le produit scalaire :</p>
+            $$ (2 + \lambda)(2 - \mu) + (2 + \mu)(1 + \lambda) + (1 + \nu)(-1) = 0 $$
+            $$ (4 - 2\mu + 2\lambda - \lambda\mu) + (2 + 2\lambda + \mu + \lambda\mu) + (-1 - \nu) = 0 $$
+            <p>Regroupons les termes :</p>
+            $$ (4 + 2 - 1) + (2\lambda + 2\lambda) + (-2\mu + \mu) + (-\lambda\mu + \lambda\mu) - \nu = 0 $$
+            $$ 5 + 4\lambda - \mu - \nu = 0 $$
+            <p>La relation liant $\lambda, \mu, \nu$ est $4\lambda - \mu - \nu + 5 = 0$. Il faut aussi s'assurer que $\vec{R} \ne \vec{0}$, c'est-à-dire que $(\lambda, \mu, \nu) \ne (-2, -2, -1)$. La condition $4\lambda - \mu - \nu + 5 = 0$ pour $(\lambda, \mu, \nu) = (-2, -2, -1)$ donne $4(-2) - (-2) - (-1) + 5 = -8 + 2 + 1 + 5 = 0$. Donc, le cas du couple satisfait aussi cette relation. Pour que ce soit spécifiquement un glisseur, il faut $\vec{R} \ne \vec{0}$.</p>
+            <p><strong>Résultat :</strong> La relation est $4\lambda - \mu - \nu + 5 = 0$ avec la condition supplémentaire que $(\lambda, \mu, \nu) \ne (-2, -2, -1)$.</p>
+        </section>
+        <section>
+             <h3>3) Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de [T].</h3>
+             <p>Calculons les éléments de réduction pour $(\lambda, \mu, \nu) = (-2, 0, -1)$:</p>
+             $$ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu) = (2 - 2, 2 + 0, 1 - 1) = (0, 2, 0) = 2\vec{j} $$
+             $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - 0, 1 - 2, -1) = (2, -1, -1) $$
+             <p>Vérifions l'automoment :</p>
+             $$ I = \vec{R} \cdot \vec{M}(O) = (0, 2, 0) \cdot (2, -1, -1) = 0(2) + 2(-1) + 0(-1) = -2 $$
+             <p>Comme $I \ne 0$ et $\vec{R} \ne \vec{0}$, le torseur est un torseur général (non glisseur, non couple).</p>
+             <p>L'axe central ($\Delta$) est la droite passant par le point $P_0$ le plus proche de O et dirigée par $\vec{R}$.</p>
+             $$ \vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
+             $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 0 \\ 2 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix} = \begin{pmatrix} (2)(-1) - (0)(-1) \\ (0)(2) - (0)(-1) \\ (0)(-1) - (2)(2) \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} $$
+        </section>
+    </div>
+    <!-- End Page 7 (8/9) -->
 
-        <h2>1) Déterminer $(\lambda, \mu, \nu)$ pour que [T] soit un couple et trouver son moment ?</h2>
-        <p><strong>Condition:</strong> Le torseur [T] est un couple si sa résultante est nulle ($\vec{R} = \vec{0}$) et son moment est non nul ($\vec{M}(O) \neq \vec{0}$).</p>
-        $$ \vec{R} = \vec{0} \implies (2 + \lambda, 2 + \mu, 1 + \nu) = (0, 0, 0) $$
-        <p>Cela donne le système :</p>
-        $$ \begin{cases} 2 + \lambda = 0 \implies \lambda = -2 \\ 2 + \mu = 0 \implies \mu = -2 \\ 1 + \nu = 0 \implies \nu = -1 \end{cases} $$
-        <p>Donc, $(\lambda, \mu, \nu) = (-2, -2, -1)$. Vérifions que le moment n'est pas nul pour ces valeurs :</p>
-        $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - (-2), 1 + (-2), -1) = (4, -1, -1) $$
-        <p>Comme $\vec{M}(O) = (4, -1, -1) \neq \vec{0}$, le torseur [T] est bien un couple.</p>
-        <p><strong>Résultat:</strong> Pour que [T] soit un couple, il faut que $(\lambda, \mu, \nu) = (-2, -2, -1)$. Le moment du couple est constant et égal à $\vec{M} = (4, -1, -1)$.</p>
+    <div class="page-separator"></div>
 
-        <h2>2) Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que [T] soit un glisseur ?</h2>
-        <p><strong>Condition:</strong> Le torseur [T] est un glisseur si son automoment (invariant scalaire) est nul ($I = \vec{R} \cdot \vec{M}(O) = 0$) et sa résultante est non nulle ($\vec{R} \neq \vec{0}$).</p>
-        $$ I = \vec{R} \cdot \vec{M}(O) = (2 + \lambda, 2 + \mu, 1 + \nu) \cdot (2 - \mu, 1 + \lambda, -1) = 0 $$
-        <p>Développons le produit scalaire :</p>
-        $$ (2 + \lambda)(2 - \mu) + (2 + \mu)(1 + \lambda) + (1 + \nu)(-1) = 0 $$
-        $$ (4 - 2\mu + 2\lambda - \lambda\mu) + (2 + 2\lambda + \mu + \lambda\mu) + (-1 - \nu) = 0 $$
-        <p>Regroupons les termes :</p>
-        $$ (4 + 2 - 1) + (2\lambda + 2\lambda) + (-2\mu + \mu) + (-\lambda\mu + \lambda\mu) - \nu = 0 $$
-        $$ 5 + 4\lambda - \mu - \nu = 0 $$
-        <p>La relation liant $\lambda, \mu, \nu$ est $4\lambda - \mu - \nu + 5 = 0$. Il faut aussi s'assurer que $\vec{R} \neq \vec{0}$, c'est-à-dire que $(\lambda, \mu, \nu) \neq (-2, -2, -1)$. (Note: la condition $4\lambda - \mu - \nu + 5 = 0$ est satisfaite pour le cas du couple $(\lambda, \mu, \nu) = (-2, -2, -1)$ car $4(-2) - (-2) - (-1) + 5 = -8 + 2 + 1 + 5 = 0$).</p>
-        <p><strong>Résultat:</strong> La relation est $4\lambda - \mu - \nu + 5 = 0$ avec la condition supplémentaire que $(\lambda, \mu, \nu) \neq (-2, -2, -1)$.</p>
-
-        <h2>3) Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de [T].</h2>
-        <p>Calculons les éléments de réduction pour $(\lambda, \mu, \nu) = (-2, 0, -1)$ :</p>
-        $$ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu) = (2 - 2, 2 + 0, 1 - 1) = (0, 2, 0) = 2\vec{j} $$
-        $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - 0, 1 - 2, -1) = (2, -1, -1) $$
-        <p>Vérifions l'automoment :</p>
-        $$ I = \vec{R} \cdot \vec{M}(O) = (0, 2, 0) \cdot (2, -1, -1) = 0(2) + 2(-1) + 0(-1) = -2 $$
-        <p>Comme $I = -2 \neq 0$ et $\vec{R} = 2\vec{j} \neq \vec{0}$, le torseur est un torseur général (non glisseur, non couple).</p>
-        <p>L'axe central $(\Delta)$ est la droite passant par le point $P_0$ le plus proche de O et dirigée par $\vec{R}$.</p>
-        $$ \vec{OP_0} = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
-        <p>Calculons $\|\vec{R}\|^2 = 0^2 + 2^2 + 0^2 = 4$.</p>
-        <p>Calculons $\vec{R} \wedge \vec{M}(O)$ :</p>
-        $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 0 \\ 2 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix} = \begin{pmatrix} (2)(-1) - (0)(-1) \\ (0)(2) - (0)(-1) \\ (0)(-1) - (2)(2) \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} $$
-        $$ \vec{OP_0} = \frac{1}{4} \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} = \begin{pmatrix} -1/2 \\ 0 \\ -1 \end{pmatrix} $$
-        <p>Le point $P_0$ a pour coordonnées $(-1/2, 0, -1)$. L'axe central $(\Delta)$ passe par $P_0(-1/2, 0, -1)$ et a pour vecteur directeur $\vec{R} = (0, 2, 0)$ (ou simplement $\vec{j} = (0, 1, 0)$).</p>
-        <p>L'équation paramétrique de l'axe central est :</p>
+    <!-- Start Page 8 (9/9) -->
+    <div class="page-content">
+        <div class="page-number">9/9</div>
+        <p> $\|\vec{R}\|^2 = 0^2 + 2^2 + 0^2 = 4$ </p>
+        $$ \vec{OP}_0 = \frac{1}{4} \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} = \begin{pmatrix} -1/2 \\ 0 \\ -1 \end{pmatrix} $$
+        <p>Le point $P_0$ a pour coordonnées $(-1/2, 0, -1)$. L'axe central ($\Delta$) passe par $P_0(-1/2, 0, -1)$ et a pour vecteur directeur $\vec{R} = (0, 2, 0)$ (ou simplement $\vec{j} = (0, 1, 0)$). L'équation paramétrique de l'axe central est :</p>
         $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -1/2 \\ 0 \\ -1 \end{pmatrix} + t \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \quad (t \in \mathbb{R}) $$
         <p>Les équations cartésiennes sont obtenues en éliminant $t$ :</p>
         $$ \begin{cases} x = -1/2 \\ z = -1 \end{cases} $$
         <p>(La variable $y$ peut prendre n'importe quelle valeur).</p>
-        <p><strong>Résultat:</strong> Les équations de l'axe central de [T] sont $x = -1/2$ et $z = -1$.</p>
+        <p><strong>Résultat :</strong> Les équations de l'axe central de [T] sont $x = -1/2$ et $z = -1$.</p>
+        <section>
+            <h3>4) Que peut-on dire de la direction de l'axe central ?</h3>
+            <p><strong>Concept :</strong> La direction de l'axe central d'un torseur est toujours donnée par le vecteur résultante $\vec{R}$, à condition que $\vec{R} \ne \vec{0}$.</p>
+            <p>Dans le cas de la question 3, la résultante est $\vec{R} = (0, 2, 0) = 2\vec{j}$. La direction de l'axe central est donc celle du vecteur $\vec{j}$.</p>
+            <p><strong>Résultat :</strong> La direction de l'axe central est celle de l'axe des ordonnées (l'axe Oy). Ceci est cohérent avec les équations cartésiennes trouvées ($x = -1/2, z = -1$), qui décrivent une droite parallèle à l'axe Oy.</p>
+        </section>
+    </div>
+    <!-- End Page 8 (9/9) -->
 
-        <h2>4) Que peut-on dire de la direction de l'axe central ?</h2>
-        <p><strong>Concept:</strong> La direction de l'axe central d'un torseur est toujours donnée par le vecteur résultante $\vec{R}$, à condition que $\vec{R} \neq \vec{0}$.</p>
-        <p>Dans le cas de la question 3, la résultante est $\vec{R} = (0, 2, 0) = 2\vec{j}$. La direction de l'axe central est donc celle du vecteur $\vec{j}$.</p>
-        <p><strong>Résultat:</strong> La direction de l'axe central est celle de l'axe des ordonnées (l'axe Oy). Ceci est cohérent avec les équations cartésiennes trouvées ($x = -1/2, z = -1$), qui décrivent une droite parallèle à l'axe Oy.</p>
-    </section>
+
     <!-- PDF Content End -->
 
     <script>
         function resizeIframeToFitContent(iframe) {
             console.log('Attempting to resize iframe:', iframe.id);
             try {
+                // Check if contentWindow and document are accessible
                 if (!iframe.contentWindow || !iframe.contentWindow.document || !iframe.contentWindow.document.body) {
                     console.warn('Iframe content window or document not accessible. Possible loading or cross-origin issue.');
-                    return; 
+                    // Fallback height if content not accessible
+                    iframe.style.height = '100px';
+                    return; // Stop if not accessible
                 }
+
                 const iframeDoc = iframe.contentWindow.document;
                 const iframeBody = iframeDoc.body;
                 const iframeHtml = iframeDoc.documentElement;
+
+                // Reset height to allow accurate scrollHeight measurement
                 iframe.style.height = 'auto';
+
+                // Calculate height using both body and documentElement scrollHeight
+                // and take the maximum. Add a small buffer (e.g., 5px) sometimes helps.
                 const bodyHeight = iframeBody.scrollHeight;
                 const docHeight = iframeHtml.scrollHeight;
-                const contentHeight = Math.max(bodyHeight, docHeight) + 5; 
+                const contentHeight = Math.max(bodyHeight, docHeight) + 10; // Increased buffer slightly
+
                 console.log(`Measured heights - body: ${bodyHeight}px, documentElement: ${docHeight}px. Setting iframe height to: ${contentHeight}px`);
-                if (contentHeight > 10) { 
+
+                if (contentHeight > 20) { // Only set if height seems valid (greater than a small threshold)
                      iframe.style.height = contentHeight + 'px';
                      console.log('Iframe height set.');
                 } else {
                      console.warn('Calculated content height is zero or very small. Not setting height.');
+                     // Optional: Set a minimum default height as fallback if needed
+                     iframe.style.height = '100px';
                 }
+
             } catch (e) {
                 console.error('ERROR resizing iframe:', e);
                 console.error('This often indicates a Same-Origin Policy violation. Ensure the parent page and iframe src are served from the exact same domain, protocol, and port.');
+                // Provide fallback or visual indication, e.g.:
+                iframe.style.border = '2px solid red';
+                iframe.style.height = '100px'; // Set a fallback height
             }
         }
 
@@ -567,25 +607,37 @@ body {
 
         if (myIframe) {
             console.log('Found iframe with ID:', myIframe.id);
+
+            // --- Event Listener for Load ---
             myIframe.addEventListener('load', function() {
                 console.log('Iframe detected LOAD event.');
-                setTimeout(() => resizeIframeToFitContent(this), 150); 
+                // Use setTimeout to allow content potentially rendering *after* load event
+                setTimeout(() => resizeIframeToFitContent(this), 150); // Delay slightly
+                // Add a second check slightly later in case of slow rendering elements
                 setTimeout(() => resizeIframeToFitContent(this), 500);
+                 // Add a third check even later for complex pages
                 setTimeout(() => resizeIframeToFitContent(this), 1500);
             });
+
+            // --- Event Listener for Window Resize ---
             let resizeTimer;
             window.addEventListener('resize', () => {
                 console.log('Window resize detected.');
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
-                    if (myIframe) { 
+                    if (myIframe) { // Ensure iframe still exists
                         resizeIframeToFitContent(myIframe);
                     }
-                }, 250); 
+                }, 250); // Debounce resize
             });
+
+            // --- Initial Check (in case already loaded) ---
+             // Check document.readyState inside the iframe more reliably
             try {
+                 // Need to check if contentWindow exists first
                 if (myIframe.contentWindow && myIframe.contentWindow.document && myIframe.contentWindow.document.readyState === 'complete') {
                     console.log('Iframe already loaded (readyState complete), attempting initial resize.');
+                    // Use setTimeout here too for consistency and timing
                     setTimeout(() => resizeIframeToFitContent(myIframe), 150);
                 } else if (myIframe.contentWindow) {
                      console.log(`Iframe not yet complete on initial script run. Current readyState: ${myIframe.contentWindow.document ? myIframe.contentWindow.document.readyState : 'document not accessible'}`);
@@ -593,8 +645,11 @@ body {
                     console.log('Iframe contentWindow not accessible on initial check (might be loading or cross-origin). Waiting for load event.')
                 }
             } catch(e) {
+                 // Catch potential cross-origin errors even during the check
                  console.warn('Initial readyState check failed, likely cross-origin before load event or iframe not fully initialized yet.', e.message);
             }
+
+
         } else {
             console.error('Iframe with ID "nav-iframe" not found in the DOM.');
         }

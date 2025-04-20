@@ -24,46 +24,46 @@
     </script>
     <style>
         html, body {
-            margin: 0; /* Remove default margins */
-            padding: 0; /* Remove default padding */
-            /* Use Computer Modern Sans font globally */
+            margin: 0;
+            padding: 0;
             font-family: "Computer Modern Sans", sans-serif;
             line-height: 1.2;
-            font-size: 16px; /* Adjust base font size if needed */
+            font-size: 16px;
         }
 
         #nav-iframe {
             width: 100%; /* Make iframe span full width */
-            height: 25vh; /* Responsive height (25% of viewport height - adjust as needed) */
+            /* Height will be set by JavaScript */
             border: none; /* Remove iframe border */
             display: block; /* Ensure it takes block layout */
             margin-bottom: 20px; /* Add some space below the iframe */
+            overflow: hidden; /* Hide potential scrollbars if calculation is slightly off */
         }
 
         .main-content {
-            max-width: 800px; /* Ensure single column on wider screens for readability */
-            margin-left: auto; /* Center the content block */
-            margin-right: auto; /* Center the content block */
-            padding: 0 20px; /* Add padding so text doesn't touch edges on narrow screens */
-            margin-top: 20px; /* Space above the content */
-            margin-bottom: 20px; /* Space below the content */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
+        /* ... (rest of your existing styles for h1, h2, p, etc.) ... */
         h1, h2, h3 {
             text-align: center;
-            font-weight: bold; /* Ensure headings are bold */
-            /* Use Computer Modern Serif Bold for headings if preferred */
+            font-weight: bold;
              font-family: "Computer Modern Serif", serif;
         }
         h2 {
-           font-size: 1.4em; /* Adjust heading size relative to body */
+           font-size: 1.4em;
         }
         p, li {
             margin-top: 0.3em;
             margin-bottom: 0.3em;
         }
         ol {
-            padding-left: 30px; /* Adjust list indentation */
+            padding-left: 30px;
         }
         .school-info {
             text-align: center;
@@ -73,18 +73,18 @@
              text-align: center;
              margin-bottom: 5px;
              font-weight: bold;
-             font-family: "Computer Modern Serif", serif; /* Use Serif Bold for this specific element */
+             font-family: "Computer Modern Serif", serif;
         }
         .title {
              text-align: center;
-             font-size: 1.8em; /* Larger title */
+             font-size: 1.8em;
              font-weight: bold;
              margin-bottom: 5px;
-             font-family: "Computer Modern Serif", serif; /* Use Serif Bold for the title */
+             font-family: "Computer Modern Serif", serif;
         }
         .year {
             text-align: center;
-            margin-bottom: 25px; /* More space after year */
+            margin-bottom: 25px;
         }
         .exercise-block {
             margin-bottom: 25px;
@@ -94,7 +94,6 @@
              margin-top: 0.5em;
              margin-bottom: 0.5em;
         }
-        /* Ensure MathJax output scales well */
         mjx-container {
              font-size: 1.0em;
         }
@@ -102,98 +101,91 @@
 </head>
 <body>
 
-    <!-- Added ID to the iframe -->
     <iframe id="nav-iframe" src="../index.html" title="Content from index.html">
         Your browser does not support iframes.
     </iframe>
 
-    <!-- Wrap main content in a div -->
     <div class="main-content">
-
+        <!-- ... (Your existing exercise content) ... -->
         <div class="school-info">High National School of Public Works Kouba Algiers</div>
         <div class="school-info">Preparatory Class in Sciences and Techniques (2nd Year)</div>
-
         <div class="series-info">SERIE N4</div>
         <div class="title">Les Torseurs</div>
         <div class="year">2024/2025</div>
-
-        <div class="exercise-block">
-            <h2>Exercice 1</h2>
-            <p>
-                Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$ liés respectivement aux points $A(1, 0, 0)$ et $B(1, 1, 0)$ et les torseurs $[G1]$ et $[G2]$ associés aux moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
-            </p>
-            <ol>
-                <li>Calculer la résultante de $[G]$ et son moment en A. En déduire la nature de $[G]$.</li>
-                <li>Déterminer l'équation cartésienne de l'axe central de $[G]$.</li>
-            </ol>
-        </div>
-
-        <div class="exercise-block">
-            <h2>Exercice 2</h2>
-            <p>
-                Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$, $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement aux points $A(0,1,2)$, $B(1,0,2)$, $C(1,2,2)$.
-            </p>
-            <ol>
-                <li>Construire le torseur $[T]$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li>
-                <li>En déduire l'auto moment.</li>
-                <li>Calculer le pas du torseur.</li>
-                <li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li>
-            </ol>
-        </div>
-
-        <div class="exercise-block">
-            <h2>Exercice 3</h2>
-            <p>
-                Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$ dont les composantes sont définies en fonction des coordonnées $(x, y, z)$ de M par :
-            </p>
-            <div class="system-eq">
-            $$
-            \left\{
-            \begin{aligned}
-            V_x &= 1 + 3y - tz \\
-            V_y &= -3x + 2tz \\
-            V_z &= 2 + tx - t^2y
-            \end{aligned}
-            \right.
-            $$
-            </div>
-            <ol>
-                <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
-                <li>Pour quelles valeurs de t, ce champ est antisymétrique ?</li>
-                <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
-                <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
-                <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
-            </ol>
-        </div>
-
-        <div class="exercise-block">
-            <h2>Exercice 4</h2>
-            <ol>
-                <li>Pour quelle condition le moment d'un torseur $[T]$ est constant le long d'une droite ?</li>
-                <li>Les éléments de réduction d'un torseur sont
-                $$ \vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad \text{et} \quad \vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} $$
-                dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$.</li>
-            </ol>
-        </div>
-
-        <div class="exercise-block">
-            <h2>Exercice 5</h2>
-            <p>
-                Dans un repère $(O,x,y,z)$, on considère les trois glisseurs définis par les vecteurs
-                $\vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$ d'origine $A(1,0,0)$,
-                $\vec{V}_2 = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ d'origine $B(0,1,0)$ et
-                $\vec{V}_3 = \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix}$ d'origine $C(0,0,1)$.
-                Soit $[T]$ la somme des trois glisseurs.
-            </p>
-            <ol>
-                <li>Déterminer $(\lambda, \mu, \nu)$ pour que $[T]$ soit un couple et trouver son moment ?</li>
-                <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que $[T]$ soit un glisseur ?</li>
-                <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de $[T]$.</li>
-                <li>Que peut-on dire de la direction de l'axe central ?</li>
-            </ol>
-        </div>
-
+        <div class="exercise-block"><h2>Exercice 1</h2><p>Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$ liés respectivement aux points $A(1, 0, 0)$ et $B(1, 1, 0)$ et les torseurs $[G1]$ et $[G2]$ associés aux moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.</p><ol><li>Calculer la résultante de $[G]$ et son moment en A. En déduire la nature de $[G]$.</li><li>Déterminer l'équation cartésienne de l'axe central de $[G]$.</li></ol></div>
+        <div class="exercise-block"><h2>Exercice 2</h2><p>Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$, $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement aux points $A(0,1,2)$, $B(1,0,2)$, $C(1,2,2)$.</p><ol><li>Construire le torseur $[T]$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li><li>En déduire l'auto moment.</li><li>Calculer le pas du torseur.</li><li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li></ol></div>
+        <div class="exercise-block"><h2>Exercice 3</h2><p>Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$ dont les composantes sont définies en fonction des coordonnées $(x, y, z)$ de M par :</p><div class="system-eq">$$
+        \left\{
+        \begin{aligned}
+        V_x &= 1 + 3y - tz \\
+        V_y &= -3x + 2tz \\
+        V_z &= 2 + tx - t^2y
+        \end{aligned}
+        \right.
+        $$</div><ol><li>Calculer le vecteur $\vec{V}(M)$ au point O.</li><li>Pour quelles valeurs de t, ce champ est antisymétrique ?</li><li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li><li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li><li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li></ol></div>
+        <div class="exercise-block"><h2>Exercice 4</h2><ol><li>Pour quelle condition le moment d'un torseur $[T]$ est constant le long d'une droite ?</li><li>Les éléments de réduction d'un torseur sont
+            $$ \vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad \text{et} \quad \vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} $$
+            dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$.</li></ol></div>
+        <div class="exercise-block"><h2>Exercice 5</h2><p>Dans un repère $(O,x,y,z)$, on considère les trois glisseurs définis par les vecteurs
+            $\vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$ d'origine $A(1,0,0)$,
+            $\vec{V}_2 = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ d'origine $B(0,1,0)$ et
+            $\vec{V}_3 = \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix}$ d'origine $C(0,0,1)$.
+            Soit $[T]$ la somme des trois glisseurs.</p><ol><li>Déterminer $(\lambda, \mu, \nu)$ pour que $[T]$ soit un couple et trouver son moment ?</li><li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que $[T]$ soit un glisseur ?</li><li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de $[T]$.</li><li>Que peut-on dire de la direction de l'axe central ?</li></ol></div>
+        <!-- ... (End of exercise content) ... -->
     </div> <!-- End of main-content div -->
+
+    <script>
+        function resizeIframeToFitContent(iframe) {
+            try {
+                // Ensure the iframe content and body are accessible
+                if (iframe.contentWindow && iframe.contentWindow.document && iframe.contentWindow.document.body) {
+                    // Reset height temporarily to accurately measure scrollHeight
+                    iframe.style.height = 'auto';
+                    // Calculate the height needed by the content
+                    const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+                    // Set the iframe height, adding a small buffer can sometimes help
+                    iframe.style.height = contentHeight + 'px';
+                } else {
+                    console.warn('Iframe content not accessible for resizing.');
+                }
+            } catch (e) {
+                console.error('Error resizing iframe (check same-origin policy):', e);
+                // Fallback or different strategy might be needed for cross-origin
+            }
+        }
+
+        // Find the iframe element
+        const myIframe = document.getElementById('nav-iframe');
+
+        if (myIframe) {
+            // Resize when the iframe content has finished loading
+            myIframe.onload = function() {
+                console.log('Iframe loaded, attempting resize...');
+                resizeIframeToFitContent(this); // 'this' refers to the iframe element
+            };
+
+            // Also resize when the main window resizes
+            // Use a debounce function if resize events fire too rapidly
+            let resizeTimer;
+            window.addEventListener('resize', () => {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => {
+                     console.log('Window resized, attempting iframe resize...');
+                     resizeIframeToFitContent(myIframe);
+                }, 150); // Adjust delay as needed (e.g., 150ms)
+            });
+
+             // Handle cases where iframe might already be loaded (e.g., from cache)
+             // Check document.readyState inside the iframe
+             if (myIframe.contentWindow && myIframe.contentWindow.document.readyState === 'complete') {
+                 console.log('Iframe already loaded, attempting initial resize...');
+                 resizeIframeToFitContent(myIframe);
+             }
+
+        } else {
+            console.error('Iframe with ID "nav-iframe" not found.');
+        }
+    </script>
 
 </body>
 </html>

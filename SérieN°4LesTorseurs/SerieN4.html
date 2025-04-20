@@ -2,36 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>SERIE N4 Les Torseurs</title>
-    <!-- Link to Computer Modern Web Font -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Les Torseurs</title>
     <script>
         MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true,
-            tags: 'ams' // Automatic equation numbering
+            processEscapes: true
           },
           svg: {
             fontCache: 'global'
           }
         };
-        </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
     </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <!-- Add the font link -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
     <style>
-        html, body {
-            margin: 0; /* Remove default margins */
-            padding: 0; /* Remove default padding */
-            /* Use Computer Modern Sans font globally */
-            font-family: "Computer Modern Sans", sans-serif;
-            line-height: 1.2;
-            font-size: 16px; /* Adjust base font size if needed */
-        }
-
+        /* Add iframe CSS */
         #nav-iframe {
             width: 100%; /* Make iframe span full width */
             /* Height will be set by JavaScript */
@@ -42,162 +34,173 @@
             vertical-align: top; /* Helps prevent extra space below in some layouts */
         }
 
-        .main-content {
-            max-width: 800px; /* Ensure single column on wider screens for readability */
-            margin-left: auto; /* Center the content block */
-            margin-right: auto; /* Center the content block */
-            padding: 0 20px; /* Add padding so text doesn't touch edges on narrow screens */
-            margin-top: 20px; /* Space above the content */
-            margin-bottom: 20px; /* Space below the content */
+        body {
+            /* Apply the font */
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6; /* Adjusted line spacing for readability */
+            margin: 2em;
         }
-
         h1, h2, h3 {
-            text-align: center;
-            font-weight: bold; /* Ensure headings are bold */
-            /* Use Computer Modern Serif Bold for headings if preferred */
-             font-family: "Computer Modern Serif", serif;
-        }
-        h2 {
-           font-size: 1.4em; /* Adjust heading size relative to body */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
         }
         p, li {
-            margin-top: 0.3em;
-            margin-bottom: 0.3em;
+            margin-top: 0.5em; /* Slightly increased spacing */
+            margin-bottom: 0.5em;
         }
-        ol {
-            padding-left: 30px; /* Adjust list indentation */
-        }
-        .school-info {
+        figure {
             text-align: center;
-            margin-bottom: 5px;
+            margin: 2em 0;
         }
-        .series-info {
-             text-align: center;
-             margin-bottom: 5px;
-             font-weight: bold;
-             font-family: "Computer Modern Serif", serif; /* Use Serif Bold for this specific element */
+        figcaption {
+            margin-top: 0.5em;
+            font-style: italic;
+            font-size: 0.9em;
         }
-        .title {
-             text-align: center;
-             font-size: 1.8em; /* Larger title */
-             font-weight: bold;
-             margin-bottom: 5px;
-             font-family: "Computer Modern Serif", serif; /* Use Serif Bold for the title */
+        img {
+            max-width: 80%;
+            height: auto;
         }
-        .year {
+        ul, ol { /* Applied styles to ordered lists as well */
+            padding-left: 40px; /* Increased indent for lists */
+            margin-top: 0.5em;
+            margin-bottom: 1em;
+        }
+        strong {
+            font-weight: bold;
+        }
+        .figure-title {
             text-align: center;
-            margin-bottom: 25px; /* More space after year */
+            font-weight: bold;
         }
-        .exercise-block {
-            margin-bottom: 25px;
+        /* Style for vertical vectors/points */
+        .vector {
+            display: inline-block;
+            text-align: center;
+            vertical-align: middle;
+            margin: 0 0.2em;
         }
-        .system-eq {
-             margin-left: 20px;
-             margin-top: 0.5em;
-             margin-bottom: 0.5em;
+        .vector span {
+            display: block;
         }
-        /* Ensure MathJax output scales well */
-        mjx-container {
-             font-size: 1.0em;
+        /* Ensure math expressions are not too small */
+        .mjx-chtml {
+           font-size: 105%; /* Slightly larger math font */
         }
+        /* Ensure display math takes space */
+         mjx-container[display="true"] {
+            display: block;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+        section { /* Add spacing between exercises */
+            margin-bottom: 2em;
+            padding-bottom: 1em;
+            border-bottom: 1px solid #eee; /* Optional separator */
+        }
+        header {
+             text-align: center;
+             margin-bottom: 2.5em;
+             border-bottom: 2px solid #ccc;
+             padding-bottom: 1em;
+        }
+        header h1 { margin-bottom: 0.2em; }
+        header p { margin-top: 0.2em; margin-bottom: 0.2em; font-size: 1.1em; }
+        header h2 { margin-top: 0.5em; margin-bottom: 0.1em; }
     </style>
 </head>
 <body>
 
-    <!-- The iframe whose height should adjust -->
+    <!-- Add the iframe -->
     <iframe id="nav-iframe" src="../index.html" title="Content from index.html">
         Your browser does not support iframes.
     </iframe>
 
-    <!-- Main content area -->
-    <div class="main-content">
+    <!-- PDF Content Start -->
+    <header>
+        <h1>High National School of Public Works Kouba Algiers</h1>
+        <p>Preparatory Class in Sciences and Techniques (2nd Year)</p>
+        <h2>SERIE N4</h2>
+        <h1>Les Torseurs</h1>
+        <p>2024/2025</p>
+    </header>
 
-        <div class="school-info">High National School of Public Works Kouba Algiers</div>
-        <div class="school-info">Preparatory Class in Sciences and Techniques (2nd Year)</div>
+    <section id="exercice1">
+        <h2>Exercice 1</h2>
+        <p>
+            Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$
+            liés respectivement aux points A(1, 0, 0) et B(1, 1, 0) et les torseurs [G1] et [G2] associés aux
+            moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
+        </p>
+        <ol>
+            <li>Calculer la résultante de [G] et son moment en A. En déduire la nature de [G].</li>
+            <li>Déterminer l'équation cartésienne de l'axe central de [G].</li>
+        </ol>
+    </section>
 
-        <div class="series-info">SERIE N4</div>
-        <div class="title">Les Torseurs</div>
-        <div class="year">2024/2025</div>
+    <section id="exercice2">
+        <h2>Exercice 2</h2>
+        <p>
+            Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$,
+            $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère
+            orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement
+            aux points A(0,1,2), B(1,0,2), C(1,2,2).
+        </p>
+        <ol>
+            <li>Construire le torseur [T] associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li>
+            <li>En déduire l'auto moment.</li>
+            <li>Calculer le pas du torseur.</li>
+            <li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li>
+        </ol>
+    </section>
 
-        <div class="exercise-block">
-            <h2>Exercice 1</h2>
-            <p>
-                Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$ liés respectivement aux points $A(1, 0, 0)$ et $B(1, 1, 0)$ et les torseurs $[G1]$ et $[G2]$ associés aux moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
-            </p>
-            <ol>
-                <li>Calculer la résultante de $[G]$ et son moment en A. En déduire la nature de $[G]$.</li>
-                <li>Déterminer l'équation cartésienne de l'axe central de $[G]$.</li>
-            </ol>
-        </div>
+    <section id="exercice3">
+        <h2>Exercice 3</h2>
+        <p>
+            Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$
+            dont les composantes sont définies en fonction des coordonnées (x, y, z) de M par :
+        </p>
+        \[
+        \begin{cases}
+            V_x = 1 + 3y - tz \\
+            V_y = -3x + 2tz \\
+            V_z = 2 + tx - t^2y
+        \end{cases}
+        \]
+        <ol>
+            <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
+            <li>Pour quelles valeurs de t, ce champ est-il antisymétrique ?</li>
+            <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
+            <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
+            <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
+        </ol>
+    </section>
 
-        <div class="exercise-block">
-            <h2>Exercice 2</h2>
-            <p>
-                Soient les trois vecteurs $\vec{V}_1 = -\vec{i} + \vec{j} + \vec{k}$, $\vec{V}_2 = \vec{j} + 2\vec{k}$, $\vec{V}_3 = \vec{i} - \vec{j}$ définis dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$ et liés respectivement aux points $A(0,1,2)$, $B(1,0,2)$, $C(1,2,2)$.
-            </p>
-            <ol>
-                <li>Construire le torseur $[T]$ associé au système de vecteurs $\vec{V}_1, \vec{V}_2, \vec{V}_3$.</li>
-                <li>En déduire l'auto moment.</li>
-                <li>Calculer le pas du torseur.</li>
-                <li>Déterminer l'axe central du torseur vectoriellement et analytiquement.</li>
-            </ol>
-        </div>
+    <section id="exercice4">
+        <h2>Exercice 4</h2>
+        <ol>
+            <li>Pour quelle condition le moment d'un torseur [T] est-il constant le long d'une droite ?</li>
+            <li>
+                Les éléments de réduction d'un torseur sont $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$ et $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$ dans
+                un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$. (Ce plan est le plan y=0).
+            </li>
+        </ol>
+    </section>
 
-        <div class="exercise-block">
-            <h2>Exercice 3</h2>
-            <p>
-                Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$ dont les composantes sont définies en fonction des coordonnées $(x, y, z)$ de M par :
-            </p>
-            <div class="system-eq">
-            $$
-            \left\{
-            \begin{aligned}
-            V_x &= 1 + 3y - tz \\
-            V_y &= -3x + 2tz \\
-            V_z &= 2 + tx - t^2y
-            \end{aligned}
-            \right.
-            $$
-            </div>
-            <ol>
-                <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
-                <li>Pour quelles valeurs de t, ce champ est antisymétrique ?</li>
-                <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
-                <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
-                <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
-            </ol>
-        </div>
+    <section id="exercice5">
+        <h2>Exercice 5</h2>
+        <p>
+            Dans un repère (O,x,y,z), on considère les trois glisseurs définis par les vecteurs $\vec{V}_1 = (1, 0, -1)$ d'origine A(1,0,0), $\vec{V}_2 = (1, 2, 2)$ d'origine B(0,1,0) et $\vec{V}_3 = (\lambda, \mu, \nu)$ d'origine C(0,0,1). Soit [T] la somme des trois glisseurs.
+        </p>
+        <ol>
+            <li>Déterminer $(\lambda, \mu, \nu)$ pour que [T] soit un couple et trouver son moment ?</li>
+            <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que [T] soit un glisseur ?</li>
+            <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de [T].</li>
+            <li>Que peut-on dire de la direction de l'axe central ?</li>
+        </ol>
+    </section>
+    <!-- PDF Content End -->
 
-        <div class="exercise-block">
-            <h2>Exercice 4</h2>
-            <ol>
-                <li>Pour quelle condition le moment d'un torseur $[T]$ est constant le long d'une droite ?</li>
-                <li>Les éléments de réduction d'un torseur sont
-                $$ \vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad \text{et} \quad \vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} $$
-                dans un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$.</li>
-            </ol>
-        </div>
-
-        <div class="exercise-block">
-            <h2>Exercice 5</h2>
-            <p>
-                Dans un repère $(O,x,y,z)$, on considère les trois glisseurs définis par les vecteurs
-                $\vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix}$ d'origine $A(1,0,0)$,
-                $\vec{V}_2 = \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix}$ d'origine $B(0,1,0)$ et
-                $\vec{V}_3 = \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix}$ d'origine $C(0,0,1)$.
-                Soit $[T]$ la somme des trois glisseurs.
-            </p>
-            <ol>
-                <li>Déterminer $(\lambda, \mu, \nu)$ pour que $[T]$ soit un couple et trouver son moment ?</li>
-                <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que $[T]$ soit un glisseur ?</li>
-                <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de $[T]$.</li>
-                <li>Que peut-on dire de la direction de l'axe central ?</li>
-            </ol>
-        </div>
-
-    </div> <!-- End of main-content div -->
-
-    <!-- JavaScript for resizing the iframe -->
     <script>
         function resizeIframeToFitContent(iframe) {
             console.log('Attempting to resize iframe:', iframe.id);
@@ -292,6 +295,5 @@
             console.error('Iframe with ID "nav-iframe" not found in the DOM.');
         }
     </script>
-
 </body>
 </html>

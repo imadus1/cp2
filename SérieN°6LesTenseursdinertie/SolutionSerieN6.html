@@ -13,6 +13,7 @@
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
             processEscapes: true
+            // Default settings allow line breaking
           },
           svg: {
             fontCache: 'global'
@@ -30,6 +31,10 @@
             font-family: "Computer Modern Sans", sans-serif;
             line-height: 1.3; /* Keep existing line spacing */
             font-size: 16px; /* Base font size */
+            box-sizing: border-box; /* Include padding/border in element's total width/height */
+        }
+        *, *:before, *:after {
+             box-sizing: inherit; /* Inherit box-sizing for all elements */
         }
 
         #nav-iframe {
@@ -38,7 +43,7 @@
             border: none; /* Remove iframe border */
             display: block; /* Ensure it takes block layout */
             margin-bottom: 20px; /* Add some space below the iframe */
-            overflow: hidden; /* Hide potential scrollbars if calculation is slightly off */
+            overflow: hidden; /* Hide potential scrollbars on the iframe element itself */
             vertical-align: top; /* Helps prevent extra space below in some layouts */
         }
 
@@ -64,7 +69,6 @@
         .figure-title {
              text-align: center; /* Keep figure titles centered */
              font-weight: bold; /* Keep bold */
-             /* font-family: "Computer Modern Serif", serif; (Inherited) */
         }
 
         p, li {
@@ -81,15 +85,21 @@
             font-size: 0.9em;
         }
         img {
-            max-width: 80%; /* Keep image sizing */
+            max-width: 100%; /* Allow image to shrink but not exceed container width */
             height: auto;
             border: 1px solid #ccc; /* Optional: add a light border to images */
+            display: block; /* Helps with centering and spacing */
+            margin-left: auto;
+            margin-right: auto;
         }
         ul {
             padding-left: 30px; /* Consistent padding */
         }
         hr {
             margin: 2em 0; /* More space around horizontal rules */
+            border: 0;
+            height: 1px;
+            background: #ccc;
         }
         strong {
             font-weight: bold; /* Ensure strong is bold */
@@ -104,18 +114,29 @@
         .vector span {
             display: block;
         }
+
         /* Ensure MathJax output scales well */
         mjx-container {
              font-size: 1.0em; /* Match base font size */
         }
-         /* Ensure display math takes space */
+         /* Ensure display math takes space and breaks lines if needed */
          mjx-container[display="true"] {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
-            /* Center display math */
-            text-align: center;
-            overflow-x: auto; /* Allow horizontal scroll for wide equations */
+            text-align: center; /* Center display math */
+            /* REMOVED overflow-x: auto; to allow line breaking */
+            max-width: 100%;  /* Constrain the container so MathJax knows when to break lines */
+         }
+
+         /* Handle potential overflow in code blocks */
+         pre {
+            overflow-x: auto; /* Allow horizontal scrollbar for code */
+            max-width: 100%;
+            padding: 10px;
+            background-color: #f8f8f8; /* Light background for code */
+            border: 1px solid #eee;
+            white-space: pre; /* Keep pre formatting but allow scroll */
          }
     </style>
 </head>
@@ -241,12 +262,13 @@
         <h2>Commentaire :</h2>
         <p>Les axes OY et OZ sont équivalents par symétrie de révolution autour de OX pour une tige idéalement fine. Ici, la géométrie strictement 1D sur OX impose \( A = 0 \) (pas d'extension en y ou z). Seule la rotation autour d'axes perpendiculaires (OY, OZ) rencontre une inertie (\( B = C \neq 0 \)). Les produits d'inertie sont nuls car OX, OY, OZ sont axes principaux d'inertie.</p>
 
+
         <hr style="page-break-after: always;">
 
         <h2 class="figure-title">Figure 1.2 : Tige parallèle à OX, décalée en Y</h2>
 
         <figure>
-            <img src="figure2.png" alt="Tige parallèle à OX, décalée en Y">
+            <img src="figure2.png" alt="Tige parallèle à OX, décalée en Y"> <!-- Verify path -->
             <figcaption>FIGURE 2 - Tige parallèle à OX, décalée en Y</figcaption>
         </figure>
 
@@ -349,7 +371,7 @@
         <h2 class="figure-title">Figure 1.3 : Tige parallèle à OX, décalée en X et Y</h2>
 
         <figure>
-            <img src="figure3.png" alt="Tige parallèle à OX, décalée en X et Y">
+            <img src="figure3.png" alt="Tige parallèle à OX, décalée en X et Y"> <!-- Verify path -->
             <figcaption>FIGURE 3 - Tige parallèle à OX, décalée en X et Y</figcaption>
         </figure>
 
@@ -467,7 +489,7 @@
          <h2 class="figure-title">Figure 1.4 : Cadre rectangulaire centré en O</h2>
 
         <figure>
-            <img src="figure4.png" alt="Cadre rectangulaire centré en O">
+            <img src="figure4.png" alt="Cadre rectangulaire centré en O"> <!-- Verify path -->
             <figcaption>FIGURE 4 - Cadre rectangulaire centré en O</figcaption>
         </figure>
 
@@ -579,7 +601,7 @@
          <h2 class="figure-title">Figure 1.5 : Corps composé de trois tiges dans le plan XY</h2>
 
         <figure>
-            <img src="figure5.png" alt="Corps composé de trois tiges dans le plan XY">
+            <img src="figure5.png" alt="Corps composé de trois tiges dans le plan XY"> <!-- Verify path -->
             <figcaption>FIGURE 5 - Corps composé de trois tiges dans le plan XY</figcaption>
         </figure>
 
@@ -718,7 +740,7 @@
          <h2>Méthode 2: Calcul direct par intégration</h2>
          <p>Calculons \( A = \int(y^2 + z^2)dm \), \( B = \int(x^2 + z^2)dm \), \( D = \int xydm \). (\( z = 0, E = F = 0 \)). \( dm = \lambda dl \).</p>
          <ul>
-            <li><strong>Segment 1 (AB):</strong> \( y = a, x \in [0, a], dl = dx. dm = \lambda dx \). <!-- Note: Example 5 drawing seems to start AB at x=0, not x=-a/2 -->
+            <li><strong>Segment 1 (AB):</strong> \( y = a, x \in [0, a], dl = dx. dm = \lambda dx \).
                 \[ A_1 = \int_0^a (a^2 + 0^2) \lambda dx = \lambda a^2 [x]_0^a = \lambda a^3 \]
                 \[ B_1 = \int_0^a (x^2 + 0^2) \lambda dx = \lambda [\frac{x^3}{3}]_0^a = \frac{\lambda a^3}{3} \]
                 \[ D_1 = \int_0^a x(a) \lambda dx = \lambda a [\frac{x^2}{2}]_0^a = \frac{\lambda a^3}{2} \]
@@ -755,16 +777,7 @@
                   \[ D_3 = \lambda \left[ 2a^2(2a) - \frac{a}{2\sqrt{2}}(2a)^2 - \frac{1}{6}(2a)^3 \right] \]
                   \[ D_3 = \lambda \left[ 4a^3 - \frac{4a^3}{2\sqrt{2}} - \frac{8a^3}{6} \right] = \lambda \left[ 4a^3 - \sqrt{2}a^3 - \frac{4a^3}{3} \right] \]
                   \[ D_3 = \lambda a^3 \left( 4 - \sqrt{2} - \frac{4}{3} \right) = \lambda a^3 \left( \frac{12-4}{3} - \sqrt{2} \right) \]
-                  \[ D_3 = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) \] <!-- Mismatch with Huygens D3 term... Check Huygens again -->
-                  <!-- Huygens -D3 term was -(-8/3 + sqrt(2)) = 8/3 - sqrt(2). Looks OK. -->
-                  <!-- Let's recheck Huygens D calculation for segment 3 -->
-                  <!-- D_O/G3 = -M3 * (-xG*yG) = M3 * xG * yG -->
-                  <!-- xG = a(1 - 1/sqrt(2)), yG = a(2 + 1/sqrt(2)) -->
-                  <!-- xG * yG = a^2 * (1 - 1/sqrt(2)) * (2 + 1/sqrt(2)) = a^2 * (2 + 1/sqrt(2) - 2/sqrt(2) - 1/2) = a^2 * (1.5 - 1/sqrt(2)) -->
-                  <!-- D_O/G3 = M3 * a^2 * (1.5 - 1/sqrt(2)) = (2 lambda a) * a^2 * (3/2 - sqrt(2)/2) = lambda a^3 * (3 - sqrt(2)) -->
-                  <!-- D_G3 was - (lambda a^3 / 3) -->
-                  <!-- Total D3 = D_G3 + D_O/G3 = -lambda a^3 / 3 + lambda a^3 (3 - sqrt(2)) = lambda a^3 (-1/3 + 3 - sqrt(2)) = lambda a^3 (8/3 - sqrt(2)). -->
-                  <!-- OK, direct integration matches Huygens D3. -->
+                  \[ D_3 = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) \]
             </li>
         </ul>
 
@@ -789,7 +802,7 @@
          <h2 class="figure-title">Figure 1.6 : Anneau circulaire centré en O</h2>
 
         <figure>
-            <img src="figure6.png" alt="Anneau circulaire centré en O">
+            <img src="figure6.png" alt="Anneau circulaire centré en O"> <!-- Verify path -->
             <figcaption>FIGURE 6 - Anneau circulaire centré en O</figcaption>
         </figure>
 
@@ -880,96 +893,66 @@
     <!-- JavaScript for resizing the iframe -->
     <script>
         function resizeIframeToFitContent(iframe) {
-            console.log('Attempting to resize iframe:', iframe.id);
+            // console.log('Attempting to resize iframe:', iframe.id); // Keep console logs for debugging if needed
             try {
-                // Check if contentWindow and document are accessible
                 if (!iframe.contentWindow || !iframe.contentWindow.document || !iframe.contentWindow.document.body) {
-                    console.warn('Iframe content window or document not accessible. Possible loading or cross-origin issue.');
-                    return; // Stop if not accessible
+                    // console.warn('Iframe content window or document not accessible.');
+                    return;
                 }
-
                 const iframeDoc = iframe.contentWindow.document;
                 const iframeBody = iframeDoc.body;
                 const iframeHtml = iframeDoc.documentElement;
-
-                // Reset height to allow accurate scrollHeight measurement
                 iframe.style.height = 'auto';
-
-                // Calculate height using both body and documentElement scrollHeight
-                // and take the maximum. Add a small buffer (e.g., 5px) sometimes helps.
                 const bodyHeight = iframeBody.scrollHeight;
                 const docHeight = iframeHtml.scrollHeight;
-                const contentHeight = Math.max(bodyHeight, docHeight) + 5; // Added 5px buffer
-
-                console.log(`Measured heights - body: ${bodyHeight}px, documentElement: ${docHeight}px. Setting iframe height to: ${contentHeight}px`);
-
-                if (contentHeight > 10) { // Only set if height seems valid (greater than a small threshold)
+                const contentHeight = Math.max(bodyHeight, docHeight) + 5;
+                // console.log(`Measured heights - body: ${bodyHeight}px, documentElement: ${docHeight}px. Setting iframe height to: ${contentHeight}px`);
+                if (contentHeight > 10) {
                      iframe.style.height = contentHeight + 'px';
-                     console.log('Iframe height set.');
+                     // console.log('Iframe height set.');
                 } else {
-                     console.warn('Calculated content height is zero or very small. Not setting height.');
-                     // Optional: Set a minimum default height as fallback if needed
-                     // iframe.style.height = '100px';
+                     // console.warn('Calculated content height is zero or very small.');
                 }
-
             } catch (e) {
                 console.error('ERROR resizing iframe:', e);
-                console.error('This often indicates a Same-Origin Policy violation. Ensure the parent page and iframe src are served from the exact same domain, protocol, and port.');
-                // Provide fallback or visual indication, e.g.:
-                // iframe.style.border = '2px solid red';
-                // iframe.style.height = '100px'; // Set a fallback height
+                // console.error('This often indicates a Same-Origin Policy violation...');
             }
         }
 
         const myIframe = document.getElementById('nav-iframe');
 
         if (myIframe) {
-            console.log('Found iframe with ID:', myIframe.id);
-
-            // --- Event Listener for Load ---
+            // console.log('Found iframe with ID:', myIframe.id);
             myIframe.addEventListener('load', function() {
-                console.log('Iframe detected LOAD event.');
-                // Use setTimeout to allow content potentially rendering *after* load event
-                setTimeout(() => resizeIframeToFitContent(this), 150); // Delay slightly
-                // Add a second check slightly later in case of slow rendering elements
+                // console.log('Iframe detected LOAD event.');
+                setTimeout(() => resizeIframeToFitContent(this), 150);
                 setTimeout(() => resizeIframeToFitContent(this), 500);
-                 // Add a third check even later for complex pages
                 setTimeout(() => resizeIframeToFitContent(this), 1500);
             });
-
-            // --- Event Listener for Window Resize ---
             let resizeTimer;
             window.addEventListener('resize', () => {
-                console.log('Window resize detected.');
+                // console.log('Window resize detected.');
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(() => {
-                    if (myIframe) { // Ensure iframe still exists
+                    if (myIframe) {
                         resizeIframeToFitContent(myIframe);
                     }
-                }, 250); // Debounce resize
+                }, 250);
             });
-
-            // --- Initial Check (in case already loaded) ---
-             // Check document.readyState inside the iframe more reliably
             try {
-                 // Need to check if contentWindow exists first
                 if (myIframe.contentWindow && myIframe.contentWindow.document && myIframe.contentWindow.document.readyState === 'complete') {
-                    console.log('Iframe already loaded (readyState complete), attempting initial resize.');
-                    // Use setTimeout here too for consistency and timing
+                    // console.log('Iframe already loaded (readyState complete), attempting initial resize.');
                     setTimeout(() => resizeIframeToFitContent(myIframe), 150);
                 } else if (myIframe.contentWindow) {
-                     console.log(`Iframe not yet complete on initial script run. Current readyState: ${myIframe.contentWindow.document ? myIframe.contentWindow.document.readyState : 'document not accessible'}`);
+                     // console.log(`Iframe not yet complete on initial script run. State: ${myIframe.contentWindow.document ? myIframe.contentWindow.document.readyState : 'doc N/A'}`);
                 } else {
-                    console.log('Iframe contentWindow not accessible on initial check (might be loading or cross-origin). Waiting for load event.')
+                    // console.log('Iframe contentWindow not accessible on initial check.');
                 }
             } catch(e) {
-                 // Catch potential cross-origin errors even during the check
-                 console.warn('Initial readyState check failed, likely cross-origin before load event or iframe not fully initialized yet.', e.message);
+                 // console.warn('Initial readyState check failed.', e.message);
             }
-
-
         } else {
-            console.error('Iframe with ID "nav-iframe" not found in the DOM.');
+            console.error('Iframe with ID "nav-iframe" not found.');
         }
     </script>
 

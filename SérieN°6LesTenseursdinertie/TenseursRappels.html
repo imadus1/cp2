@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Résumé Étendu : Tenseur d'Inertie</title>
+    <title>Tenseur d'Inertie</title>
     <script>
         MathJax = {
           tex: {
@@ -150,7 +150,7 @@
                     $$ E = I_{xz} = \\ \int_{(S)} xz dm $$
                     $$ F = I_{yz} = \\ \int_{(S)} yz dm $$
                 </div>
-                 <p><strong>Note Importante :</strong> Avec $D, E, F$ définis par ces intégrales (positives), ils apparaissent avec un signe '$-$' dans la matrice $[I_O]$. C'est la convention utilisée dans le document `Tenseurs Inertie UMBB A KADI.pdf`.</p>
+                 <p><strong>Note Importante :</strong> Avec $D, E, F$ définis par ces intégrales (positives), ils apparaissent avec un signe '$-$' dans la matrice $[I_O]$.</p>
             </li>
         </ul>
          <p><strong>Moment d'inertie polaire :</strong> Le moment d'inertie par rapport au point $O$ est</p>
@@ -176,7 +176,7 @@
 
     <h2>4. Propriétés et Théorèmes Clés</h2>
 
-    <h3>4.1 Simplification par Symétrie (Détail)</h3>
+    <h3>4.1 Simplification par Symétrie</h3>
     <p>La présence de symétries matérielles dans le solide par rapport au repère $(O, \vec{i}, \vec{j}, \vec{k})$ est un outil puissant pour simplifier la matrice d'inertie $[I_O]$.</p>
     <ul>
         <li>
@@ -290,7 +290,7 @@
          <p>Alternativement, si $P_{R' \to R}$ est la matrice dont les colonnes sont les anciens vecteurs $(\vec{i}, \vec{j}, \vec{k})$ dans la nouvelle base $(\vec{i}', \vec{j}', \vec{k}')$ (et $P_{R' \to R} = P^T$), alors $[I_O]_{R'} = P_{R' \to R} [I_O]_R P_{R' \to R}^T$.</p>
     </div>
      <div class="example">
-        <p><strong>Exemple (inspiré Cours p. 131-132):</strong> Une barre mince OA de masse M, longueur L, située initialement sur l'axe $Ox_1$ dans un repère $R_1$. Sa matrice d'inertie en O dans $R_1$ est $[I_O]_{R_1} = \text{diag}(0, ML^2/3, ML^2/3)$ (calculée à l'extrémité). On considère un repère $R_0$ tel que $R_1$ est obtenu par rotation d'angle $(-\alpha)$ de $R_0$ autour de $Oz_0=Oz_1$, ou $R_0$ obtenu par rotation d'angle $\alpha$ de $R_1$. La matrice de passage de $R_0$ à $R_1$ (colonnes = vecteurs de $R_1$ dans $R_0$) est :
+        <p><strong>Exemple:</strong> Une barre mince OA de masse M, longueur L, située initialement sur l'axe $Ox_1$ dans un repère $R_1$. Sa matrice d'inertie en O dans $R_1$ est $[I_O]_{R_1} = \text{diag}(0, ML^2/3, ML^2/3)$ (calculée à l'extrémité). On considère un repère $R_0$ tel que $R_1$ est obtenu par rotation d'angle $(-\alpha)$ de $R_0$ autour de $Oz_0=Oz_1$, ou $R_0$ obtenu par rotation d'angle $\alpha$ de $R_1$. La matrice de passage de $R_0$ à $R_1$ (colonnes = vecteurs de $R_1$ dans $R_0$) est :
          $$ P = [P]_{R_0 \to R_1} = \\ \begin{pmatrix} \cos \alpha & -\sin \alpha & 0 \\ \sin \alpha & \cos \alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
         On cherche $[I_O]_{R_0}$. La formule est $[I_O]_{R_0} = P [I_O]_{R_1} P^T$. (Transformation de $R_1$ vers $R_0$).
         $$ [I_O]_{R_0} = \\ \begin{pmatrix} c & -s & 0 \\ s & c & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & L^2/3 & 0 \\ 0 & 0 & L^2/3 \end{pmatrix} \begin{pmatrix} c & s & 0 \\ -s & c & 0 \\ 0 & 0 & 1 \end{pmatrix} M $$
@@ -300,8 +300,8 @@
          </p>
     </div>
 
-    <h2>5. Conclusion</h2>
-    <p>Le tenseur d'inertie, représenté par la matrice d'inertie $[I_O]$, est un outil essentiel pour décrire la distribution de masse d'un solide et analyser son comportement en rotation. Son calcul peut être effectué par intégration directe, mais l'utilisation judicieuse des symétries et des théorèmes comme celui de Huygens ou de Guldin (pour le centre de masse) permet des simplifications considérables, rendant son application pratique dans divers problèmes de mécanique et d'ingénierie.</p>
+    <h2></h2>
+    <p></p>
 
 </body>
 </html>

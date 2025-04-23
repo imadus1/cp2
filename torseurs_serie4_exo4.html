@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Exercice 4</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // Enable equation numbering
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Default tags to skip
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+     <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h2, h3, h4 { margin-top: 1.5em; margin-bottom: 0.5em; font-weight: bold; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        h3 { font-size: 1.3em; }
+        h4 { font-size: 1.1em; }
+        p, li { margin-top: 0.5em; margin-bottom: 0.5em; }
+        ul, ol { padding-left: 40px; margin-top: 0.5em; margin-bottom: 1em; }
+        strong { font-weight: bold; }
+        .mjx-chtml { font-size: 105%; }
+         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: auto; }
+         section { margin-bottom: 1.5em; padding-bottom: 0.5em; }
+         hr { margin: 2em 0; border: 0; border-top: 1px dashed #ccc;}
+    </style>
+</head>
+<body>
+
+    <!-- Exercice 4 Enoncé (from SerieN4.html) -->
+    <section id="exercice4">
+        <h2>Exercice 4</h2>
+        <ol>
+            <li>Pour quelle condition le moment d'un torseur [T] est-il constant le long d'une droite ?</li>
+            <li>
+                Les éléments de réduction d'un torseur sont $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$ et $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$ dans
+                un repère orthonormé $R(O, \vec{i}, \vec{j}, \vec{k})$. Déterminer le point I où l'axe central $(\Delta)$ rencontre le plan $(O, \vec{k}, \vec{i})$. (Ce plan est le plan y=0).
+            </li>
+        </ol>
+    </section>
+
+    <hr>
+
+    <!-- Solution 4 (from SolutionSerieN4.html) -->
+    <h2>Solution 04</h2>
+        <section>
+             <h4>Calculs préliminaires pour Solution 04 (axe central)</h4>
+             <p><strong>Concept :</strong> L'axe central ($\Delta$) est l'ensemble des points $P(x, y, z)$ tels que le moment $\vec{M}(P)$ est colinéaire à la résultante $\vec{R}$. Un point P appartient à ($\Delta$) si $\vec{OP} = \vec{OP}_0 + \lambda \vec{R}$, où $P_0$ est le point de l'axe le plus proche de O, donné par $\vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2}$.</p>
+             <p>Données (implicites de la Solution 04, non explicitement données sur cette page mais nécessaires pour la Q2) : $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$, $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$.</p>
+             <p>Calculons $\vec{R} \wedge \vec{M}(O)$:</p>
+             $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \wedge \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix} = \begin{pmatrix} (6)(-6) - (4)(3) \\ (4)(6) - (10)(-6) \\ (10)(3) - (6)(6) \end{pmatrix} = \begin{pmatrix} -36 - 12 \\ 24 + 60 \\ 30 - 36 \end{pmatrix} = \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} $$
+             <p>Calculons $\|\vec{R}\|^2$:</p>
+             $$ \|\vec{R}\|^2 = 10^2 + 6^2 + 4^2 = 100 + 36 + 16 = 152 $$
+             <p>Le vecteur position du point $P_0$ est :</p>
+             $$ \vec{OP}_0 = \frac{1}{152} \begin{pmatrix} -48 \\ 84 \\ -6 \end{pmatrix} = \begin{pmatrix} -48/152 \\ 84/152 \\ -6/152 \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} $$
+             <p>L'équation paramétrique de l'axe central ($\Delta$) est :</p>
+             $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -6/19 \\ 21/38 \\ -3/76 \end{pmatrix} + \lambda \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix} \quad (\lambda \in \mathbb{R}) $$
+        </section>
+
+        <section>
+            <h3>1) Pour quelle condition le moment d'un torseur [T] est constant le long d'une droite ?</h3>
+            <p>Soit $[T] = \{\vec{R}, \vec{M}(A)\}$ un torseur défini par sa résultante $\vec{R}$ et son moment $\vec{M}(A)$ en un point A. Soit (D) une droite passant par un point A et de vecteur directeur $\vec{u}$. Un point P quelconque sur la droite (D) peut s'écrire $P = A + t\vec{u}$, où $t \in \mathbb{R}$.</p>
+            <p>Le moment du torseur au point P est donné par la formule de Varignon :</p>
+            $$ \vec{M}(P) = \vec{M}(A) + \vec{PA} \wedge \vec{R} $$
+            <p>Comme $\vec{PA} = A - P = A - (A + t\vec{u}) = -t\vec{u}$, on a :</p>
+            $$ \vec{M}(P) = \vec{M}(A) + (-t\vec{u}) \wedge \vec{R} = \vec{M}(A) - t(\vec{u} \wedge \vec{R}) $$
+            <p>Pour que le moment $\vec{M}(P)$ soit constant le long de la droite (D), il faut qu'il soit indépendant du paramètre $t$. Cela signifie que le terme dépendant de $t$ doit être nul :</p>
+            $$ -t(\vec{u} \wedge \vec{R}) = \vec{0} \quad \text{pour tout } t $$
+            <p>Ceci est vrai si et seulement si :</p>
+            $$ \vec{u} \wedge \vec{R} = \vec{0} $$
+            <p>Cette condition signifie que le vecteur directeur $\vec{u}$ de la droite est colinéaire à la résultante $\vec{R}$ du torseur (ou que $\vec{R} = \vec{0}$, auquel cas le torseur est un couple et son moment est constant partout).</p>
+            <p><strong>Conclusion :</strong> Le moment d'un torseur est constant le long d'une droite si et seulement si cette droite est parallèle à la résultante $\vec{R}$ du torseur (ou si $\vec{R} = \vec{0}$). Les droites parallèles à la résultante sont appelées les lignes de champ du moment vectoriel. L'axe central est un cas particulier de ces lignes.</p>
+        </section>
+        <section>
+            <h3>2) Déterminer le point I où l'axe central ($\Delta$) rencontre le plan (O, $\vec{k}$, $\vec{i}$)</h3>
+             <p>Données : $\vec{R} = \begin{pmatrix} 10 \\ 6 \\ 4 \end{pmatrix}$, $\vec{M}(O) = \begin{pmatrix} 6 \\ 3 \\ -6 \end{pmatrix}$. Le plan $(O, \vec{k}, \vec{i})$ est le plan d'équation $y=0$ (plan xz).</p>
+             <p>Le point d'intersection $I(x_I, y_I, z_I)$ de l'axe ($\Delta$) avec le plan $y = 0$ doit satisfaire les équations de l'axe et l'équation du plan. Donc, $y_I = 0$. En utilisant l'équation paramétrique pour $y$ (dérivée ci-dessus) :</p>
+             $$ y_I = \frac{21}{38} + 6\lambda = 0 $$
+             $$ 6\lambda = -\frac{21}{38} \implies \lambda = -\frac{21}{38 \times 6} = -\frac{7}{38 \times 2} = -\frac{7}{76} $$
+             <p>Maintenant, substituons cette valeur de $\lambda$ dans les équations pour $x$ et $z$ pour trouver les coordonnées $x_I$ et $z_I$ du point I:</p>
+             $$ x_I = -\frac{6}{19} + 10\lambda = -\frac{6}{19} + 10\left(-\frac{7}{76}\right) = -\frac{6}{19} - \frac{70}{76} $$
+             $$ x_I = -\frac{6 \times 4}{19 \times 4} - \frac{70}{76} = -\frac{24}{76} - \frac{70}{76} = -\frac{94}{76} = -\frac{47}{38} $$
+             $$ z_I = -\frac{3}{76} + 4\lambda = -\frac{3}{76} + 4\left(-\frac{7}{76}\right) = -\frac{3}{76} - \frac{28}{76} = -\frac{31}{76} $$
+             <p>Le point I où l'axe central rencontre le plan $(O, \vec{k}, \vec{i})$ (plan $y=0$) a pour coordonnées :</p>
+             $$ I\left(-\frac{47}{38}, 0, -\frac{31}{76}\right) $$
+        </section>
+
+</body>
+</html>

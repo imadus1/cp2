@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 1.6 - Anneau circulaire</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Solution Figure 1.6 : Anneau circulaire centré en O</h1>
+
+    <div class="figure-placeholder">figure6.png</div>
+    <p class="caption">FIGURE 6 - Anneau circulaire centré en O</p>
+
+    <h2>Méthode requise : Calcul direct.</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li><strong>Coordonnées polaires (ou cylindriques) :</strong> Particulièrement adaptées à la géométrie circulaire ou cylindrique. Pour un anneau dans le plan $z = 0$, on utilise $x = R \cos \theta$, $y = R \sin \theta$, $z = 0$. L'élément de longueur est $dl = R d\theta$.</li>
+        <li><strong>Corps linéique :</strong> $dm = \lambda dl = \lambda R d\theta$.</li>
+        <li><strong>Axe de Révolution (Oz) :</strong> L'anneau possède une symétrie de révolution autour de l'axe Oz. Cela a deux conséquences majeures pour le tenseur d'inertie en O (qui est sur l'axe) :
+            <ol>
+                <li>Oz est un axe principal d'inertie. Plus généralement, tout axe passant par O dans le plan xOy est aussi un axe principal. La matrice d'inertie en O est donc diagonale ($D = E = F = 0$).</li>
+                <li>Les moments d'inertie par rapport à tous les axes passant par O dans le plan perpendiculaire à l'axe de révolution (ici, le plan xOy) sont égaux. Donc $A = B$.</li>
+            </ol>
+        </li>
+        <li><strong>Plan de symétrie (z=0) :</strong> L'anneau est contenu dans ce plan, qui est un plan de symétrie. Cela implique $E = I_{xz} = 0$ et $F = I_{yz} = 0$.</li>
+        <li><strong>Intégrales trigonométriques classiques :</strong> Pour $\theta \in [0, 2\pi]$ :
+            $$ \int_0^{2\pi} \sin^2 \theta d\theta = \pi $$
+            $$ \int_0^{2\pi} \cos^2 \theta d\theta = \pi $$
+            $$ \int_0^{2\pi} \sin \theta \cos \theta d\theta = \frac{1}{2} \int_0^{2\pi} \sin(2\theta) d\theta = 0 $$
+            $$ \int_0^{2\pi} d\theta = 2\pi $$
+        </li>
+    </ul>
+
+    <h2>Géométrie et Paramétrisation :</h2>
+    <ul>
+        <li>Cercle de rayon R centré en O, dans le plan $z = 0$.</li>
+        <li>Point P : $ P = \begin{pmatrix} R \cos \theta \\ R \sin \theta \\ 0 \end{pmatrix} $, avec $\theta \in [0, 2\pi]$.</li>
+        <li>Élément de longueur : $dl = R d\theta$.</li>
+        <li>Élément de masse : $dm = \lambda dl = \lambda R d\theta$.</li>
+        <li>Masse totale : $ M = \int_0^{2\pi} \lambda R d\theta = \lambda R \int_0^{2\pi} d\theta = \lambda R (2\pi) = 2\pi R \lambda $.</li>
+    </ul>
+
+    <h2>Calcul des termes du tenseur :</h2>
+    <h3>Calcul de A :</h3>
+    $$ A = \int (y^2 + z^2) dm = \int_0^{2\pi} ((R \sin \theta)^2 + 0^2) \lambda R d\theta $$
+    $$ = \lambda R^3 \int_0^{2\pi} \sin^2 \theta d\theta = \lambda R^3 (\pi) $$
+    <p>En utilisant $M = 2\pi R \lambda \implies \lambda = M / (2\pi R)$ :</p>
+    $$ A = \left(\frac{M}{2\pi R}\right) R^3 \pi = \frac{M R^2}{2} $$
+    <h3>Calcul de B :</h3>
+    <p>Par symétrie de révolution autour de Oz, on doit avoir $A = B$. Vérifions :</p>
+    $$ B = \int (x^2 + z^2) dm = \int_0^{2\pi} ((R \cos \theta)^2 + 0^2) \lambda R d\theta $$
+    $$ = \lambda R^3 \int_0^{2\pi} \cos^2 \theta d\theta = \lambda R^3 (\pi) = \frac{M R^2}{2} $$
+    <p>(Comme A, attendu).</p>
+    <h3>Calcul de C :</h3>
+     $$ C = \int (x^2 + y^2) dm = \int_0^{2\pi} ((R \cos \theta)^2 + (R \sin \theta)^2) \lambda R d\theta $$
+     $$ = \int_0^{2\pi} R^2 (\cos^2 \theta + \sin^2 \theta) \lambda R d\theta = \int_0^{2\pi} R^2 (1) \lambda R d\theta $$
+     $$ = \lambda R^3 \int_0^{2\pi} d\theta = \lambda R^3 (2\pi) $$
+     $$ = (2\pi R \lambda) R^2 = M R^2 $$
+     <p>(Vérification du théorème de l'axe perpendiculaire : $C = A + B = \frac{MR^2}{2} + \frac{MR^2}{2} = MR^2$. OK.)</p>
+    <h3>Calcul de D :</h3>
+     $$ D = \int xy dm = \int_0^{2\pi} (R \cos \theta)(R \sin \theta) \lambda R d\theta $$
+     $$ = \lambda R^3 \int_0^{2\pi} \sin \theta \cos \theta d\theta = \lambda R^3 (0) = 0 $$
+     <p>(Attendu par symétrie de révolution).</p>
+    <h3>Calcul de E et F :</h3>
+     $$ E = \int xz dm = \int_0^{2\pi} (R \cos \theta)(0) \lambda R d\theta = 0 $$
+     $$ F = \int yz dm = \int_0^{2\pi} (R \sin \theta)(0) \lambda R d\theta = 0 $$
+     <p>(Attendu par symétrie de révolution et plan z=0).</p>
+
+    <h2>Résultat :</h2>
+    <p>Le tenseur d'inertie de l'anneau au point O est :</p>
+    $$ [I_O]_{1.6} = \begin{pmatrix} MR^2/2 & 0 & 0 \\ 0 & MR^2/2 & 0 \\ 0 & 0 & MR^2 \end{pmatrix} $$
+
+    <h2>Commentaire :</h2>
+    <p>Le résultat ($A = B$, $D = E = F = 0$) est cohérent avec la symétrie de révolution autour de Oz. La relation $C = A + B$ est cohérente avec la nature planaire ($z = 0$) de l'objet.</p>
+
+</body>
+</html>

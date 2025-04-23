@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Exercice 5</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // Enable equation numbering
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Default tags to skip
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+     <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h2, h3, h4 { margin-top: 1.5em; margin-bottom: 0.5em; font-weight: bold; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        h3 { font-size: 1.3em; }
+        h4 { font-size: 1.1em; }
+        p, li { margin-top: 0.5em; margin-bottom: 0.5em; }
+        ul, ol { padding-left: 40px; margin-top: 0.5em; margin-bottom: 1em; }
+        strong { font-weight: bold; }
+        .mjx-chtml { font-size: 105%; }
+         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: auto; }
+         section { margin-bottom: 1.5em; padding-bottom: 0.5em; }
+         hr { margin: 2em 0; border: 0; border-top: 1px dashed #ccc;}
+    </style>
+</head>
+<body>
+
+    <!-- Exercice 5 Enoncé (from SerieN4.html) -->
+     <section id="exercice5">
+        <h2>Exercice 5</h2>
+        <p>
+            Dans un repère (O,x,y,z), on considère les trois glisseurs définis par les vecteurs $\vec{V}_1 = (1, 0, -1)$ d'origine A(1,0,0), $\vec{V}_2 = (1, 2, 2)$ d'origine B(0,1,0) et $\vec{V}_3 = (\lambda, \mu, \nu)$ d'origine C(0,0,1). Soit [T] la somme des trois glisseurs.
+        </p>
+        <ol>
+            <li>Déterminer $(\lambda, \mu, \nu)$ pour que [T] soit un couple et trouver son moment ?</li>
+            <li>Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que [T] soit un glisseur ?</li>
+            <li>Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de [T].</li>
+            <li>Que peut-on dire de la direction de l'axe central ?</li>
+        </ol>
+    </section>
+
+    <hr>
+
+    <!-- Solution 5 (from SolutionSerieN4.html) -->
+    <h2>Solution 05</h2>
+        <p>On considère trois glisseurs $[G_1], [G_2], [G_3]$ définis par :</p>
+        <ul>
+            <li>$\vec{V}_1 = (1,0,-1)$ en $A(1,0,0)$</li>
+            <li>$\vec{V}_2 = (1,2,2)$ en $B(0,1,0)$</li>
+            <li>$\vec{V}_3 = (\lambda, \mu, \nu)$ en $C(0, 0, 1)$</li>
+        </ul>
+        <p>Le torseur $[T]$ est la somme de ces trois glisseurs : $[T] = [G_1] + [G_2] + [G_3]$. Calculons les éléments de réduction de $[T]$ en $O(0,0,0)$.</p>
+        <h4>Résultante $\vec{R}$</h4>
+        $$ \vec{R} = \vec{V}_1 + \vec{V}_2 + \vec{V}_3 = (1 + 1 + \lambda, 0 + 2 + \mu, -1 + 2 + \nu) $$
+        $$ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu) $$
+        <h4>Moment $\vec{M}(O)$</h4>
+        $$ \vec{M}(O) = \vec{M}_1(O) + \vec{M}_2(O) + \vec{M}_3(O) $$
+        <p>où $\vec{M}_i(O)$ est le moment du glisseur $[G_i]$ en O.</p>
+        $$ \vec{M}_1(O) = \vec{OA} \wedge \vec{V}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 0 \\ -1 \end{pmatrix} = \begin{pmatrix} (0)(-1)-(0)(0) \\ (0)(1)-(1)(-1) \\ (1)(0)-(0)(1) \end{pmatrix} = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} = \vec{j} $$
+        $$ \vec{M}_2(O) = \vec{OB} \wedge \vec{V}_2 = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 1 \\ 2 \\ 2 \end{pmatrix} = \begin{pmatrix} (1)(2)-(0)(2) \\ (0)(1)-(0)(2) \\ (0)(2)-(1)(1) \end{pmatrix} = \begin{pmatrix} 2 \\ 0 \\ -1 \end{pmatrix} = 2\vec{i} - \vec{k} $$
+        $$ \vec{M}_3(O) = \vec{OC} \wedge \vec{V}_3 = \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \wedge \begin{pmatrix} \lambda \\ \mu \\ \nu \end{pmatrix} = \begin{pmatrix} (0)(\nu)-(1)(\mu) \\ (1)(\lambda)-(0)(\nu) \\ (0)(\mu)-(0)(\lambda) \end{pmatrix} = \begin{pmatrix} -\mu \\ \lambda \\ 0 \end{pmatrix} = -\mu\vec{i} + \lambda\vec{j} $$
+        <p>Donc, le moment total en O est :</p>
+        $$ \vec{M}(O) = (0 + 2 - \mu)\vec{i} + (1 + 0 + \lambda)\vec{j} + (0 - 1 + 0)\vec{k} $$
+        $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) $$
+        <p>Les éléments de réduction de $[T]$ en O sont :</p>
+        $$ [T]_O = \{\vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu), \vec{M}(O) = (2 - \mu, 1 + \lambda, -1)\} $$
+        <section>
+            <h3>1) Déterminer $(\lambda, \mu, \nu)$ pour que [T] soit un couple et trouver son moment ?</h3>
+            <p><strong>Condition :</strong> Le torseur [T] est un couple si sa résultante est nulle ($\vec{R} = \vec{0}$) et son moment est non nul ($\vec{M}(O) \ne \vec{0}$).</p>
+            $$ \vec{R} = \vec{0} \implies (2 + \lambda, 2 + \mu, 1 + \nu) = (0,0,0) $$
+            <p>Cela donne le système :</p>
+            $$ \begin{cases} 2 + \lambda = 0 \implies \lambda = -2 \\ 2 + \mu = 0 \implies \mu = -2 \\ 1 + \nu = 0 \implies \nu = -1 \end{cases} $$
+            <p>Donc, $(\lambda, \mu, \nu) = (-2, -2, -1)$. Vérifions que le moment n'est pas nul pour ces valeurs :</p>
+            $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - (-2), 1 + (-2), -1) $$
+            $$ = (4, -1, -1) $$
+            <p>Comme $\vec{M}(O) = (4, -1, -1) \ne \vec{0}$, le torseur [T] est bien un couple. Le moment du couple est constant et égal à $\vec{M}(O)$.</p>
+            <p><strong>Résultat :</strong> Pour que [T] soit un couple, il faut que $(\lambda, \mu, \nu) = (-2, -2, -1)$. Le moment du couple est $\vec{M} = (4, -1, -1)$.</p>
+        </section>
+        <section>
+            <h3>2) Déterminer la relation que doit lier $\lambda, \mu$ et $\nu$ pour que [T] soit un glisseur ?</h3>
+            <p><strong>Condition :</strong> Le torseur [T] est un glisseur si son automoment (invariant scalaire) est nul ($I = \vec{R} \cdot \vec{M}(O) = 0$) et sa résultante est non nulle ($\vec{R} \ne \vec{0}$).</p>
+            $$ I = \vec{R} \cdot \vec{M}(O) = (2 + \lambda, 2 + \mu, 1 + \nu) \cdot (2 - \mu, 1 + \lambda, -1) = 0 $$
+            <p>Développons le produit scalaire :</p>
+            $$ (2 + \lambda)(2 - \mu) + (2 + \mu)(1 + \lambda) + (1 + \nu)(-1) = 0 $$
+            $$ (4 - 2\mu + 2\lambda - \lambda\mu) + (2 + 2\lambda + \mu + \lambda\mu) + (-1 - \nu) = 0 $$
+            <p>Regroupons les termes :</p>
+            $$ (4 + 2 - 1) + (2\lambda + 2\lambda) + (-2\mu + \mu) + (-\lambda\mu + \lambda\mu) - \nu = 0 $$
+            $$ 5 + 4\lambda - \mu - \nu = 0 $$
+            <p>La relation liant $\lambda, \mu, \nu$ est $4\lambda - \mu - \nu + 5 = 0$. Il faut aussi s'assurer que $\vec{R} \ne \vec{0}$, c'est-à-dire que $(\lambda, \mu, \nu) \ne (-2, -2, -1)$. La condition $4\lambda - \mu - \nu + 5 = 0$ pour $(\lambda, \mu, \nu) = (-2, -2, -1)$ donne $4(-2) - (-2) - (-1) + 5 = -8 + 2 + 1 + 5 = 0$. Donc, le cas du couple satisfait aussi cette relation. Pour que ce soit spécifiquement un glisseur, il faut $\vec{R} \ne \vec{0}$.</p>
+            <p><strong>Résultat :</strong> La relation est $4\lambda - \mu - \nu + 5 = 0$ avec la condition supplémentaire que $(\lambda, \mu, \nu) \ne (-2, -2, -1)$.</p>
+        </section>
+        <section>
+             <h3>3) Dans le cas où $(\lambda, \mu, \nu) = (-2, 0, -1)$, trouver les équations de l'axe central de [T].</h3>
+             <p>Calculons les éléments de réduction pour $(\lambda, \mu, \nu) = (-2, 0, -1)$:</p>
+             $$ \vec{R} = (2 + \lambda, 2 + \mu, 1 + \nu) = (2 - 2, 2 + 0, 1 - 1) = (0, 2, 0) = 2\vec{j} $$
+             $$ \vec{M}(O) = (2 - \mu, 1 + \lambda, -1) = (2 - 0, 1 - 2, -1) = (2, -1, -1) $$
+             <p>Vérifions l'automoment :</p>
+             $$ I = \vec{R} \cdot \vec{M}(O) = (0, 2, 0) \cdot (2, -1, -1) = 0(2) + 2(-1) + 0(-1) = -2 $$
+             <p>Comme $I \ne 0$ et $\vec{R} \ne \vec{0}$, le torseur est un torseur général (non glisseur, non couple).</p>
+             <p>L'axe central ($\Delta$) est la droite passant par le point $P_0$ le plus proche de O et dirigée par $\vec{R}$.</p>
+             $$ \vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}(O)}{\|\vec{R}\|^2} $$
+             $$ \vec{R} \wedge \vec{M}(O) = \begin{pmatrix} 0 \\ 2 \\ 0 \end{pmatrix} \wedge \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix} = \begin{pmatrix} (2)(-1) - (0)(-1) \\ (0)(2) - (0)(-1) \\ (0)(-1) - (2)(2) \end{pmatrix} = \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} $$
+              <p> $\|\vec{R}\|^2 = 0^2 + 2^2 + 0^2 = 4$ </p>
+            $$ \vec{OP}_0 = \frac{1}{4} \begin{pmatrix} -2 \\ 0 \\ -4 \end{pmatrix} = \begin{pmatrix} -1/2 \\ 0 \\ -1 \end{pmatrix} $$
+            <p>Le point $P_0$ a pour coordonnées $(-1/2, 0, -1)$. L'axe central ($\Delta$) passe par $P_0(-1/2, 0, -1)$ et a pour vecteur directeur $\vec{R} = (0, 2, 0)$ (ou simplement $\vec{j} = (0, 1, 0)$). L'équation paramétrique de l'axe central est :</p>
+            $$ \begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} -1/2 \\ 0 \\ -1 \end{pmatrix} + t \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix} \quad (t \in \mathbb{R}) $$
+            <p>Les équations cartésiennes sont obtenues en éliminant $t$ :</p>
+            $$ \begin{cases} x = -1/2 \\ z = -1 \end{cases} $$
+            <p>(La variable $y$ peut prendre n'importe quelle valeur).</p>
+            <p><strong>Résultat :</strong> Les équations de l'axe central de [T] sont $x = -1/2$ et $z = -1$.</p>
+        </section>
+        <section>
+            <h3>4) Que peut-on dire de la direction de l'axe central ?</h3>
+            <p><strong>Concept :</strong> La direction de l'axe central d'un torseur est toujours donnée par le vecteur résultante $\vec{R}$, à condition que $\vec{R} \ne \vec{0}$.</p>
+            <p>Dans le cas de la question 3, la résultante est $\vec{R} = (0, 2, 0) = 2\vec{j}$. La direction de l'axe central est donc celle du vecteur $\vec{j}$.</p>
+            <p><strong>Résultat :</strong> La direction de l'axe central est celle de l'axe des ordonnées (l'axe Oy). Ceci est cohérent avec les équations cartésiennes trouvées ($x = -1/2, z = -1$), qui décrivent une droite parallèle à l'axe Oy.</p>
+        </section>
+
+</body>
+</html>

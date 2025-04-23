@@ -12,9 +12,8 @@
             processEscapes: true,
             processEnvironments: true,
             macros: {
-              vec: ['\\overrightarrow{#1}', 1],
-              mat: ['\\mathbf{#1}', 1],
-              T: ['^{\mathsf{T}}']
+              vec: ['\\overrightarrow{#1}', 1], // Kept from your original code
+              mat: ['\\mathbf{#1}', 1]          // For identity matrix I if needed
             }
           },
           options: {
@@ -49,7 +48,7 @@
 </head>
 <body>
 
-    <h1>Solution Figure 1.5 : Corps composé de trois tiges dans le plan XY</h1>
+    <h1>Figure 1.5 : Corps composé de trois tiges dans le plan XY</h1>
 
     <div class="figure-placeholder">figure5.png</div>
     <p class="caption">FIGURE 5 - Corps composé de trois tiges dans le plan XY</p>
@@ -62,18 +61,28 @@
         <li><strong>Théorème de Huygens :</strong> Utilisé pour chaque segment pour trouver $[I_O]_i$ à partir de $[I_{G_i}]$. $[I_O]_i = [I_{G_i}] + [I_{O/G_i}]$.</li>
         <li><strong>Plan de symétrie :</strong> Le corps est dans le plan $z = 0$, qui est un plan de symétrie matérielle. Donc, $E = I_{xz} = 0$ et $F = I_{yz} = 0$. Le produit d'inertie $D = I_{xy}$ n'est généralement pas nul car il n'y a pas de symétrie par rapport aux plans $x = 0$ ou $y = 0$.</li>
         <li><strong>Corps linéique :</strong> Chaque segment est modélisé comme un corps linéique ($dm = \lambda dl$).</li>
-        <li><strong>Tenseur d'une tige inclinée :</strong> Pour une tige de masse $M$, longueur $L$, dont l'orientation est donnée par le vecteur unitaire $\vec{u}$, son tenseur d'inertie par rapport à son centre $G$ est $[I_G] = \frac{ML^2}{12} (\mat{I} - \vec{u} \otimes \vec{u})$, où $\mat{I}$ est la matrice identité et $\otimes$ est le produit tensoriel (dyadique).</li>
+        <li><strong>Tenseur d'une tige inclinée :</strong> Pour une tige de masse $M$, longueur $L$, dont l'orientation est donnée par le vecteur unitaire $\vec{u}$, son tenseur d'inertie par rapport à son centre G est $[I_G] = \frac{ML^2}{12} (\mat{I} - \vec{u} \otimes \vec{u})$, où $\mat{I}$ est la matrice identité et $\vec{u} \otimes \vec{u}$ est le produit tensoriel (dyadique) de $\vec{u}$ avec lui-même.</li>
     </ul>
 
     <h2>Géométrie et Décomposition :</h2>
     <p>Le corps est formé de 3 segments de tiges homogènes (densité $\lambda$) dans le plan $z = 0$.</p>
     <ul>
-        <li><strong>Seg 1 (AB) :</strong> de $A = \begin{pmatrix} 0 \\ a \\ 0 \end{pmatrix}$ à $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$. Orientation : Parallèle à OX ($\vec{u}_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \end{pmatrix}$). Longueur $L_1 = a$. Masse $M_1 = \lambda a$. Centre de masse $G_1 = (A+B)/2 = \begin{pmatrix} a/2 \\ a \\ 0 \end{pmatrix}$.</li>
-        <li><strong>Seg 2 (BC) :</strong> de $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$ à $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$. Orientation : Parallèle à OY ($\vec{u}_2 = \begin{pmatrix} 0 \\ 1 \\ 0 \end{pmatrix}$). Longueur $L_2 = a$. Masse $M_2 = \lambda a$. Centre de masse $G_2 = (B+C)/2 = \begin{pmatrix} a \\ 3a/2 \\ 0 \end{pmatrix}$.</li>
+        <li><strong>Seg 1 (AB) :</strong> de $A = \begin{pmatrix} 0 \\ a \\ 0 \end{pmatrix}$ à $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$.
+            <ul><li>Orientation : Parallèle à OX.</li>
+            <li>Longueur $L_1 = a$.</li>
+            <li>Masse $M_1 = \lambda a$.</li>
+            <li>Centre de masse $G_1 = (A+B)/2 = \begin{pmatrix} a/2 \\ a \\ 0 \end{pmatrix}$.</li></ul>
+        </li>
+        <li><strong>Seg 2 (BC) :</strong> de $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$ à $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$.
+            <ul><li>Orientation : Parallèle à OY.</li>
+            <li>Longueur $L_2 = a$.</li>
+            <li>Masse $M_2 = \lambda a$.</li>
+            <li>Centre de masse $G_2 = (B+C)/2 = \begin{pmatrix} a \\ 3a/2 \\ 0 \end{pmatrix}$.</li></ul>
+        </li>
         <li><strong>Seg 3 (CD) :</strong> de $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$ à $D = \begin{pmatrix} a(1-\sqrt{2}) \\ a(2+\sqrt{2}) \\ 0 \end{pmatrix}$.
             <ul>
                 <li>Vecteur $\vec{CD} = D - C = \begin{pmatrix} -a\sqrt{2} \\ a\sqrt{2} \\ 0 \end{pmatrix}$.</li>
-                <li>Longueur $L_3 = ||\vec{CD}|| = \sqrt{(-a\sqrt{2})^2 + (a\sqrt{2})^2 + 0^2} = \sqrt{2a^2 + 2a^2} = \sqrt{4a^2} = 2a$.</li>
+                <li>Longueur $L_3 = ||\vec{CD}|| = \sqrt{(-a\sqrt{2})^2 + (a\sqrt{2})^2 + 0^2} = \sqrt{2a^2 + 2a^2} = 2a$.</li>
                 <li>Masse $M_3 = \lambda L_3 = 2\lambda a$.</li>
                 <li>Centre de masse $G_3 = (C+D)/2 = \begin{pmatrix} (a + a - a\sqrt{2})/2 \\ (2a + 2a + a\sqrt{2})/2 \\ 0 \end{pmatrix} = \begin{pmatrix} a(1 - \sqrt{2}/2) \\ a(2 + \sqrt{2}/2) \\ 0 \end{pmatrix}$.</li>
                 <li>Vecteur unitaire $\vec{u}_3 = \vec{CD}/L_3 = \begin{pmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{pmatrix}$. (Angle de 135° avec OX).</li>
@@ -83,76 +92,86 @@
     </ul>
 
     <h2>Méthode 1 : Additivité et Théorème de Huygens</h2>
+    <p>On calcule $[I_O]_i = [I_{G_i}] + [I_{O/G_i}]$ pour chaque segment $i = 1, 2, 3$.</p>
 
     <h3>Segment 1 (AB) : Parallèle à OX</h3>
      <ul>
-        <li>$G_1 = (a/2, a, 0)$, $M_1 = \lambda a$, $L_1 = a$.</li>
-        <li>$[I_{G1}] = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & \lambda a^3 / 12 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix}$.</li>
-        <li>Transport O/G1 ($x_G=a/2, y_G=a, z_G=0$):
+        <li>$M_1 = \lambda a, L_1 = a, G_1 = (a/2, a, 0)$.</li>
+        <li>Tenseur $[I_{G1}]$ (cf. Fig 1.1) :
+            $$ [I_{G1}] = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & \lambda a^3 / 12 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
+        <li>Transport $[I_{O/G1}]$ : $x_G=a/2, y_G=a, z_G=0$.
             $$ [I_{O/G1}] = M_1 \begin{pmatrix} a^2+0 & -(a/2)a & 0 \\ -(a/2)a & (a/2)^2+0 & 0 \\ 0 & 0 & (a/2)^2+a^2 \end{pmatrix} = \lambda a \begin{pmatrix} a^2 & -a^2/2 & 0 \\ -a^2/2 & a^2/4 & 0 \\ 0 & 0 & 5a^2/4 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/4 & 0 \\ 0 & 0 & 5\lambda a^3/4 \end{pmatrix} $$
         </li>
-        <li>$[I_O]_1 = [I_{G1}] + [I_{O/G1}]$:
-            $$ [I_O]_1 = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/12 + \lambda a^3/4 & 0 \\ 0 & 0 & \lambda a^3/12 + 5\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} $$
+        <li>Tenseur $[I_O]_1$:
+            $$ [I_O]_1 = [I_{G1}] + [I_{O/G1}] = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/12 + \lambda a^3/4 & 0 \\ 0 & 0 & \lambda a^3/12 + 5\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} $$
         </li>
     </ul>
 
     <h3>Segment 2 (BC) : Parallèle à OY</h3>
      <ul>
-        <li>$G_2 = (a, 3a/2, 0)$, $M_2 = \lambda a$, $L_2 = a$.</li>
-        <li>$[I_{G2}] = \begin{pmatrix} M_2 a^2 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_2 a^2 / 12 \end{pmatrix} = \begin{pmatrix} \lambda a^3 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix}$.</li>
-        <li>Transport O/G2 ($x_G=a, y_G=3a/2, z_G=0$):
+        <li>$M_2 = \lambda a, L_2 = a, G_2 = (a, 3a/2, 0)$.</li>
+        <li>Tenseur $[I_{G2}]$ (tige // OY) :
+            $$ [I_{G2}] = \begin{pmatrix} M_2 a^2 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_2 a^2 / 12 \end{pmatrix} = \begin{pmatrix} \lambda a^3 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
+        <li>Transport $[I_{O/G2}]$ : $x_G=a, y_G=3a/2, z_G=0$.
             $$ [I_{O/G2}] = M_2 \begin{pmatrix} (3a/2)^2+0 & -a(3a/2) & 0 \\ -a(3a/2) & a^2+0 & 0 \\ 0 & 0 & a^2+(3a/2)^2 \end{pmatrix} = \lambda a \begin{pmatrix} 9a^2/4 & -3a^2/2 & 0 \\ -3a^2/2 & a^2 & 0 \\ 0 & 0 & 13a^2/4 \end{pmatrix} = \begin{pmatrix} 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 13\lambda a^3/4 \end{pmatrix} $$
         </li>
-        <li>$[I_O]_2 = [I_{G2}] + [I_{O/G2}]$:
-            $$ [I_O]_2 = \begin{pmatrix} \lambda a^3/12 + 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & \lambda a^3/12 + 13\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} $$
+        <li>Tenseur $[I_O]_2$:
+            $$ [I_O]_2 = [I_{G2}] + [I_{O/G2}] = \begin{pmatrix} \lambda a^3/12 + 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & \lambda a^3/12 + 13\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} $$
         </li>
     </ul>
 
     <h3>Segment 3 (CD) : Orienté à 135° - Méthode par Rotation</h3>
+     <p>Nous calculons le tenseur d'inertie $[I_O]_3$ pour le segment CD en utilisant la rotation de base et le théorème de Huygens.</p>
+     <h4>Caractéristiques du segment CD</h4>
      <ul>
-        <li>$G_3 = (a(1 - \frac{\sqrt{2}}{2}), a(2 + \frac{\sqrt{2}}{2}), 0)$, $M_3 = 2\lambda a$, $L_3 = 2a$.</li>
-        <h4>Étape 1 : Tenseur d'inertie dans un repère local en G3 ($R'$)</h4>
-        <p>Dans $R'(G_3, \vec{i}', \vec{j}', \vec{k}')$ où $\vec{i}' = \vec{u}_3$ (aligné avec la tige), le tenseur est :</p>
-         $$ [I_{G3}]_{R'} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_3 L_3^2 / 12 & 0 \\ 0 & 0 & M_3 L_3^2 / 12 \end{pmatrix} $$
-         $$ M_3 L_3^2 / 12 = (2\lambda a)(2a)^2 / 12 = (2\lambda a)(4a^2) / 12 = 8\lambda a^3 / 12 = 2\lambda a^3 / 3 $$
-         $$ [I_{G3}]_{R'} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 2\lambda a^3 / 3 & 0 \\ 0 & 0 & 2\lambda a^3 / 3 \end{pmatrix} $$
-        <h4>Étape 2 : Matrice de Rotation</h4>
-        <p>La matrice de passage $P$ du repère global $R(O, \vec{i}, \vec{j}, \vec{k})$ au repère local $R'(G_3, \vec{i}', \vec{j}', \vec{k}')$ a pour colonnes les vecteurs de base de $R'$ exprimés dans $R$.<br/>
-        $\vec{i}' = \vec{u}_3 = (-1/\sqrt{2}, 1/\sqrt{2}, 0)\T$. <br/>
-        $\vec{k}' = \vec{k} = (0, 0, 1)\T$. <br/>
-        $\vec{j}' = \vec{k}' \times \vec{i}' = (0, 0, 1)\T \times (-1/\sqrt{2}, 1/\sqrt{2}, 0)\T = (-1/\sqrt{2}, -1/\sqrt{2}, 0)\T$.</p>
-         $$ P = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
-         <p>Cette matrice est orthogonale ($P\T = P^{-1}$).</p>
-        <h4>Étape 3 : Rotation du Tenseur vers le Repère Global (en G3)</h4>
-        <p>La formule est $[I_{G3}]_R = P [I_{G3}]_{R'} P\T$.</p>
-         $$ [I_{G3}]_R = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & \frac{2\lambda a^3}{3} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} \begin{pmatrix} -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
-         $$ = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ -\frac{2\lambda a^3}{3\sqrt{2}} & -\frac{2\lambda a^3}{3\sqrt{2}} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} $$
-         $$ = \begin{pmatrix} \frac{2\lambda a^3}{6} & \frac{2\lambda a^3}{6} & 0 \\ \frac{2\lambda a^3}{6} & \frac{2\lambda a^3}{6} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} = \lambda a^3 \begin{pmatrix} 1/3 & 1/3 & 0 \\ 1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} $$
-        <h4>Étape 4 : Terme de Huygens</h4>
-        <p> $x_G = a(1 - \frac{\sqrt{2}}{2})$, $y_G = a(2 + \frac{\sqrt{2}}{2})$, $z_G = 0$. $M_3 = 2\lambda a$.</p>
-         <ul>
-             <li>$y_G^2 + z_G^2 = a^2(2 + \frac{\sqrt{2}}{2})^2 = a^2(4 + 2\sqrt{2} + 1/2) = a^2(4.5 + 2\sqrt{2})$</li>
-             <li>$x_G^2 + z_G^2 = a^2(1 - \frac{\sqrt{2}}{2})^2 = a^2(1 - \sqrt{2} + 1/2) = a^2(1.5 - \sqrt{2})$</li>
-             <li>$x_G^2 + y_G^2 = a^2(1.5 - \sqrt{2}) + a^2(4.5 + 2\sqrt{2}) = a^2(6 + \sqrt{2})$</li>
-             <li>$-x_G y_G = -a(1 - \frac{\sqrt{2}}{2}) a(2 + \frac{\sqrt{2}}{2}) = -a^2(2 + \frac{\sqrt{2}}{2} - \sqrt{2} - 1/2) = -a^2(1.5 - \frac{\sqrt{2}}{2})$</li>
-         </ul>
-         $$ [I_{O/G3}] = M_3 \begin{pmatrix} y_G^2+z_G^2 & -x_G y_G & 0 \\ -x_G y_G & x_G^2+z_G^2 & 0 \\ 0 & 0 & x_G^2+y_G^2 \end{pmatrix} $$
-          $$ = 2\lambda a \begin{pmatrix} a^2(4.5 + 2\sqrt{2}) & -a^2(1.5 - \frac{\sqrt{2}}{2}) & 0 \\ -a^2(1.5 - \frac{\sqrt{2}}{2}) & a^2(1.5 - \sqrt{2}) & 0 \\ 0 & 0 & a^2(6 + \sqrt{2}) \end{pmatrix} $$
-          $$ = \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
-        <h4>Étape 5 : Tenseur d'Inertie Final pour CD en O</h4>
-         $$ [I_O]_3 = [I_{G3}]_R + [I_{O/G3}] $$
-         $$ = \lambda a^3 \begin{pmatrix} 1/3 & 1/3 & 0 \\ 1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} + \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
-         $$ = \lambda a^3 \begin{pmatrix} 1/3 + 9 + 4\sqrt{2} & 1/3 - 3 + \sqrt{2} & 0 \\ 1/3 - 3 + \sqrt{2} & 1/3 + 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 2/3 + 12 + 2\sqrt{2} \end{pmatrix} $$
-         $$ = \lambda a^3 \begin{pmatrix} 28/3 + 4\sqrt{2} & -8/3 + \sqrt{2} & 0 \\ -8/3 + \sqrt{2} & 10/3 - 2\sqrt{2} & 0 \\ 0 & 0 & 38/3 + 2\sqrt{2} \end{pmatrix} $$
-     </ul>
+        <li>Extrémités : $C = (a, 2a, 0)$, $D = (a(1 - \sqrt{2}), a(2 + \sqrt{2}), 0)$</li>
+        <li>Longueur : $L_3 = ||\vec{CD}|| = ||(−a\sqrt{2}, a\sqrt{2}, 0)|| = \sqrt{2a^2 + 2a^2} = 2a$</li>
+        <li>Masse : $M_3 = \lambda L_3 = 2\lambda a$</li>
+        <li>Centre de masse : $G_3 = (C+D)/2 = (a(1 - \frac{\sqrt{2}}{2}), a(2 + \frac{\sqrt{2}}{2}), 0)$</li>
+        <li>Vecteur directeur unitaire (de C vers D) : $\vec{u}_3 = \frac{\vec{CD}}{L_3} = \frac{1}{2a}(-a\sqrt{2}, a\sqrt{2}, 0) = (-\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0)$. Ceci correspond à un angle de 135° par rapport à l'axe Ox.</li>
+    </ul>
+     <h4>Étape 1 : Tenseur d'inertie dans un repère local en G3 ($R'$)</h4>
+     <p>Considérons un repère local $R'(G_3, \vec{i}', \vec{j}', \vec{k}')$ où $\vec{i}' = \vec{u}_3$ est aligné avec la tige, $\vec{k}' = \vec{k}$ (axe Oz), et $\vec{j}' = \vec{k}' \times \vec{i}' = (0, 0, 1) \times (-\frac{1}{\sqrt{2}}, \frac{1}{\sqrt{2}}, 0) = (-\frac{1}{\sqrt{2}}, -\frac{1}{\sqrt{2}}, 0)$. Dans ce repère local $R'$, la tige est alignée avec l'axe $G_3x'$. Pour une tige mince de masse $M$ et longueur $L$ centrée à l'origine le long de l'axe x', son tenseur d'inertie est :</p>
+        $$ [I_{G3}]_{R'} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_3 L_3^2 / 12 & 0 \\ 0 & 0 & M_3 L_3^2 / 12 \end{pmatrix} $$
+        Avec $M_3 = 2\lambda a$ et $L_3 = 2a$:
+        $$ \frac{M_3 L_3^2}{12} = \frac{(2\lambda a)(2a)^2}{12} = \frac{2\lambda a \cdot 4a^2}{12} = \frac{8\lambda a^3}{12} = \frac{2\lambda a^3}{3} $$
+        Donc,
+        $$ [I_{G3}]_{R'} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 2\lambda a^3 / 3 & 0 \\ 0 & 0 & 2\lambda a^3 / 3 \end{pmatrix} $$
+     <h4>Étape 2 : Matrice de Rotation</h4>
+     <p>La matrice de passage P du repère global $R(O,\vec{i},\vec{j},\vec{k})$ au repère local $R'(G_3,\vec{i}',\vec{j}',\vec{k}')$ a pour colonnes les vecteurs de base de $R'$ exprimés dans $R$.</p>
+        $$ P = [\vec{i}' | \vec{j}' | \vec{k}']_R = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+        <p>Cette matrice est orthogonale ($P^T = P^{-1}$).</p>
+     <h4>Étape 3 : Rotation du Tenseur vers le Repère Global (en G3)</h4>
+     <p>La formule de changement de base pour le tenseur d'inertie est $[I_{G3}]_R = P [I_{G3}]_{R'} P^T$.</p>
+        $$ [I_{G3}]_R = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & \frac{2\lambda a^3}{3} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} \begin{pmatrix} -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+        $$ = \begin{pmatrix} -1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ - \frac{2\lambda a^3}{3\sqrt{2}} & - \frac{2\lambda a^3}{3\sqrt{2}} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} $$
+        $$ = \begin{pmatrix} \frac{2\lambda a^3}{6} & \frac{2\lambda a^3}{6} & 0 \\ \frac{2\lambda a^3}{6} & \frac{2\lambda a^3}{6} & 0 \\ 0 & 0 & \frac{2\lambda a^3}{3} \end{pmatrix} = \lambda a^3 \begin{pmatrix} 1/3 & 1/3 & 0 \\ 1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} $$
+        <p>Ce $[I_{G3}]_R$ est le tenseur d'inertie de la tige par rapport à son centre de masse G3, mais exprimé dans la base globale $(\vec{i}, \vec{j}, \vec{k})$.</p>
+     <h4>Étape 4 : Terme de Huygens</h4>
+     <p>Le terme de transport $[I_{O/G3}]$ est le tenseur d'inertie d'une masse ponctuelle $M_3$ située en $G_3$, par rapport à O. Avec $x_G = a(1 - \frac{\sqrt{2}}{2})$, $y_G = a(2 + \frac{\sqrt{2}}{2})$, $z_G = 0$.</p>
+        <ul>
+            <li>$y_G^2 + z_G^2 = a^2(2 + \frac{\sqrt{2}}{2})^2 = a^2(4 + 2\sqrt{2} + 1/2) = a^2(4.5 + 2\sqrt{2})$</li>
+            <li>$x_G^2 + z_G^2 = a^2(1 - \frac{\sqrt{2}}{2})^2 = a^2(1 - \sqrt{2} + 1/2) = a^2(1.5 - \sqrt{2})$</li>
+            <li>$x_G^2 + y_G^2 = a^2(1.5 - \sqrt{2}) + a^2(4.5 + 2\sqrt{2}) = a^2(6 + \sqrt{2})$</li>
+            <li>$-x_G y_G = -a(1 - \frac{\sqrt{2}}{2}) a(2 + \frac{\sqrt{2}}{2}) = -a^2(2 + \frac{\sqrt{2}}{2} - \sqrt{2} - \frac{1}{2}) = -a^2(1.5 - \frac{\sqrt{2}}{2})$</li>
+        </ul>
+        $$ [I_{O/G3}] = M_3 \begin{pmatrix} y_G^2+z_G^2 & -x_G y_G & 0 \\ -x_G y_G & x_G^2+z_G^2 & 0 \\ 0 & 0 & x_G^2+y_G^2 \end{pmatrix} $$
+        $$ = 2\lambda a \begin{pmatrix} a^2(4.5 + 2\sqrt{2}) & -a^2(1.5 - \frac{\sqrt{2}}{2}) & 0 \\ -a^2(1.5 - \frac{\sqrt{2}}{2}) & a^2(1.5 - \sqrt{2}) & 0 \\ 0 & 0 & a^2(6 + \sqrt{2}) \end{pmatrix} $$
+        $$ = \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
+     <h4>Étape 5 : Tenseur d'Inertie Final pour CD en O</h4>
+     $$ [I_O]_3 = [I_{G3}]_R + [I_{O/G3}] $$
+     $$ = \lambda a^3 \begin{pmatrix} 1/3 & 1/3 & 0 \\ 1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} + \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
+     $$ = \lambda a^3 \begin{pmatrix} \frac{1}{3} + 9 + 4\sqrt{2} & \frac{1}{3} - 3 + \sqrt{2} & 0 \\ \frac{1}{3} - 3 + \sqrt{2} & \frac{1}{3} + 3 - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{2}{3} + 12 + 2\sqrt{2} \end{pmatrix} $$
+     $$ = \lambda a^3 \begin{pmatrix} \frac{28}{3} + 4\sqrt{2} & -\frac{8}{3} + \sqrt{2} & 0 \\ -\frac{8}{3} + \sqrt{2} & \frac{10}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{38}{3} + 2\sqrt{2} \end{pmatrix} $$
 
     <h2>Tenseur Total :</h2>
-    <p> $[I_O] = [I_O]_1 + [I_O]_2 + [I_O]_3 $. Avec $E=F=0$.</p>
-    <h3>Calcul des composantes A, B, D, C :</h3>
+    <p> $[I_O] = [I_O]_1 + [I_O]_2 + [I_O]_3 $.</p>
+     $$ [I_O] = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} + \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} + \lambda a^3 \begin{pmatrix} \frac{28}{3} + 4\sqrt{2} & -\frac{8}{3} + \sqrt{2} & 0 \\ -\frac{8}{3} + \sqrt{2} & \frac{10}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{38}{3} + 2\sqrt{2} \end{pmatrix} $$
+    <p>Calcul des composantes A, B, D, C :</p>
     <ul>
-        <li> $A = A_1 + A_2 + A_3 = \lambda a^3 + \frac{7\lambda a^3}{3} + \lambda a^3(\frac{28}{3} + 4\sqrt{2}) = \lambda a^3 (1 + \frac{7}{3} + \frac{28}{3} + 4\sqrt{2}) = \lambda a^3 (\frac{3+7+28}{3} + 4\sqrt{2}) = \lambda a^3 (\frac{38}{3} + 4\sqrt{2})$ </li>
-        <li> $B = B_1 + B_2 + B_3 = \frac{\lambda a^3}{3} + \lambda a^3 + \lambda a^3(\frac{10}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{1}{3} + 1 + \frac{10}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{1+3+10}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{14}{3} - 2\sqrt{2})$ </li>
-        <li> $-D = (-D)_1 + (-D)_2 + (-D)_3 = -\frac{\lambda a^3}{2} - \frac{3\lambda a^3}{2} + \lambda a^3(-\frac{8}{3} + \sqrt{2}) = \lambda a^3 (-\frac{1}{2} - \frac{3}{2} - \frac{8}{3} + \sqrt{2}) = \lambda a^3 (-2 - \frac{8}{3} + \sqrt{2}) = \lambda a^3 (\frac{-6-8}{3} + \sqrt{2}) = \lambda a^3 (-\frac{14}{3} + \sqrt{2})$ <br/>
+        <li> $A = A_1 + A_2 + A_3 = \lambda a^3 + \frac{7\lambda a^3}{3} + \lambda a^3(\frac{28}{3} + 4\sqrt{2}) = \lambda a^3 (\frac{3+7+28}{3} + 4\sqrt{2}) = \lambda a^3 (\frac{38}{3} + 4\sqrt{2})$ </li>
+        <li> $B = B_1 + B_2 + B_3 = \frac{\lambda a^3}{3} + \lambda a^3 + \lambda a^3(\frac{10}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{1+3+10}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{14}{3} - 2\sqrt{2})$ </li>
+        <li> $-D = (-D)_1 + (-D)_2 + (-D)_3 = -\frac{\lambda a^3}{2} - \frac{3\lambda a^3}{2} + \lambda a^3(-\frac{8}{3} + \sqrt{2}) = \lambda a^3 (-\frac{4}{2} - \frac{8}{3} + \sqrt{2}) = \lambda a^3 (\frac{-6-8}{3} + \sqrt{2}) = \lambda a^3 (-\frac{14}{3} + \sqrt{2})$ <br/>
            $ \implies D = \lambda a^3 (\frac{14}{3} - \sqrt{2}) $</li>
         <li> $C = C_1 + C_2 + C_3 = \frac{4\lambda a^3}{3} + \frac{10\lambda a^3}{3} + \lambda a^3(\frac{38}{3} + 2\sqrt{2}) = \lambda a^3 (\frac{4+10+38}{3} + 2\sqrt{2}) = \lambda a^3 (\frac{52}{3} + 2\sqrt{2})$ </li>
     </ul>
@@ -166,33 +185,30 @@
     <hr style="margin: 2em 0;">
 
     <h2>Méthode 2 : Calcul direct par intégration</h2>
-    <p>Calculons A, B, D pour chaque segment directement.</p>
-    <h3>Segment 1 (AB): $y=a, x \in [0, a]$, $dm = \lambda dx$</h3>
-    $$ A_1 = \int_0^a (a^2+0^2)\lambda dx = \lambda a^2 [x]_0^a = \lambda a^3 $$
-    $$ B_1 = \int_0^a (x^2+0^2)\lambda dx = \lambda [x^3/3]_0^a = \lambda a^3/3 $$
+    <p>Calculons $A = \int (y^2 + z^2)dm$, $B = \int (x^2 + z^2)dm$, $D = \int xy dm$. ($z=0, E=F=0$). $dm = \lambda dl$.</p>
+    <h3>Segment 1 (AB): $y=a, x \in [0, a]$, $dl = dx$. $dm = \lambda dx$.</h3>
+    $$ A_1 = \int_0^a (a^2 + 0^2)\lambda dx = \lambda a^2[x]_0^a = \lambda a^3 $$
+    $$ B_1 = \int_0^a (x^2 + 0^2)\lambda dx = \lambda [x^3/3]_0^a = \lambda a^3/3 $$
     $$ D_1 = \int_0^a x(a)\lambda dx = \lambda a [x^2/2]_0^a = \lambda a^3/2 $$
-    <h3>Segment 2 (BC): $x=a, y \in [a, 2a]$, $dm = \lambda dy$</h3>
-    $$ A_2 = \int_a^{2a} (y^2+0^2)\lambda dy = \lambda [y^3/3]_a^{2a} = \lambda (\frac{8a^3}{3} - \frac{a^3}{3}) = 7\lambda a^3/3 $$
-    $$ B_2 = \int_a^{2a} (a^2+0^2)\lambda dy = \lambda a^2 [y]_a^{2a} = \lambda a^2 (2a - a) = \lambda a^3 $$
+    <h3>Segment 2 (BC): $x=a, y \in [a, 2a]$, $dl = dy$. $dm = \lambda dy$.</h3>
+    $$ A_2 = \int_a^{2a} (y^2 + 0^2)\lambda dy = \lambda [y^3/3]_a^{2a} = \lambda (\frac{8a^3}{3} - \frac{a^3}{3}) = 7\lambda a^3/3 $$
+    $$ B_2 = \int_a^{2a} (a^2 + 0^2)\lambda dy = \lambda a^2 [y]_a^{2a} = \lambda a^2 (2a - a) = \lambda a^3 $$
     $$ D_2 = \int_a^{2a} a(y)\lambda dy = \lambda a [y^2/2]_a^{2a} = \lambda a (\frac{4a^2}{2} - \frac{a^2}{2}) = 3\lambda a^3/2 $$
-    <h3>Segment 3 (CD): Paramétrisation par abscisse curviligne $s \in [0, 2a]$ depuis C.</h3>
-    <p> $ P(s) = C + s \vec{u}_3 = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix} + s \begin{pmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{pmatrix} = \begin{pmatrix} a - s/\sqrt{2} \\ 2a + s/\sqrt{2} \\ 0 \end{pmatrix} $. $dm = \lambda ds$. </p>
+    <h3>Segment 3 (CD): Paramétrisation par l'abscisse curviligne $s \in [0, 2a]$ depuis C.</h3>
+    <p> $ P(s) = C + s \vec{u}_3 = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix} + s \begin{pmatrix} -1/\sqrt{2} \\ 1/\sqrt{2} \\ 0 \end{pmatrix} = \begin{pmatrix} a - s/\sqrt{2} \\ 2a + s/\sqrt{2} \\ 0 \end{pmatrix} $. $x(s) = a - s/\sqrt{2}$, $y(s) = 2a + s/\sqrt{2}$. $dm = \lambda ds$. </p>
     $$ A_3 = \int_0^{2a} y(s)^2 \lambda ds = \lambda \int_0^{2a} (2a + s/\sqrt{2})^2 ds = \lambda \int_0^{2a} (4a^2 + \frac{4as}{\sqrt{2}} + \frac{s^2}{2}) ds $$
-    $$ = \lambda \left[ 4a^2s + \frac{4a s^2}{2\sqrt{2}} + \frac{s^3}{6} \right]_0^{2a} = \lambda \left( 4a^2(2a) + \frac{4a(2a)^2}{2\sqrt{2}} + \frac{(2a)^3}{6} \right) $$
-    $$ = \lambda \left( 8a^3 + \frac{16a^3}{2\sqrt{2}} + \frac{8a^3}{6} \right) = \lambda a^3 \left( 8 + \frac{8}{\sqrt{2}} + \frac{4}{3} \right) = \lambda a^3 \left( 8 + 4\sqrt{2} + \frac{4}{3} \right) = \lambda a^3 \left( \frac{24+12\sqrt{2}+4}{3} \right) = \lambda a^3 \left( \frac{28}{3} + 4\sqrt{2} \right) $$
+    $$ = \lambda \left[ 4a^2s + \frac{4a s^2}{2\sqrt{2}} + \frac{s^3}{6} \right]_0^{2a} = \lambda \left( 8a^3 + \frac{16a^3}{2\sqrt{2}} + \frac{8a^3}{6} \right) = \lambda a^3 \left( \frac{28}{3} + 4\sqrt{2} \right) $$
     $$ B_3 = \int_0^{2a} x(s)^2 \lambda ds = \lambda \int_0^{2a} (a - s/\sqrt{2})^2 ds = \lambda \int_0^{2a} (a^2 - \frac{2as}{\sqrt{2}} + \frac{s^2}{2}) ds $$
-    $$ = \lambda \left[ a^2s - \frac{2a s^2}{2\sqrt{2}} + \frac{s^3}{6} \right]_0^{2a} = \lambda \left( a^2(2a) - \frac{a(2a)^2}{\sqrt{2}} + \frac{(2a)^3}{6} \right) $$
-    $$ = \lambda \left( 2a^3 - \frac{4a^3}{\sqrt{2}} + \frac{8a^3}{6} \right) = \lambda a^3 \left( 2 - 2\sqrt{2} + \frac{4}{3} \right) = \lambda a^3 \left( \frac{6-6\sqrt{2}+4}{3} \right) = \lambda a^3 \left( \frac{10}{3} - 2\sqrt{2} \right) $$
-    $$ D_3 = \int_0^{2a} x(s)y(s) \lambda ds = \lambda \int_0^{2a} (a - s/\sqrt{2})(2a + s/\sqrt{2}) ds = \lambda \int_0^{2a} (2a^2 + \frac{as}{\sqrt{2}} - \frac{2as}{\sqrt{2}} - \frac{s^2}{2}) ds $$
-    $$ = \lambda \int_0^{2a} (2a^2 - \frac{as}{\sqrt{2}} - \frac{s^2}{2}) ds = \lambda \left[ 2a^2s - \frac{a s^2}{2\sqrt{2}} - \frac{s^3}{6} \right]_0^{2a} $$
-    $$ = \lambda \left( 2a^2(2a) - \frac{a (2a)^2}{2\sqrt{2}} - \frac{(2a)^3}{6} \right) = \lambda \left( 4a^3 - \frac{4a^3}{2\sqrt{2}} - \frac{8a^3}{6} \right) = \lambda a^3 \left( 4 - \sqrt{2} - \frac{4}{3} \right) $$
-    $$ = \lambda a^3 \left( \frac{12-3\sqrt{2}-4}{3} \right) = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) $$
+    $$ = \lambda \left[ a^2s - \frac{2a s^2}{2\sqrt{2}} + \frac{s^3}{6} \right]_0^{2a} = \lambda \left( 2a^3 - \frac{4a^3}{\sqrt{2}} + \frac{8a^3}{6} \right) = \lambda a^3 \left( \frac{10}{3} - 2\sqrt{2} \right) $$
+    $$ D_3 = \int_0^{2a} x(s)y(s) \lambda ds = \lambda \int_0^{2a} (a - s/\sqrt{2})(2a + s/\sqrt{2}) ds = \lambda \int_0^{2a} (2a^2 - \frac{as}{\sqrt{2}} - \frac{s^2}{2}) ds $$
+    $$ = \lambda \left[ 2a^2s - \frac{a s^2}{2\sqrt{2}} - \frac{s^3}{6} \right]_0^{2a} = \lambda \left( 4a^3 - \frac{4a^3}{2\sqrt{2}} - \frac{8a^3}{6} \right) = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) $$
 
     <h3>Somme des intégrales :</h3>
-    $$ A = A_1 + A_2 + A_3 = \lambda a^3 + \frac{7\lambda a^3}{3} + \lambda a^3(\frac{28}{3} + 4\sqrt{2}) = \lambda a^3(\frac{3+7+28}{3} + 4\sqrt{2}) = \lambda a^3(\frac{38}{3} + 4\sqrt{2}) $$
-    $$ B = B_1 + B_2 + B_3 = \frac{\lambda a^3}{3} + \lambda a^3 + \lambda a^3(\frac{10}{3} - 2\sqrt{2}) = \lambda a^3(\frac{1+3+10}{3} - 2\sqrt{2}) = \lambda a^3(\frac{14}{3} - 2\sqrt{2}) $$
-    $$ D = D_1 + D_2 + D_3 = \frac{\lambda a^3}{2} + \frac{3\lambda a^3}{2} + \lambda a^3(\frac{8}{3} - \sqrt{2}) = \lambda a^3(\frac{1+3}{2} + \frac{8}{3} - \sqrt{2}) = \lambda a^3(2 + \frac{8}{3} - \sqrt{2}) = \lambda a^3(\frac{6+8}{3} - \sqrt{2}) = \lambda a^3(\frac{14}{3} - \sqrt{2}) $$
-    <p> $E=0, F=0$. $C=A+B$ (Vérifié).</p>
+    $$ A = A_1 + A_2 + A_3 = \lambda a^3 + \frac{7\lambda a^3}{3} + \lambda a^3(\frac{28}{3} + 4\sqrt{2}) = \lambda a^3(\frac{38}{3} + 4\sqrt{2}) $$
+    $$ B = B_1 + B_2 + B_3 = \frac{\lambda a^3}{3} + \lambda a^3 + \lambda a^3(\frac{10}{3} - 2\sqrt{2}) = \lambda a^3(\frac{14}{3} - 2\sqrt{2}) $$
+    $$ D = D_1 + D_2 + D_3 = \frac{\lambda a^3}{2} + \frac{3\lambda a^3}{2} + \lambda a^3(\frac{8}{3} - \sqrt{2}) = \lambda a^3(2 + \frac{8}{3} - \sqrt{2}) = \lambda a^3(\frac{14}{3} - \sqrt{2}) $$
+    <p> $C = A + B = \lambda a^3 (\frac{38}{3} + 4\sqrt{2}) + \lambda a^3 (\frac{14}{3} - 2\sqrt{2}) = \lambda a^3 (\frac{52}{3} + 2\sqrt{2})$ (Vérifié).</p>
+    <p> $E = 0, F = 0$.</p>
 
     <h2>Résultat :</h2>
     <p>Le tenseur d'inertie au point O est :</p>

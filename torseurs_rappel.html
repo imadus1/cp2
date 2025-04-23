@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rappel Torseurs</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+              vec: ["{\\overrightarrow{#1}}", 1]
+            }
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body {
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6;
+            margin: 1em; /* Add margin for content inside iframe */
+        }
+        h1, h2, h3 {
+            font-family: "Computer Modern Sans", sans-serif; /* Imitation LaTeX font */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+        }
+        h1 { font-size: 1.8em; } /* Slightly smaller for iframe */
+        h2 { font-size: 1.5em; }
+        h3 { font-size: 1.2em; }
+        mjx-container { /* Ensure MathJax output isn't shrunk */
+            font-size: 105% !important;
+            text-align: left !important;
+        }
+        .math-display {
+             margin-top: 1em;
+             margin-bottom: 1em;
+        }
+        .example {
+            border-left: 3px solid #007bff; padding-left: 1em; margin: 1em 0; font-style: italic; color: #333;
+        }
+        .definition {
+            border: 1px solid #eee; background-color: #f9f9f9; padding: 0.8em; margin: 1em 0;
+        }
+        table { border-collapse: collapse; width: 95%; margin: 1em auto; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+    <!-- Content copied directly from TorseursRappels.html -->
+    <h1>Les Torseurs en Mécanique</h1>
+
+    <h2>Introduction</h2>
+    <p>
+        Les torseurs sont des outils mathématiques fondamentaux en mécanique, particulièrement utiles pour décrire les actions mécaniques (forces et moments) et les mouvements (vitesses et rotations) des solides indéformables. Ils permettent de représenter de manière concise et élégante des champs de vecteurs spécifiques, simplifiant l'écriture et la manipulation des équations de la statique et de la dynamique. Un torseur encapsule deux informations vectorielles : une résultante et un moment.
+    </p>
+    <p class="example">
+        Exemples d'utilisation : Torseur cinématique (décrit les vitesses d'un solide), torseur des actions mécaniques (décrit les forces et couples appliqués à un solide), torseur cinétique (décrit la quantité de mouvement et le moment cinétique), torseur dynamique.
+    </p>
+
+    <h2>1. Concepts Préliminaires : Moment d'un Vecteur</h2>
+
+    <h3>1.1. Moment d'un vecteur par rapport à un point</h3>
+    <div class="definition">
+        Le moment \( \vec{M}_A(\vec{V}) \) d'un vecteur \( \vec{V} \) d'origine \( B \) (vecteur lié ou glissant) par rapport à un point \( A \) est défini par le produit vectoriel :
+        <div class="math-display">
+        \[
+        \vec{M}_A(\vec{V}) = \vec{AB} \wedge \vec{V}
+        \]
+        </div>
+        Le vecteur \( \vec{AB} \) représente la position de l'origine du vecteur \( \vec{V} \) par rapport au point \( A \). Le trièdre \( (\vec{AB}, \vec{V}, \vec{M}_A(\vec{V})) \) est direct.
+    </div>
+    <p>
+        <strong>Propriété importante :</strong> Si \( \vec{V} \) est un vecteur glissant (c'est-à-dire qu'il peut être déplacé le long de sa ligne d'action \( (\Delta) \)), son moment par rapport à un point \( A \) ne dépend pas de la position de son point d'application \( B \) sur \( (\Delta) \). Si \( C \) est un autre point sur \( (\Delta) \), alors \( \vec{BC} \) est parallèle à \( \vec{V} \), donc \( \vec{BC} \wedge \vec{V} = \vec{0} \).
+        <div class="math-display">
+        \[
+        \begin{align*}
+        \vec{M}_A(\vec{V}) &= \vec{AC} \wedge \vec{V} \\
+                          &= (\vec{AB} + \vec{BC}) \wedge \vec{V} \\
+                          &= \vec{AB} \wedge \vec{V} + \vec{BC} \wedge \vec{V} \\
+                          &= \vec{AB} \wedge \vec{V} + \vec{0} \\
+                          &= \vec{AB} \wedge \vec{V}
+        \end{align*}
+        \]
+        </div>
+    </p>
+    <p class="example">
+        En statique, le moment d'une force \( \vec{F} \) appliquée en \( B \) par rapport à un point \( A \) représente la tendance de cette force à faire tourner le solide autour d'un axe passant par \( A \) et perpendiculaire au plan \( (A, \vec{F}) \). La distance \( d \) entre \( A \) et la ligne d'action de \( \vec{F} \) est le bras de levier, et \( ||\vec{M}_A(\vec{F})|| = ||\vec{F}|| \cdot d \).
+    </p>
+
+    <h3>1.2. Moment d'un vecteur par rapport à un axe</h3>
+    <div class="definition">
+        Le moment d'un vecteur \( \vec{V} \) par rapport à un axe \( (\Delta) \), défini par un point \( A \) et un vecteur unitaire \( \vec{u} \), est la projection orthogonale sur l'axe \( (\Delta) \) du moment de \( \vec{V} \) par rapport à un point quelconque \( A \) de l'axe :
+        <div class="math-display">
+        \[
+        M_{\Delta}(\vec{V}) = \vec{M}_A(\vec{V}) \cdot \vec{u} = (\vec{AB} \wedge \vec{V}) \cdot \vec{u}
+        \]
+        </div>
+        C'est une grandeur scalaire. Cette valeur est indépendante du choix du point \( A \) sur l'axe \( (\Delta) \).
+    </div>
+    <p class="example">
+        Ce concept est crucial pour analyser la rotation autour d'axes spécifiques, comme l'axe d'une liaison pivot en mécanique. \( M_{\Delta}(\vec{F}) \) mesure l'efficacité de la force \( \vec{F} \) à provoquer une rotation autour de l'axe \( (\Delta) \).
+    </p>
+
+    <h2>2. Définition du Torseur</h2>
+    <div class="definition">
+        Un torseur \( [T] \) est un champ de vecteurs \( M \mapsto \vec{V}(M) \) défini sur l'espace affine euclidien \( \mathcal{E} \), tel qu'il existe un vecteur \( \vec{R} \) (appelé <strong>résultante</strong> du torseur) vérifiant la relation suivante pour tout couple de points \( (A, C) \) de \( \mathcal{E} \) :
+        <div class="math-display">
+        \[
+        \vec{V}(C) = \vec{V}(A) + \vec{CA} \wedge \vec{R}
+        \]
+        </div>
+        Le vecteur \( \vec{V}(A) \) est appelé le <strong>moment</strong> du torseur au point \( A \), souvent noté \( \vec{M}_A(T) \) ou simplement \( \vec{M}_A \).
+        <br/>
+        Le torseur est donc caractérisé par deux champs de vecteurs :
+        <ol>
+            <li>Un champ constant : la résultante \( \vec{R} \), indépendante du point.</li>
+            <li>Un champ de moments \( A \mapsto \vec{M}_A \), qui dépend du point \( A \) via la relation ci-dessus (appelée formule de transport des moments).</li>
+        </ol>
+    </div>
+
+    <h3>Éléments de réduction d'un torseur</h3>
+    <p>
+        Un torseur \( [T] \) est entièrement déterminé par la donnée, en un point \( A \) quelconque de l'espace, de ses <strong>éléments de réduction</strong> :
+    </p>
+    <ul>
+        <li>Sa résultante \( \vec{R} \)</li>
+        <li>Son moment en \( A \), \( \vec{M}_A \)</li>
+    </ul>
+    <p>
+        On note le torseur réduit au point \( A \) :
+        <div class="math-display">
+        \[
+        \{T\}_A = \begin{Bmatrix} \vec{R} \\ \vec{M}_A \end{Bmatrix}_A
+        \]
+        </div>
+        où \( \vec{R} = \begin{pmatrix} R_x \\ R_y \\ R_z \end{pmatrix} \) et \( \vec{M}_A = \begin{pmatrix} L_A \\ M_A \\ N_A \end{pmatrix} \) dans une base donnée.
+    </p>
+    <p class="example">
+        Le torseur des actions mécaniques exercées sur un solide \( S \) est la somme des torseurs associés à chaque action \( \vec{F}_i \) appliquée en \( B_i \). Ses éléments de réduction en un point \( A \) sont :
+        <div class="math-display">
+        \[
+        \vec{R} = \sum_i \vec{F}_i \quad ; \quad \vec{M}_A = \sum_i \vec{M}_A(\vec{F}_i) = \sum_i \vec{AB}_i \wedge \vec{F}_i
+        \]
+        </div>
+    </p>
+
+    <h2>3. Propriétés Fondamentales</h2>
+
+    <h3>3.1. Formule de Transport des Moments</h3>
+    <p>
+        La relation fondamentale qui lie les moments d'un torseur en deux points distincts \( A \) et \( C \) est la formule de transport (déjà vue dans la définition) :
+        <div class="math-display">
+        \[
+        \vec{M}_C = \vec{M}_A + \vec{CA} \wedge \vec{R}
+        \]
+        </div>
+        Cette formule est essentielle pour calculer le moment en un point connaissant le moment en un autre point et la résultante.
+    </p>
+
+    <h3>3.2. Équiprojectivité du Champ de Moments</h3>
+    <p>
+        Une conséquence directe de la formule de transport est l'équiprojectivité du champ de moments. La projection du moment sur la droite \( (AC) \) est la même, que l'on calcule le moment en \( A \) ou en \( C \) :
+        <div class="math-display">
+        \[
+        \vec{M}_C \cdot \vec{AC} = (\vec{M}_A + \vec{CA} \wedge \vec{R}) \cdot \vec{AC}
+        \]
+        </div>
+        Comme \( (\vec{CA} \wedge \vec{R}) \) est orthogonal à \( \vec{AC} \), leur produit scalaire est nul : \( (\vec{CA} \wedge \vec{R}) \cdot \vec{AC} = 0 \). Donc :
+        <div class="math-display">
+        \[
+        \vec{M}_C \cdot \vec{AC} = \vec{M}_A \cdot \vec{AC}
+        \]
+        </div>
+        Ou, en utilisant \( \vec{CA} = -\vec{AC} \) :
+        <div class="math-display">
+        \[
+        \vec{M}_C \cdot \vec{CA} = \vec{M}_A \cdot \vec{CA}
+        \]
+        </div>
+        Le champ des moments d'un torseur est un champ équiprojectif.
+    </p>
+
+    <h2>4. Opérations sur les Torseurs</h2>
+    <p>Les torseurs forment un espace vectoriel.</p>
+    <ul>
+        <li>
+            <strong>Égalité :</strong> Deux torseurs \( [T_1] \) et \( [T_2] \) sont égaux si et seulement si leurs éléments de réduction sont égaux en un point \( P \) quelconque :
+            <div class="math-display">
+            \[
+            \{T_1\}_P = \{T_2\}_P \iff
+            \begin{cases}
+            \vec{R}_1 = \vec{R}_2 \\
+            \vec{M}_{1P} = \vec{M}_{2P}
+            \end{cases}
+            \]
+            </div>
+        </li>
+        <li>
+            <strong>Addition :</strong> La somme de deux torseurs \( [T_1] \) et \( [T_2] \) est un torseur \( [T] = [T_1] + [T_2] \) dont les éléments de réduction en un point \( P \) sont la somme des éléments de réduction respectifs :
+            <div class="math-display">
+            \[
+            \{T\}_P = \begin{Bmatrix} \vec{R}_1 + \vec{R}_2 \\ \vec{M}_{1P} + \vec{M}_{2P} \end{Bmatrix}_P
+            \]
+            </div>
+        </li>
+        <li>
+            <strong>Multiplication par un scalaire :</strong> Le produit d'un torseur \( [T_1] \) par un scalaire \( \lambda \) est un torseur \( [T] = \lambda [T_1] \) défini par :
+            <div class="math-display">
+            \[
+            \{T\}_P = \begin{Bmatrix} \lambda \vec{R}_1 \\ \lambda \vec{M}_{1P} \end{Bmatrix}_P
+            \]
+            </div>
+        </li>
+        <li>
+            <strong>Torseur Nul :</strong> Le torseur nul \( [0] \) est le torseur dont la résultante et le moment en tout point sont nuls :
+            <div class="math-display">
+            \[
+            \{0\}_P = \begin{Bmatrix} \vec{0} \\ \vec{0} \end{Bmatrix}_P \quad \forall P \in \mathcal{E}
+            \]
+            </div>
+            <p class="example">
+                En statique, le principe fondamental stipule que le torseur des actions mécaniques extérieures appliquées à un solide en équilibre est égal au torseur nul.
+            </p>
+        </li>
+    </ul>
+
+    <h2>5. Invariants d'un Torseur</h2>
+    <p>Un invariant d'un torseur est une quantité qui ne dépend pas du point de réduction choisi.</p>
+    <ul>
+        <li>
+            <strong>Invariant Vectoriel :</strong> La résultante \( \vec{R} \) est un invariant vectoriel. Elle est indépendante du point \( A \).
+        </li>
+        <li>
+            <strong>Invariant Scalaire (Automoment) :</strong> Le produit scalaire de la résultante et du moment en un point \( A \) est un invariant scalaire, appelé automoment :
+            <div class="definition">
+                <div class="math-display">
+                \[
+                I = \vec{R} \cdot \vec{M}_A
+                \]
+                </div>
+            </div>
+            Preuve de l'invariance :
+            <div class="math-display">
+            \[
+            \begin{align*}
+            \vec{R} \cdot \vec{M}_C &= \vec{R} \cdot (\vec{M}_A + \vec{CA} \wedge \vec{R}) \\
+                                   &= \vec{R} \cdot \vec{M}_A + \vec{R} \cdot (\vec{CA} \wedge \vec{R})
+            \end{align*}
+            \]
+            </div>
+            Le produit mixte \( \vec{R} \cdot (\vec{CA} \wedge \vec{R}) \) est nul car le vecteur \( \vec{CA} \wedge \vec{R} \) est orthogonal à \( \vec{R} \). Donc :
+            <div class="math-display">
+            \[
+            \vec{R} \cdot \vec{M}_C = \vec{R} \cdot \vec{M}_A = I \quad (\text{Constant})
+            \]
+            </div>
+        </li>
+    </ul>
+
+    <h2>6. Axe Central et Pas d'un Torseur</h2>
+    <p>Ces notions ne sont définies que si la résultante \( \vec{R} \) est non nulle.</p>
+    <h3>6.1. Axe Central \( (\Delta) \)</h3>
+    <div class="definition">
+        L'axe central \( (\Delta) \) d'un torseur \( [T] \) (avec \( \vec{R} \neq \vec{0} \)) est l'ensemble des points \( P \) de l'espace où le moment \( \vec{M}_P \) est colinéaire à la résultante \( \vec{R} \):
+        <div class="math-display">
+        \[
+        P \in (\Delta) \iff \vec{M}_P = \lambda \vec{R} \quad (\text{pour un certain scalaire } \lambda)
+        \]
+        </div>
+        On peut montrer que :
+        <ul>
+            <li>L'axe central est une droite dirigée par \( \vec{R} \).</li>
+            <li>Le moment \( \vec{M}_P \) est minimum en norme pour les points \( P \) de l'axe central.</li>
+            <li>Si \( P_0 \) est un point de l'axe central, l'équation vectorielle définissant les points \( P \) de l'axe est \( \vec{P} = \vec{P_0} + \alpha \vec{R} \), \( \alpha \in \mathbb{R} \).</li>
+            <li>Le point \( P_0 \) de l'axe central le plus proche d'une origine \( O \) est donné par :
+                <div class="math-display">
+                \[
+                \vec{OP_0} = \frac{\vec{R} \wedge \vec{M}_O}{||\vec{R}||^2}
+                \]
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <h3>6.2. Pas du Torseur \( \lambda \)</h3>
+    <div class="definition">
+        Le pas (ou paramètre) \( \lambda \) du torseur \( [T] \) (avec \( \vec{R} \neq \vec{0} \)) est le scalaire de proportionnalité entre le moment et la résultante sur l'axe central. Il est donné par le rapport entre l'invariant scalaire et le carré de la norme de la résultante :
+        <div class="math-display">
+        \[
+        \lambda = \frac{I}{||\vec{R}||^2} = \frac{\vec{R} \cdot \vec{M}_A}{||\vec{R}||^2}
+        \]
+        </div>
+        Pour tout point \( P \) de l'axe central \( (\Delta) \), on a \( \vec{M}_P = \lambda \vec{R} \).
+    </div>
+
+    <h2>7. Classification des Torseurs</h2>
+    <p>Les torseurs sont classifiés en fonction de leur résultante \( \vec{R} \) et de leur invariant scalaire \( I = \vec{R} \cdot \vec{M}_A \).</p>
+
+    <h3>7.1. Torseur Nul</h3>
+    <p>
+        \( \vec{R} = \vec{0} \) et \( \vec{M}_A = \vec{0} \) pour tout \( A \).
+        <br/>\( I = 0 \).
+    </p>
+    <p class="example">Représente une absence d'action ou l'équilibre statique global.</p>
+
+    <h3>7.2. Torseur Couple</h3>
+    <p>
+        \( \vec{R} = \vec{0} \) mais \( \vec{M}_A \neq \vec{0} \).
+        <br/>Le moment est indépendant du point : \( \vec{M}_C = \vec{M}_A + \vec{CA} \wedge \vec{0} = \vec{M}_A \). On note souvent le moment \( \vec{M} \).
+        <br/>L'invariant scalaire \( I = \vec{0} \cdot \vec{M}_A = 0 \).
+    </p>
+    <p class="example">Représente un couple pur, comme l'action d'un tournevis ou le moment appliqué par un moteur électrique sur son axe.</p>
+
+    <h3>7.3. Torseur Glisseur</h3>
+    <p>
+        \( \vec{R} \neq \vec{0} \) et \( I = \vec{R} \cdot \vec{M}_A = 0 \).
+        <br/>Puisque \( I = 0 \), le pas \( \lambda = 0 \). Sur l'axe central \( (\Delta) \), le moment est nul : \( \vec{M}_P = 0 \cdot \vec{R} = \vec{0} \) pour \( P \in (\Delta) \).
+        <br/>Il existe donc une droite (l'axe central) où le moment du torseur est nul.
+    </p>
+    <p class="example">Représente l'action d'une force unique \( \vec{F} \) appliquée le long d'une droite (son axe central). C'est le torseur associé à un vecteur glissant.</p>
+
+    <h3>7.4. Torseur Quelconque (ou Vis)</h3>
+    <p>
+        \( \vec{R} \neq \vec{0} \) et \( I = \vec{R} \cdot \vec{M}_A \neq 0 \).
+        <br/>Le pas \( \lambda = I / ||\vec{R}||^2 \neq 0 \). Sur l'axe central \( (\Delta) \), le moment \( \vec{M}_P = \lambda \vec{R} \) est non nul et colinéaire à \( \vec{R} \).
+    </p>
+    <p class="example">Représente la combinaison d'une force et d'un couple dont l'axe est parallèle à la force. En cinématique, le mouvement hélicoïdal uniforme est décrit par un torseur quelconque (combinaison d'une vitesse de translation et d'une vitesse de rotation autour du même axe).</p>
+
+    <h2>8. Décomposition des Torseurs</h2>
+    <p>
+        Tout torseur \( [T] \) peut être décomposé de manière unique, en un point \( P \) donné, en la somme :
+    </p>
+    <ul>
+        <li>D'un torseur glisseur \( [T_g] \) dont l'axe passe par \( P \).</li>
+        <li>D'un torseur couple \( [T_c] \).</li>
+    </ul>
+    <p>
+        Si \( \{T\}_P = \begin{Bmatrix} \vec{R} \\ \vec{M}_P \end{Bmatrix} \), la décomposition est :
+        <div class="math-display">
+        \[
+        \{T_g\}_P = \begin{Bmatrix} \vec{R} \\ \vec{M}_{P \perp} \end{Bmatrix}_P \quad \text{et} \quad \{T_c\}_P = \begin{Bmatrix} \vec{0} \\ \vec{M}_{P \|} \end{Bmatrix}_P
+        \]
+        </div>
+        où \( \vec{M}_{P \|} = (\vec{M}_P \cdot \frac{\vec{R}}{||\vec{R}||}) \frac{\vec{R}}{||\vec{R}||} = \lambda \vec{R} \) est la projection de \( \vec{M}_P \) sur \( \vec{R} \) (moment sur l'axe central),
+        et \( \vec{M}_{P \perp} = \vec{M}_P - \vec{M}_{P \|} \) est la partie orthogonale.
+    </p>
+    <p>
+        Alternativement, un torseur quelconque peut être vu comme la somme d'un glisseur dont l'axe est l'axe central \( (\Delta) \) et d'un couple dont le moment est parallèle à \( \vec{R} \). Si \( P \in (\Delta) \):
+        <div class="math-display">
+        \[
+        \{T\}_P = \begin{Bmatrix} \vec{R} \\ \vec{M}_P \end{Bmatrix}_P = \begin{Bmatrix} \vec{R} \\ \lambda \vec{R} \end{Bmatrix}_P = \underbrace{\begin{Bmatrix} \vec{R} \\ \vec{0} \end{Bmatrix}_P}_{\text{Glisseur d'axe } (\Delta)} + \underbrace{\begin{Bmatrix} \vec{0} \\ \lambda \vec{R} \end{Bmatrix}_P}_{\text{Couple}}
+        \]
+        </div>
+    </p>
+
+    <h2>9. Tableau Récapitulatif de Classification</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Condition</th>
+                <th>Type de Torseur</th>
+                <th>Description</th>
+                <th>Exemple Mécanique</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>\( \vec{R} = \vec{0} \) <br/> \( \vec{M}_A = \vec{0} \) (\( \forall A \))</td>
+                <td>Torseur Nul</td>
+                <td>Résultante nulle, moment nul partout. \( I = 0 \).</td>
+                <td>Système en équilibre (torseur des actions extérieures), Absence d'action.</td>
+            </tr>
+            <tr>
+                <td>\( \vec{R} = \vec{0} \) <br/> \( \vec{M}_A \neq \vec{0} \)</td>
+                <td>Torseur Couple</td>
+                <td>Résultante nulle, moment non nul et constant (\( \vec{M} \)). \( I = 0 \).</td>
+                <td>Couple pur, moment de torsion.</td>
+            </tr>
+            <tr>
+                <td>\( \vec{R} \neq \vec{0} \) <br/> \( I = \vec{R} \cdot \vec{M}_A = 0 \)</td>
+                <td>Torseur Glisseur</td>
+                <td>Résultante non nulle, invariant scalaire nul. Existence d'un axe \( (\Delta) \) où \( \vec{M}_P = \vec{0} \). Pas \( \lambda = 0 \).</td>
+                <td>Force unique agissant le long d'une droite.</td>
+            </tr>
+            <tr>
+                <td>\( \vec{R} \neq \vec{0} \) <br/> \( I = \vec{R} \cdot \vec{M}_A \neq 0 \)</td>
+                <td>Torseur Quelconque (Vis)</td>
+                <td>Résultante non nulle, invariant scalaire non nul. Moment minimum \( \vec{M}_P = \lambda \vec{R} \) sur l'axe central \( (\Delta) \). Pas \( \lambda \neq 0 \).</td>
+                <td>Mouvement hélicoïdal, combinaison force + couple parallèle.</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+</html>

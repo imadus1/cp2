@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Exercice 1</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // Enable equation numbering
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Default tags to skip
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+     <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h2, h3, h4 { margin-top: 1.5em; margin-bottom: 0.5em; font-weight: bold; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        h3 { font-size: 1.3em; }
+        h4 { font-size: 1.1em; }
+        p, li { margin-top: 0.5em; margin-bottom: 0.5em; }
+        ul, ol { padding-left: 40px; margin-top: 0.5em; margin-bottom: 1em; }
+        strong { font-weight: bold; }
+        .mjx-chtml { font-size: 105%; }
+         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: auto; }
+         section { margin-bottom: 1.5em; padding-bottom: 0.5em; }
+         hr { margin: 2em 0; border: 0; border-top: 1px dashed #ccc;}
+    </style>
+</head>
+<body>
+
+    <!-- Exercice 1 Enoncé (from SerieN4.html) -->
+    <section id="exercice1">
+        <h2>Exercice 1</h2>
+        <p>
+            Considérons les vecteurs $\vec{u} = a\vec{i} + b\vec{j}$ et $\vec{v} = \vec{j}$
+            liés respectivement aux points A(1, 0, 0) et B(1, 1, 0) et les torseurs [G1] et [G2] associés aux
+            moments de $\vec{u}$ et $\vec{v}$ respectivement. On pose $[G] = [G1] + [G2]$.
+        </p>
+        <ol>
+            <li>Calculer la résultante de [G] et son moment en A. En déduire la nature de [G].</li>
+            <li>Déterminer l'équation cartésienne de l'axe central de [G].</li>
+        </ol>
+    </section>
+
+    <hr>
+
+    <!-- Solution 1 (from SolutionSerieN4.html) -->
+    <h2>Solution 01</h2>
+        <section>
+            <h3>1) Calculer la résultante de [G] et son moment en A. En déduire la nature de [G].</h3>
+
+            <h4>Résultante de [G]</h4>
+            <p>La résultante de [G] est la somme des résultantes de [G1] et [G2]. Les résultantes de [G1] et [G2] sont respectivement les vecteurs $\vec{u}$ et $\vec{v}$. Donc, la résultante de [G], notée $\vec{R}$, est :</p>
+            $$ \vec{R} = \vec{u} + \vec{v} = (a\vec{i} + b\vec{j}) + \vec{j} = a\vec{i} + (b+1)\vec{j} $$
+            <p>En composantes cartésiennes : $\vec{R} = (a, b+1, 0)$</p>
+
+            <h4>Moment de [G] en A</h4>
+            <p>Le moment de [G] en A, noté $\vec{M}_A([G])$, est la somme des moments de [G1] et [G2] en A.</p>
+            <p>Le moment de [G1] en A est le moment du vecteur $\vec{u}$ appliqué au point A par rapport au point A, qui est nul car le point et le point d'application coïncident. Donc :</p>
+            $$ \vec{M}_A([G_1]) = \vec{AA} \wedge \vec{u} = \vec{0} $$
+            <p>Le moment de [G2] en A est le moment du vecteur $\vec{v}$ appliqué au point B par rapport au point A. On utilise la formule du moment d'un vecteur par rapport à un point :</p>
+            $$ \vec{M}_A(\vec{v}) = \vec{AB} \wedge \vec{v} $$
+            <p>Calculons le vecteur</p>
+            $$ \vec{AB} = B - A = (1-1, 1-0, 0-0) = (0, 1, 0) = \vec{j} $$
+            $$ \vec{v} = \vec{j} = (0,1,0) $$
+            $$ \vec{M}_A([G_2]) = \vec{AB} \wedge \vec{v} = \vec{j} \wedge \vec{j} = \vec{0} $$
+            <p>Donc, le moment de [G] en A est :</p>
+            $$ \vec{M}_A([G]) = \vec{M}_A([G_1]) + \vec{M}_A([G_2]) = \vec{0} $$
+
+            <h4>Nature de [G]</h4>
+            <p>Puisque le moment de [G] en A est nul et la résultante est non nulle, le torseur [G] est un <strong>glisseur</strong> (ou force unique). Si $\vec{R} = \vec{0}$ alors [G] est un torseur nul. En général, pour des valeurs arbitraires de $a$ et $b$, $\vec{R}=(a, b+1, 0)$ n'est pas nul (sauf si $a=0$ et $b=-1$). Donc, en général, [G] est un glisseur.</p>
+        </section>
+        <section>
+             <h3>2) Déterminer l'équation cartésienne de l'axe central de [G]</h3>
+             <p>L'axe central d'un glisseur est la ligne d'action de la force résultante où le moment est minimal (et colinéaire à la résultante, ici le moment minimal est nul). Puisque le moment en A est déjà nul, le point A appartient à l'axe central. L'axe central est la droite passant par A et de direction la résultante $\vec{R}$. Point $A = (1,0,0)$ Vecteur directeur $\vec{R} = (a, b+1, 0)$</p>
+             <p>L'équation paramétrique de l'axe central est :</p>
+             $$ \begin{cases} x = 1 + a \cdot t \\ y = 0 + (b+1) \cdot t \\ z = 0 + 0 \cdot t = 0 \end{cases} $$
+             <p>Pour obtenir l'équation cartésienne, nous éliminons le paramètre $t$. De la troisième équation, on a $z=0$.</p>
+             <p>Si $a \neq 0$, on peut exprimer $t = (x-1)/a$. En substituant dans la deuxième équation :</p>
+             $$ y = (b+1) \frac{(x-1)}{a} $$
+             $$ a \cdot y = (b+1)(x-1) $$
+             $$ a \cdot y = (b+1)x - (b+1) $$
+             $$ (b+1)x - a \cdot y - (b+1) = 0 $$
+             <p>Si $a=0$, alors la première équation devient $x=1$, et $y=(b+1)t, z=0$.</p>
+             <p>En conclusion, l'équation cartésienne de l'axe central est dans le plan $z=0$, et est donnée par :</p>
+             <ul>
+                <li>Si $a \neq 0$ : $(b+1)x - a \cdot y - (b+1) = 0$ et $z=0$</li>
+                <li>Si $a = 0$ : $x=1$ et $z=0$</li>
+             </ul>
+             <p>On peut combiner ces deux cas en notant que si $a \neq 0$ on a une droite dans le plan $z=0$. Si $a=0$, c'est une droite verticale dans le plan $z=0$ (parallèle à l'axe des y). Dans tous les cas, l'axe central est dans le plan $z=0$. L'équation générale peut être écrite comme :</p>
+             $$ \begin{cases} (b+1)(x-1) - a \cdot y = 0 \\ z = 0 \end{cases} $$
+        </section>
+
+</body>
+</html>

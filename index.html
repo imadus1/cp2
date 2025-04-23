@@ -1,227 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TD Mécanique Rationnelle</title>
-
-    <!-- MathJax Configuration and Loading (from Code 2) -->
+    <title>Mécanique Rationnelle - TD</title>
     <script>
         MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
           },
-          svg: {
-            fontCache: 'global'
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
           }
         };
-        </script>
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>
-
-    <!-- Combined Styles from Code 1 and Code 2 -->
+      </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
     <style>
-        /* --- Styles from Code 1 (Directory Tree) --- */
-        body { /* Combined from both files */
-            font-family: sans-serif;
-            margin: 2em;
-            line-height: 1.3; /* Added from Code 2 */
+        body {
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
+            background-color: #f4f4f4;
         }
-        /* Basic Tree Styling */
-        .tree ul {
-            padding-left: 1.5em; /* Indentation for sub-levels */
-            list-style-type: none; /* Remove default bullets */
-            position: relative; /* Needed for connecting lines */
+        .controls {
+            padding: 15px;
+            background-color: #e0e0e0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            gap: 20px; /* Spacing between dropdowns */
+            flex-wrap: wrap; /* Allow wrapping on small screens */
         }
-
-        .tree li {
-            margin: 0.5em 0;
-            position: relative; /* Needed for connecting lines */
-        }
-
-        /* Simple Connectors (Optional but enhances tree look) */
-        .tree ul ul { /* Deeper levels */
-             margin-left: .5em; /* Add space for connector */
-        }
-        .tree li::before { /* Vertical line */
-            content: "";
-            position: absolute;
-            top: -0.3em;
-            left: -1em;
-            width: 1px;
-            height: calc(100% + 0.3em);
-            background-color: #ccc;
-            z-index: -1; /* Put behind content */
-        }
-        .tree li:last-child::before { /* Shorten line for last item */
-             height: 1.1em;
-        }
-        .tree li::after { /* Horizontal line */
-            content: "";
-            position: absolute;
-            top: 0.8em; /* Adjust vertical position */
-            left: -1em;
-            width: 0.8em; /* Length of horizontal line */
-            height: 1px;
-            background-color: #ccc;
-            z-index: -1; /* Put behind content */
-        }
-        .tree > li::before, .tree > li::after { /* Remove connectors for top-level items */
-             content: none;
-        }
-
-
-        /* Icons (using simple text characters) */
-        .tree .folder::before {
-            content: "📁 "; /* Folder icon */
-            margin-right: 0.3em;
-            /* Remove connector pseudo-element if icon is used */
-            /* display: inline-block; */
-        }
-        .tree .file::before {
-            content: "📄 "; /* File icon */
-            margin-right: 0.3em;
-            /* Remove connector pseudo-element if icon is used */
-             /* display: inline-block; */
-        }
-         /* Adjust if using icons AND connectors */
-         .tree li::before, .tree li::after {
-            left: -1.5em; /* Move connectors left to make space for icons */
-         }
-         .tree li::after {
-            width: 1.3em;
-         }
-          .tree > li::before, .tree > li::after {
-             content: none;
-          }
-           .tree ul {
-               padding-left: 2em; /* Increase padding if icons + connectors used */
-           }
-
-
-        /* Link Styling */
-        .tree a {
-            text-decoration: none;
-            color: #0066cc;
-        }
-        .tree a:hover {
-            text-decoration: underline;
-            color: #004080;
-        }
-        .folder { /* Note: Selects the span with class folder */
-             font-weight: bold; /* Make folders stand out */
-             color: #333;
-        }
-
-        /* --- Styles from Code 2 (Math Examples) --- */
-        h1, h2, h3 {
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-        }
-        /* Note: The generic p, li styles below might affect the tree. */
-        /* The specificity of .tree li should override the generic li for the tree itself */
-        p, li {
-            margin-top: 0.3em;
-            margin-bottom: 0.3em;
-        }
-        figure {
-            text-align: center;
-            margin: 2em 0;
-        }
-        figcaption {
-            margin-top: 0.5em;
-            font-style: italic;
-            font-size: 0.9em;
-        }
-        img {
-            max-width: 80%;
-            height: auto;
-            /* Added border for missing images */
-            border: 1px dashed #ccc;
-            min-height: 50px; /* So missing image placeholders are visible */
-        }
-        /* Note: Generic ul style might affect the tree */
-        /* The specificity of .tree ul should override this for the tree itself */
-        ul {
-            padding-left: 20px; /* General list padding */
-        }
-        strong {
+        .controls label {
             font-weight: bold;
+            margin-right: 5px;
         }
-        .figure-title {
-            text-align: center;
-            font-weight: bold;
+        .controls select {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            min-width: 250px; /* Minimum width for dropdowns */
+            font-size: 1em;
         }
-        /* Style for vertical vectors/points */
-        .vector {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            margin: 0 0.2em;
+        #content-iframe {
+            flex-grow: 1; /* Takes remaining vertical space */
+            width: 100%;
+            border: none; /* Remove iframe border */
+            background-color: #fff; /* White background for content area */
         }
-        .vector span {
-            display: block;
+         /* Basic styling for Computer Modern fonts */
+        @font-face {
+          font-family: 'Computer Modern Serif';
+          src: url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff2') format('woff2'),
+               url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff') format('woff');
+          font-weight: normal;
+          font-style: normal;
         }
-        /* Ensure math expressions are not too small */
-        .mjx-chtml {
-           font-size: 105%; /* Slightly larger math font */
+        @font-face {
+          font-family: 'Computer Modern Sans';
+          src: url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunsx.woff2') format('woff2'),
+               url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunsx.woff') format('woff');
+          font-weight: normal;
+          font-style: normal;
         }
-        /* Ensure display math takes space */
+        body {
+           font-family: "Computer Modern Sans", sans-serif; /* Default to Sans for UI */
+        }
+         /* Ensure math expressions are not too small */
+        .mjx-chtml, mjx-container {
+           font-size: 105% !important; /* Slightly larger math font */
+           text-align: left !important;
+        }
          mjx-container[display="true"] {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
-        }
+            overflow-x: auto; /* Allow scrolling for wide equations */
+            overflow-y: hidden;
+         }
     </style>
 </head>
 <body>
 
-    <!-- Content from Code 1 (Directory Tree) -->
-    <h1>TD Mécanique Rationnelle</h1>
+    <div class="controls">
+        <div>
+            <label for="torseurs-select">Les Torseurs:</label>
+            <select id="torseurs-select" onchange="loadContent(this, 'tenseurs-select')">
+                <option value="">-- Sélectionner --</option>
+                <option value="torseurs_rappel.html">Rappel de cours</option>
+                <optgroup label="Série N°4">
+                    <option value="torseurs_serie4_exo1.html">Exercice 1 (Énoncé + Solution)</option>
+                    <option value="torseurs_serie4_exo2.html">Exercice 2 (Énoncé + Solution)</option>
+                    <option value="torseurs_serie4_exo3.html">Exercice 3 (Énoncé + Solution)</option>
+                    <option value="torseurs_serie4_exo4.html">Exercice 4 (Énoncé + Solution)</option>
+                    <option value="torseurs_serie4_exo5.html">Exercice 5 (Énoncé + Solution)</option>
+                </optgroup>
+            </select>
+        </div>
 
-    <ul class="tree">
-        <!-- Items directly in the root directory -->
-        <li class="file"><a href="index.html" target="_top">Accueil</a></li>
-        <li class="file"><a href="index2.html" target="_top">Accueil2</a></li>
-      <!--   <li class="file"><a href="about.html">about.html</a></li> -->
+        <div>
+            <label for="tenseurs-select">Les Tenseurs d'inertie:</label>
+            <select id="tenseurs-select" onchange="loadContent(this, 'torseurs-select')">
+                <option value="">-- Sélectionner --</option>
+                <option value="tenseurs_rappel.html">Rappel de cours</option>
+                 <optgroup label="Série N°6">
+                    <option value="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</option>
+                    <option value="tenseurs_serie6_exo1_fig1.html">   ↳ Figure 1.1 + Solution</option>
+                    <option value="tenseurs_serie6_exo1_fig2.html">   ↳ Figure 1.2 + Solution</option>
+                    <option value="tenseurs_serie6_exo1_fig3.html">   ↳ Figure 1.3 + Solution</option>
+                    <option value="tenseurs_serie6_exo1_fig4.html">   ↳ Figure 1.4 + Solution</option>
+                    <option value="tenseurs_serie6_exo1_fig5.html">   ↳ Figure 1.5 + Solution</option>
+                    <option value="tenseurs_serie6_exo1_fig6.html">   ↳ Figure 1.6 + Solution</option>
+                    <option value="tenseurs_serie6_exo2_enonce.html">Exercice 2 (Énoncé)</option>
+                    <option value="tenseurs_serie6_exo3_enonce.html">Exercice 3 (Énoncé)</option>
+                    <option value="tenseurs_serie6_exo4_enonce.html">Exercice 4 (Énoncé)</option>
+                 </optgroup>
+            </select>
+        </div>
+    </div>
 
-        <!-- project_files Folder -->
-        <li>
-            <span class="folder">Série N°4 Les Torseurs</span> <!-- Folder Name (not a link itself) -->
-            <ul> <!-- Files inside project_files -->
-                <li class="file"><a href="SérieN°4LesTorseurs/TorseursRappels.html" target="_top">Rappels de Cours</a></li>
-                <li class="file"><a href="SérieN°4LesTorseurs/SerieN4.html" target="_top">Série N°4</a></li>
-                <li class="file"><a href="SérieN°4LesTorseurs/SolutionSerieN4.html" target="_top">Solution Série N°4</a></li>
-                <!-- You could add non-html assets too, maybe without a link or styled differently -->
-              <!--  <li><span style="color: #888;">└── assets/ (contains non-html)</span></li> -->
-            </ul>
-        </li>
+    <iframe id="content-iframe" name="content-iframe" src="about:blank">
+        Votre navigateur ne supporte pas les iframes.
+    </iframe>
 
-        <!-- project_files Folder -->
-        <li>
-            <span class="folder">Série N°6 Les Tenseurs d'inertie</span> <!-- Folder Name (not a link itself) -->
-            <ul> <!-- Files inside project_files -->
-                <li class="file"><a href="SérieN°6LesTenseursdinertie/TenseursRappels.html" target="_top">Rappels de Cours</a></li>                
-                <li class="file"><a href="SérieN°6LesTenseursdinertie/SerieN6.html" target="_top">Série N°6</a></li>
-                <li class="file"><a href="SérieN°6LesTenseursdinertie/SolutionSerieN6.html" target="_top">Solution Série N°6</a></li>
-                <!-- You could add non-html assets too, maybe without a link or styled differently -->
-              <!--  <li><span style="color: #888;">└── assets/ (contains non-html)</span></li> -->
-            </ul>
-        </li>
+    <script>
+        function loadContent(selectElement, otherSelectId) {
+            const selectedValue = selectElement.value;
+            const iframe = document.getElementById('content-iframe');
+            const otherSelect = document.getElementById(otherSelectId);
 
-         <!-- Add more root files or folders here -->
-         <!-- Example: <li class="file"><a href="another_root_file.html">another_root_file.html</a></li> -->
+            if (selectedValue) {
+                iframe.src = selectedValue;
+                // Reset the other dropdown
+                otherSelect.selectedIndex = 0;
+            } else {
+                // If the placeholder is selected, clear the iframe
+                iframe.src = 'about:blank';
+            }
+        }
 
-    </ul>
-
-   
-
-    <hr style="margin: 1em 0;"> <!-- Separator between the two content sections -->
-
-
+         // Ensure MathJax typesets content loaded into the iframe dynamically
+         const iframe = document.getElementById('content-iframe');
+         iframe.addEventListener('load', () => {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc && typeof iframe.contentWindow.MathJax !== 'undefined') {
+                     // Check if MathJax is available in the iframe's context
+                     iframe.contentWindow.MathJax.typesetPromise();
+                } else if (iframeDoc) {
+                    // If MathJax isn't loaded in the iframe yet, wait a bit and try again
+                    // This is a fallback, ideally MathJax should be in the fragment's head
+                    setTimeout(() => {
+                         if (typeof iframe.contentWindow.MathJax !== 'undefined') {
+                             iframe.contentWindow.MathJax.typesetPromise();
+                         }
+                    }, 500); // Wait 500ms
+                }
+            } catch (e) {
+                console.error("Error accessing iframe content or MathJax:", e);
+                // This might happen due to cross-origin issues if files are loaded locally
+                // or if MathJax hasn't loaded yet.
+            }
+         });
+    </script>
 
 </body>
 </html>

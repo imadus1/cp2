@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Série N4 - Exercice 3</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            tags: 'ams' // Enable equation numbering
+          },
+          svg: {
+            fontCache: 'global'
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'], // Default tags to skip
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+     <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h2, h3, h4 { margin-top: 1.5em; margin-bottom: 0.5em; font-weight: bold; }
+        h2 { font-size: 1.5em; border-bottom: 1px solid #eee; padding-bottom: 0.3em;}
+        h3 { font-size: 1.3em; }
+        h4 { font-size: 1.1em; }
+        p, li { margin-top: 0.5em; margin-bottom: 0.5em; }
+        ul, ol { padding-left: 40px; margin-top: 0.5em; margin-bottom: 1em; }
+        strong { font-weight: bold; }
+        .mjx-chtml { font-size: 105%; }
+         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: auto; }
+         section { margin-bottom: 1.5em; padding-bottom: 0.5em; }
+         hr { margin: 2em 0; border: 0; border-top: 1px dashed #ccc;}
+    </style>
+</head>
+<body>
+
+    <!-- Exercice 3 Enoncé (from SerieN4.html) -->
+    <section id="exercice3">
+        <h2>Exercice 3</h2>
+        <p>
+            Dans un repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$, on considère le champ de vecteurs $\vec{V}(M)$
+            dont les composantes sont définies en fonction des coordonnées (x, y, z) de M par :
+        </p>
+        \[
+        \begin{cases}
+            V_x = 1 + 3y - tz \\
+            V_y = -3x + 2tz \\
+            V_z = 2 + tx - t^2y
+        \end{cases}
+        \]
+        <ol>
+            <li>Calculer le vecteur $\vec{V}(M)$ au point O.</li>
+            <li>Pour quelles valeurs de t, ce champ est-il antisymétrique ?</li>
+            <li>Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur (résultante et moment en O).</li>
+            <li>Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur dont on indiquera les éléments de réduction.</li>
+            <li>Déterminer la position de l'axe central du torseur pour t = 0 et t=2.</li>
+        </ol>
+    </section>
+
+    <hr>
+
+    <!-- Solution 3 (from SolutionSerieN4.html) -->
+    <h2>Solution 03</h2>
+        <p>Le champ de vecteurs $\vec{V}(M)$ est donné en fonction des coordonnées $(x, y, z)$ du point M dans le repère orthonormé direct $R(O, \vec{i}, \vec{j}, \vec{k})$ par :</p>
+        $$ \begin{cases} v_x = 1 + 3y - tz \\ v_y = -3x + 2tz \\ v_z = 2 + tx - t^2y \end{cases} $$
+        <p>où $t$ est un paramètre réel.</p>
+        <section>
+            <h3>1) Calculer le vecteur $\vec{V}(M)$ au point O</h3>
+            <p><strong>Concept :</strong> Évaluer un champ de vecteurs en un point consiste à substituer les coordonnées de ce point dans les composantes du champ. Le point O est l'origine, ses coordonnées sont $(0,0,0)$. En substituant :</p>
+            <p> $v_x(O) = 1 + 3(0) - t(0) = 1$ <br>
+                $v_y(O) = -3(0) + 2t(0) = 0$ <br>
+                $v_z(O) = 2 + t(0) - t^2(0) = 2$ </p>
+            <p>Le vecteur $\vec{V}(O)$ est donc :</p>
+            $$ \vec{V}(O) = 1\vec{i} + 0\vec{j} + 2\vec{k} = \vec{i} + 2\vec{k} $$
+        </section>
+        <section>
+            <h3>2) Pour quelles valeurs de t, ce champ est antisymétrique ?</h3>
+            <p><strong>Concept :</strong> Un champ de vecteurs $\vec{V}$ est dit antisymétrique ssi il est équiprojectif. Pour tous points A et B:</p>
+            $$ \vec{V}(A) \cdot \vec{AB} = \vec{V}(B) \cdot \vec{AB} $$
+            <p>Choisissons $A = O(0, 0, 0)$ et $B = M(x, y, z)$. Alors $\vec{AB} = \vec{OM} = x\vec{i} + y\vec{j} + z\vec{k}$. L'équiprojectivité s'écrit :</p>
+            $$ \vec{V}(O) \cdot \vec{OM} = \vec{V}(M) \cdot \vec{OM} $$
+            <p>Calculons le membre de gauche :</p>
+            $$ \vec{V}(O) \cdot \vec{OM} = (\vec{i} + 2\vec{k}) \cdot (x\vec{i} + y\vec{j} + z\vec{k}) = x + 2z $$
+            <p>Calculons le membre de droite :</p>
+            $$ \vec{V}(M) \cdot \vec{OM} = v_x x + v_y y + v_z z $$
+            $$ = (1 + 3y - tz)x + (-3x + 2tz)y + (2 + tx - t^2y)z $$
+            $$ = x + 3xy - txz - 3xy + 2tyz + 2z + txz - t^2yz $$
+            $$ = x + 2z + (2t - t^2)yz \quad \text{(après simplification)} $$
+            <p>Égalons les deux membres :</p>
+            $$ x + 2z = x + 2z + (2t - t^2)yz $$
+            <p>Cette égalité doit être vraie pour tout M(x, y, z), donc :</p>
+            $$ (2t - t^2)yz = 0 \quad \forall y, z $$
+            <p>Ceci impose que le coefficient $(2t - t^2)$ soit nul :</p>
+            $$ 2t - t^2 = 0 \implies t(2 - t) = 0 $$
+            <p>Les valeurs de $t$ pour lesquelles le champ $\vec{V}(M)$ est antisymétrique sont donc :</p>
+            $$ t=0 \text{ et } t=2 $$
+        </section>
+        <section>
+            <h3>3) Pour chaque valeur trouvée de t, déterminer les éléments de réduction du torseur</h3>
+            <p><strong>Concept :</strong> Un champ de vecteurs antisymétrique $\vec{V}(M)$ définit un torseur. Les éléments de réduction en un point A sont sa résultante $\vec{R}$ (constante) et son moment en ce point $\vec{M}_A = \vec{V}(A)$. La formule de transport du moment est :</p>
+            $$ \vec{V}(M) = \vec{V}(A) + \vec{R} \wedge \vec{AM} $$
+            <p>Utilisons le point O comme point de réduction. $\vec{M}_O = \vec{V}(O)$.</p>
+            $$ \vec{V}(M) = \vec{V}(O) + \vec{R} \wedge \vec{OM} $$
+            <p>Soit $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$. Le produit vectoriel est :</p>
+            $$ \vec{R} \wedge \vec{OM} = (R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k} $$
+            <p>Substituons dans la formule de transport :</p>
+            $$ \vec{V}(M) = (\vec{i} + 2\vec{k}) + (R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (R_x y - R_y x)\vec{k} $$
+            $$ = (1 + R_y z - R_z y)\vec{i} + (R_z x - R_x z)\vec{j} + (2 + R_x y - R_y x)\vec{k} $$
+            <p>Comparons avec l'expression initiale de $\vec{V}(M)$:</p>
+            $$ \vec{V}(M) = (1 + 3y - tz)\vec{i} + (-3x + 2tz)\vec{j} + (2 + tx - t^2y)\vec{k} $$
+            <p>Par identification des composantes (valide pour tout x, y, z) :</p>
+            <ul>
+                <li>Comp. $\vec{i}$: $3y - tz = -R_z y + R_y z \implies R_z = -3, R_y = -t$</li>
+                <li>Comp. $\vec{j}$: $-3x + 2tz = R_z x - R_x z \implies R_z = -3, -R_x = 2t \implies R_x = -2t$</li>
+                <li>Comp. $\vec{k}$: $tx - t^2y = R_x y - R_y x \implies R_x = -t^2, -R_y = t \implies R_y = -t$</li>
+            </ul>
+            <p>La cohérence pour $R_x$ demande $-2t = -t^2 \implies t^2 - 2t = 0 \implies t(t - 2) = 0$. Ceci redonne bien $t=0$ ou $t=2$. La résultante du torseur est $\vec{R} = R_x\vec{i} + R_y\vec{j} + R_z\vec{k}$:</p>
+            $$ \vec{R} = -2t\vec{i} - t\vec{j} - 3\vec{k} $$
+             <p>Le moment du torseur au point O est :</p>
+            $$ \vec{M}_O = \vec{V}(O) = \vec{i} + 2\vec{k} $$
+            <p>Étudions les deux cas :</p>
+            <p><strong>Cas t = 0 :</strong></p>
+            <ul>
+                <li>Résultante : $\vec{R}_0 = -2(0)\vec{i} - (0)\vec{j} - 3\vec{k} = -3\vec{k}$</li>
+                <li>Moment en O : $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$</li>
+            </ul>
+            <p>Éléments de réduction pour t=0 en O :</p>
+            $$ \{T_0\}_O = \{\vec{R}_0 = -3\vec{k}; \vec{M}_{O,0} = \vec{i} + 2\vec{k}\} $$
+            <p><strong>Cas t = 2 :</strong></p>
+             <ul>
+                <li>Résultante : $\vec{R}_2 = -2(2)\vec{i} - (2)\vec{j} - 3\vec{k} = -4\vec{i} - 2\vec{j} - 3\vec{k}$</li>
+                <li>Moment en O : $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$ (inchangé)</li>
+            </ul>
+            <p>Éléments de réduction pour t=2 en O :</p>
+            $$ \{T_2\}_O = \{\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{O,2} = \vec{i} + 2\vec{k}\} $$
+        </section>
+        <section>
+            <h3>4) Décomposer le torseur associé à $\vec{V}(M)$ en une somme d'un couple et d'un glisseur</h3>
+            <p><strong>Concept :</strong> Tout torseur $\{\vec{R}, \vec{M}(O)\}$ peut être décomposé de manière unique en la somme d'un couple $\{0, \vec{M}_{\|}\}$ et d'un glisseur $\{\vec{R}, \vec{M}_{\perp}(O)\}$.</p>
+            $$ \vec{M}_{\|} = \frac{\vec{M}(O) \cdot \vec{R}}{\|\vec{R}\|^2} \vec{R} \quad \text{(Moment parallèle)} $$
+            $$ \vec{M}_{\perp}(O) = \vec{M}(O) - \vec{M}_{\|} \quad \text{(Moment orthogonal)} $$
+            <p><strong>Cas t = 0 :</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$.</p>
+            <p> $\vec{M}_{O,0} \cdot \vec{R}_0 = (\vec{i} + 2\vec{k}) \cdot (-3\vec{k}) = -6$ <br>
+                $\|\vec{R}_0\|^2 = (-3)^2 = 9$ <br>
+                $\vec{M}_{\|,0} = \frac{-6}{9}(-3\vec{k}) = 2\vec{k}$ <br>
+                $\vec{M}_{\perp,0}(O) = (\vec{i} + 2\vec{k}) - (2\vec{k}) = \vec{i}$ </p>
+            <p>Décomposition pour t = 0 :</p>
+            <ul>
+                <li>Couple : $\{0; \vec{M}_{\|,0} = 2\vec{k}\}$</li>
+                <li>Glisseur : $\{\vec{R}_0 = -3\vec{k}; \vec{M}_{\perp,0}(O) = \vec{i}\}_O$</li>
+            </ul>
+             <p><strong>Cas t = 2 :</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$.</p>
+             <p> $\vec{M}_{O,2} \cdot \vec{R}_2 = (\vec{i} + 2\vec{k}) \cdot (-4\vec{i} - 2\vec{j} - 3\vec{k}) = (1)(-4) + (0)(-2) + (2)(-3) = -4 - 6 = -10$ <br>
+                 $\|\vec{R}_2\|^2 = (-4)^2 + (-2)^2 + (-3)^2 = 16 + 4 + 9 = 29$ <br>
+                 $\vec{M}_{\|,2} = \frac{-10}{29}(-4\vec{i} - 2\vec{j} - 3\vec{k}) = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}$ <br>
+                 $\vec{M}_{\perp,2}(O) = (\vec{i} + 2\vec{k}) - \left(\frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}\right)$ <br>
+                 $\vec{M}_{\perp,2}(O) = \left(1 - \frac{40}{29}\right)\vec{i} - \frac{20}{29}\vec{j} + \left(2 - \frac{30}{29}\right)\vec{k}$ <br>
+                 $\vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k}$ </p>
+             <p>Décomposition pour t = 2 :</p>
+             <ul>
+                 <li>Couple : $\{0; \vec{M}_{\|,2} = \frac{40}{29}\vec{i} + \frac{20}{29}\vec{j} + \frac{30}{29}\vec{k}\}$</li>
+                 <li>Glisseur : $\{\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}; \vec{M}_{\perp,2}(O) = -\frac{11}{29}\vec{i} - \frac{20}{29}\vec{j} + \frac{28}{29}\vec{k}\}_O$</li>
+             </ul>
+        </section>
+        <section>
+            <h3>5) Déterminer la position de l'axe central du torseur pour t=0 et t=2</h3>
+             <p><strong>Concept :</strong> L'axe central d'un torseur $T = (\vec{R}, \vec{M}_O)$ est l'ensemble des points P où le moment $\vec{M}_P$ est colinéaire à $\vec{R}$. Si $\vec{R} \ne \vec{0}$, l'axe central est une droite dirigée par $\vec{R}$. Un point P appartient à l'axe central si son vecteur position $\vec{OP}$ satisfait :</p>
+            $$ \vec{OP} = \vec{OP}_0 + \lambda \vec{R} \quad (\lambda \in \mathbb{R}) $$
+            <p>Le premier terme $\vec{OP}_0 = \frac{\vec{R} \wedge \vec{M}_O}{\|\vec{R}\|^2}$ est le vecteur position du point $P_0$ de l'axe central le plus proche de l'origine O.</p>
+            <p><strong>Cas t = 0 :</strong> $\vec{R}_0 = -3\vec{k}$, $\vec{M}_{O,0} = \vec{i} + 2\vec{k}$, $\|\vec{R}_0\|^2 = 9$.</p>
+            <p> $\vec{R}_0 \wedge \vec{M}_{O,0} = (-3\vec{k}) \wedge (\vec{i} + 2\vec{k}) = -3(\vec{k} \wedge \vec{i}) - 6(\vec{k} \wedge \vec{k}) = -3\vec{j} - \vec{0} = -3\vec{j}$ <br>
+                $\vec{OP}_0 = \frac{-3\vec{j}}{9} = -\frac{1}{3}\vec{j}$ </p>
+            <p>Le point $P_0$ a pour coordonnées $(0, -1/3, 0)$. L'axe central pour t = 0 est la droite passant par $P_0(0, -1/3, 0)$ et de vecteur directeur $\vec{R}_0 = -3\vec{k}$. Équation paramétrique : $\vec{OP} = (0, -1/3, 0) + \lambda(0, 0, -3)$. Équations cartésiennes :</p>
+            $$ \text{Axe central (t=0) :} \quad x = 0, \quad y = -1/3 $$
+             <p><strong>Cas t = 2 :</strong> $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$, $\vec{M}_{O,2} = \vec{i} + 2\vec{k}$, $\|\vec{R}_2\|^2 = 29$.</p>
+             <p> $\vec{R}_2 \wedge \vec{M}_{O,2} = (-4\vec{i} - 2\vec{j} - 3\vec{k}) \wedge (\vec{i} + 2\vec{k})$ <br>
+                $= -4(\vec{i} \wedge \vec{i}) - 8(\vec{i} \wedge \vec{k}) - 2(\vec{j} \wedge \vec{i}) - 4(\vec{j} \wedge \vec{k}) - 3(\vec{k} \wedge \vec{i}) - 6(\vec{k} \wedge \vec{k})$ <br>
+                $= \vec{0} - 8(-\vec{j}) - 2(-\vec{k}) - 4(\vec{i}) - 3(\vec{j}) - \vec{0} = 8\vec{j} + 2\vec{k} - 4\vec{i} - 3\vec{j} = -4\vec{i} + 5\vec{j} + 2\vec{k}$ <br>
+                $\vec{OP}_0 = \frac{-4\vec{i} + 5\vec{j} + 2\vec{k}}{29} = -\frac{4}{29}\vec{i} + \frac{5}{29}\vec{j} + \frac{2}{29}\vec{k}$ </p>
+             <p>Le point $P_0$ a pour coordonnées $(-4/29, 5/29, 2/29)$. L'axe central pour t = 2 est la droite passant par $P_0$ et de vecteur directeur $\vec{R}_2 = -4\vec{i} - 2\vec{j} - 3\vec{k}$. Équation paramétrique : $\vec{OP} = (-\frac{4}{29}, \frac{5}{29}, \frac{2}{29}) + \lambda(-4, -2, -3)$. Équations cartésiennes (en éliminant $\lambda$) :</p>
+             $$ \text{Axe central (t=2):} \quad \frac{x + 4/29}{-4} = \frac{y - 5/29}{-2} = \frac{z - 2/29}{-3} $$
+        </section>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 1.4 - Cadre rectangulaire</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Solution Figure 1.4 : Cadre rectangulaire centré en O</h1>
+
+    <div class="figure-placeholder">figure4.png</div>
+    <p class="caption">FIGURE 4 - Cadre rectangulaire centré en O</p>
+
+    <h2>Méthode requise : Calcul direct (par additivité).</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li><strong>Additivité :</strong> Pour un solide composé de plusieurs parties ($S_i$) sans recouvrement de masse, le tenseur d'inertie total $[I_O]$ est la somme des tenseurs d'inertie de chaque partie $[I_O]_i$, calculés au même point O et dans la même base.
+            $$ [I_O] = \sum_i [I_O]_i $$
+        </li>
+        <li><strong>Théorème de Huygens :</strong> Utilisé ici pour chaque segment (partie $S_i$) afin de calculer son tenseur $[I_O]_i$ à partir de son tenseur au centre de masse $[I_{G_i}]$ : $[I_O]_i = [I_{G_i}] + [I_{O/G_i}]$.</li>
+        <li><strong>Symétrie :</strong> Le cadre est centré en O. Les plans $x = 0$ (plan yOz) et $y = 0$ (plan xOz) sont des plans de symétrie matérielle. Puisque les axes OX et OY sont contenus dans ces plans de symétrie respectifs, les produits d'inertie correspondants sont nuls ($D = I_{xy} = 0$, $E = I_{xz} = 0$, $F = I_{yz} = 0$). La matrice d'inertie totale $[I_O]$ est donc diagonale.</li>
+    </ul>
+
+    <h2>Géométrie et Décomposition :</h2>
+    <ul>
+        <li>Cadre formé de 4 segments de tiges homogènes (densité $\lambda$), dimensions $a \times b$.</li>
+        <li><strong>Seg 1 (Haut) :</strong> Tige horizontale en $y = b/2$, $x \in [-a/2, a/2]$. Longueur $a$. Masse $M_1 = \lambda a$. Centre de masse $G_1 = \begin{pmatrix} 0 \\ b/2 \\ 0 \end{pmatrix}$.</li>
+        <li><strong>Seg 2 (Bas) :</strong> Tige horizontale en $y = -b/2$, $x \in [-a/2, a/2]$. Longueur $a$. Masse $M_2 = \lambda a$. Centre de masse $G_2 = \begin{pmatrix} 0 \\ -b/2 \\ 0 \end{pmatrix}$. ($M_2 = M_1$).</li>
+        <li><strong>Seg 3 (Droite) :</strong> Tige verticale en $x = a/2$, $y \in [-b/2, b/2]$. Longueur $b$. Masse $M_3 = \lambda b$. Centre de masse $G_3 = \begin{pmatrix} a/2 \\ 0 \\ 0 \end{pmatrix}$.</li>
+        <li><strong>Seg 4 (Gauche) :</strong> Tige verticale en $x = -a/2$, $y \in [-b/2, b/2]$. Longueur $b$. Masse $M_4 = \lambda b$. Centre de masse $G_4 = \begin{pmatrix} -a/2 \\ 0 \\ 0 \end{pmatrix}$. ($M_4 = M_3$).</li>
+        <li><strong>Masse totale :</strong> $M = M_1 + M_2 + M_3 + M_4 = 2M_1 + 2M_3 = 2\lambda a + 2\lambda b = 2\lambda(a+b)$.</li>
+    </ul>
+
+    <h2>Calcul pour chaque segment (via Huygens) :</h2>
+
+    <h3>Segment 1 (Haut) : $G_1 = (0, b/2, 0)$, $M_1 = \lambda a$</h3>
+    <ul>
+        <li>Tenseur en G1 (tige de longueur $a$ parallèle à OX) :
+            $$ [I_{G1}] = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 \end{pmatrix} $$</li>
+        <li>Transport O/G1 ($x_G=0, y_G=b/2, z_G=0$) :
+             $$ [I_{O/G1}] = M_1 \begin{pmatrix} (b/2)^2+0 & 0 & 0 \\ 0 & 0^2+0 & 0 \\ 0 & 0 & 0^2+(b/2)^2 \end{pmatrix} = \begin{pmatrix} M_1 b^2 / 4 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_1 b^2 / 4 \end{pmatrix} $$</li>
+        <li>Tenseur en O pour Seg 1 : $[I_O]_1 = [I_{G1}] + [I_{O/G1}]$
+            $$ [I_O]_1 = \begin{pmatrix} M_1 b^2 / 4 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 + M_1 b^2 / 4 \end{pmatrix} $$</li>
+    </ul>
+
+    <h3>Segment 2 (Bas) : $G_2 = (0, -b/2, 0)$, $M_2 = M_1$</h3>
+    <p>$[I_{G2}] = [I_{G1}]$. Le terme de transport $[I_{O/G2}]$ est identique à $[I_{O/G1}]$ car $y_G^2 = (-b/2)^2 = (b/2)^2$. Donc :</p>
+    $$ [I_O]_2 = [I_O]_1 $$
+
+    <h3>Segment 3 (Droite) : $G_3 = (a/2, 0, 0)$, $M_3 = \lambda b$</h3>
+     <ul>
+        <li>Tenseur en G3 (tige de longueur $b$ parallèle à OY) :
+            $$ [I_{G3}] = \begin{pmatrix} M_3 b^2 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_3 b^2 / 12 \end{pmatrix} $$</li>
+        <li>Transport O/G3 ($x_G=a/2, y_G=0, z_G=0$) :
+             $$ [I_{O/G3}] = M_3 \begin{pmatrix} 0^2+0 & 0 & 0 \\ 0 & (a/2)^2+0 & 0 \\ 0 & 0 & (a/2)^2+0 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_3 a^2 / 4 & 0 \\ 0 & 0 & M_3 a^2 / 4 \end{pmatrix} $$</li>
+        <li>Tenseur en O pour Seg 3 : $[I_O]_3 = [I_{G3}] + [I_{O/G3}]$
+            $$ [I_O]_3 = \begin{pmatrix} M_3 b^2 / 12 & 0 & 0 \\ 0 & M_3 a^2 / 4 & 0 \\ 0 & 0 & M_3 b^2 / 12 + M_3 a^2 / 4 \end{pmatrix} $$</li>
+    </ul>
+
+     <h3>Segment 4 (Gauche) : $G_4 = (-a/2, 0, 0)$, $M_4 = M_3$</h3>
+    <p>$[I_{G4}] = [I_{G3}]$. Le terme de transport $[I_{O/G4}]$ est identique à $[I_{O/G3}]$ car $x_G^2 = (-a/2)^2 = (a/2)^2$. Donc :</p>
+    $$ [I_O]_4 = [I_O]_3 $$
+
+    <h2>Sommation :</h2>
+    <p>En utilisant l'additivité : $[I_O] = [I_O]_1 + [I_O]_2 + [I_O]_3 + [I_O]_4 = 2[I_O]_1 + 2[I_O]_3$.<br/>
+    La matrice résultante $[I_O]$ est diagonale, comme prévu par la symétrie. Calculons ses termes diagonaux A, B, C :</p>
+    <h3>Calcul de A (moment / Ox) :</h3>
+    $$ A = 2A_1 + 2A_3 = 2\left(\frac{M_1 b^2}{4}\right) + 2\left(\frac{M_3 b^2}{12}\right) $$
+    $$ = 2\left(\frac{(\lambda a) b^2}{4}\right) + 2\left(\frac{(\lambda b) b^2}{12}\right) = \frac{\lambda a b^2}{2} + \frac{\lambda b^3}{6} $$
+    $$ = \frac{\lambda b^2}{6} (3a + b) $$
+    <h3>Calcul de B (moment / Oy) :</h3>
+    $$ B = 2B_1 + 2B_3 = 2\left(\frac{M_1 a^2}{12}\right) + 2\left(\frac{M_3 a^2}{4}\right) $$
+    $$ = 2\left(\frac{(\lambda a) a^2}{12}\right) + 2\left(\frac{(\lambda b) a^2}{4}\right) = \frac{\lambda a^3}{6} + \frac{\lambda b a^2}{2} $$
+    $$ = \frac{\lambda a^2}{6} (a + 3b) $$
+    <h3>Calcul de C (moment / Oz) :</h3>
+    $$ C = 2C_1 + 2C_3 = 2\left(\frac{M_1 a^2}{12} + \frac{M_1 b^2}{4}\right) + 2\left(\frac{M_3 b^2}{12} + \frac{M_3 a^2}{4}\right) $$
+    $$ = \left(2\frac{M_1 b^2}{4} + 2\frac{M_3 b^2}{12}\right) + \left(2\frac{M_1 a^2}{12} + 2\frac{M_3 a^2}{4}\right) = A + B $$
+    $$ = \frac{\lambda b^2}{6} (3a + b) + \frac{\lambda a^2}{6} (a + 3b) = \frac{\lambda}{6} (3ab^2 + b^3 + a^3 + 3a^2b) $$
+    $$ = \frac{\lambda}{6} (a^3 + 3a^2b + 3ab^2 + b^3) = \frac{\lambda}{6} (a+b)^3 $$
+    <p>(Vérification C = A + B : OK. Théorème de l'axe perpendiculaire vérifié pour le cadre plan)</p>
+
+    <h2>Résultat :</h2>
+    $$ [I_O]_{1.4} = \begin{pmatrix} A & 0 & 0 \\ 0 & B & 0 \\ 0 & 0 & C \end{pmatrix} = \begin{pmatrix} \frac{\lambda b^2}{6}(3a+b) & 0 & 0 \\ 0 & \frac{\lambda a^2}{6}(a+3b) & 0 \\ 0 & 0 & \frac{\lambda}{6}(a+b)^3 \end{pmatrix} $$
+    <p>ou, en termes de A et B calculés :</p>
+    $$ [I_O]_{1.4} = \begin{pmatrix} A & 0 & 0 \\ 0 & B & 0 \\ 0 & 0 & A+B \end{pmatrix} $$
+
+</body>
+</html>

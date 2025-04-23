@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 1.1 - Tige centrée</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Solution Figure 1.1 : Tige centrée en O sur l'axe OX</h1>
+
+    <div class="figure-placeholder">figure1.png</div>
+    <p class="caption">FIGURE 1 - Tige centrée en O sur l'axe OX</p>
+
+    <h2>Méthode requise : Calcul direct.</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li><strong>Matrice d'inertie :</strong> C'est une matrice symétrique $[I_O]$ qui décrit comment la masse d'un solide est distribuée par rapport à un point O et comment elle résiste à la rotation autour des axes passant par ce point. Elle dépend du point O et de la base choisie.</li>
+        <li><strong>Composantes :</strong> La matrice d'inertie dans une base $(O, \vec{i}, \vec{j}, \vec{k})$ est donnée par :
+            $$ [I_O] = \begin{pmatrix} A & -D & -E \\ -D & B & -F \\ -E & -F & C \end{pmatrix} $$
+            où A, B, C sont les <strong>moments d'inertie</strong> par rapport aux axes Ox, Oy, Oz et D, E, F sont les <strong>produits d'inertie</strong> par rapport aux plans. Ils sont définis par les intégrales sur le volume (ou la surface, ou la ligne) du solide (S) :
+            $$ A = I_{xx} = \int_{(S)} (y^2 + z^2) dm \quad (\text{Moment d'inertie / Ox}) $$
+            $$ B = I_{yy} = \int_{(S)} (x^2 + z^2) dm \quad (\text{Moment d'inertie / Oy}) $$
+            $$ C = I_{zz} = \int_{(S)} (x^2 + y^2) dm \quad (\text{Moment d'inertie / Oz}) $$
+            $$ D = I_{xy} = \int_{(S)} xy dm \quad (\text{Produit d'inertie / plan z=0}) $$
+            $$ E = I_{xz} = \int_{(S)} xz dm \quad (\text{Produit d'inertie / plan y=0}) $$
+            $$ F = I_{yz} = \int_{(S)} yz dm \quad (\text{Produit d'inertie / plan x=0}) $$
+        </li>
+        <li><strong>Note :</strong> La convention de signe $(-D, -E, -F)$ est courante en mécanique.</li>
+        <li><strong>Corps linéique :</strong> Modélisation où la masse est répartie le long d'une courbe (1D). L'élément de masse $dm$ est lié à l'élément de longueur $dl$ par la densité linéique $\lambda$ : $dm = \lambda dl$.</li>
+        <li><strong>Symétrie :</strong> La symétrie matérielle simplifie le calcul. Si un plan de coordonnées (ex : $z = 0$) est un plan de symétrie matérielle, les produits d'inertie impliquant la coordonnée perpendiculaire (ici $E = I_{xz}$ et $F = I_{yz}$) sont nuls. Si un axe de coordonnées est un axe de symétrie, les trois produits d'inertie sont nuls. Ici, la tige est sur l'axe OX. Cela implique une symétrie de révolution autour de OX (pour une tige infiniment fine) mais surtout que $y = 0$ et $z = 0$ pour tous les points de la tige.</li>
+    </ul>
+
+    <h2>Géométrie et Paramétrisation :</h2>
+    <ul>
+        <li>Segment de droite sur l'axe OX, de $x = -L/2$ à $x = +L/2$.</li>
+        <li>Un point P du segment a pour coordonnées :
+            $$ P = \begin{pmatrix} x \\ 0 \\ 0 \end{pmatrix}, \quad \text{avec } x \in \left[-\frac{L}{2}, \frac{L}{2}\right] $$
+        </li>
+        <li>Élément de longueur : $dl = dx$.</li>
+        <li>Élément de masse (densité $\lambda$ constante supposée) : $dm = \lambda dx$.</li>
+        <li>Masse totale :
+            $$ M = \int_{-L/2}^{L/2} \lambda dx = \lambda [x]_{-L/2}^{L/2} = \lambda \left(\frac{L}{2} - \left(-\frac{L}{2}\right)\right) = \lambda L $$
+        </li>
+    </ul>
+
+    <h2>Calcul des termes du tenseur :</h2>
+    <p>Pour tout point P de la tige, $y = 0$ and $z = 0$.</p>
+    <h3>Calcul de A :</h3>
+    $$ A = \int_{-L/2}^{L/2} (y^2 + z^2) dm = \int_{-L/2}^{L/2} (0^2 + 0^2) \lambda dx = 0 $$
+    <h3>Calcul de B :</h3>
+    $$ B = \int_{-L/2}^{L/2} (x^2 + z^2) dm = \int_{-L/2}^{L/2} (x^2 + 0^2) \lambda dx $$
+    $$ = \lambda \int_{-L/2}^{L/2} x^2 dx = \lambda \left[\frac{x^3}{3}\right]_{-L/2}^{L/2} $$
+    $$ = \lambda \left( \frac{(L/2)^3}{3} - \frac{(-L/2)^3}{3} \right) = \lambda \left( \frac{L^3}{24} - \left(-\frac{L^3}{24}\right) \right) $$
+    $$ = \lambda \left( \frac{L^3}{24} + \frac{L^3}{24} \right) = \lambda \frac{L^3}{12} $$
+    <p>En fonction de $M = \lambda L$ :</p>
+    $$ B = \frac{(\lambda L) L^2}{12} = \frac{ML^2}{12} $$
+    <h3>Calcul de C :</h3>
+    $$ C = \int_{-L/2}^{L/2} (x^2 + y^2) dm = \int_{-L/2}^{L/2} (x^2 + 0^2) \lambda dx = B = \frac{ML^2}{12} $$
+    <h3>Calcul de D :</h3>
+    $$ D = \int_{-L/2}^{L/2} xy dm = \int_{-L/2}^{L/2} x(0) \lambda dx = 0 $$
+    <h3>Calcul de E :</h3>
+    $$ E = \int_{-L/2}^{L/2} xz dm = \int_{-L/2}^{L/2} x(0) \lambda dx = 0 $$
+    <h3>Calcul de F :</h3>
+    $$ F = \int_{-L/2}^{L/2} yz dm = \int_{-L/2}^{L/2} (0)(0) \lambda dx = 0 $$
+
+    <h2>Résultat :</h2>
+    <p>Le tenseur d'inertie au point O est :</p>
+    $$ [I_O]_{1.1} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & ML^2/12 & 0 \\ 0 & 0 & ML^2/12 \end{pmatrix} $$
+
+    <h2>Commentaire :</h2>
+    <p>Les axes OY et OZ sont équivalents par symétrie de révolution autour de OX pour une tige idéalement fine. Ici, la géométrie strictement 1D sur OX impose $A = 0$ (pas d'extension en y ou z). Seule la rotation autour d'axes perpendiculaires (OY, OZ) rencontre une inertie ($B = C \neq 0$). Les produits d'inertie sont nuls car OX, OY, OZ sont axes principaux d'inertie.</p>
+
+</body>
+</html>

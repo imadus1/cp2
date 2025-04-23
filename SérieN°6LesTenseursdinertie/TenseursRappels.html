@@ -2,307 +2,305 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Série N4 - Les Torseurs</title>
+    <title>Résumé Étendu : Tenseur d'Inertie</title>
     <script>
         MathJax = {
           tex: {
             inlineMath: [['$', '$'], ['\\(', '\\)']],
             displayMath: [['$$', '$$'], ['\\[', '\\]']],
-            processEscapes: true
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
           },
-          svg: {
-            fontCache: 'global'
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
           }
         };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>
-    <!-- Add the font link -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
     <style>
-        /* Add iframe CSS */
-        #nav-iframe {
-            width: 100%; /* Make iframe span full width */
-            /* Height will be set by JavaScript */
-            border: none; /* Remove iframe border */
-            display: block; /* Ensure it takes block layout */
-            margin-bottom: 20px; /* Add some space below the iframe */
-            overflow: hidden; /* Hide potential scrollbars if calculation is slightly off */
-            vertical-align: top; /* Helps prevent extra space below in some layouts */
-        }
-
-        body {
-            /* Apply the font */
-            font-family: "Computer Modern Sans", sans-serif;
-            line-height: 1.6; /* Adjusted line spacing for readability */
-            margin: 2em;
-        }
-        h1, h2, h3 {
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-        }
-        p, li {
-            margin-top: 0.5em; /* Slightly increased spacing */
-            margin-bottom: 0.5em;
-        }
-        figure {
-            text-align: center;
-            margin: 2em 0;
-        }
-        figcaption {
-            margin-top: 0.5em;
-            font-style: italic;
-            font-size: 0.9em;
-        }
-        img {
-            max-width: 80%;
-            height: auto;
-        }
-        ul, ol { /* Applied styles to ordered lists as well */
-            padding-left: 40px; /* Increased indent for lists */
-            margin-top: 0.5em;
-            margin-bottom: 1em;
-        }
-        strong {
-            font-weight: bold;
-        }
-        .figure-title {
-            text-align: center;
-            font-weight: bold;
-        }
-        /* Style for vertical vectors/points */
-        .vector {
-            display: inline-block;
-            text-align: center;
-            vertical-align: middle;
-            margin: 0 0.2em;
-        }
-        .vector span {
-            display: block;
-        }
-        /* Ensure math expressions are not too small */
-        .mjx-chtml {
-           font-size: 105%; /* Slightly larger math font */
-        }
-        /* Ensure display math takes space */
-         mjx-container[display="true"] {
-            display: block;
-            margin-top: 1em;
-            margin-bottom: 1em;
-        }
-        section { /* Add spacing between exercises */
-            margin-bottom: 2em;
-            padding-bottom: 1em;
-            border-bottom: 1px solid #eee; /* Optional separator */
-        }
-        header {
-             text-align: center;
-             margin-bottom: 2.5em;
-             border-bottom: 2px solid #ccc;
-             padding-bottom: 1em;
-        }
-        header h1 { margin-bottom: 0.2em; }
-        header p { margin-top: 0.2em; margin-bottom: 0.2em; font-size: 1.1em; }
-        header h2 { margin-top: 0.5em; margin-bottom: 0.1em; }
+        body { font-family: sans-serif; line-height: 1.6; }
+        h1, h2, h3 { color: #0056b3; }
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding-left: 10px; margin-bottom: 15px; background-color: #e7f3ff; padding: 10px;}
+        .example { border-left: 3px solid #17a2b8; padding-left: 10px; margin-bottom: 15px; background-color: #e2f7fa; padding: 10px;}
+        .formula { text-align: center; margin: 15px 0; }
+        /* Ensure LaTeX vectors have arrows */
+         vec {} /* Placeholder, handled by MathJax macro */
+        /* Ensure no small fonts in math */
+        .mjx-math { font-size: 1em !important; }
     </style>
 </head>
 <body>
 
-    <!-- Add the iframe -->
-    <iframe id="nav-iframe" src="../index.html" title="Content from index.html">
-        Your browser does not support iframes.
-    </iframe>
+    <h1>Résumé Étendu : Tenseur d'Inertie en Mécanique Rationnelle</h1>
 
-    <!-- PDF Content Start -->
-    <h1>Objectif</h1>
-    <p>Déterminer les tenseurs d'inertie au point O, relativement au repère orthonormé $\mathcal{R}(O, X, Y, Z)$, des corps décrits par les figures 1.1 à 3.4, en utilisant les méthodes spécifiées.</p>
+    <p>Le tenseur d'inertie (ou opérateur d'inertie) est un concept central en mécanique du solide rigide. Il décrit mathématiquement comment la masse d'un corps est distribuée spatialement par rapport à un point donné, et par conséquent, comment le corps résiste aux changements de son état de rotation autour des axes passant par ce point. Il s'agit d'un tenseur symétrique de second ordre.</p>
 
-    <h2>Rappels Théoriques</h2>
+    <h2>1. Prérequis : Centre d'Inertie (Centre de Masse)</h2>
+    <p>La connaissance du centre d'inertie (ou centre de masse) $G$ d'un solide $(S)$ est fondamentale avant d'aborder le calcul du tenseur d'inertie.</p>
+    <div class="definition">
+        <p><strong>Définition :</strong> Le centre d'inertie $G$ d'un système matériel $(S)$ de masse totale $m$ est défini comme le barycentre des masses du système. Il est le point unique tel que :</p>
+        <div class="formula">
+            $$ \int_{P \in (S)} \vec{GP} dm = \\ \vec{0} $$
+        </div>
+        <p>où $dm$ est l'élément de masse infinitésimal situé au point géométrique $P$ du solide.</p>
+        <p>Par rapport à une origine fixe $O$ d'un repère, la position du centre d'inertie $G$ est donnée par :</p>
+        <div class="formula">
+            $$ \vec{OG} = \\ \frac{1}{m} \int_{P \in (S)} \vec{OP} dm $$
+        </div>
+        <p>où $m = \int_{P \in (S)} dm$ est la masse totale du solide.</p>
+        <p>Dans un repère cartésien $R(O, \vec{i}, \vec{j}, \vec{k})$, si $\vec{OP} = x\vec{i} + y\vec{j} + z\vec{k}$, les coordonnées de $G$ sont :</p>
+        <div class="formula">
+             $$ x_G = \\ \frac{1}{m} \int_{(S)} x dm $$
+             $$ y_G = \\ \frac{1}{m} \int_{(S)} y dm $$
+             $$ z_G = \\ \frac{1}{m} \int_{(S)} z dm $$
+        </div>
+         <p>Le point $G$ est donc donné par :</p>
+         $$ G \begin{pmatrix} x_G \\ y_G \\ z_G \end{pmatrix} $$
+        <p>L'élément de masse $dm$ s'exprime différemment selon la distribution de masse :</p>
+        <ul>
+            <li><strong>Corps Linéique (1D, fil) :</strong> $dm = \lambda dl$, où $\lambda$ est la masse linéique (constante ou variable) et $dl$ l'élément de longueur.</li>
+            <li><strong>Corps Surfacique (2D, plaque mince) :</strong> $dm = \sigma ds$, où $\sigma$ est la masse surfacique et $ds$ l'élément de surface.</li>
+            <li><strong>Corps Volumique (3D) :</strong> $dm = \rho dv$, où $\rho$ est la masse volumique et $dv$ l'élément de volume.</li>
+        </ul>
+         <p><strong>Corps Homogène :</strong> Si la masse volumique ($\rho$), surfacique ($\sigma$) ou linéique ($\lambda$) est constante sur tout le corps, on dit qu'il est homogène. Dans ce cas, le centre d'inertie $G$ coïncide avec le centre géométrique (centroïde du volume, de la surface ou de la ligne).</p>
+    </div>
+    <div class="example">
+        <p><strong>Exemple (inspiré Solutions Ex. 1.1) :</strong> Pour une tige rectiligne homogène de longueur $L$ placée sur l'axe $Ox$ entre $-L/2$ et $+L/2$, le centre de masse $G$ est, par symétrie, à l'origine $O$.</p>
+         $$ O \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} $$
+    </div>
 
-    <h3>Définition du Tenseur d'Inertie</h3>
-    <p>Pour un système matériel (S) continu (linéaire, surfacique ou volumique), le tenseur d'inertie en un point O, noté $[I_O]$, est un opérateur linéaire symétrique qui caractérise la répartition de la masse par rapport au point O et aux axes du repère $\mathcal{R}(O, X, Y, Z)$. Sa matrice dans la base $(X, Y, Z)$ est donnée par :
-    \[
-    [I_O]_{\mathcal{R}} =
-    \begin{pmatrix}
-    A & -D & -E \\
-    -D & B & -F \\
-    -E & -F & C
-    \end{pmatrix}
-    \]
-    où les moments d'inertie (diagonaux) et produits d'inertie (hors diagonale) sont définis par des intégrales sur le domaine occupé par le système (S) :
-    \[ A = I_{xx} = \int_{(S)} (y^2 + z^2) dm \]
-    \[ B = I_{yy} = \int_{(S)} (x^2 + z^2) dm \]
-    \[ C = I_{zz} = \int_{(S)} (x^2 + y^2) dm \]
-    \[ D = I_{xy} = \int_{(S)} xy \, dm \]
-    \[ E = I_{xz} = \int_{(S)} xz \, dm \]
-    \[ F = I_{yz} = \int_{(S)} yz \, dm \]
-    L'élément de masse $dm$ dépend de la nature du corps.</p>
+    <h3>1.1 Théorèmes de Guldin</h3>
+    <p>Ces théorèmes offrent une méthode élégante pour déterminer la position du centre d'inertie ($R_G$, sa distance à un axe) pour des lignes ou surfaces planes homogènes, en les reliant à la géométrie des objets qu'elles génèrent par rotation.</p>
+    <div class="definition">
+        <p><strong>Premier Théorème de Guldin (Surface engendrée par une courbe) :</strong></p>
+        <p>Soit un arc de courbe plane $(L)$ de longueur $L$ et de centre d'inertie $G$. La rotation de cet arc autour d'un axe $(\Delta)$ coplanaire ne le coupant pas engendre une surface d'aire $S_A$. Cette aire est égale au produit de la longueur $L$ de l'arc par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
+        <div class="formula">
+            $$ S_A = \\ L \times (2\pi R_G) $$
+        </div>
+        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de l'arc à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
+        <div class="formula">
+            $$ R_G = \\ \frac{S_A}{2\pi L} $$
+        </div>
+    </div>
+     <div class="example">
+        <p><strong>Exemple Guldin 1 :</strong> Trouver le centre d'inertie d'un demi-anneau mince homogène de rayon $R$. La longueur est $L = \pi R$. Faisons-le tourner autour du diamètre joignant ses extrémités. Il engendre une surface sphérique d'aire $S_A = 4\pi R^2$. La distance $R_G$ du centre d'inertie au diamètre est :</p>
+         <div class="formula">
+            $$ R_G = \\ \frac{S_A}{2\pi L} = \\ \frac{4\pi R^2}{2\pi (\pi R)} = \\ \frac{2R}{\pi} $$
+         </div>
+         <p>Le centre d'inertie est donc sur l'axe de symétrie du demi-anneau, à une distance $2R/\pi$ du centre du cercle.</p>
+    </div>
+    <div class="definition">
+        <p><strong>Deuxième Théorème de Guldin (Volume engendré par une surface) :</strong></p>
+        <p>Soit une surface plane $(S)$ d'aire $S$ et de centre d'inertie $G$. La rotation de cette surface autour d'un axe $(\Delta)$ coplanaire ne la coupant pas (sauf éventuellement sur sa frontière) engendre un volume $V_A$. Ce volume est égal au produit de l'aire $S$ de la surface par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
+        <div class="formula">
+            $$ V_A = \\ S \times (2\pi R_G) $$
+        </div>
+        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de la surface à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
+        <div class="formula">
+            $$ R_G = \\ \frac{V_A}{2\pi S} $$
+        </div>
+    </div>
 
-    <h3>Élément de Masse et Intégration</h3>
-    <p>L'élément de masse $dm$ est défini en fonction de la dimensionnalité du corps et de sa densité :</p>
+
+     <h3>1.2 Simplification par Symétrie pour le Centre d'Inertie</h3>
+     <p>Les propriétés de symétrie d'un corps homogène simplifient grandement la localisation de son centre d'inertie $G$ :</p>
+     <ul>
+        <li>Si le corps admet un <strong>plan de symétrie</strong> matérielle, $G$ appartient à ce plan.</li>
+        <li>Si le corps admet un <strong>axe de symétrie</strong> matérielle, $G$ appartient à cet axe.</li>
+        <li>Si le corps admet un <strong>centre de symétrie</strong> matérielle, $G$ coïncide avec ce centre.</li>
+     </ul>
+     <div class="example">
+        <p><strong>Exemple (inspiré Solutions Ex. 2.1 & 3.4) :</strong> Le centre d'inertie d'un rectangle homogène est à l'intersection de ses diagonales (centre de symétrie). Le centre d'inertie d'un cylindre droit homogène est au milieu de son axe de révolution (axe de symétrie).</p>
+     </div>
+
+    <h2>2. Définition du Tenseur d'Inertie</h2>
+    <p>L'opérateur d'inertie $[I_O]$ (ou tenseur d'inertie) d'un solide $(S)$ en un point $O$ est un opérateur linéaire qui caractérise la répartition de la masse du solide par rapport à $O$. Il quantifie la "difficulté" à faire tourner le solide autour d'axes passant par $O$.</p>
+    <div class="definition">
+    <p><strong>Définition Opérationnelle :</strong> Pour un vecteur $\vec{V}$ quelconque, l'action de l'opérateur d'inertie $[I_O]$ est définie par l'intégrale sur le solide $(S)$ :</p>
+        <div class="formula">
+            $$ I_O(\vec{V}) = \\ -\int_{(S)} \vec{OP} \wedge (\vec{OP} \wedge \vec{V}) dm $$
+        </div>
+        <p>où $P$ est un point courant du solide, $\vec{OP}$ est le vecteur position de $P$ par rapport à $O$, $dm$ est l'élément de masse en $P$, et $\wedge$ désigne le produit vectoriel.</p>
+        <p>Cette définition montre que l'opérateur d'inertie transforme un vecteur en un autre vecteur, de manière linéaire. Dans une base, cet opérateur est représenté par une matrice.</p>
+    </div>
+
+    <h3>2.1 Matrice d'Inertie</h3>
+    <p>Dans une base orthonormée directe $R(O, \vec{i}, \vec{j}, \vec{k})$, l'opérateur d'inertie $[I_O]$ est représenté par une matrice $3 \times 3$ symétrique, appelée matrice d'inertie en $O$ :</p>
+    <div class="definition">
+        <div class="formula">
+            $$ [I_O] = \\ \begin{pmatrix} A & -D & -E \\ -D & B & -F \\ -E & -F & C \end{pmatrix} = \\ \begin{pmatrix} I_{xx} & -I_{xy} & -I_{xz} \\ -I_{xy} & I_{yy} & -I_{yz} \\ -I_{xz} & -I_{yz} & I_{zz} \end{pmatrix} $$
+        </div>
+        <p>Les termes de cette matrice sont définis par les intégrales suivantes :</p>
+        <ul>
+            <li><strong>Moments d'inertie (diagonaux) :</strong> Ils mesurent la résistance à la rotation autour des axes de coordonnées.
+                <div class="formula">
+                    $$ A = I_{xx} = \\ \int_{(S)} (y^2 + z^2) dm $$
+                    $$ B = I_{yy} = \\ \int_{(S)} (x^2 + z^2) dm $$
+                    $$ C = I_{zz} = \\ \int_{(S)} (x^2 + y^2) dm $$
+                </div>
+            </li>
+            <li><strong>Produits d'inertie (hors diagonaux, changés de signe) :</strong> Ils caractérisent l'asymétrie de la distribution de masse par rapport aux plans de coordonnées.
+                <div class="formula">
+                    $$ D = I_{xy} = \\ \int_{(S)} xy dm $$
+                    $$ E = I_{xz} = \\ \int_{(S)} xz dm $$
+                    $$ F = I_{yz} = \\ \int_{(S)} yz dm $$
+                </div>
+                 <p><strong>Note Importante :</strong> Avec $D, E, F$ définis par ces intégrales (positives), ils apparaissent avec un signe '$-$' dans la matrice $[I_O]$. C'est la convention utilisée dans le document `Tenseurs Inertie UMBB A KADI.pdf`.</p>
+            </li>
+        </ul>
+         <p><strong>Moment d'inertie polaire :</strong> Le moment d'inertie par rapport au point $O$ est</p>
+         <div class="formula">
+            $$ I_{O} = \\ \int_{(S)} r^2 dm = \\ \int_{(S)} (x^2 + y^2 + z^2) dm $$
+         </div>
+         <p>où $r = \|\vec{OP}\|$. On a la relation $I_O = \frac{1}{2}(A + B + C)$.</p>
+    </div>
+
+    <h2>3. Calcul des Composantes du Tenseur d'Inertie</h2>
+    <p>Le calcul effectif des moments et produits d'inertie A, B, C, D, E, F se fait par intégration sur la géométrie du solide (ligne, surface ou volume), en utilisant un système de coordonnées approprié (cartésien, cylindrique, sphérique).</p>
+    <div class="example">
+        <p><strong>Exemple (inspiré Solutions Ex. 2.1 - Rectangle centré) :</strong> Pour un rectangle homogène de masse $M$, de largeur $L$ (selon $Ox$) et de hauteur $H$ (selon $Oy$), centré en $O$, dans le plan $z=0$. Masse surfacique $\sigma = M/(LH)$. $dm = \sigma dx dy$.</p>
+        <ul>
+            <li>$A = I_{xx} = \\ \int_{-L/2}^{L/2} \int_{-H/2}^{H/2} (y^2+0^2) \sigma dx dy = \\ \sigma L [\frac{y^3}{3}]_{-H/2}^{H/2} = \\ \sigma L \frac{2(H/2)^3}{3} = \\ \sigma L \frac{H^3}{12} = \\ \frac{M}{LH} L \frac{H^3}{12} = \\ M \frac{H^2}{12}$.</li>
+            <li>$B = I_{yy} = \\ \int_{-L/2}^{L/2} \int_{-H/2}^{H/2} (x^2+0^2) \sigma dx dy = \\ \sigma H [\frac{x^3}{3}]_{-L/2}^{L/2} = \\ \sigma H \frac{L^3}{12} = \\ M \frac{L^2}{12}$.</li>
+            <li>$C = I_{zz} = \\ A + B = \\ M (\frac{H^2}{12} + \frac{L^2}{12})$ (car $z=0$, théorème de l'axe perpendiculaire).</li>
+            <li>Par symétrie par rapport aux plans $x=0$ et $y=0$, et comme $z=0$, on a $D=I_{xy}=0$, $E=I_{xz}=0$, $F=I_{yz}=0$.</li>
+        </ul>
+        <p>La matrice d'inertie est :</p>
+        $$ [I_O] = \\ \begin{pmatrix} A & -D & -E \\ -D & B & -F \\ -E & -F & C \end{pmatrix} = \\ \begin{pmatrix} M H^2/12 & 0 & 0 \\ 0 & M L^2/12 & 0 \\ 0 & 0 & M(L^2+H^2)/12 \end{pmatrix} $$
+    </div>
+
+    <h2>4. Propriétés et Théorèmes Clés</h2>
+
+    <h3>4.1 Simplification par Symétrie (Détail)</h3>
+    <p>La présence de symétries matérielles dans le solide par rapport au repère $(O, \vec{i}, \vec{j}, \vec{k})$ est un outil puissant pour simplifier la matrice d'inertie $[I_O]$.</p>
     <ul>
-        <li><strong>Corps Volumiques (3D)</strong> : $dm = \rho(x, y, z) dV$, où $\rho$ est la densité volumique et $dV$ est l'élément de volume (par exemple, $dV = dxdydz$ en coordonnées cartésiennes). Les intégrales sont des intégrales triples sur le volume (V) du corps.
-        \[ A = \iiint_{(V)} (y^2 + z^2) \rho dV, \quad D = \iiint_{(V)} xy \rho dV, \text{ etc.} \]
-        </li>
-        <li><strong>Corps Surfaciques (2D)</strong> : $dm = \sigma(x, y) dS$, où $\sigma$ est la densité surfacique et $dS$ est l'élément d'aire (par exemple, $dS = dx dy$ pour une surface plane, $dS = r dr d\theta$ en coordonnées polaires planes). Les intégrales sont des intégrales doubles sur la surface (S) du corps.
-        \[ A = \iint_{(S)} (y^2 + z^2) \sigma dS, \quad D = \iint_{(S)} xy \sigma dS, \text{ etc.} \]
-        <p>Cas particulier (plaques planes dans $z=0$) : Si le corps est une plaque mince située dans le plan $z=0$, alors $z=0$ et $dz=0$ pour tous les points. Les termes $E$ et $F$ sont nuls. Les moments d'inertie deviennent $A = \iint_{(S)} y^2 \sigma dS$, $B = \iint_{(S)} x^2 \sigma dS$, et $C = A + B$ (théorème de l'axe perpendiculaire). Le tenseur prend la forme
-        \[
-        \begin{pmatrix}
-        A & -D & 0 \\
-        -D & B & 0 \\
-        0 & 0 & (A+B)
-        \end{pmatrix}
-        \]
-        </p>
-        </li>
-        <li><strong>Corps Linéiques (1D)</strong> : $dm = \lambda(l) dl$, où $\lambda$ est la densité linéique et $dl$ est l'élément de longueur (par exemple, $dl = dx$ pour un fil le long de l'axe Ox). Les intégrales sont des intégrales simples le long de la courbe (L).
-        \[ A = \int_{(L)} (y^2 + z^2) \lambda dl, \quad D = \int_{(L)} xy \lambda dl, \text{ etc.} \]
-        </li>
-    </ul>
-
-    <h3>Homogénéité et Masse Totale</h3>
-    <p>Si le corps est homogène, sa densité ($\rho$, $\sigma$, ou $\lambda$) est constante sur tout le domaine. La masse totale M est alors : $M = \rho V_{total}$ (pour un corps volumique) $M = \sigma S_{total}$ (pour un corps surfacique) $M = \lambda L_{total}$ (pour un corps linéique)</p>
-    <p>La densité constante peut être sortie des intégrales lors du calcul des moments et produits d'inertie.</p>
-
-    <h3>Théorème de Huygens (Transport du Tenseur d'Inertie)</h3>
-    <p>Ce théorème est général et s'applique à tout type de corps. Soit G le centre de masse d'un système matériel (S) de masse totale M. Le tenseur d'inertie $[I_O]$ au point O est lié au tenseur d'inertie $[I_G]$ au point G (calculé dans une base parallèle à celle en O) par :
-    \[ [I_O] = [I_G] + [I_{O/G}] \]
-    où $[I_{O/G}]$ est le tenseur d'inertie du point matériel G (affecté de la masse totale M) par rapport au point O. Si $\vec{OG} = (x_G, y_G, z_G)$, sa matrice dans $\mathcal{R}(O, X, Y, Z)$ est :
-    \[
-    [I_{O/G}] = M
-    \begin{pmatrix}
-    (y_G^2 + z_G^2) & -x_G y_G & -x_G z_G \\
-    -x_G y_G & (x_G^2 + z_G^2) & -y_G z_G \\
-    -x_G z_G & -y_G z_G & (x_G^2 + y_G^2)
-    \end{pmatrix}
-    \]
-    <p><strong>Important :</strong> Les matrices $[I_O]$, $[I_G]$ et $[I_{O/G}]$ doivent être exprimées dans des bases dont les axes sont parallèles.</p>
-
-    <h3>Principe d'Additivité</h3>
-    <p>Ce principe est général. Pour un système matériel (S) composé de plusieurs sous-systèmes disjoints $(S_1), (S_2), ..., (S_n)$, le tenseur d'inertie du système complet en un point O est la somme des tenseurs d'inertie de chaque sous-système au même point O :
-    \[ [I_O](S) = \sum_{i=1}^{n} [I_O](S_i) \]
-    <p>Toutes les matrices doivent être exprimées dans la même base.</p>
-
-    <h3>Simplifications par Symétrie</h3>
-    <p>Les symétries matérielles du corps simplifient le tenseur d'inertie. Ces règles sont générales.</p>
-    <ul>
-        <li>Si un plan de coordonnée est un plan de symétrie matérielle pour la distribution de masse :
+        <li>
+            <p><strong>Plan de Symétrie :</strong> Si un plan de coordonnées est un plan de symétrie matérielle (la distribution de masse est identique de part et d'autre).</p>
             <ul>
-                <li>Plan $xOy$ ($z=0$) $\implies I_{xz} = 0, I_{yz} = 0$ (soit $E=0, F=0$). L'intégrale de $xz dm$ ou $yz dm$ sur (S) est nulle car pour chaque $dm$ en $(x, y, z)$, il existe un $dm$ équivalent en $(x, y, -z)$.</li>
-                <li>Plan $xOz$ ($y=0$) $\implies I_{xy} = 0, I_{yz} = 0$ (soit $D=0, F=0$). Symétrie par rapport à $y=0$.</li>
-                <li>Plan $yOz$ ($x=0$) $\implies I_{xy} = 0, I_{xz} = 0$ (soit $D=0, E=0$). Symétrie par rapport à $x=0$.</li>
+                <li>Si $(xOy)$ (plan $z=0$) est plan de symétrie : Pour tout point $P(x,y,z)$ de masse $dm$, il existe un point $P'(x,y,-z)$ de même masse $dm$. Les intégrales $\int xz dm$ et $\int yz dm$ s'annulent par compensation terme à terme ($xz dm + x(-z) dm = 0$).
+                <br/>$\implies E = I_{xz} = 0$ et $F = I_{yz} = 0$. L'axe $Oz$ (perpendiculaire au plan) est un axe principal d'inertie.</li>
+                <li>Si $(xOz)$ (plan $y=0$) est plan de symétrie $\implies D = I_{xy} = 0$ et $F = I_{yz} = 0$. L'axe $Oy$ est principal.</li>
+                <li>Si $(yOz)$ (plan $x=0$) est plan de symétrie $\implies D = I_{xy} = 0$ et $E = I_{xz} = 0$. L'axe $Ox$ est principal.</li>
             </ul>
+             <div class="example"><strong>Exemple (Solutions Ex 3.3 - Parallélépipède au coin):</strong> Si le parallélépipède est défini par $x \in [0,a], y \in [0,b], z \in [0,c]$, aucun plan de coordonnée n'est plan de symétrie *par rapport à l'origine O au coin*. Les produits d'inertie D, E, F sont généralement non nuls. Par contre, si l'origine est au *centre* $G(a/2, b/2, c/2)$, alors les 3 plans passant par $G$ et parallèles aux faces sont des plans de symétrie, et en $G$, $D_G=E_G=F_G=0$.</div>
         </li>
-        <li>Si deux plans de coordonnées sont des plans de symétrie, les trois produits d'inertie sont nuls ($D=E=F=0$) et le tenseur d'inertie est <strong>diagonal</strong> dans cette base. C'est notamment le cas si un axe de coordonnée est un axe de symétrie matérielle.</li>
-        <li>Si le corps admet une <strong>symétrie de révolution</strong> (axiale) autour d'un axe de coordonnée (par ex. Oz), alors le tenseur est diagonal et les moments d'inertie par rapport aux axes perpendiculaires sont égaux. Pour une symétrie autour de Oz : $I_{xx} = I_{yy}$ ($A=B$) et $D=E=F=0$. Le tenseur est
-        \[
-        \begin{pmatrix}
-        A & 0 & 0 \\
-        0 & A & 0 \\
-        0 & 0 & C
-        \end{pmatrix}
-        \]
+         <li>
+            <p><strong>Axe de Symétrie (de Révolution) :</strong> Si un axe de coordonnées (ex: $Oz$) est un axe de symétrie matérielle de <strong>révolution</strong> (axisymétrie). Cela signifie que la distribution de masse est invariante par toute rotation autour de cet axe.</p>
+             <ul>
+                <li>Conséquences :
+                    <ul>
+                        <li>Tout plan contenant l'axe de révolution $Oz$ est un plan de symétrie matérielle. Cela inclut les plans de coordonnées $(xOz)$ et $(yOz)$.</li>
+                        <li>Comme $(yOz)$ est plan de symétrie $\implies E = I_{xz} = 0$.</li>
+                        <li>Comme $(xOz)$ est plan de symétrie $\implies F = I_{yz} = 0$.</li>
+                        <li>La symétrie de révolution implique également que l'intégrale $\int xy dm$ s'annule $\implies D = I_{xy} = 0$. (On peut le voir en coordonnées cylindriques, l'intégrale sur $\theta$ de $\cos\theta \sin\theta$ est nulle sur $[0, 2\pi]$).</li>
+                        <li>La résistance à la rotation autour de tout axe perpendiculaire à $Oz$ passant par $O$ est la même, donc $A = I_{xx} = B = I_{yy}$.</li>
+                    </ul>
+                </li>
+                <li><strong>Résultat :</strong> Si $Oz$ est axe de révolution $\implies D=E=F=0$ et $A=B$. La matrice d'inertie est diagonale avec les deux premiers termes égaux. Les axes $Ox, Oy, Oz$ forment une base principale d'inertie.</li>
+             </ul>
+              <div class="example"><strong>Exemple (Solutions Ex 3.1 & 3.4 - Cône, Cylindre):</strong> Pour un cône ou un cylindre d'axe $Oz$ et d'origine $O$ sur l'axe (au sommet ou au centre de la base), $Oz$ est axe de révolution. Donc $D=E=F=0$ et $A=B$.</div>
+        </li>
+        <li>
+            <p><strong>Symétrie Sphérique :</strong> Si le solide est invariant par toute rotation autour de $O$.</p>
+            <p><strong>Résultat :</strong> Tout axe passant par $O$ est un axe principal d'inertie. La matrice est scalaire : $D=E=F=0$ et $A=B=C = I$. $[I_O] = I [\mathbf{1}]$.</p>
+            <div class="example"><strong>Exemple (Solutions Ex 3.2 - Sphère):</strong> Pour une sphère homogène centrée en $O$, $A=B=C = \frac{2}{5}MR^2$, $D=E=F=0$.</div>
         </li>
     </ul>
-    <!-- PDF Content End -->
 
-    <script>
-        function resizeIframeToFitContent(iframe) {
-            console.log('Attempting to resize iframe:', iframe.id);
-            try {
-                // Check if contentWindow and document are accessible
-                if (!iframe.contentWindow || !iframe.contentWindow.document || !iframe.contentWindow.document.body) {
-                    console.warn('Iframe content window or document not accessible. Possible loading or cross-origin issue.');
-                    return; // Stop if not accessible
-                }
+    <h3>4.2 Axes Principaux et Moments Principaux d'Inertie</h3>
+    <div class="definition">
+        <p>Pour tout solide $(S)$ et tout point $O$, il existe au moins une base orthonormée $R_p(O, \vec{e}_1, \vec{e}_2, \vec{e}_3)$ telle que la matrice d'inertie de $(S)$ en $O$, exprimée dans cette base, soit diagonale :</p>
+        <div class="formula">
+            $$ [I_O]_{R_p} = \\ \begin{pmatrix} I_1 & 0 & 0 \\ 0 & I_2 & 0 \\ 0 & 0 & I_3 \end{pmatrix} $$
+        </div>
+        <p>Les axes $(O, \vec{e}_1), (O, \vec{e}_2), (O, \vec{e}_3)$ sont appelés <strong>axes principaux d'inertie</strong> en $O$. Les valeurs diagonales $I_1, I_2, I_3$ sont les <strong>moments principaux d'inertie</strong> en $O$.</p>
+        <p>Mathématiquement, $I_1, I_2, I_3$ sont les valeurs propres de la matrice $[I_O]$ (exprimée dans une base quelconque), et $\vec{e}_1, \vec{e}_2, \vec{e}_3$ sont les vecteurs propres normalisés correspondants.</p>
+    </div>
 
-                const iframeDoc = iframe.contentWindow.document;
-                const iframeBody = iframeDoc.body;
-                const iframeHtml = iframeDoc.documentElement;
+    <h3>4.3 Théorème de Huygens (Théorème des Axes Parallèles)</h3>
+    <p>Ce théorème fondamental relie le tenseur d'inertie $[I_O]$ en un point quelconque $O$ au tenseur d'inertie $[I_G]$ au centre de masse $G$. Il est extrêmement utile car $[I_G]$ est souvent plus simple à calculer (grâce aux symétries centrées en $G$).</p>
+    <div class="definition">
+        <p><strong>Théorème de Huygens :</strong> Soit $(S)$ un solide de masse $M$ et de centre de masse $G$. Le tenseur d'inertie $[I_O]$ en un point $O$ est la somme du tenseur d'inertie $[I_G]$ (calculé dans une base parallèle à celle en $O$) et du tenseur d'inertie $[J_{OG}]$ qu'aurait une masse ponctuelle $M$ située en $G$, calculé par rapport à $O$.</p>
+        <div class="formula">
+            $$ [I_O] = \\ [I_G] + [J_{OG}] $$
+        </div>
+         <p>Si $\vec{OG}$ a pour composantes $(x_G, y_G, z_G)$ dans la base $R(O, \vec{i}, \vec{j}, \vec{k})$, alors les composantes $A_O, B_O, ..., F_O$ de $[I_O]$ sont liées aux composantes $A_G, B_G, ..., F_G$ de $[I_G]$ par :</p>
+         <div class="formula">
+            $$ A_O = I_{Oxx} = \\ I_{Gxx} + M (y_G^2 + z_G^2) $$
+            $$ B_O = I_{Oyy} = \\ I_{Gyy} + M (x_G^2 + z_G^2) $$
+            $$ C_O = I_{Ozz} = \\ I_{Gzz} + M (x_G^2 + y_G^2) $$
+            $$ D_O = I_{Oxy} = \\ I_{Gxy} + M x_G y_G $$
+            $$ E_O = I_{Oxz} = \\ I_{Gxz} + M x_G z_G $$
+            $$ F_O = I_{Oyz} = \\ I_{Gyz} + M y_G z_G $$
+        </div>
+         <p>Matriciellement, en utilisant la convention $[I_O] = \begin{pmatrix} A_O & -D_O & -E_O \\ ... \end{pmatrix}$:</p>
+         $$ \begin{pmatrix} A_O & -D_O & -E_O \\ -D_O & B_O & -F_O \\ -E_O & -F_O & C_O \end{pmatrix} = \\ \begin{pmatrix} A_G & -D_G & -E_G \\ -D_G & B_G & -F_G \\ -E_G & -F_G & C_G \end{pmatrix} + M \begin{pmatrix} y_G^2+z_G^2 & -x_G y_G & -x_G z_G \\ -x_G y_G & x_G^2+z_G^2 & -y_G z_G \\ -x_G z_G & -y_G z_G & x_G^2+y_G^2 \end{pmatrix} $$
+    </div>
+    <div class="example">
+        <p><strong>Exemple (Solutions Ex 1.2 - Tige décalée):</strong> Tige de masse $M$, longueur $L$, parallèle à $Ox$ mais en $y=a, z=0$. Le centre de masse $G$ est au milieu du segment en $x$, donc si la tige va de $x=-L/2$ à $x=L/2$, $G$ est en $(0, a, 0)$. En $G$, $[I_G] = \text{diag}(Ma^2, ML^2/12, Ma^2+ML^2/12)$ n'est pas le tenseur de la tige centrée car G n'est pas sur la tige ! Le tenseur au centre de la tige G'=(0,a,0) serait $\text{diag}(0, ML^2/12, ML^2/12)$. Prenons l'origine $O$ au début de la tige, $O(-L/2, a, 0)$. Alors $G$ est en $x_G=L/2, y_G=0, z_G=0$ par rapport à $O$. Le tenseur en $G$ est $[I_G] = \text{diag}(0, ML^2/12, ML^2/12)$. On cherche $[I_O]$.</p>
+        <ul>
+            <li>$A_O = A_G + M(y_G^2 + z_G^2) = \\ 0 + M(0^2+0^2) = 0$.</li>
+            <li>$B_O = B_G + M(x_G^2 + z_G^2) = \\ ML^2/12 + M((L/2)^2 + 0^2) = \\ ML^2/12 + ML^2/4 = \\ ML^2/3$.</li>
+            <li>$C_O = C_G + M(x_G^2 + y_G^2) = \\ ML^2/12 + M((L/2)^2 + 0^2) = \\ ML^2/3$.</li>
+            <li>$D_O = D_G + M x_G y_G = \\ 0 + M(L/2)(0) = 0$.</li>
+            <li>$E_O = E_G + M x_G z_G = \\ 0 + M(L/2)(0) = 0$.</li>
+            <li>$F_O = F_G + M y_G z_G = \\ 0 + M(0)(0) = 0$.</li>
+        </ul>
+        <p>Le tenseur d'inertie à l'extrémité O de la tige est :</p>
+        $$ [I_O] = \\ \begin{pmatrix} 0 & 0 & 0 \\ 0 & ML^2/3 & 0 \\ 0 & 0 & ML^2/3 \end{pmatrix} $$
+    </div>
 
-                // Reset height to allow accurate scrollHeight measurement
-                iframe.style.height = 'auto';
-
-                // Calculate height using both body and documentElement scrollHeight
-                // and take the maximum. Add a small buffer (e.g., 5px) sometimes helps.
-                const bodyHeight = iframeBody.scrollHeight;
-                const docHeight = iframeHtml.scrollHeight;
-                const contentHeight = Math.max(bodyHeight, docHeight) + 5; // Added 5px buffer
-
-                console.log(`Measured heights - body: ${bodyHeight}px, documentElement: ${docHeight}px. Setting iframe height to: ${contentHeight}px`);
-
-                if (contentHeight > 10) { // Only set if height seems valid (greater than a small threshold)
-                     iframe.style.height = contentHeight + 'px';
-                     console.log('Iframe height set.');
-                } else {
-                     console.warn('Calculated content height is zero or very small. Not setting height.');
-                     // Optional: Set a minimum default height as fallback if needed
-                     // iframe.style.height = '100px';
-                }
-
-            } catch (e) {
-                console.error('ERROR resizing iframe:', e);
-                console.error('This often indicates a Same-Origin Policy violation. Ensure the parent page and iframe src are served from the exact same domain, protocol, and port.');
-                // Provide fallback or visual indication, e.g.:
-                // iframe.style.border = '2px solid red';
-                // iframe.style.height = '100px'; // Set a fallback height
-            }
-        }
-
-        const myIframe = document.getElementById('nav-iframe');
-
-        if (myIframe) {
-            console.log('Found iframe with ID:', myIframe.id);
-
-            // --- Event Listener for Load ---
-            myIframe.addEventListener('load', function() {
-                console.log('Iframe detected LOAD event.');
-                // Use setTimeout to allow content potentially rendering *after* load event
-                setTimeout(() => resizeIframeToFitContent(this), 150); // Delay slightly
-                // Add a second check slightly later in case of slow rendering elements
-                setTimeout(() => resizeIframeToFitContent(this), 500);
-                 // Add a third check even later for complex pages
-                setTimeout(() => resizeIframeToFitContent(this), 1500);
-            });
-
-            // --- Event Listener for Window Resize ---
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                console.log('Window resize detected.');
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    if (myIframe) { // Ensure iframe still exists
-                        resizeIframeToFitContent(myIframe);
-                    }
-                }, 250); // Debounce resize
-            });
-
-            // --- Initial Check (in case already loaded) ---
-             // Check document.readyState inside the iframe more reliably
-            try {
-                 // Need to check if contentWindow exists first
-                if (myIframe.contentWindow && myIframe.contentWindow.document && myIframe.contentWindow.document.readyState === 'complete') {
-                    console.log('Iframe already loaded (readyState complete), attempting initial resize.');
-                    // Use setTimeout here too for consistency and timing
-                    setTimeout(() => resizeIframeToFitContent(myIframe), 150);
-                } else if (myIframe.contentWindow) {
-                     console.log(`Iframe not yet complete on initial script run. Current readyState: ${myIframe.contentWindow.document ? myIframe.contentWindow.document.readyState : 'document not accessible'}`);
-                } else {
-                    console.log('Iframe contentWindow not accessible on initial check (might be loading or cross-origin). Waiting for load event.')
-                }
-            } catch(e) {
-                 // Catch potential cross-origin errors even during the check
-                 console.warn('Initial readyState check failed, likely cross-origin before load event or iframe not fully initialized yet.', e.message);
-            }
+    <h3>4.4 Moment d'Inertie par Rapport à un Axe Quelconque</h3>
+    <p>Le moment d'inertie $I_{\Delta}$ d'un solide $(S)$ par rapport à un axe $(\Delta)$, passant par $O$ et de vecteur directeur unitaire $\vec{n}$, est donné par la forme quadratique associée à la matrice d'inertie $[I_O]$.</p>
+     <div class="definition">
+        <div class="formula">
+            $$ I_{\Delta} = \\ \vec{n}^T [I_O] \vec{n} $$
+        </div>
+        <p>Si $\vec{n} = \begin{pmatrix} \alpha \\ \beta \\ \gamma \end{pmatrix}$ (avec $\alpha^2+\beta^2+\gamma^2=1$), et en utilisant la matrice $[I_O] = \begin{pmatrix} A & -D & -E \\ -D & B & -F \\ -E & -F & C \end{pmatrix}$, l'expression développée est :</p>
+        <div class="formula">
+            $$ I_{\Delta} = \\ \alpha^2 A + \beta^2 B + \gamma^2 C - 2\alpha\beta D - 2\alpha\gamma E - 2\beta\gamma F $$
+        </div>
+         <p>Physiquement, $I_\Delta = \int_{(S)} d^2 dm$, où $d$ est la distance de l'élément $dm$ à l'axe $(\Delta)$. On peut montrer que $d^2 = \| \vec{OP} \wedge \vec{n} \|^2$.</p>
+    </div>
 
 
-        } else {
-            console.error('Iframe with ID "nav-iframe" not found in the DOM.');
-        }
-    </script>
+    <h3>4.5 Produit d'Inertie par Rapport à Deux Axes Orthogonaux Quelconques</h3>
+     <p>Le produit d'inertie $I_{uv}$ par rapport à deux axes orthogonaux $(\Delta_u)$ et $(\Delta_v)$ passant par $O$, de vecteurs directeurs unitaires $\vec{u}$ et $\vec{v}$ ($\vec{u} \cdot \vec{v} = 0$), est donné par :</p>
+     <div class="definition">
+        <div class="formula">
+             $$ I_{uv} = \\ \int_{(S)} x_u x_v dm $$
+             $$ I_{uv} = \\ -\vec{u}^T [I_O] \vec{v} $$
+        </div>
+        <p>où $x_u = \vec{OP} \cdot \vec{u}$ et $x_v = \vec{OP} \cdot \vec{v}$ sont les projections de $\vec{OP}$ sur les axes $(\Delta_u)$ et $(\Delta_v)$. Le signe '$-$' dans la seconde formule provient de la relation entre l'intégrale et l'opérateur matriciel $[I_O]$ tel que défini (avec les $-D, -E, -F$).</p>
+    </div>
+
+    <h3>4.6 Changement de Base (Rotation)</h3>
+    <p>Si la matrice d'inertie $[I_O]_R$ est connue dans une base $R(O, \vec{i}, \vec{j}, \vec{k})$ et qu'on désire l'exprimer dans une nouvelle base $R'(O, \vec{i}', \vec{j}', \vec{k}')$ obtenue par rotation de $R$, on utilise la matrice de passage (ou matrice de rotation).</p>
+    <div class="definition">
+        <p>Soit $P = [P]_{R \to R'}$ la matrice de passage de la base $R$ à la base $R'$. Les colonnes de $P$ sont les composantes des <strong>nouveaux</strong> vecteurs de base $(\vec{i}', \vec{j}', \vec{k}')$ exprimées dans l'<strong>ancienne</strong> base $(\vec{i}, \vec{j}, \vec{k})$. $P$ est une matrice orthogonale ($P^T P = P P^T = [\mathbf{1}]$, donc $P^T = P^{-1}$).</p>
+        <p>La matrice d'inertie dans la nouvelle base $R'$ est donnée par la formule de changement de base pour les tenseurs d'ordre 2 :</p>
+        <div class="formula">
+            $$ [I_O]_{R'} = \\ P^T [I_O]_R P $$
+        </div>
+         <p>Alternativement, si $P_{R' \to R}$ est la matrice dont les colonnes sont les anciens vecteurs $(\vec{i}, \vec{j}, \vec{k})$ dans la nouvelle base $(\vec{i}', \vec{j}', \vec{k}')$ (et $P_{R' \to R} = P^T$), alors $[I_O]_{R'} = P_{R' \to R} [I_O]_R P_{R' \to R}^T$.</p>
+    </div>
+     <div class="example">
+        <p><strong>Exemple (inspiré Cours p. 131-132):</strong> Une barre mince OA de masse M, longueur L, située initialement sur l'axe $Ox_1$ dans un repère $R_1$. Sa matrice d'inertie en O dans $R_1$ est $[I_O]_{R_1} = \text{diag}(0, ML^2/3, ML^2/3)$ (calculée à l'extrémité). On considère un repère $R_0$ tel que $R_1$ est obtenu par rotation d'angle $(-\alpha)$ de $R_0$ autour de $Oz_0=Oz_1$, ou $R_0$ obtenu par rotation d'angle $\alpha$ de $R_1$. La matrice de passage de $R_0$ à $R_1$ (colonnes = vecteurs de $R_1$ dans $R_0$) est :
+         $$ P = [P]_{R_0 \to R_1} = \\ \begin{pmatrix} \cos \alpha & -\sin \alpha & 0 \\ \sin \alpha & \cos \alpha & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+        On cherche $[I_O]_{R_0}$. La formule est $[I_O]_{R_0} = P [I_O]_{R_1} P^T$. (Transformation de $R_1$ vers $R_0$).
+        $$ [I_O]_{R_0} = \\ \begin{pmatrix} c & -s & 0 \\ s & c & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & L^2/3 & 0 \\ 0 & 0 & L^2/3 \end{pmatrix} \begin{pmatrix} c & s & 0 \\ -s & c & 0 \\ 0 & 0 & 1 \end{pmatrix} M $$
+         $$ = \\ M \begin{pmatrix} c & -s & 0 \\ s & c & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ -s L^2/3 & c L^2/3 & 0 \\ 0 & 0 & L^2/3 \end{pmatrix} $$
+         $$ = \\ M \frac{L^2}{3} \begin{pmatrix} s^2 & -sc & 0 \\ -sc & c^2 & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+         Cette matrice représente l'inertie de la barre inclinée dans le repère fixe $R_0$.
+         </p>
+    </div>
+
+    <h2>5. Conclusion</h2>
+    <p>Le tenseur d'inertie, représenté par la matrice d'inertie $[I_O]$, est un outil essentiel pour décrire la distribution de masse d'un solide et analyser son comportement en rotation. Son calcul peut être effectué par intégration directe, mais l'utilisation judicieuse des symétries et des théorèmes comme celui de Huygens ou de Guldin (pour le centre de masse) permet des simplifications considérables, rendant son application pratique dans divers problèmes de mécanique et d'ingénierie.</p>
+
 </body>
 </html>

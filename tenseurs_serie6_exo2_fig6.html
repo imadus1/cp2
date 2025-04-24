@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 2.6 - Disque</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Figure 2.6 : Disque</h1>
+
+     <div class="figure-placeholder">figure2.6.png (Placeholder)</div>
+     <p class="caption">FIGURE 2.6 - Disque</p>
+
+    <h2>Méthode requise : Calcul direct (coordonnées polaires).</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li>Matrice d'inertie, Corps surfacique ($dm = \sigma dA$).</li>
+        <li><strong>Coordonnées polaires :</strong> $x = r \cos \theta$, $y = r \sin \theta$, $dA = r dr d\theta$.</li>
+        <li><strong>Symétrie :</strong> Symétrie de révolution autour de l'axe Z (passant par O). Implique que tous les axes dans le plan XOY passant par O sont principaux d'inertie, et les moments d'inertie par rapport à ces axes sont égaux (A = B). Les produits d'inertie D, E, F sont nuls.</li>
+    </ul>
+
+    <h2>Géométrie et Paramétrisation :</h2>
+    <ul>
+        <li>Disque de rayon R centré en O, dans le plan $z=0$.</li>
+        <li>Masse totale : $M = \sigma \pi R^2$.</li>
+        <li>Limites d'intégration : $r \in [0, R]$, $\theta \in [0, 2\pi]$.</li>
+        <li>Élément de masse : $dm = \sigma r dr d\theta$.</li>
+    </ul>
+
+    <h2>Calcul des termes du tenseur :</h2>
+    <h3>Calcul de A :</h3>
+    $$ A = I_{xx} = \iint_S y^2 dm = \int_0^{2\pi} \int_0^R (r \sin \theta)^2 \sigma r dr d\theta $$
+    $$ = \sigma \int_0^R r^3 dr \int_0^{2\pi} \sin^2 \theta d\theta $$
+    $$ = \sigma \left[ \frac{r^4}{4} \right]_0^R \int_0^{2\pi} \frac{1 - \cos(2\theta)}{2} d\theta $$
+    $$ = \sigma \frac{R^4}{4} \left[ \frac{\theta}{2} - \frac{\sin(2\theta)}{4} \right]_0^{2\pi} $$
+    $$ = \sigma \frac{R^4}{4} \left( \frac{2\pi}{2} - 0 \right) = \sigma \frac{R^4 \pi}{4} $$
+    $$ = (\sigma \pi R^2) \frac{R^2}{4} = M \frac{R^2}{4} $$
+
+    <h3>Calcul de B :</h3>
+    <p>Par symétrie de révolution, B = A. Vérifions :</p>
+    $$ B = I_{yy} = \iint_S x^2 dm = \int_0^{2\pi} \int_0^R (r \cos \theta)^2 \sigma r dr d\theta $$
+    $$ = \sigma \int_0^R r^3 dr \int_0^{2\pi} \cos^2 \theta d\theta $$
+    $$ = \sigma \left[ \frac{r^4}{4} \right]_0^R \int_0^{2\pi} \frac{1 + \cos(2\theta)}{2} d\theta $$
+     $$ = \sigma \frac{R^4}{4} \left[ \frac{\theta}{2} + \frac{\sin(2\theta)}{4} \right]_0^{2\pi} $$
+    $$ = \sigma \frac{R^4}{4} \left( \frac{2\pi}{2} + 0 \right) = \sigma \frac{R^4 \pi}{4} = M \frac{R^2}{4} $$
+
+    <h3>Calcul de C :</h3>
+    <p>C = A + B (objet plan).</p>
+    $$ C = M \frac{R^2}{4} + M \frac{R^2}{4} = M \frac{R^2}{2} $$
+    <p>Alternativement, calcul direct :</p>
+    $$ C = I_{zz} = \iint_S (x^2 + y^2) dm = \iint_S r^2 dm $$
+    $$ = \int_0^{2\pi} \int_0^R r^2 \sigma r dr d\theta = \sigma \int_0^R r^3 dr \int_0^{2\pi} d\theta $$
+    $$ = \sigma \left[ \frac{r^4}{4} \right]_0^R [\theta]_0^{2\pi} = \sigma \frac{R^4}{4} (2\pi) $$
+    $$ = (\sigma \pi R^2) \frac{R^2}{2} = M \frac{R^2}{2} $$
+
+    <h3>Calcul de D :</h3>
+    <p>Par symétrie, D = 0. Vérifions :</p>
+    $$ D = I_{xy} = \iint_S xy dm = \int_0^{2\pi} \int_0^R (r \cos \theta)(r \sin \theta) \sigma r dr d\theta $$
+    $$ = \sigma \int_0^R r^3 dr \int_0^{2\pi} \sin \theta \cos \theta d\theta $$
+    $$ = \sigma \left[ \frac{r^4}{4} \right]_0^R \int_0^{2\pi} \frac{1}{2} \sin(2\theta) d\theta $$
+    $$ = \sigma \frac{R^4}{4} \left[ -\frac{1}{4} \cos(2\theta) \right]_0^{2\pi} = \sigma \frac{R^4}{4} (-\frac{1}{4} (1 - 1)) = 0 $$
+
+    <h3>Calcul de E et F :</h3>
+    E = F = 0 car z = 0.
+
+    <h2>Résultat :</h2>
+    <p>Le tenseur d'inertie au point O est :</p>
+    $$ [I_O]_{2.6} = \begin{pmatrix} M R^2/4 & 0 & 0 \\ 0 & M R^2/4 & 0 \\ 0 & 0 & M R^2/2 \end{pmatrix} $$
+    <p>où $M = \sigma \pi R^2$.</p>
+
+    <h2>Commentaire :</h2>
+    <p>La matrice est diagonale et A = B, comme attendu pour un objet avec symétrie de révolution autour de Oz. Les coordonnées polaires simplifient grandement le calcul. Le résultat C = A + B est cohérent.</p>
+
+</body>
+</html>

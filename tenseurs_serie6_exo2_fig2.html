@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 2.2 - Rectangle décalé en Y</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Figure 2.2 : Rectangle décalé en Y</h1>
+     <!-- Placeholder for figure -->
+    <div class="figure-placeholder">Figure 2.2 Placeholder</div>
+
+    <h2>Méthodes requises : Calcul direct et Théorème de Huygens.</h2>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li><strong>Matrice d'inertie, Corps surfacique</strong> ($dm = \sigma dA$).</li>
+        <li><strong>Symétrie :</strong> Le plan $z = 0$ contient le corps ($E=F=0$). Le plan $x = 0$ (YOZ) est un plan de symétrie matérielle ($D=0$).</li>
+        <li><strong>Théorème de Huygens :</strong> $[I_O] = [I_G] + [I_{O/G}]$. Permet de calculer $[I_O]$ à partir du tenseur au centre de masse G.</li>
+    </ul>
+
+    <h3>Géométrie et Paramétrisation :</h3>
+    <ul>
+        <li>Rectangle de dimensions $L \times a$.</li>
+        <li>Position : $x \in [-L/2, L/2]$, $y \in [0, a]$, $z = 0$.</li>
+        <li>Masse totale : $M = \sigma L a$.</li>
+        <li>Centre de masse : $G(0, a/2, 0)$.</li>
+        <li>Élément de masse : $dm = \sigma dx dy$.</li>
+    </ul>
+
+    <h2>Méthode 1 : Calcul direct</h2>
+    <h3>Calcul de A :</h3>
+    $$ A = I_{xx} = \iint_S y^2 dm = \sigma \int_{-L/2}^{L/2} \int_{0}^{a} y^2 dy dx $$
+    $$ = \sigma \int_{-L/2}^{L/2} \left[ \frac{y^3}{3} \right]_0^a dx = \sigma \int_{-L/2}^{L/2} \frac{a^3}{3} dx $$
+    $$ = \sigma \frac{a^3}{3} [x]_{-L/2}^{L/2} = \sigma \frac{a^3}{3} L = (\sigma L a) \frac{a^2}{3} = M \frac{a^2}{3} $$
+
+    <h3>Calcul de B :</h3>
+    $$ B = I_{yy} = \iint_S x^2 dm = \sigma \int_{0}^{a} \int_{-L/2}^{L/2} x^2 dx dy $$
+    $$ = \sigma \int_{0}^{a} \left[ \frac{x^3}{3} \right]_{-L/2}^{L/2} dy = \sigma \int_{0}^{a} \frac{L^3}{12} dy $$
+    $$ = \sigma \frac{L^3}{12} [y]_0^a = \sigma \frac{L^3}{12} a = (\sigma L a) \frac{L^2}{12} = M \frac{L^2}{12} $$
+
+    <h3>Calcul de C :</h3>
+    <p> $C = A + B$ (objet plan) </p>
+    $$ C = M \frac{a^2}{3} + M \frac{L^2}{12} = M \left( \frac{a^2}{3} + \frac{L^2}{12} \right) $$
+
+    <h3>Calcul de D :</h3>
+    <p>Par symétrie ($x = 0$ est plan de symétrie) :</p>
+    $$ D = I_{xy} = \iint_S xy dm = \sigma \int_{0}^{a} y \left( \int_{-L/2}^{L/2} x \, dx \right) dy $$
+    <p>L'intégrale interne $\int x \, dx$ sur $[-L/2, L/2]$ est nulle. Donc $D = 0$.</p>
+
+    <h3>Calcul de E et F :</h3>
+    <p>$E = F = 0$ car $z = 0$.</p>
+
+    <h2>Méthode 2 : Théorème de Huygens</h2>
+    <ul>
+        <li><strong>Tenseur au centre de masse G(0, a/2, 0) :</strong> En G, le rectangle est centré. Utilisons le résultat 2.1 avec largeur=L et hauteur=a.
+            $$ [I_G] = \begin{pmatrix} M \frac{a^2}{12} & 0 & 0 \\ 0 & M \frac{L^2}{12} & 0 \\ 0 & 0 & M \frac{L^2+a^2}{12} \end{pmatrix} $$
+        </li>
+        <li><strong>Terme de transport $[I_{O/G}]$ :</strong> Masse M ponctuelle en $G(x_G=0, y_G=a/2, z_G=0)$. $\vec{OG} = (0, a/2, 0)$.
+            $$ A_{O/G} = M(y_G^2 + z_G^2) = M((a/2)^2 + 0^2) = M \frac{a^2}{4} $$
+            $$ B_{O/G} = M(x_G^2 + z_G^2) = M(0^2 + 0^2) = 0 $$
+            $$ C_{O/G} = M(x_G^2 + y_G^2) = M(0^2 + (a/2)^2) = M \frac{a^2}{4} $$
+            $$ D_{O/G} = M(-x_G y_G) = M(-(0)(a/2)) = 0 $$
+            $$ E_{O/G} = M(-x_G z_G) = M(-(0)(0)) = 0 $$
+            $$ F_{O/G} = M(-y_G z_G) = M(-(a/2)(0)) = 0 $$
+            $$ [I_{O/G}] = \begin{pmatrix} M \frac{a^2}{4} & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M \frac{a^2}{4} \end{pmatrix} $$
+        </li>
+        <li><strong>Tenseur en O :</strong> $[I_O] = [I_G] + [I_{O/G}]$
+            $$ A = A_G + A_{O/G} = M \frac{a^2}{12} + M \frac{a^2}{4} = M \frac{a^2 + 3a^2}{12} = M \frac{4a^2}{12} = M \frac{a^2}{3} $$
+            $$ B = B_G + B_{O/G} = M \frac{L^2}{12} + 0 = M \frac{L^2}{12} $$
+            $$ C = C_G + C_{O/G} = M \frac{L^2+a^2}{12} + M \frac{a^2}{4} = M \frac{L^2+a^2+3a^2}{12} = M \frac{L^2+4a^2}{12} = M \left(\frac{L^2}{12} + \frac{a^2}{3}\right) $$
+            $$ D = D_G + D_{O/G} = 0 + 0 = 0 $$
+            $$ E = E_G + E_{O/G} = 0 + 0 = 0 $$
+            $$ F = F_G + F_{O/G} = 0 + 0 = 0 $$
+        </li>
+    </ul>
+
+    <h3>Résultat :</h3>
+    <p>Les deux méthodes donnent le même tenseur d'inertie en O :</p>
+    $$ [I_O]_{2.2} = \begin{pmatrix} M \frac{a^2}{3} & 0 & 0 \\ 0 & M \frac{L^2}{12} & 0 \\ 0 & 0 & M \left(\frac{a^2}{3} + \frac{L^2}{12}\right) \end{pmatrix} $$
+    <p>où $M = \sigma L a$.</p>
+
+    <h3>Vérification :</h3>
+    <p>Les résultats des deux méthodes coïncident. La nullité de D est confirmée par la symétrie par rapport au plan $x = 0$. La relation $C = A + B$ est vérifiée.</p>
+
+</body>
+</html>

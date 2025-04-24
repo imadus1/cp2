@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 4.2 - Triangle Linéique Décalé</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
+        .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
+        mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
+        mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
+        mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
+        ul { padding-left: 30px; }
+        .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+        .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+
+    <h1>Solution Figure 4.2 : Triangle linéique décalé en x</h1>
+    <div class="figure-placeholder">Figure 4.2</div>
+    <p class="caption">FIGURE 4.2 - Triangle linéique décalé en x de c</p>
+
+    <h2>Méthode requise : Translation du centre de masse (préférable) OU Théorème de Guldin.</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li><strong>Translation :</strong> Si $G_1$ est le centre d'inertie d'un corps et que le corps est translaté de $\vec{v}$, le nouveau centre d'inertie est $G_2 = G_1 + \vec{v}$.</li>
+        <li><strong>Théorème de Guldin :</strong> $R_G = S_A / (2\pi L)$.</li>
+        <li><strong>Relation avec Figure 4.1 :</strong> Le corps est identique à celui de la Figure 4.1, mais translaté de $\vec{v} = c \vec{i}$.</li>
+    </ul>
+
+    <h2>Géométrie et Décomposition (pour Guldin direct):</h2>
+    <p>Soit O'=(c,0), A'=(c,a), B'=(c+b,0).</p>
+    <ul>
+        <li>Segment O'A' : Longueur $L_{O'A'} = a$.</li>
+        <li>Segment O'B' : Longueur $L_{O'B'} = b$.</li>
+        <li>Segment A'B' (hypoténuse) : Longueur $L_{A'B'} = \sqrt{a^2 + b^2}$.</li>
+        <li>Longueur totale : $$L = a + b + \sqrt{a^2 + b^2}$$</li>
+    </ul>
+
+    <h2>Méthode 1 : Translation du Centre de Masse</h2>
+    <p>Le centre d'inertie $G_1 = (x_{G1}, y_{G1})$ de la Figure 4.1 est :</p>
+    $$ x_{G1} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    $$ y_{G1} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    <p>Le centre d'inertie $G_2 = (x_{G2}, y_{G2})$ pour la Figure 4.2 est obtenu par translation ($G_2 = G_1 + c\vec{i}$):</p>
+    $$ x_{G2} = x_{G1} + c = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    $$ y_{G2} = y_{G1} + 0 = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+
+    <h2>Méthode 2 : Application Directe du Théorème de Guldin</h2>
+    <h3>Calcul de $x_G$ (Distance à l'axe Oy via rotation autour de Oy) :</h3>
+     <ul>
+        <li>Segment O'A': Génère surface cylindrique (rayon c, hauteur a). Aire $S_{A,O'A'} = 2\pi c a$.</li>
+        <li>Segment O'B': Génère un anneau (rayon ext c+b, int c). Aire $S_{A,O'B'} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
+        <li>Segment A'B': Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{A,A'B'} = \pi(c + (c+b)) L_{A'B'} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
+        <li>Aire totale générée : $$S_{A,Oy} = 2\pi c a + \pi(2cb + b^2) + \pi(2c+b)\sqrt{a^2+b^2}$$</li>
+        <li>Application de Guldin ($R_{G,Oy} = x_G$):
+         $$ x_G = \frac{S_{A,Oy}}{2\pi L} = \frac{2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}}{2\pi (a + b + \sqrt{a^2+b^2})} $$
+         <p>Simplification attendue vers $c + x_{G1}$ (calcul laissé en exercice).</p>
+         </li>
+    </ul>
+     <h3>Calcul de $y_G$ (Distance à l'axe Ox via rotation autour de Ox) :</h3>
+     <ul>
+        <li>Segment O'A': Génère un anneau (rayon ext a, int 0). Aire $S_{A,O'A'} = \pi a^2$.</li>
+        <li>Segment O'B': Génère une surface d'aire $S_{A,O'B'} = 0$.</li>
+        <li>Segment A'B': Génère surface latérale cône (rayon base a). Aire $S_{A,A'B'} = \pi a L_{A'B'} = \pi a \sqrt{a^2+b^2}$.</li>
+        <li>Aire totale générée : $$S_{A,Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
+        <li>Application de Guldin ($R_{G,Ox} = y_G$):
+        $$ y_G = \frac{S_{A,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+        </li>
+    </ul>
+    <p>On observe que le calcul de $y_G$ par Guldin direct est identique à celui de $y_{G1}$, et le calcul (non simplifié ici) de $x_G$ par Guldin direct est plus complexe mais doit donner le même résultat que la translation.</p>
+
+    <h2>Résultat (confirmé par les deux méthodes) :</h2>
+    <p>Le centre d'inertie G du triangle linéique décalé a pour coordonnées :</p>
+    $$ x_G = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    $$ y_G = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    $$ z_G = 0 $$
+
+    <h2>Vérification :</h2>
+    <p>La méthode par translation est la plus simple et donne un résultat cohérent. La méthode par Guldin direct confirme le résultat pour $y_G$ et (après simplification) pour $x_G$.</p>
+
+</body>
+</html>

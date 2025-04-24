@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 2.3 - Composé de deux rectangles</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Figure 2.3 : Composé de deux rectangles</h1>
+     <!-- Placeholder for figure -->
+    <div class="figure-placeholder">Figure 2.3 Placeholder</div>
+
+    <h2>Méthodes requises : Additivité et Théorème de Huygens.</h2>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li><strong>Additivité :</strong> Le tenseur total est la somme des tenseurs des parties : $[I_O] = [I_O]_1 + [I_O]_2$.</li>
+        <li><strong>Théorème de Huygens :</strong> Utilisé pour calculer $[I_O]_1$ et $[I_O]_2$ à partir de $[I_G]_1$ et $[I_G]_2$.</li>
+        <li><strong>Symétrie :</strong> Le plan $z = 0$ contient l'objet ($E=F=0$ pour chaque partie et le total). Aucune symétrie évidente pour les plans $x = 0$ ou $y = 0$ pour l'ensemble, donc D peut être non nul.</li>
+    </ul>
+
+    <h3>Géométrie et Décomposition :</h3>
+    <ul>
+        <li><strong>Rectangle 1 :</strong> Dimensions $4a \times a$. Centre de masse $G_1(0, -a/2, 0)$. Masse $M_1 = \sigma(4a)(a) = 4\sigma a^2$.</li>
+        <li><strong>Rectangle 2 :</strong> Dimensions $a \times 3a$. Centre de masse $G_2(3a/2, 3a/2, 0)$. Masse $M_2 = \sigma(a)(3a) = 3\sigma a^2$.</li>
+        <li>Masse totale : $M = M_1 + M_2 = 7\sigma a^2$.</li>
+    </ul>
+
+    <h2>Calcul des tenseurs partiels en O :</h2>
+
+    <h3>Tenseur pour Rectangle 1 ($[I_O]_1$) :</h3>
+    <ul>
+        <li><strong>Tenseur en $G_1$</strong> (type 2.1, largeur=4a, hauteur=a):
+            $$ [I_G]_1 = \begin{pmatrix} M_1 \frac{a^2}{12} & 0 & 0 \\ 0 & M_1 \frac{(4a)^2}{12} & 0 \\ 0 & 0 & M_1 \frac{(4a)^2+a^2}{12} \end{pmatrix} = \begin{pmatrix} M_1 \frac{a^2}{12} & 0 & 0 \\ 0 & M_1 \frac{16a^2}{12} & 0 \\ 0 & 0 & M_1 \frac{17a^2}{12} \end{pmatrix} $$
+        </li>
+        <li><strong>Terme de transport $[I_{O/G}]_1$</strong> ($\vec{OG}_1 = (0, -a/2, 0)$):
+            $$ A_{O/G1} = M_1((-a/2)^2 + 0) = M_1 \frac{a^2}{4} $$
+            $$ B_{O/G1} = M_1(0^2 + 0) = 0 $$
+            $$ C_{O/G1} = M_1(0^2 + (-a/2)^2) = M_1 \frac{a^2}{4} $$
+            $$ D_{O/G1} = -M_1(0)(-a/2) = 0 $$
+            $$ [I_{O/G}]_1 = \begin{pmatrix} M_1 \frac{a^2}{4} & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_1 \frac{a^2}{4} \end{pmatrix} $$
+        </li>
+        <li><strong>$[I_O]_1 = [I_G]_1 + [I_{O/G}]_1$ :</strong>
+            $$ A_1 = M_1 \frac{a^2}{12} + M_1 \frac{a^2}{4} = M_1 \frac{a^2+3a^2}{12} = M_1 \frac{4a^2}{12} = M_1 \frac{a^2}{3} $$
+            $$ B_1 = M_1 \frac{16a^2}{12} + 0 = M_1 \frac{4a^2}{3} $$
+            $$ C_1 = M_1 \frac{17a^2}{12} + M_1 \frac{a^2}{4} = M_1 \frac{17a^2+3a^2}{12} = M_1 \frac{20a^2}{12} = M_1 \frac{5a^2}{3} $$
+            $$ D_1 = 0 + 0 = 0 $$
+            $$ [I_O]_1 = \begin{pmatrix} M_1 \frac{a^2}{3} & 0 & 0 \\ 0 & M_1 \frac{4a^2}{3} & 0 \\ 0 & 0 & M_1 \frac{5a^2}{3} \end{pmatrix} $$
+        </li>
+    </ul>
+
+    <h3>Tenseur pour Rectangle 2 ($[I_O]_2$) :</h3>
+     <ul>
+        <li><strong>Tenseur en $G_2$</strong> (type 2.1, largeur=a, hauteur=3a):
+            $$ [I_G]_2 = \begin{pmatrix} M_2 \frac{(3a)^2}{12} & 0 & 0 \\ 0 & M_2 \frac{a^2}{12} & 0 \\ 0 & 0 & M_2 \frac{a^2+(3a)^2}{12} \end{pmatrix} = \begin{pmatrix} M_2 \frac{9a^2}{12} & 0 & 0 \\ 0 & M_2 \frac{a^2}{12} & 0 \\ 0 & 0 & M_2 \frac{10a^2}{12} \end{pmatrix} $$
+        </li>
+        <li><strong>Terme de transport $[I_{O/G}]_2$</strong> ($\vec{OG}_2 = (3a/2, 3a/2, 0)$):
+            $$ A_{O/G2} = M_2((3a/2)^2 + 0) = M_2 \frac{9a^2}{4} $$
+            $$ B_{O/G2} = M_2((3a/2)^2 + 0) = M_2 \frac{9a^2}{4} $$
+            $$ C_{O/G2} = M_2((3a/2)^2 + (3a/2)^2) = M_2 \frac{18a^2}{4} = M_2 \frac{9a^2}{2} $$
+            $$ D_{O/G2} = -M_2(3a/2)(3a/2) = -M_2 \frac{9a^2}{4} $$
+            $$ [I_{O/G}]_2 = \begin{pmatrix} M_2 \frac{9a^2}{4} & -M_2 \frac{9a^2}{4} & 0 \\ -M_2 \frac{9a^2}{4} & M_2 \frac{9a^2}{4} & 0 \\ 0 & 0 & M_2 \frac{9a^2}{2} \end{pmatrix} $$
+        </li>
+        <li><strong>$[I_O]_2 = [I_G]_2 + [I_{O/G}]_2$ :</strong>
+            $$ A_2 = M_2 \frac{9a^2}{12} + M_2 \frac{9a^2}{4} = M_2 \frac{9a^2+27a^2}{12} = M_2 \frac{36a^2}{12} = M_2 3a^2 $$
+            $$ B_2 = M_2 \frac{a^2}{12} + M_2 \frac{9a^2}{4} = M_2 \frac{a^2+27a^2}{12} = M_2 \frac{28a^2}{12} = M_2 \frac{7a^2}{3} $$
+            $$ C_2 = M_2 \frac{10a^2}{12} + M_2 \frac{9a^2}{2} = M_2 \frac{10a^2+54a^2}{12} = M_2 \frac{64a^2}{12} = M_2 \frac{16a^2}{3} $$
+            $$ D_2 = 0 - M_2 \frac{9a^2}{4} = -M_2 \frac{9a^2}{4} $$
+            $$ [I_O]_2 = \begin{pmatrix} M_2 3a^2 & -M_2 \frac{9a^2}{4} & 0 \\ -M_2 \frac{9a^2}{4} & M_2 \frac{7a^2}{3} & 0 \\ 0 & 0 & M_2 \frac{16a^2}{3} \end{pmatrix} $$
+        </li>
+    </ul>
+
+    <h2>Calcul du tenseur total en O :</h2>
+    <p>$[I_O] = [I_O]_1 + [I_O]_2$. Substituons $M_1 = 4\sigma a^2$ et $M_2 = 3\sigma a^2$.</p>
+    $$ A = A_1 + A_2 = (4\sigma a^2)\frac{a^2}{3} + (3\sigma a^2)3a^2 = \sigma a^4 (\frac{4}{3} + 9) = \sigma a^4 (\frac{4+27}{3}) = \frac{31}{3} \sigma a^4 $$
+    $$ B = B_1 + B_2 = (4\sigma a^2)\frac{4a^2}{3} + (3\sigma a^2)\frac{7a^2}{3} = \sigma a^4 (\frac{16}{3} + \frac{21}{3}) = \frac{37}{3} \sigma a^4 $$
+    $$ C = C_1 + C_2 = (4\sigma a^2)\frac{5a^2}{3} + (3\sigma a^2)\frac{16a^2}{3} = \sigma a^4 (\frac{20}{3} + \frac{48}{3}) = \frac{68}{3} \sigma a^4 $$
+    $$ D = D_1 + D_2 = 0 - (3\sigma a^2)\frac{9a^2}{4} = -\frac{27}{4} \sigma a^4 $$
+    <p>$E = 0$</p>
+    <p>$F = 0$</p>
+
+    <h3>Résultat :</h3>
+    <p>Le tenseur d'inertie total en O est :</p>
+    $$ [I_O]_{2.3} = \sigma a^4 \begin{pmatrix} \frac{31}{3} & -(-\frac{27}{4}) & 0 \\ -(-\frac{27}{4}) & \frac{37}{3} & 0 \\ 0 & 0 & \frac{68}{3} \end{pmatrix} = \sigma a^4 \begin{pmatrix} \frac{31}{3} & \frac{27}{4} & 0 \\ \frac{27}{4} & \frac{37}{3} & 0 \\ 0 & 0 & \frac{68}{3} \end{pmatrix} $$
+    <!-- Note: The OCR had -D inside the matrix, I write the matrix with D values -->
+    $$ [I_O]_{2.3} = \sigma a^4 \begin{pmatrix} \frac{31}{3} & -D & 0 \\ -D & \frac{37}{3} & 0 \\ 0 & 0 & \frac{68}{3} \end{pmatrix} \quad \text{avec } D = -\frac{27}{4} \sigma a^4 $$
+
+
+    <h3>Vérification :</h3>
+    <p>Le théorème de l'axe perpendiculaire est vérifié : $A + B = \sigma a^4 (\frac{31}{3} + \frac{37}{3}) = \sigma a^4 (\frac{68}{3}) = C$. Le produit d'inertie D est non nul, ce qui est attendu car l'objet n'a pas de symétrie par rapport aux plans $x = 0$ ou $y = 0$.</p>
+
+</body>
+</html>

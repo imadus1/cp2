@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 3.3 - Parallélépipède rectangle</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+
+    <h1>Figure 3.3 : Parallélépipède rectangle</h1>
+    <p>Parallélépipède défini par les sommets P1(0,0,0), P2(a,0,0), P3(a,b,0), P4(0,b,0) et extrudé à une hauteur c le long de Z. L'origine O est à un coin.</p>
+
+    <h3>Méthodes requises : Calcul direct et Théorème de Huygens.</h3>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li>Matrice d'inertie, Corps volumique ($dm = \rho dV$).</li>
+        <li>Coordonnées cartésiennes : $dV = dx dy dz$.</li>
+        <li>Symétrie : Aucune symétrie par rapport aux plans coordonnées passant par O. Les produits d'inertie D, E, F peuvent être non nuls.</li>
+        <li>Théorème de Huygens : $[I_O] = [I_G] + [I_{O/G}]$, où G est le centre de masse.</li>
+    </ul>
+
+    <h3>Géométrie et Paramétrisation :</h3>
+    <ul>
+        <li>Dimensions : a, b, c le long des axes X, Y, Z.</li>
+        <li>Domaine d'intégration : $x \in [0, a]$, $y \in [0, b]$, $z \in [0, c]$.</li>
+        <li>Élément de masse : $dm = \rho dx dy dz$.</li>
+        <li>Masse totale : $M = \rho \int_0^a \int_0^b \int_0^c dx dy dz = \rho abc$.</li>
+        <li>Centre de masse : $G(a/2, b/2, c/2)$.</li>
+    </ul>
+
+    <h2>Méthode 1 : Calcul direct en O</h2>
+    <h4>Calcul de A ($I_{xx}$) :</h4>
+    $$ A = \iiint_V (y^2 + z^2) \rho dx dy dz = \rho \int_0^a dx \int_0^b \int_0^c (y^2 + z^2) dz dy $$
+    $$ = \rho a \int_0^b \left[ y^2 z + \frac{z^3}{3} \right]_0^c dy = \rho a \int_0^b (c y^2 + \frac{c^3}{3}) dy $$
+    $$ = \rho a \left[ \frac{c y^3}{3} + \frac{c^3}{3} y \right]_0^b = \rho a \left( \frac{c b^3}{3} + \frac{c^3 b}{3} \right) $$
+    $$ = \frac{\rho abc}{3} (b^2 + c^2) = \frac{M}{3} (b^2 + c^2) $$
+
+    <h4>Calcul de B ($I_{yy}$) : Par permutation cyclique $a \to b \to c \to a$ et $x \to y \to z \to x$.</h4>
+    $$ B = \frac{M}{3} (a^2 + c^2) $$
+
+    <h4>Calcul de C ($I_{zz}$) : Par permutation cyclique.</h4>
+    $$ C = \frac{M}{3} (a^2 + b^2) $$
+
+    <h4>Calcul de D ($I_{xy}$) :</h4>
+    $$ D = \iiint_V xy \rho dx dy dz = \rho \left( \int_0^a x dx \right) \left( \int_0^b y dy \right) \left( \int_0^c dz \right) $$
+    $$ = \rho \left[ \frac{x^2}{2} \right]_0^a \left[ \frac{y^2}{2} \right]_0^b [z]_0^c = \rho \left( \frac{a^2}{2} \right) \left( \frac{b^2}{2} \right) (c) $$
+    $$ = \frac{\rho a^2 b^2 c}{4} = \frac{\rho abc}{4} (ab) = \frac{M}{4} ab $$
+
+    <h4>Calcul de E ($I_{xz}$) : Par permutation $y \leftrightarrow z$, $b \leftrightarrow c$.</h4>
+    $$ E = \frac{M}{4} ac $$
+
+    <h4>Calcul de F ($I_{yz}$) : Par permutation $x \leftrightarrow z$, $a \leftrightarrow c$.</h4>
+    $$ F = \frac{M}{4} bc $$
+
+    <h2>Méthode 2 : Théorème de Huygens</h2>
+    <ul>
+        <li>Tenseur au centre de masse $G(a/2, b/2, c/2)$: En G, le parallélépipède est centré. Les axes passant par G parallèles aux axes (O,x,y,z) sont principaux d'inertie. Les coordonnées relatives $x'=x-a/2$, $y'=y-b/2$, $z'=z-c/2$ varient dans $[-a/2, a/2]$, $[-b/2, b/2]$, $[-c/2, c/2]$. Le tenseur en G est diagonal (par symétrie) : $[I_G]$.
+            $$ A_G = \iiint_{V'} (y'^2 + z'^2) \rho dx' dy' dz' $$
+            <p>Calcul de $A_G$ :</p>
+             $$ A_G = \rho \int_{-a/2}^{a/2} dx' \int_{-b/2}^{b/2} \int_{-c/2}^{c/2} (y'^2 + z'^2) dz' dy' = \rho a \int_{-b/2}^{b/2} \left[ y'^2 z' + \frac{z'^3}{3} \right]_{-c/2}^{c/2} dy' $$
+             $$ = \rho a \int_{-b/2}^{b/2} 2 \left( y'^2 \frac{c}{2} + \frac{(c/2)^3}{3} \right) dy' = \rho a \int_{-b/2}^{b/2} (c y'^2 + \frac{c^3}{12}) dy' $$
+             $$ = \rho a \left[ \frac{c y'^3}{3} + \frac{c^3}{12} y' \right]_{-b/2}^{b/2} = \rho a \cdot 2 \left( \frac{c (b/2)^3}{3} + \frac{c^3}{12} \frac{b}{2} \right) $$
+             $$ = \rho a \cdot 2 \left( \frac{c b^3}{24} + \frac{c^3 b}{24} \right) = \frac{\rho a b c}{12} (b^2 + c^2) = \frac{M}{12} (b^2 + c^2) $$
+             <p>Par permutation : $B_G = \frac{M}{12} (a^2 + c^2)$, $C_G = \frac{M}{12} (a^2 + b^2)$. Par symétrie : $D_G = E_G = F_G = 0$.</p>
+             $$ [I_G] = \begin{pmatrix} \frac{M}{12}(b^2+c^2) & 0 & 0 \\ 0 & \frac{M}{12}(a^2+c^2) & 0 \\ 0 & 0 & \frac{M}{12}(a^2+b^2) \end{pmatrix} $$
+        </li>
+        <li>Terme de transport $[I_{O/G}]$ : Masse M ponctuelle en $G(x_G=a/2, y_G=b/2, z_G=c/2)$.
+            <ul>
+                <li>$A_{O/G} = M(y_G^2 + z_G^2) = M((b/2)^2 + (c/2)^2) = M \frac{b^2+c^2}{4}$</li>
+                <li>$B_{O/G} = M(x_G^2 + z_G^2) = M((a/2)^2 + (c/2)^2) = M \frac{a^2+c^2}{4}$</li>
+                <li>$C_{O/G} = M(x_G^2 + y_G^2) = M((a/2)^2 + (b/2)^2) = M \frac{a^2+b^2}{4}$</li>
+                <li>$D_{O/G} = M x_G y_G = M(a/2)(b/2) = M \frac{ab}{4}$</li>
+                <li>$E_{O/G} = M x_G z_G = M(a/2)(c/2) = M \frac{ac}{4}$</li>
+                <li>$F_{O/G} = M y_G z_G = M(b/2)(c/2) = M \frac{bc}{4}$</li>
+            </ul>
+             $$ [I_{O/G}] = \begin{pmatrix} M\frac{b^2+c^2}{4} & -M\frac{ab}{4} & -M\frac{ac}{4} \\ -M\frac{ab}{4} & M\frac{a^2+c^2}{4} & -M\frac{bc}{4} \\ -M\frac{ac}{4} & -M\frac{bc}{4} & M\frac{a^2+b^2}{4} \end{pmatrix} $$
+        </li>
+        <li>Tenseur total en O : $[I_O] = [I_G] + [I_{O/G}]$. On somme les composantes correspondantes.
+             <ul>
+                <li>$A = A_G + A_{O/G} = \frac{M}{12}(b^2+c^2) + M\frac{b^2+c^2}{4} = M(b^2+c^2)(\frac{1}{12} + \frac{3}{12}) = M(b^2+c^2)\frac{4}{12} = \frac{M}{3}(b^2+c^2)$</li>
+                <li>$B = B_G + B_{O/G} = \frac{M}{12}(a^2+c^2) + M\frac{a^2+c^2}{4} = \frac{M}{3}(a^2+c^2)$</li>
+                <li>$C = C_G + C_{O/G} = \frac{M}{12}(a^2+b^2) + M\frac{a^2+b^2}{4} = \frac{M}{3}(a^2+b^2)$</li>
+                <li>$D = D_G + D_{O/G} = 0 + M\frac{ab}{4} = \frac{M}{4}ab$</li>
+                <li>$E = E_G + E_{O/G} = 0 + M\frac{ac}{4} = \frac{M}{4}ac$</li>
+                <li>$F = F_G + F_{O/G} = 0 + M\frac{bc}{4} = \frac{M}{4}bc$</li>
+            </ul>
+            Les résultats coïncident avec le calcul direct.
+        </li>
+    </ul>
+
+    <h3>Résultat :</h3>
+    <p>Le tenseur d'inertie en O est :</p>
+     $$ [I_O]_{3.3} = \begin{pmatrix} \frac{M}{3}(b^2+c^2) & -\frac{M}{4}ab & -\frac{M}{4}ac \\ -\frac{M}{4}ab & \frac{M}{3}(a^2+c^2) & -\frac{M}{4}bc \\ -\frac{M}{4}ac & -\frac{M}{4}bc & \frac{M}{3}(a^2+b^2) \end{pmatrix} $$
+
+    <h3>Vérification :</h3>
+    <p>Les deux méthodes (calcul direct et théorème de Huygens) donnent le même résultat. La non-nullité des produits d'inertie est attendue car O est un coin et non le centre de symétrie.</p>
+
+
+
+</body>
+</html>

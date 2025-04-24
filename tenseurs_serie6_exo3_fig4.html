@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 3.4 - Cylindre</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        /* No specific alternative method section for this one as Huygens is in verification */
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+
+    <h1>Figure 3.4 : Cylindre</h1>
+    <p>Cylindre droit, base circulaire de rayon R dans le plan z=0 centrée en O, hauteur H le long de l'axe Z.</p>
+
+    <h3>Méthode requise : Calcul direct (coordonnées cylindriques).</h3>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li>Matrice d'inertie, Corps volumique ($dm = \rho dV$).</li>
+        <li>Coordonnées cylindriques : $x = r \cos \theta$, $y = r \sin \theta$, $z = z$. $dV = r dr d\theta dz$.</li>
+        <li>Symétrie : Symétrie de révolution autour de l'axe Z. L'axe Z est principal. Tout axe dans le plan XY passant par O est principal. Donc $A = B$ et $D = E = F = 0$. La matrice est diagonale. Le plan $z = H/2$ est plan de symétrie, mais pas $z = 0$.</li>
+    </ul>
+
+    <h3>Géométrie et Paramétrisation :</h3>
+    <ul>
+        <li>Domaine d'intégration : $r \in [0, R]$, $\theta \in [0, 2\pi]$, $z \in [0, H]$.</li>
+        <li>Élément de masse : $dm = \rho r dr d\theta dz$.</li>
+        <li>Masse totale :
+            $$ M = \iiint_V \rho dV = \rho \int_0^H \int_0^{2\pi} \int_0^R r dr d\theta dz $$
+            $$ = \rho \left( \int_0^R r dr \right) \left( \int_0^{2\pi} d\theta \right) \left( \int_0^H dz \right) $$
+            $$ = \rho \left[ \frac{r^2}{2} \right]_0^R [\theta]_0^{2\pi} [z]_0^H = \rho \left( \frac{R^2}{2} \right) (2\pi) (H) = \rho \pi R^2 H $$
+        </li>
+    </ul>
+
+    <h3>Calcul des termes du tenseur :</h3>
+    <h4>Calcul de C ($I_{zz}$) : Moment d'inertie par rapport à l'axe du cylindre.</h4>
+     $$ C = I_{zz} = \iiint_V (x^2 + y^2) dm = \iiint_V r^2 (\rho r dr d\theta dz) $$
+     $$ = \rho \int_0^H \int_0^{2\pi} \int_0^R r^3 dr d\theta dz $$
+     $$ = \rho \left( \int_0^R r^3 dr \right) \left( \int_0^{2\pi} d\theta \right) \left( \int_0^H dz \right) $$
+     $$ = \rho \left[ \frac{r^4}{4} \right]_0^R [\theta]_0^{2\pi} [z]_0^H = \rho \left( \frac{R^4}{4} \right) (2\pi) (H) = \frac{1}{2} \rho \pi R^4 H $$
+     $$ = \frac{1}{2} (\rho \pi R^2 H) R^2 = \frac{1}{2} M R^2 $$
+
+    <h4>Calcul de A ($I_{xx}$) :</h4>
+      $$ A = I_{xx} = \iiint_V (y^2 + z^2) dm = \iiint_V ((r \sin \theta)^2 + z^2) (\rho r dr d\theta dz) $$
+      $$ = \rho \int_0^R \int_0^{2\pi} \int_0^H (r^3 \sin^2 \theta + z^2 r) dz d\theta dr $$
+      $$ = \rho \int_0^R \int_0^{2\pi} \left[ r^3 \sin^2 \theta z + \frac{z^3}{3} r \right]_0^H d\theta dr $$
+      $$ = \rho \int_0^R \int_0^{2\pi} \left( H r^3 \sin^2 \theta + \frac{H^3}{3} r \right) d\theta dr $$
+      $$ = \rho \int_0^R \left( H r^3 \int_0^{2\pi} \sin^2 \theta d\theta + \frac{H^3}{3} r \int_0^{2\pi} d\theta \right) dr $$
+      $$ = \rho \int_0^R \left( H r^3 (\pi) + \frac{H^3}{3} r (2\pi) \right) dr $$
+      $$ = \rho \pi \int_0^R \left( H r^3 + \frac{2 H^3}{3} r \right) dr $$
+      $$ = \rho \pi \left[ H \frac{r^4}{4} + \frac{2 H^3}{3} \frac{r^2}{2} \right]_0^R = \rho \pi \left( \frac{H R^4}{4} + \frac{H^3 R^2}{3} \right) $$
+      $$ = (\rho \pi R^2 H) \frac{R^2}{4} + (\rho \pi R^2 H) \frac{H^2}{3} = M \frac{R^2}{4} + M \frac{H^2}{3} = M \left( \frac{R^2}{4} + \frac{H^2}{3} \right) $$
+
+      <ul>
+        <li>Par symétrie de révolution, $B = I_{yy} = A = M \left( \frac{R^2}{4} + \frac{H^2}{3} \right)$.</li>
+        <li>Par symétrie de révolution, les produits d'inertie sont nuls : $D = E = F = 0$.</li>
+      </ul>
+
+    <h3>Résultat :</h3>
+    <p>Le tenseur d'inertie en O est :</p>
+     $$ [I_O]_{3.4} = \begin{pmatrix} M(\frac{R^2}{4} + \frac{H^2}{3}) & 0 & 0 \\ 0 & M(\frac{R^2}{4} + \frac{H^2}{3}) & 0 \\ 0 & 0 & \frac{1}{2}MR^2 \end{pmatrix} $$
+
+    <h3>Vérification :</h3>
+    <p>La matrice est diagonale avec $A = B$, cohérent avec la symétrie de révolution autour de Z. Les formules sont les moments d'inertie standards pour un cylindre calculés à l'extrémité de son axe. On peut vérifier avec Huygens : le centre de masse est $G(0,0,H/2)$. En G, $A_G = M(\frac{R^2}{4} + \frac{H^2}{12})$ et $C_G = \frac{1}{2}MR^2$. Terme de transport $A_{O/G} = M(y_G^2 + z_G^2) = M(0^2 + (H/2)^2) = MH^2/4$. $C_{O/G} = M(x_G^2 + y_G^2) = M(0^2 + 0^2) = 0$. Donc $A = A_G + A_{O/G} = M(\frac{R^2}{4} + \frac{H^2}{12}) + M\frac{H^2}{4} = M(\frac{R^2}{4} + \frac{H^2+3H^2}{12}) = M(\frac{R^2}{4} + \frac{4H^2}{12}) = M(\frac{R^2}{4} + \frac{H^2}{3})$. Et $C = C_G + C_{O/G} = \frac{1}{2}MR^2 + 0 = \frac{1}{2}MR^2$. Les résultats sont cohérents.</p>
+
+</body>
+</html>

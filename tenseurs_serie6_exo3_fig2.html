@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 3.2 - Sphère</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+    </style>
+</head>
+<body>
+
+    <h1>Figure 3.2 : Sphère</h1>
+    <p>Sphère de rayon R centrée en O.</p>
+
+    <h3>Méthode requise : Calcul direct (coordonnées sphériques).</h3>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li>Matrice d'inertie, Corps volumique ($dm = \rho dV$).</li>
+        <li>Coordonnées sphériques : $x = r \sin \theta \cos \phi$, $y = r \sin \theta \sin \phi$, $z = r \cos \theta$. $dV = r^2 \sin \theta dr d\theta d\phi$. ($\theta$ est l'angle polaire, $\phi$ l'angle azimutal).</li>
+        <li>Symétrie : Symétrie sphérique autour de O. Tout axe passant par O est axe principal d'inertie. Donc $A = B = C$ et $D = E = F = 0$. La matrice est diagonale et scalaire.</li>
+    </ul>
+
+    <h3>Géométrie et Paramétrisation :</h3>
+    <ul>
+        <li>Domaine d'intégration : $r \in [0, R]$, $\theta \in [0, \pi]$, $\phi \in [0, 2\pi]$.</li>
+        <li>Élément de masse : $dm = \rho r^2 \sin \theta dr d\theta d\phi$.</li>
+        <li>Masse totale :
+             $$ M = \iiint_V \rho dV = \rho \int_0^R \int_0^{\pi} \int_0^{2\pi} r^2 \sin \theta dr d\theta d\phi $$
+             $$ = \rho \left( \int_0^R r^2 dr \right) \left( \int_0^{\pi} \sin \theta d\theta \right) \left( \int_0^{2\pi} d\phi \right) $$
+             $$ = \rho \left[ \frac{r^3}{3} \right]_0^R [-\cos \theta]_0^{\pi} [\phi]_0^{2\pi} $$
+             $$ = \rho \left( \frac{R^3}{3} \right) (-\cos \pi - (-\cos 0)) (2\pi) $$
+             $$ = \rho \frac{R^3}{3} (-(-1) - (-1)) (2\pi) = \rho \frac{R^3}{3} (1+1) (2\pi) = \rho \frac{R^3}{3} (2) (2\pi) = \frac{4}{3} \pi R^3 \rho $$
+         </li>
+    </ul>
+
+    <h3>Calcul des termes du tenseur :</h3>
+    <p>Par symétrie sphérique, $A = B = C$. Calculons C ($I_{zz}$) :</p>
+    $$ C = I_{zz} = \iiint_V (x^2 + y^2) dm $$
+    $$ = \iiint_V ( (r \sin \theta \cos \phi)^2 + (r \sin \theta \sin \phi)^2 ) (\rho r^2 \sin \theta dr d\theta d\phi) $$
+    $$ = \iiint_V (r^2 \sin^2 \theta (\cos^2 \phi + \sin^2 \phi)) (\rho r^2 \sin \theta dr d\theta d\phi) $$
+    $$ = \iiint_V (r^2 \sin^2 \theta) (\rho r^2 \sin \theta dr d\theta d\phi) $$
+    $$ = \rho \int_0^{2\pi} \int_0^{\pi} \int_0^R r^4 \sin^3 \theta dr d\theta d\phi $$
+    $$ = \rho \left( \int_0^R r^4 dr \right) \left( \int_0^{\pi} \sin^3 \theta d\theta \right) \left( \int_0^{2\pi} d\phi \right) $$
+    <p>Calculons les intégrales : $\int_0^R r^4 dr = [\frac{r^5}{5}]_0^R = \frac{R^5}{5}$. $\int_0^{2\pi} d\phi = 2\pi$. <br>
+    $\int_0^{\pi} \sin^3 \theta d\theta = \int_0^{\pi} \sin \theta (1 - \cos^2 \theta) d\theta$. Posons $u = \cos \theta$, $du = -\sin \theta d\theta$. Limites : $u(0) = 1$, $u(\pi) = -1$. <br>
+    $\int_1^{-1} (1-u^2)(-du) = \int_{-1}^{1} (1-u^2)du = \left[ u - \frac{u^3}{3} \right]_{-1}^1 = (1 - \frac{1}{3}) - (-1 - \frac{(-1)^3}{3}) = (\frac{2}{3}) - (-1 + \frac{1}{3}) = \frac{2}{3} - (-\frac{2}{3}) = \frac{4}{3}$.</p>
+    $$ C = \rho \left( \frac{R^5}{5} \right) \left( \frac{4}{3} \right) (2\pi) = \frac{8}{15} \pi R^5 \rho $$
+    $$ = \frac{2}{5} \left( \frac{4}{3} \pi R^3 \rho \right) R^2 = \frac{2}{5} M R^2 $$
+    <ul>
+        <li>Par symétrie, $A = B = C = \frac{2}{5} M R^2$.</li>
+        <li>Par symétrie, les produits d'inertie sont nuls : $D = E = F = 0$.</li>
+    </ul>
+
+    <h3>Résultat :</h3>
+    <p>Le tenseur d'inertie en O est :</p>
+     $$ [I_O]_{3.2} = \begin{pmatrix} \frac{2}{5}MR^2 & 0 & 0 \\ 0 & \frac{2}{5}MR^2 & 0 \\ 0 & 0 & \frac{2}{5}MR^2 \end{pmatrix} $$
+
+    <h3>Vérification :</h3>
+    <p>La matrice est diagonale et $A = B = C$, ce qui est cohérent avec la symétrie sphérique. Le résultat est le moment d'inertie standard d'une sphère homogène.</p>
+
+
+
+</body>
+</html>

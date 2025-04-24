@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice 2.5 - Triangle isocèle</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Figure 2.5 : Triangle isocèle</h1>
+
+    <div class="figure-placeholder">figure2.5.png (Placeholder)</div>
+    <p class="caption">FIGURE 2.5 - Triangle isocèle</p>
+
+    <h2>Méthode requise : Calcul direct.</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li>Matrice d'inertie, Corps surfacique ($dm = \sigma dA$).</li>
+        <li><strong>Symétrie :</strong> Le plan $y=0$ n'est pas un plan de symétrie. L'axe Y (contenu dans $x=0$) est un axe de symétrie matérielle. Donc $D=I_{xy}=0$ et $F=I_{yz}=0$. Le plan $z=0$ contient l'objet, donc $E=I_{xz}=0$. La matrice sera diagonale.</li>
+    </ul>
+
+    <h2>Géométrie et Paramétrisation :</h2>
+    <ul>
+        <li>Triangle isocèle : base sur l'axe X de -B/2 à B/2. Sommet en (0, A, 0).</li>
+        <li>Masse totale : $M = \sigma \times (\frac{1}{2} B A)$.</li>
+        <li>Limites d'intégration : $y$ varie de 0 à A. Pour un $y$ donné, $x$ varie de $x_{min}(y)$ à $x_{max}(y)$. L'équation de la droite passant par (B/2, 0) et (0, A) est $\frac{y-0}{A-0} = \frac{x-B/2}{0-B/2} \implies \frac{y}{A} = \frac{x-B/2}{-B/2} = 1 - \frac{2x}{B} \implies \frac{2x}{B} = 1 - \frac{y}{A} \implies x = \frac{B}{2}(1 - \frac{y}{A})$. Par symétrie, $x$ varie de $-\frac{B}{2}(1 - \frac{y}{A})$ à $\frac{B}{2}(1 - \frac{y}{A})$. Notons $w(y) = \frac{B}{2}(1 - \frac{y}{A})$.</li>
+        <li>Élément de masse : $dm = \sigma dx dy$.</li>
+    </ul>
+
+    <h2>Calcul des termes du tenseur :</h2>
+    <h3>Calcul de A :</h3>
+    $$ A = I_{xx} = \iint_S y^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} y^2 dx dy $$
+    $$ = \sigma \int_0^A y^2 [x]_{-w(y)}^{w(y)} dy = \sigma \int_0^A y^2 (2w(y)) dy $$
+    $$ = \sigma \int_0^A y^2 B(1 - \frac{y}{A}) dy = \sigma B \int_0^A (y^2 - \frac{y^3}{A}) dy $$
+    $$ = \sigma B \left[ \frac{y^3}{3} - \frac{y^4}{4A} \right]_0^A = \sigma B \left( \frac{A^3}{3} - \frac{A^4}{4A} \right) = \sigma B (\frac{A^3}{3} - \frac{A^3}{4}) $$
+    $$ = \sigma B \frac{A^3}{12} = (\frac{1}{2} \sigma B A) \frac{A^2}{6} = M \frac{A^2}{6} $$
+
+    <h3>Calcul de B :</h3>
+    $$ B = I_{yy} = \iint_S x^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} x^2 dx dy $$
+    $$ = \sigma \int_0^A \left[ \frac{x^3}{3} \right]_{-w(y)}^{w(y)} dy = \sigma \int_0^A \frac{2(w(y))^3}{3} dy $$
+    $$ = \frac{2\sigma}{3} \int_0^A \left( \frac{B}{2}(1 - \frac{y}{A}) \right)^3 dy = \frac{2\sigma}{3} \frac{B^3}{8} \int_0^A (1 - \frac{y}{A})^3 dy $$
+    <p>Posons $u = 1 - y/A$, $du = -dy/A$. Quand $y=0, u=1$. Quand $y=A, u=0$.</p>
+    $$ B = \frac{\sigma B^3}{12} \int_1^0 u^3 (-A du) = \frac{\sigma A B^3}{12} \int_0^1 u^3 du $$
+    $$ = \frac{\sigma A B^3}{12} \left[ \frac{u^4}{4} \right]_0^1 = \frac{\sigma A B^3}{12} \frac{1}{4} = \frac{\sigma A B^3}{48} $$
+    $$ = (\frac{1}{2} \sigma B A) \frac{B^2}{24} = M \frac{B^2}{24} $$
+
+    <h3>Calcul de C :</h3>
+    <p>C = A + B (objet plan)</p>
+    $$ C = M \frac{A^2}{6} + M \frac{B^2}{24} = M \left( \frac{A^2}{6} + \frac{B^2}{24} \right) $$
+
+    <h3>Calcul de D :</h3>
+    <p>Par symétrie ($x=0$ est axe de symétrie) :</p>
+    $$ D = I_{xy} = \iint_S xy dm = \sigma \int_0^A y \left( \int_{-w(y)}^{w(y)} x dx \right) dy $$
+    L'intégrale interne $\int x dx$ est sur un intervalle symétrique, donc nulle. $D = 0$.
+
+    <h3>Calcul de E et F :</h3>
+    $E=F=0$ car $z=0$.
+
+    <h2>Résultat :</h2>
+    <p>Le tenseur d'inertie au point O est :</p>
+    $$ [I_O]_{2.5} = \begin{pmatrix} M A^2/6 & 0 & 0 \\ 0 & M B^2/24 & 0 \\ 0 & 0 & M(A^2/6 + B^2/24) \end{pmatrix} $$
+    <p>où $M = \frac{1}{2} \sigma B A$.</p>
+
+    <h2>Commentaire :</h2>
+    <p>La matrice est diagonale, comme attendu par la symétrie par rapport à l'axe Y et la nature planaire.</p>
+
+</body>
+</html>

@@ -61,48 +61,73 @@
 
     <h2>Géométrie et Paramétrisation :</h2>
     <ul>
-        <li>Triangle isocèle : base sur l'axe X de -B/2 à B/2. Sommet en (0, A, 0).</li>
+        <li>Triangle isocèle : base sur l'axe X de -B/2 à B/2. Sommet en (0, A, 0). Dimension A=Hauteur, B=Base.</li>
         <li>Masse totale : $M = \sigma \times (\frac{1}{2} B A)$.</li>
-        <li>Limites d'intégration : $y$ varie de 0 à A. Pour un $y$ donné, $x$ varie de $x_{min}(y)$ à $x_{max}(y)$. L'équation de la droite passant par (B/2, 0) et (0, A) est $\frac{y-0}{A-0} = \frac{x-B/2}{0-B/2} \implies \frac{y}{A} = \frac{x-B/2}{-B/2} = 1 - \frac{2x}{B} \implies \frac{2x}{B} = 1 - \frac{y}{A} \implies x = \frac{B}{2}(1 - \frac{y}{A})$. Par symétrie, $x$ varie de $-\frac{B}{2}(1 - \frac{y}{A})$ à $\frac{B}{2}(1 - \frac{y}{A})$. Notons $w(y) = \frac{B}{2}(1 - \frac{y}{A})$.</li>
+        <li>Demi-largeur à la hauteur y : $w(y) = \frac{B}{2}(1 - \frac{y}{A})$.</li>
+        <li>Hauteur à l'abscisse x : $h(x) = A(1 - \frac{2|x|}{B})$ pour $x \in [-B/2, B/2]$.</li>
         <li>Élément de masse : $dm = \sigma dx dy$.</li>
     </ul>
 
     <h2>Calcul des termes du tenseur :</h2>
-    <h3>Calcul de A :</h3>
-    $$ A = I_{xx} = \iint_S y^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} y^2 dx dy $$
-    $$ = \sigma \int_0^A y^2 [x]_{-w(y)}^{w(y)} dy = \sigma \int_0^A y^2 (2w(y)) dy $$
-    $$ = \sigma \int_0^A y^2 B(1 - \frac{y}{A}) dy = \sigma B \int_0^A (y^2 - \frac{y^3}{A}) dy $$
-    $$ = \sigma B \left[ \frac{y^3}{3} - \frac{y^4}{4A} \right]_0^A = \sigma B \left( \frac{A^3}{3} - \frac{A^4}{4A} \right) = \sigma B (\frac{A^3}{3} - \frac{A^3}{4}) $$
-    $$ = \sigma B \frac{A^3}{12} = (\frac{1}{2} \sigma B A) \frac{A^2}{6} = M \frac{A^2}{6} $$
 
-    <h3>Calcul de B :</h3>
-    $$ B = I_{yy} = \iint_S x^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} x^2 dx dy $$
-    $$ = \sigma \int_0^A \left[ \frac{x^3}{3} \right]_{-w(y)}^{w(y)} dy = \sigma \int_0^A \frac{2(w(y))^3}{3} dy $$
-    $$ = \frac{2\sigma}{3} \int_0^A \left( \frac{B}{2}(1 - \frac{y}{A}) \right)^3 dy = \frac{2\sigma}{3} \frac{B^3}{8} \int_0^A (1 - \frac{y}{A})^3 dy $$
-    <p>Posons $u = 1 - y/A$, $du = -dy/A$. Quand $y=0, u=1$. Quand $y=A, u=0$.</p>
-    $$ B = \frac{\sigma B^3}{12} \int_1^0 u^3 (-A du) = \frac{\sigma A B^3}{12} \int_0^1 u^3 du $$
-    $$ = \frac{\sigma A B^3}{12} \left[ \frac{u^4}{4} \right]_0^1 = \frac{\sigma A B^3}{12} \frac{1}{4} = \frac{\sigma A B^3}{48} $$
-    $$ = (\frac{1}{2} \sigma B A) \frac{B^2}{24} = M \frac{B^2}{24} $$
+    <h2>Méthode 1 : Calcul direct (intégration dx dy)</h2>
+    <h3>Calcul de $A_{xx}$ :</h3>
+    $$ A_{xx} = I_{xx} = \iint_S y^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} y^2 dx dy $$
+    $$ = \sigma \int_0^A y^2 (2w(y)) dy = \sigma B \int_0^A (y^2 - \frac{y^3}{A}) dy $$
+    $$ = \sigma B \left[ \frac{y^3}{3} - \frac{y^4}{4A} \right]_0^A = \sigma B \frac{A^3}{12} = M \frac{A^2}{6} $$
+    <h3>Calcul de $B_{yy}$ :</h3>
+    $$ B_{yy} = I_{yy} = \iint_S x^2 dm = \sigma \int_0^A \int_{-w(y)}^{w(y)} x^2 dx dy $$
+    $$ = \sigma \int_0^A \frac{2(w(y))^3}{3} dy = \frac{2\sigma}{3} \frac{B^3}{8} \int_0^A (1 - \frac{y}{A})^3 dy $$
+    <p>Posons $u = 1 - y/A$, $du = -dy/A$.</p>
+    $$ B_{yy} = \frac{\sigma B^3}{12} \int_1^0 u^3 (-A du) = \frac{\sigma A B^3}{12} \int_0^1 u^3 du = \frac{\sigma A B^3}{48} = M \frac{B^2}{24} $$
+    <h3>Calcul de $C_{zz}$, D, E, F :</h3>
+    $ C_{zz} = A_{xx} + B_{yy} = M \left( \frac{A^2}{6} + \frac{B^2}{24} \right) $. $D=0$. $E=F=0$.
 
-    <h3>Calcul de C :</h3>
-    <p>C = A + B (objet plan)</p>
-    $$ C = M \frac{A^2}{6} + M \frac{B^2}{24} = M \left( \frac{A^2}{6} + \frac{B^2}{24} \right) $$
+    <hr style="margin: 2em 0;">
 
-    <h3>Calcul de D :</h3>
-    <p>Par symétrie ($x=0$ est axe de symétrie) :</p>
-    $$ D = I_{xy} = \iint_S xy dm = \sigma \int_0^A y \left( \int_{-w(y)}^{w(y)} x dx \right) dy $$
-    L'intégrale interne $\int x dx$ est sur un intervalle symétrique, donc nulle. $D = 0$.
+    <h2>Méthode 2 : Intégration par bandes horizontales</h2>
+    <p>Bande à la hauteur $y$, épaisseur $dy$, largeur $L(y)=2w(y)=B(1-y/A)$, masse $dm = \sigma L(y) dy$.</p>
+    <h3>Calcul de $A_{xx}$ :</h3>
+    $dA_{xx} = y^2 dm$.
+    $$ A_{xx} = \int_0^A y^2 dm = \int_0^A y^2 \sigma B(1 - y/A) dy = \sigma B \frac{A^3}{12} = M \frac{A^2}{6} $$
+    <h3>Calcul de $B_{yy}$ :</h3>
+    Moment d'inertie de la bande (tige) autour de l'axe Y (son centre) : $dB_{yy} = \frac{1}{12} dm (L(y))^2$.
+    $$ B_{yy} = \int_0^A dB_{yy} = \int_0^A \frac{1}{12} (\sigma B(1 - y/A) dy) (B(1 - y/A))^2 = \frac{\sigma B^3}{12} \int_0^A (1 - y/A)^3 dy $$
+    $$ = \frac{\sigma A B^3}{12} \int_0^1 u^3 du = \frac{\sigma A B^3}{48} = M \frac{B^2}{24} $$
+    <h3>Calcul de $C_{zz}$, D, E, F :</h3>
+     $ C_{zz} = A_{xx} + B_{yy} = M(A^2/6 + B^2/24) $. $D=0$ (symétrie). $E=F=0$.
 
-    <h3>Calcul de E et F :</h3>
-    $E=F=0$ car $z=0$.
+    <hr style="margin: 2em 0;">
+
+     <h2>Méthode 3 : Intégration par bandes verticales</h2>
+    <p>Bande verticale à l'abscisse $x$, épaisseur $dx$, hauteur $h(x)=A(1 - 2|x|/B)$, masse $dm = \sigma h(x) dx$.</p>
+    <h3>Calcul de $B_{yy}$ :</h3>
+    $dB_{yy} = x^2 dm$.
+    $$ B_{yy} = \int_{-B/2}^{B/2} x^2 dm = \int_{-B/2}^{B/2} x^2 (\sigma A(1 - 2|x|/B) dx) $$
+    <p>Intégrand pair :</p>
+    $$ B_{yy} = 2 \sigma A \int_0^{B/2} x^2 (1 - 2x/B) dx = 2 \sigma A \int_0^{B/2} (x^2 - 2x^3/B) dx $$
+    $$ = 2 \sigma A \left[ \frac{x^3}{3} - \frac{x^4}{2B} \right]_0^{B/2} = 2 \sigma A \left( \frac{B^3}{24} - \frac{B^3}{32} \right) = \frac{\sigma A B^3}{48} = M \frac{B^2}{24} $$
+    <h3>Calcul de $A_{xx}$ :</h3>
+    Moment d'inertie de la bande (tige) par rapport à l'axe Ox (son extrémité basse) : $dA_{xx} = \frac{1}{3} dm (h(x))^2$.
+    $$ A_{xx} = \int_{-B/2}^{B/2} dA_{xx} = \int_{-B/2}^{B/2} \frac{1}{3} (\sigma A(1 - 2|x|/B) dx) (A(1 - 2|x|/B))^2 $$
+    $$ = \int_{-B/2}^{B/2} \frac{\sigma A^3}{3} (1 - 2|x|/B)^3 dx $$
+    <p>Intégrand pair :</p>
+    $$ A_{xx} = \frac{2 \sigma A^3}{3} \int_0^{B/2} (1 - 2x/B)^3 dx $$
+    <p>Posons $v = 1 - 2x/B$, $dx = -B dv/2$.</p>
+    $$ A_{xx} = \frac{2 \sigma A^3}{3} \int_1^0 v^3 (-B dv/2) = \frac{\sigma A^3 B}{3} \int_0^1 v^3 dv $$
+    $$ = \frac{\sigma A^3 B}{3} \left[ \frac{v^4}{4} \right]_0^1 = \frac{\sigma A^3 B}{12} = M \frac{A^2}{6} $$
+    <h3>Calcul de $C_{zz}$, D, E, F :</h3>
+     $ C_{zz} = A_{xx} + B_{yy} = M(A^2/6 + B^2/24) $. $D=0$ (symétrie). $E=F=0$.
+
+    <hr style="margin: 2em 0;">
 
     <h2>Résultat :</h2>
     <p>Le tenseur d'inertie au point O est :</p>
-    $$ [I_O]_{2.5} = \begin{pmatrix} M A^2/6 & 0 & 0 \\ 0 & M B^2/24 & 0 \\ 0 & 0 & M(A^2/6 + B^2/24) \end{pmatrix} $$
+    $$ [I_O]_{2.5} = \begin{pmatrix} A_{xx} & -D & -E \\ -D & B_{yy} & -F \\ -E & -F & C_{zz} \end{pmatrix} = \begin{pmatrix} M A^2/6 & 0 & 0 \\ 0 & M B^2/24 & 0 \\ 0 & 0 & M(A^2/6 + B^2/24) \end{pmatrix} $$
     <p>où $M = \frac{1}{2} \sigma B A$.</p>
 
     <h2>Commentaire :</h2>
-    <p>La matrice est diagonale, comme attendu par la symétrie par rapport à l'axe Y et la nature planaire.</p>
+    <p>La matrice est diagonale, comme attendu par la symétrie par rapport à l'axe Y et la nature planaire. Les trois méthodes de calcul direct donnent le même résultat.</p>
 
 </body>
 </html>

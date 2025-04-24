@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 2.4 - Composé de trois rectangles (symétrique)</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1] // Kept from your original code
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .definition { border-left: 3px solid #0056b3; padding: 10px; margin: 15px 0; background-color: #e7f3ff; }
+        .example { border-left: 3px solid #17a2b8; padding: 10px; margin: 15px 0; background-color: #e2f7fa; }
+        .formula { text-align: center; margin: 15px 0; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow overflow, disable scrollbar */
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+    </style>
+</head>
+<body>
+
+    <h1>Figure 2.4 : Composé de trois rectangles (symétrique)</h1>
+     <!-- Placeholder for figure -->
+    <div class="figure-placeholder">Figure 2.4 Placeholder</div>
+
+    <h2>Méthodes requises : Additivité, Théorème de Huygens, Symétrie.</h2>
+
+    <h3>Concepts Clés :</h3>
+    <ul>
+        <li><strong>Additivité :</strong> $[I_O] = [I_O]_1 + [I_O]_2 + [I_O]_3$.</li>
+        <li><strong>Théorème de Huygens :</strong> Utilisé pour $[I_O]_1$ et $[I_O]_3$.</li>
+        <li><strong>Symétrie :</strong> L'ensemble est symétrique par rapport au plan $y = 0$ (plan XOZ), donc $D = I_{xy} = 0$. Le plan $z = 0$ contient l'objet ($E=F=0$). La matrice totale sera diagonale. Par symétrie, $[I_O]_1 = [I_O]_3$.</li>
+    </ul>
+
+    <h3>Géométrie et Décomposition :</h3>
+    <ul>
+        <li><strong>Rectangle 1 :</strong> Dimensions $a \times 4a$. Centre $G_1(-3a/2, 0, 0)$. Masse $M_1 = \sigma(a)(4a) = 4\sigma a^2$.</li>
+        <li><strong>Rectangle 2 :</strong> Dimensions $2a \times a$. Centre $G_2(0, 0, 0)$. Masse $M_2 = \sigma(2a)(a) = 2\sigma a^2$.</li>
+        <li><strong>Rectangle 3 :</strong> Dimensions $a \times 4a$. Centre $G_3(3a/2, 0, 0)$. Masse $M_3 = M_1 = 4\sigma a^2$.</li>
+        <li>Masse totale : $M = M_1 + M_2 + M_3 = 10\sigma a^2$.</li>
+    </ul>
+
+    <h2>Calcul des tenseurs partiels en O :</h2>
+
+    <h3>Tenseur pour Rectangle 2 ($[I_O]_2$) :</h3>
+    <p>Directement depuis 2.1 (largeur=2a, hauteur=a) :</p>
+    $$ A_2 = M_2 \frac{a^2}{12} $$
+    $$ B_2 = M_2 \frac{(2a)^2}{12} = M_2 \frac{4a^2}{12} = M_2 \frac{a^2}{3} $$
+    $$ C_2 = A_2 + B_2 = M_2 (\frac{a^2}{12} + \frac{a^2}{3}) = M_2 \frac{a^2+4a^2}{12} = M_2 \frac{5a^2}{12} $$
+    $$ D_2 = E_2 = F_2 = 0 $$
+    $$ [I_O]_2 = \begin{pmatrix} M_2 \frac{a^2}{12} & 0 & 0 \\ 0 & M_2 \frac{a^2}{3} & 0 \\ 0 & 0 & M_2 \frac{5a^2}{12} \end{pmatrix} $$
+
+    <h3>Tenseur pour Rectangle 1 ($[I_O]_1$) : Par Huygens.</h3>
+     <ul>
+        <li><strong>Tenseur en $G_1$</strong> (type 2.1, largeur=a, hauteur=4a):
+            $$ [I_G]_1 = \begin{pmatrix} M_1 \frac{(4a)^2}{12} & 0 & 0 \\ 0 & M_1 \frac{a^2}{12} & 0 \\ 0 & 0 & M_1 \frac{a^2+(4a)^2}{12} \end{pmatrix} = \begin{pmatrix} M_1 \frac{16a^2}{12} & 0 & 0 \\ 0 & M_1 \frac{a^2}{12} & 0 \\ 0 & 0 & M_1 \frac{17a^2}{12} \end{pmatrix} $$
+        </li>
+        <li><strong>Terme de transport $[I_{O/G}]_1$</strong> ($\vec{OG}_1 = (-3a/2, 0, 0)$):
+            $$ A_{O/G1} = M_1(0^2 + 0^2) = 0 $$
+            $$ B_{O/G1} = M_1((-3a/2)^2 + 0^2) = M_1 \frac{9a^2}{4} $$
+            $$ C_{O/G1} = M_1((-3a/2)^2 + 0^2) = M_1 \frac{9a^2}{4} $$
+            $$ D_{O/G1} = -M_1(-3a/2)(0) = 0 $$
+            $$ [I_{O/G}]_1 = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 \frac{9a^2}{4} & 0 \\ 0 & 0 & M_1 \frac{9a^2}{4} \end{pmatrix} $$
+        </li>
+        <li><strong>$[I_O]_1 = [I_G]_1 + [I_{O/G}]_1$ :</strong>
+            $$ A_1 = M_1 \frac{16a^2}{12} + 0 = M_1 \frac{4a^2}{3} $$
+            $$ B_1 = M_1 \frac{a^2}{12} + M_1 \frac{9a^2}{4} = M_1 \frac{a^2+27a^2}{12} = M_1 \frac{28a^2}{12} = M_1 \frac{7a^2}{3} $$
+            $$ C_1 = M_1 \frac{17a^2}{12} + M_1 \frac{9a^2}{4} = M_1 \frac{17a^2+27a^2}{12} = M_1 \frac{44a^2}{12} = M_1 \frac{11a^2}{3} $$
+            $$ D_1 = 0 $$
+            $$ [I_O]_1 = \begin{pmatrix} M_1 \frac{4a^2}{3} & 0 & 0 \\ 0 & M_1 \frac{7a^2}{3} & 0 \\ 0 & 0 & M_1 \frac{11a^2}{3} \end{pmatrix} $$
+        </li>
+    </ul>
+
+    <h3>Tenseur pour Rectangle 3 ($[I_O]_3$) :</h3>
+    <p>Par symétrie, $[I_O]_3 = [I_O]_1$.</p>
+
+    <h2>Calcul du tenseur total en O :</h2>
+    <p>$[I_O] = [I_O]_1 + [I_O]_2 + [I_O]_3 = 2 [I_O]_1 + [I_O]_2$. Substituons $M_1 = 4\sigma a^2$ et $M_2 = 2\sigma a^2$.</p>
+    $$ A = 2A_1 + A_2 = 2(4\sigma a^2)\frac{4a^2}{3} + (2\sigma a^2)\frac{a^2}{12} = \sigma a^4 (\frac{32}{3} + \frac{2}{12}) = \sigma a^4 (\frac{128+2}{12}) = \sigma a^4 \frac{130}{12} = \sigma a^4 \frac{65}{6} $$
+    $$ B = 2B_1 + B_2 = 2(4\sigma a^2)\frac{7a^2}{3} + (2\sigma a^2)\frac{a^2}{3} = \sigma a^4 (\frac{56}{3} + \frac{2}{3}) = \sigma a^4 \frac{58}{3} $$
+    $$ C = 2C_1 + C_2 = 2(4\sigma a^2)\frac{11a^2}{3} + (2\sigma a^2)\frac{5a^2}{12} = \sigma a^4 (\frac{88}{3} + \frac{10}{12}) = \sigma a^4 (\frac{352+10}{12}) = \sigma a^4 \frac{362}{12} = \sigma a^4 \frac{181}{6} $$
+    $$ D = 2D_1 + D_2 = 0 + 0 = 0 $$
+    $$ E = 0 $$
+    $$ F = 0 $$
+
+    <h3>Résultat :</h3>
+    <p>Le tenseur d'inertie total en O est :</p>
+    $$ [I_O]_{2.4} = \sigma a^4 \begin{pmatrix} \frac{65}{6} & 0 & 0 \\ 0 & \frac{58}{3} & 0 \\ 0 & 0 & \frac{181}{6} \end{pmatrix} $$
+
+    <h3>Vérification :</h3>
+    <p>La matrice est diagonale comme attendu par symétrie ($D = 0$) et nature planaire ($E = F = 0$). Le théorème de l'axe perpendiculaire est vérifié : $A + B = \sigma a^4 (\frac{65}{6} + \frac{58}{3}) = \sigma a^4 (\frac{65 + 116}{6}) = \sigma a^4 \frac{181}{6} = C$.</p>
+
+</body>
+</html>

@@ -168,26 +168,90 @@
             margin: 0;
         }
 
+        /* Basic style for all LI elements in the pan */
         .content-pan li {
-            padding: 8px 0;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
+            padding: 8px 0; /* Base padding */
             border-bottom: 1px dotted #eee;
+            position: relative; /* Needed for potential future effects or indicators */
+            line-height: 1.4; /* Improve readability */
+        }
+
+        /* Style only for LI elements that have a data-url (the clickable items) */
+        .content-pan li[data-url] {
+             cursor: pointer; /* Indicate it's clickable */
+             transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease, padding-left 0.2s ease; /* Add padding transition */
         }
 
         .content-pan li:last-child {
              border-bottom: none;
         }
 
-        .content-pan li:hover {
-            background-color: #f0f0f0; /* Lighter hover background */
+        /* Hover style - Apply only to LI with data-url */
+        .content-pan li[data-url]:hover {
+            background-color: #f0f0f0; /* Light gray background on hover */
         }
 
-        .content-pan li.indent {
-             padding-left: 20px; /* Indent sub-items */
-             font-size: 0.95em;
-             color: #555;
+        /* Active (mouse down) style - Apply only to LI with data-url */
+        .content-pan li[data-url]:active {
+             background-color: #ddd; /* Slightly darker gray when clicked */
+             transform: scale(0.98); /* Optional: Slight press effect */
+             transition: none; /* No transition on active state */
         }
+
+        /* Style for the highlighted item - Apply only to LI with data-url */
+        .content-pan li[data-url].is-selected {
+            background-color: #e9ecef; /* Light blue-gray background */
+            font-weight: bold;
+            color: #0056b3; /* Darker blue text color for selected item */
+            border-left: 3px solid #007bff; /* Add a colored bar on the left */
+            padding-left: 17px; /* Adjust padding because of the border (20 - 3 if starting from 20, but we have 8px top/bottom) -> Let's adjust based on base padding */
+            /* Re-evaluate padding for selected state: */
+            /* Base padding was 8px 0. When adding 3px border-left, content shifts. */
+            /* To maintain alignment, we *add* 3px to left padding. Original left padding was 0. */
+            /* New left padding should be 3px. The visual appearance will be border + 3px space + text. */
+            /* Let's set a consistent base horizontal padding first for all data-url items for clarity */
+        }
+
+        /* Refined padding for LI with data-url */
+        .content-pan li[data-url] {
+            padding: 8px 10px; /* Base vertical and horizontal padding */
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease, padding-left 0.2s ease;
+            border-bottom: 1px dotted #eee; /* Keep border bottom */
+            position: relative;
+            line-height: 1.4;
+        }
+
+        /* Indent style - Adjusted to work with base padding */
+        .content-pan li.indent {
+             padding-left: 30px; /* Base 10px + 20px indent */
+        }
+
+
+        /* Selected style with refined padding */
+        .content-pan li[data-url].is-selected {
+            background-color: #e9ecef;
+            font-weight: bold;
+            color: #0056b3;
+            border-left: 3px solid #007bff;
+            /* Adjust padding-left for selected state: */
+            /* Original padding-left was 10px. Add the border width (3px) to push text further right */
+            padding-left: 13px; /* 10px (original) + 3px (border) */
+        }
+
+         /* Adjust padding for indented AND selected items */
+        .content-pan li[data-url].is-selected.indent {
+             /* Original indented padding-left was 30px. Add border width (3px). */
+             padding-left: 33px; /* 30px (original indented) + 3px (border) */
+        }
+
+         /* Ensure non-data-url list items don't have pointer cursor or hover/active effects */
+         .content-pan li:not([data-url]) {
+             cursor: default;
+         }
+         .content-pan li:not([data-url]):hover {
+             background-color: transparent; /* Ensure no hover effect */
+         }
 
 
         #content-iframe {
@@ -246,7 +310,7 @@
             <h3>Les Torseurs</h3>
             <ul>
                 <li data-url="torseurs_rappel.html">Rappel de cours</li>
-                <li>
+                <li> <!-- This LI contains the h4 and the nested ul -->
                     <h4>Série N°4</h4>
                     <ul>
                         <li data-url="torseurs_serie4_exo1.html">Exercice 1 (Énoncé + Solution)</li>
@@ -263,7 +327,7 @@
             <h3>Les Tenseurs d'inertie</h3>
             <ul>
                 <li data-url="tenseurs_rappel.html">Rappel de cours</li>
-                 <li>
+                 <li> <!-- This LI contains the h4 and the nested ul -->
                     <h4>Série N°6</h4>
                     <ul>
                         <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
@@ -296,7 +360,7 @@
             <h3>Guldin</h3>
             <ul>
                 <li data-url="guldin_rappel.html">Rappel de cours</li>
-                <li>
+                <li> <!-- This LI contains the h4 and the nested ul -->
                     <h4>Série N°7</h4>
                     <ul>
                         <li data-url="guldin_serie7_exo1.html">Exercice 1 (Énoncé + Solution)</li>
@@ -339,8 +403,53 @@
             contentPan.classList.remove('is-visible');
         }
 
-        // Event listener for the button to open the pan
-        openMenuButton.addEventListener('click', openPan);
+        // Function to highlight the item in the pan corresponding to the iframe content
+        function highlightCurrentItemInPan() {
+            // Get the current iframe source, normalize path for comparison
+            let currentPath = iframe.contentWindow.location.pathname;
+            // Remove leading slash if present for comparison with data-url
+            if (currentPath.startsWith('/')) {
+                currentPath = currentPath.substring(1);
+            }
+
+            // Find currently selected item and remove highlight
+            const currentlySelected = contentPan.querySelector('li.is-selected');
+            if (currentlySelected) {
+                currentlySelected.classList.remove('is-selected');
+            }
+
+            // Find all list items with a data-url
+            const listItems = contentPan.querySelectorAll('li[data-url]');
+
+            // Iterate through list items and find the match
+            listItems.forEach(item => {
+                // Check if the current iframe path ends with the data-url
+                if (currentPath.endsWith(item.dataset.url)) {
+                    item.classList.add('is-selected');
+                    // Optional: Scroll the highlighted item into view in the pan
+                    // Only scroll if the pan is visible when highlighting
+                    if (contentPan.classList.contains('is-visible')) {
+                         // Use requestAnimationFrame to ensure scroll happens after pan transition starts
+                         requestAnimationFrame(() => {
+                            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                         });
+                    }
+                }
+            });
+        }
+
+
+        // Event listener for the button to open/close the pan
+        openMenuButton.addEventListener('click', () => {
+            if (contentPan.classList.contains('is-visible')) {
+                // If pan is visible, close it
+                closePan();
+            } else {
+                // If pan is hidden, highlight the current item and open it
+                highlightCurrentItemInPan();
+                openPan();
+            }
+        });
 
         // Event listener for the close button inside the pan
         closePanButton.addEventListener('click', closePan);
@@ -348,14 +457,15 @@
         // Event listener for clicks within the pan to handle item selection
         contentPan.addEventListener('click', (event) => {
             // Check if the clicked element is an LI or is inside an LI with data-url
-            const targetLi = event.target.closest('li');
-            if (targetLi && targetLi.dataset.url) {
+            const targetLi = event.target.closest('li[data-url]'); // <-- Added [data-url] here!
+            if (targetLi) { // Check if a valid targetLi was found
                 const url = targetLi.dataset.url;
                 iframe.src = url; // Load the content
+                // Highlighting will happen when the iframe's 'load' event fires
                 closePan(); // Close the pan
             }
+             // If the click was on an LI without data-url (like the one containing H4), do nothing.
         });
-
 
          // Ensure MathJax typesets content loaded into the iframe dynamically
          // This part remains the same as it handles content inside the iframe
@@ -366,29 +476,32 @@
                 if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                      iframe.contentWindow.MathJax.typesetPromise();
                 } else if (iframeDoc) {
-                    // Fallback if MathJax isn't immediately ready or loaded
-                    // This might be needed if MathJax script/config is ONLY in the parent page
-                    // and needs to be manually triggered for the iframe's content.
-                    // If MathJax script is in the iframe's HTML files, this might not be necessary.
                     console.warn("MathJax might not be immediately available or configured in the iframe.");
-                     // Manual trigger attempt (less reliable):
-                    // setTimeout(() => {
-                    //      if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
-                    //          iframe.contentWindow.MathJax.typesetPromise();
-                    //      }
-                    // }, 500);
                 }
+
+                 // --- Highlight the item in the pan when the iframe finishes loading ---
+                 highlightCurrentItemInPan();
+
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
-                // This might happen due to cross-origin issues if files are loaded locally
-                // or if MathJax hasn't loaded yet.
             }
          });
 
-         // Optional: Close pan if clicking outside of it (requires an overlay)
-         // Add an overlay div just before the pan in HTML: <div id="pan-overlay" class="pan-overlay"></div>
-         // Add CSS for .pan-overlay (fixed, full screen, transparent/semi-transparent, lower z-index than pan)
-         // Add JS listener to overlay to call closePan
+         // Call highlightCurrentItemInPan on the initial page load as well
+         // This ensures that if the iframe starts with a specific src (not about:blank)
+         // or if you refresh on a page, the pan highlights correctly when first opened.
+         // Using a slight delay can help ensure the iframe src is truly available.
+         // Or even better, add a listener specifically for the *initial* load if needed,
+         // but the event listener added above should handle all loads including the first.
+         // Let's make sure the pan event listener is added *before* any potential initial load.
+         // The current structure ensures this. The initial call might still need a delay
+         // if the iframe src is set very early or by other scripts. Let's add a simple timeout for safety on initial load.
+         window.addEventListener('load', () => {
+             // Small delay to allow initial iframe loading or default src to be set
+             setTimeout(highlightCurrentItemInPan, 100);
+         });
+
+
     </script>
 
 </body>

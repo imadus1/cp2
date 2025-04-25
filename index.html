@@ -31,32 +31,127 @@
             flex-direction: column;
             height: 100vh; /* Full viewport height */
             background-color: #f4f4f4;
+            overflow: hidden; /* Prevent body scroll when pan is open */
         }
-        .controls {
-            padding: 15px;
+
+        /* Header bar for the button */
+        .header-bar {
+            padding: 10px 15px;
             background-color: #e0e0e0;
             border-bottom: 1px solid #ccc;
             display: flex;
-            gap: 20px; /* Spacing between dropdowns */
-            flex-wrap: wrap; /* Allow wrapping on small screens */
+            align-items: center;
         }
-        .controls label {
-            font-weight: bold;
-            margin-right: 5px;
-        }
-        .controls select {
-            padding: 8px 12px;
+
+        #open-menu-button {
+            padding: 8px 15px;
+            font-size: 1em;
+            cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 4px;
-            min-width: 250px; /* Minimum width for dropdowns */
-            font-size: 1em;
+            background-color: #fff;
+            transition: background-color 0.2s ease;
         }
+
+        #open-menu-button:hover {
+            background-color: #f0f0f0;
+        }
+
+
+        /* Pan styles */
+        .content-pan {
+            position: fixed; /* Position relative to the viewport */
+            top: 0;
+            right: 0; /* Start off-screen to the right */
+            width: 300px; /* Adjust width as needed */
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            overflow-y: auto; /* Enable scrolling for long lists */
+            z-index: 1000; /* Ensure it's on top of other content */
+            transform: translateX(100%); /* Initially hide it */
+            transition: transform 0.3s ease-in-out; /* Smooth sliding effect */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .content-pan.is-visible {
+            transform: translateX(0); /* Slide into view */
+        }
+
+        .pan-close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .content-pan h2 {
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .pan-section {
+            margin-bottom: 20px;
+        }
+
+        .pan-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2em;
+            color: #333;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 5px;
+        }
+
+         .pan-section h4 {
+            margin: 10px 0 5px 0;
+            font-size: 1em;
+            color: #555;
+            font-weight: normal;
+         }
+
+
+        .content-pan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .content-pan li {
+            padding: 8px 0;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            border-bottom: 1px dotted #eee;
+        }
+
+        .content-pan li:last-child {
+             border-bottom: none;
+        }
+
+        .content-pan li:hover {
+            background-color: #f9f9f9;
+        }
+
+        .content-pan li.indent {
+             padding-left: 20px; /* Indent sub-items */
+             font-size: 0.95em;
+             color: #555;
+        }
+
+
         #content-iframe {
             flex-grow: 1; /* Takes remaining vertical space */
             width: 100%;
             border: none; /* Remove iframe border */
             background-color: #fff; /* White background for content area */
         }
+
          /* Basic styling for Computer Modern fonts */
         @font-face {
           font-family: 'Computer Modern Serif';
@@ -87,82 +182,95 @@
             overflow-x: auto; /* Allow scrolling for wide equations */
             overflow-y: hidden;
          }
+
     </style>
 </head>
 <body>
 
-    <div class="controls">
-        <div>
-            <label for="torseurs-select">Les Torseurs:</label>
-            <select id="torseurs-select" onchange="loadContent(this, 'tenseurs-select')">
-                <option value="">-- Sélectionner --</option>
-                <option value="torseurs_rappel.html">Rappel de cours</option>
-                <optgroup label="Série N°4">
-                    <option value="torseurs_serie4_exo1.html">Exercice 1 (Énoncé + Solution)</option>
-                    <option value="torseurs_serie4_exo2.html">Exercice 2 (Énoncé + Solution)</option>
-                    <option value="torseurs_serie4_exo3.html">Exercice 3 (Énoncé + Solution)</option>
-                    <option value="torseurs_serie4_exo4.html">Exercice 4 (Énoncé + Solution)</option>
-                    <option value="torseurs_serie4_exo5.html">Exercice 5 (Énoncé + Solution)</option>
-                </optgroup>
-            </select>
+    <div class="header-bar">
+        <button id="open-menu-button">Select Content</button>
+    </div>
+
+    <!-- The Pan/Sidebar -->
+    <div id="content-pan" class="content-pan">
+        <button class="pan-close-button" id="close-pan-button">X</button>
+        <h2>Available Content</h2>
+
+        <div class="pan-section">
+            <h3>Les Torseurs</h3>
+            <ul>
+                <li data-url="torseurs_rappel.html">Rappel de cours</li>
+                <li>
+                    <h4>Série N°4</h4>
+                    <ul>
+                        <li data-url="torseurs_serie4_exo1.html">Exercice 1 (Énoncé + Solution)</li>
+                        <li data-url="torseurs_serie4_exo2.html">Exercice 2 (Énoncé + Solution)</li>
+                        <li data-url="torseurs_serie4_exo3.html">Exercice 3 (Énoncé + Solution)</li>
+                        <li data-url="torseurs_serie4_exo4.html">Exercice 4 (Énoncé + Solution)</li>
+                        <li data-url="torseurs_serie4_exo5.html">Exercice 5 (Énoncé + Solution)</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
 
-        <div>
-            <label for="tenseurs-select">Les Tenseurs d'inertie:</label>
-            <select id="tenseurs-select" onchange="loadContent(this, 'torseurs-select')">
-                <option value="">-- Sélectionner --</option>
-                <option value="tenseurs_rappel.html">Rappel de cours</option>
-                 <optgroup label="Série N°6">
-                    <option value="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</option>
-                    <option value="tenseurs_serie6_exo1_fig1.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.1 + Solution</option>
-                    <option value="tenseurs_serie6_exo1_fig2.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.2 + Solution</option>
-                    <option value="tenseurs_serie6_exo1_fig3.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.3 + Solution</option>
-                    <option value="tenseurs_serie6_exo1_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.4 + Solution</option>
-                    <option value="tenseurs_serie6_exo1_fig5.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.5 + Solution</option>
-                    <option value="tenseurs_serie6_exo1_fig6.html">&nbsp;&nbsp;&nbsp;↳ Figure 1.6 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_enonce.html">Exercice 2 (Énoncé)</option>
-                    <option value="tenseurs_serie6_exo2_fig1.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.1 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_fig2.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.2 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_fig3.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.3 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.4 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_fig5.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.5 + Solution</option>
-                    <option value="tenseurs_serie6_exo2_fig6.html">&nbsp;&nbsp;&nbsp;↳ Figure 2.6 + Solution</option>                     
-                    <option value="tenseurs_serie6_exo3_enonce.html">Exercice 3 (Énoncé)</option>
-                    <option value="tenseurs_serie6_exo3_fig1.html">&nbsp;&nbsp;&nbsp;↳ Figure 3.1 + Solution</option>
-                    <option value="tenseurs_serie6_exo3_fig2.html">&nbsp;&nbsp;&nbsp;↳ Figure 3.2 + Solution</option>
-                    <option value="tenseurs_serie6_exo3_fig3.html">&nbsp;&nbsp;&nbsp;↳ Figure 3.3 + Solution</option>
-                    <option value="tenseurs_serie6_exo3_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 3.4 + Solution</option>
-                    <option value="tenseurs_serie6_exo4_enonce.html">Exercice 4 (Énoncé)</option>
-                    <option value="tenseurs_serie6_exo4_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 4 + Solution</option>
-                 </optgroup>
-            </select>
+        <div class="pan-section">
+            <h3>Les Tenseurs d'inertie</h3>
+            <ul>
+                <li data-url="tenseurs_rappel.html">Rappel de cours</li>
+                 <li>
+                    <h4>Série N°6</h4>
+                    <ul>
+                        <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
+                        <li data-url="tenseurs_serie6_exo1_fig1.html" class="indent">   ↳ Figure 1.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig2.html" class="indent">   ↳ Figure 1.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig3.html" class="indent">   ↳ Figure 1.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig4.html" class="indent">   ↳ Figure 1.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig5.html" class="indent">   ↳ Figure 1.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig6.html" class="indent">   ↳ Figure 1.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_enonce.html">Exercice 2 (Énoncé)</li>
+                        <li data-url="tenseurs_serie6_exo2_fig1.html" class="indent">   ↳ Figure 2.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig2.html" class="indent">   ↳ Figure 2.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig3.html" class="indent">   ↳ Figure 2.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig4.html" class="indent">   ↳ Figure 2.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig5.html" class="indent">   ↳ Figure 2.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig6.html" class="indent">   ↳ Figure 2.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_enonce.html">Exercice 3 (Énoncé)</li>
+                        <li data-url="tenseurs_serie6_exo3_fig1.html" class="indent">   ↳ Figure 3.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig2.html" class="indent">   ↳ Figure 3.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig3.html" class="indent">   ↳ Figure 3.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig4.html" class="indent">   ↳ Figure 3.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo4_enonce.html">Exercice 4 (Énoncé)</li>
+                        <li data-url="tenseurs_serie6_exo4_fig4.html" class="indent">   ↳ Figure 4 + Solution</li>
+                    </ul>
+                 </li>
+            </ul>
         </div>
 
-        <div>
-            <label for="guldin-select">Guldin:</label>
-            <select id="guldin-select" onchange="loadContent(this, 'guldin-select')">
-                <option value="">-- Sélectionner --</option>
-                <option value="guldin_rappel.html">Rappel de cours</option>
-                <optgroup label="Série N°7">
-                    <option value="guldin_serie7_exo1.html">Exercice 1 (Énoncé + Solution)</option>
-                      <option value="guldin_serie7_exo1_fig1.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.1 + Solution</option>
-                      <option value="guldin_serie7_exo1_fig2.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.2 + Solution</option>
-                      <option value="guldin_serie7_exo1_fig3.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.3 + Solution</option>
-                      <option value="guldin_serie7_exo1_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.4 + Solution</option>
-                      <option value="guldin_serie7_exo1_fig5.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.5 + Solution</option>
-                      <option value="guldin_serie7_exo1_fig6.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.1.6 + Solution</option>
-                    <option value="guldin_serie7_exo2.html">Exercice 2 (Énoncé + Solution)</option>
-                      <option value="guldin_serie7_exo2_fig1.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.1 + Solution</option>
-                      <option value="guldin_serie7_exo2_fig2.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.2 + Solution</option>
-                      <option value="guldin_serie7_exo2_fig3.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.3 + Solution</option>
-                      <option value="guldin_serie7_exo2_fig4.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.4 + Solution</option>
-                      <option value="guldin_serie7_exo2_fig5.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.5 + Solution</option>
-                      <option value="guldin_serie7_exo2_fig6.html">&nbsp;&nbsp;&nbsp;↳ Figure 7.2.6 + Solution</option>
-                </optgroup>
-            </select>
+        <div class="pan-section">
+            <h3>Guldin</h3>
+            <ul>
+                <li data-url="guldin_rappel.html">Rappel de cours</li>
+                <li>
+                    <h4>Série N°7</h4>
+                    <ul>
+                        <li data-url="guldin_serie7_exo1.html">Exercice 1 (Énoncé + Solution)</li>
+                        <li data-url="guldin_serie7_exo1_fig1.html" class="indent">   ↳ Figure 7.1.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig2.html" class="indent">   ↳ Figure 7.1.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig3.html" class="indent">   ↳ Figure 7.1.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig4.html" class="indent">   ↳ Figure 7.1.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig5.html" class="indent">   ↳ Figure 7.1.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig6.html" class="indent">   ↳ Figure 7.1.6 + Solution</li>
+                        <li data-url="guldin_serie7_exo2.html">Exercice 2 (Énoncé + Solution)</li>
+                        <li data-url="guldin_serie7_exo2_fig1.html" class="indent">   ↳ Figure 7.2.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig2.html" class="indent">   ↳ Figure 7.2.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig3.html" class="indent">   ↳ Figure 7.2.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig4.html" class="indent">   ↳ Figure 7.2.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig5.html" class="indent">   ↳ Figure 7.2.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig6.html" class="indent">   ↳ Figure 7.2.6 + Solution</li>
+                    </ul>
+                </li>
+            </ul>
         </div>
-
-        
     </div>
 
     <iframe id="content-iframe" name="content-iframe" src="about:blank">
@@ -170,23 +278,40 @@
     </iframe>
 
     <script>
-        function loadContent(selectElement, otherSelectId) {
-            const selectedValue = selectElement.value;
-            const iframe = document.getElementById('content-iframe');
-            const otherSelect = document.getElementById(otherSelectId);
+        const openMenuButton = document.getElementById('open-menu-button');
+        const contentPan = document.getElementById('content-pan');
+        const closePanButton = document.getElementById('close-pan-button');
+        const iframe = document.getElementById('content-iframe');
 
-            if (selectedValue) {
-                iframe.src = selectedValue;
-                // Reset the other dropdown
-                otherSelect.selectedIndex = 0;
-            } else {
-                // If the placeholder is selected, clear the iframe
-                iframe.src = 'about:blank';
-            }
+        // Function to show the pan
+        function openPan() {
+            contentPan.classList.add('is-visible');
         }
 
+        // Function to hide the pan
+        function closePan() {
+            contentPan.classList.remove('is-visible');
+        }
+
+        // Event listener for the button to open the pan
+        openMenuButton.addEventListener('click', openPan);
+
+        // Event listener for the close button inside the pan
+        closePanButton.addEventListener('click', closePan);
+
+        // Event listener for clicks within the pan to handle item selection
+        contentPan.addEventListener('click', (event) => {
+            // Check if the clicked element is an LI and has a data-url attribute
+            if (event.target.tagName === 'LI' && event.target.dataset.url) {
+                const url = event.target.dataset.url;
+                iframe.src = url; // Load the content
+                closePan(); // Close the pan
+            }
+        });
+
+
          // Ensure MathJax typesets content loaded into the iframe dynamically
-         const iframe = document.getElementById('content-iframe');
+         // This part remains the same as it handles content inside the iframe
          iframe.addEventListener('load', () => {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;

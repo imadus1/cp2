@@ -41,14 +41,25 @@
          ul { padding-left: 30px; }
          .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
          .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+        /* ... (your existing CSS) ... */
 
+        .figure-placeholder img {
+            max-width: 100%; /* Make sure the image is never wider than its parent container */
+            height: auto;    /* Maintain the image's aspect ratio */
+            display: block;  /* Treat the image as a block element (helps with centering) */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto; /* Center the image horizontally */
+        }
+
+        /* ... (rest of your existing CSS) ... */
     </style>
 </head>
 <body>
 
     <h1>Figure 2.2 : Rectangle décalé en Y</h1>
      <!-- Placeholder for figure -->
-    <div class="figure-placeholder">Figure 2.2 Placeholder</div>
+    <div class="figure-placeholder"><img src="figure6.2.2.png"></div>
+
 
     <h2>Méthodes requises : Calcul direct et Théorème de Huygens.</h2>
 

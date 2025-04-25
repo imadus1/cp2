@@ -32,69 +32,113 @@
             height: 100vh; /* Full viewport height */
             background-color: #f4f4f4;
             overflow: hidden; /* Prevent body scroll when pan is open */
+            position: relative; /* Necessary for potential positioning contexts */
         }
 
-        /* Header bar for the button */
-        .header-bar {
-            padding: 10px 15px;
-            background-color: #e0e0e0;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-        }
-
+        /* Floating button - positioned top-left */
         #open-menu-button {
-            padding: 8px 15px;
-            font-size: 1em;
+            position: fixed; /* Make it float relative to the viewport */
+            top: 20px; /* 20px from the top */
+            left: 20px; /* 20px from the left */
+            width: 40px; /* Set a fixed size for the button */
+            height: 40px;
+            padding: 0; /* Remove padding */
+            font-size: 1.5em; /* Adjust icon size if needed */
             cursor: pointer;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            background-color: #fff;
-            transition: background-color 0.2s ease;
+            border-radius: 5px;
+            background-color: #007bff; /* Example: a blue button */
+            color: white; /* Icon color */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 900; /* Below the pan (1000) */
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: flex; /* Use flexbox to center the icon */
+            align-items: center;
+            justify-content: center;
         }
 
         #open-menu-button:hover {
-            background-color: #f0f0f0;
+            background-color: #0056b3; /* Darker blue on hover */
+            transform: scale(1.05); /* Slightly enlarge effect */
+        }
+
+        /* Hamburger icon styles */
+        .hamburger-icon,
+        .hamburger-icon::before,
+        .hamburger-icon::after {
+            display: block;
+            width: 25px; /* Width of the bars */
+            height: 3px; /* Height of the bars */
+            background-color: white; /* Color of the bars */
+            border-radius: 2px; /* Rounded ends for bars */
+            transition: all 0.3s ease-in-out;
+        }
+
+        .hamburger-icon {
+            position: relative; /* Container for pseudo-elements */
+        }
+
+        .hamburger-icon::before,
+        .hamburger-icon::after {
+            content: ''; /* Required for pseudo-elements */
+            position: absolute;
+            left: 0; /* Align bars */
+        }
+
+        .hamburger-icon::before {
+            top: -8px; /* Position above the middle bar */
+        }
+
+        .hamburger-icon::after {
+            top: 8px; /* Position below the middle bar */
         }
 
 
-        /* Pan styles */
+        /* Pan styles - Modified for Left */
         .content-pan {
             position: fixed; /* Position relative to the viewport */
             top: 0;
-            right: 0; /* Start off-screen to the right */
+            left: 0; /* Start off-screen to the LEFT */
             width: 300px; /* Adjust width as needed */
+            max-width: 90%; /* Ensure it doesn't exceed screen width on small devices */
             height: 100%;
             background-color: #fff;
-            box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3); /* Shadow on the RIGHT side */
             overflow-y: auto; /* Enable scrolling for long lists */
             z-index: 1000; /* Ensure it's on top of other content */
-            transform: translateX(100%); /* Initially hide it */
+            transform: translateX(-100%); /* Initially hide it to the LEFT */
             transition: transform 0.3s ease-in-out; /* Smooth sliding effect */
             padding: 20px;
             box-sizing: border-box; /* Include padding in width */
         }
 
         .content-pan.is-visible {
-            transform: translateX(0); /* Slide into view */
+            transform: translateX(0); /* Slide into view (back to left: 0) */
         }
 
         .pan-close-button {
             position: absolute;
             top: 10px;
-            right: 10px;
+            right: 10px; /* Still positioned in the upper right corner of the pan */
             font-size: 1.5em;
             background: none;
             border: none;
             cursor: pointer;
             padding: 5px;
+            color: #555;
         }
+
+        .pan-close-button:hover {
+            color: #000;
+        }
+
 
         .content-pan h2 {
             margin-top: 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
             margin-bottom: 15px;
+            font-size: 1.3em;
         }
 
         .pan-section {
@@ -103,7 +147,7 @@
 
         .pan-section h3 {
             margin: 0 0 10px 0;
-            font-size: 1.2em;
+            font-size: 1.1em;
             color: #333;
             border-bottom: 1px dashed #eee;
             padding-bottom: 5px;
@@ -135,7 +179,7 @@
         }
 
         .content-pan li:hover {
-            background-color: #f9f9f9;
+            background-color: #f0f0f0; /* Lighter hover background */
         }
 
         .content-pan li.indent {
@@ -187,9 +231,10 @@
 </head>
 <body>
 
-    <div class="header-bar">
-        <button id="open-menu-button">Select Content</button>
-    </div>
+    <!-- Floating button in upper left with icon -->
+    <button id="open-menu-button" aria-label="Open Content Menu">
+        <span class="hamburger-icon"></span>
+    </button>
 
     <!-- The Pan/Sidebar -->
     <div id="content-pan" class="content-pan">
@@ -301,9 +346,10 @@
 
         // Event listener for clicks within the pan to handle item selection
         contentPan.addEventListener('click', (event) => {
-            // Check if the clicked element is an LI and has a data-url attribute
-            if (event.target.tagName === 'LI' && event.target.dataset.url) {
-                const url = event.target.dataset.url;
+            // Check if the clicked element is an LI or is inside an LI with data-url
+            const targetLi = event.target.closest('li');
+            if (targetLi && targetLi.dataset.url) {
+                const url = targetLi.dataset.url;
                 iframe.src = url; // Load the content
                 closePan(); // Close the pan
             }
@@ -315,17 +361,21 @@
          iframe.addEventListener('load', () => {
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                if (iframeDoc && typeof iframe.contentWindow.MathJax !== 'undefined') {
-                     // Check if MathJax is available in the iframe's context
+                 // Check if MathJax is defined in the iframe's window and if it's ready
+                if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                      iframe.contentWindow.MathJax.typesetPromise();
                 } else if (iframeDoc) {
-                    // If MathJax isn't loaded in the iframe yet, wait a bit and try again
-                    // This is a fallback, ideally MathJax should be in the fragment's head
-                    setTimeout(() => {
-                         if (typeof iframe.contentWindow.MathJax !== 'undefined') {
-                             iframe.contentWindow.MathJax.typesetPromise();
-                         }
-                    }, 500); // Wait 500ms
+                    // Fallback if MathJax isn't immediately ready or loaded
+                    // This might be needed if MathJax script/config is ONLY in the parent page
+                    // and needs to be manually triggered for the iframe's content.
+                    // If MathJax script is in the iframe's HTML files, this might not be necessary.
+                    console.warn("MathJax might not be immediately available or configured in the iframe.");
+                     // Manual trigger attempt (less reliable):
+                    // setTimeout(() => {
+                    //      if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
+                    //          iframe.contentWindow.MathJax.typesetPromise();
+                    //      }
+                    // }, 500);
                 }
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
@@ -333,6 +383,11 @@
                 // or if MathJax hasn't loaded yet.
             }
          });
+
+         // Optional: Close pan if clicking outside of it (requires an overlay)
+         // Add an overlay div just before the pan in HTML: <div id="pan-overlay" class="pan-overlay"></div>
+         // Add CSS for .pan-overlay (fixed, full screen, transparent/semi-transparent, lower z-index than pan)
+         // Add JS listener to overlay to call closePan
     </script>
 
 </body>

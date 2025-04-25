@@ -35,15 +35,16 @@
             position: relative; /* Necessary for potential positioning contexts */
         }
 
-        /* Floating button - positioned top-left */
+        /* Floating button - positioned top-right and smaller */
         #open-menu-button {
             position: fixed; /* Make it float relative to the viewport */
-            top: 20px; /* 20px from the top */
-            left: 20px; /* 20px from the left */
-            width: 40px; /* Set a fixed size for the button */
-            height: 40px;
+            top: 15px; /* Slightly less from the top */
+            right: 15px; /* 15px from the right */
+            left: auto; /* Ensure it's not affected by a previous left value */
+            width: 35px; /* Smaller width */
+            height: 35px; /* Smaller height */
             padding: 0; /* Remove padding */
-            font-size: 1.5em; /* Adjust icon size if needed */
+            font-size: 1.4em; /* Adjust icon size relative to button */
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -62,13 +63,13 @@
             transform: scale(1.05); /* Slightly enlarge effect */
         }
 
-        /* Hamburger icon styles */
+        /* Hamburger icon styles (adjusted for smaller button) */
         .hamburger-icon,
         .hamburger-icon::before,
         .hamburger-icon::after {
             display: block;
-            width: 25px; /* Width of the bars */
-            height: 3px; /* Height of the bars */
+            width: 20px; /* Smaller width of the bars */
+            height: 2.5px; /* Slightly smaller height of the bars */
             background-color: white; /* Color of the bars */
             border-radius: 2px; /* Rounded ends for bars */
             transition: all 0.3s ease-in-out;
@@ -86,15 +87,15 @@
         }
 
         .hamburger-icon::before {
-            top: -8px; /* Position above the middle bar */
+            top: -6px; /* Adjusted position above the middle bar */
         }
 
         .hamburger-icon::after {
-            top: 8px; /* Position below the middle bar */
+            top: 6px; /* Adjusted position below the middle bar */
         }
 
 
-        /* Pan styles - Modified for Left */
+        /* Pan styles (appears from Left) */
         .content-pan {
             position: fixed; /* Position relative to the viewport */
             top: 0;
@@ -231,12 +232,12 @@
 </head>
 <body>
 
-    <!-- Floating button in upper left with icon -->
+    <!-- Floating button in upper right with icon -->
     <button id="open-menu-button" aria-label="Open Content Menu">
         <span class="hamburger-icon"></span>
     </button>
 
-    <!-- The Pan/Sidebar -->
+    <!-- The Pan/Sidebar (appears from Left) -->
     <div id="content-pan" class="content-pan">
         <button class="pan-close-button" id="close-pan-button">X</button>
         <h2>Available Content</h2>

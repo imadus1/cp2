@@ -39,11 +39,24 @@
          ul { padding-left: 30px; }
          .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
          .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+           /* ... (your existing CSS) ... */
+
+        .figure-placeholder img {
+            max-width: 100%; /* Make sure the image is never wider than its parent container */
+            height: auto;    /* Maintain the image's aspect ratio */
+            display: block;  /* Treat the image as a block element (helps with centering) */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto; /* Center the image horizontally */
+        }
+
+        /* ... (rest of your existing CSS) ... */
     </style>
 </head>
 <body>
 
     <h1>Figure 3.3 : Parallélépipède rectangle</h1>
+    <div class="figure-placeholder"><img src="figure6.3.3.png"></div>
+
     <p>Parallélépipède défini par les sommets P1(0,0,0), P2(a,0,0), P3(a,b,0), P4(0,b,0) et extrudé à une hauteur c le long de Z. L'origine O est à un coin.</p>
 
     <h3>Méthodes requises : Calcul direct et Théorème de Huygens.</h3>

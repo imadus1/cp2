@@ -39,6 +39,17 @@
          ul { padding-left: 30px; }
          .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
          .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+            /* ... (your existing CSS) ... */
+
+        .figure-placeholder img {
+            max-width: 100%; /* Make sure the image is never wider than its parent container */
+            height: auto;    /* Maintain the image's aspect ratio */
+            display: block;  /* Treat the image as a block element (helps with centering) */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto; /* Center the image horizontally */
+        }
+
+        /* ... (rest of your existing CSS) ... */
     </style>
 </head>
 <body>
@@ -47,6 +58,7 @@
     <p>Pour tous les exercices, $\rho$ désigne la masse volumique homogène. Les tenseurs d'inertie sont calculés au point O dans la base $R(O, \vec{i}, \vec{j}, \vec{k})$. Les composantes du tenseur d'inertie sont définies comme : $A = I_{xx} = \iiint_V (y^2 + z^2)dm$, $B = I_{yy} = \iiint_V (x^2 + z^2)dm$, $C = I_{zz} = \iiint_V (x^2 + y^2)dm$, $D = I_{xy} = \iiint_V xy dm$, $E = I_{xz} = \iiint_V xz dm$, $F = I_{yz} = \iiint_V yz dm$. où $dm = \rho dV$. La matrice d'inertie en O est :
     $$ [I_O] = \begin{pmatrix} A & -D & -E \\ -D & B & -F \\ -E & -F & C \end{pmatrix} $$
     </p>
+<div class="figure-placeholder"><img src="figure6.3.1.png"></div>
 
     <h2>Figure 3.1 : Cône inversé</h2>
     <p>Cône de révolution, sommet en O, axe Z, hauteur H, rayon de la base R.</p>

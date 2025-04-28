@@ -52,18 +52,18 @@
 </head>
 <body>
 
-    <h1>Solution Figure 4.2 : Triangle linéique décalé en x</h1>
+    <h1>Solution Figure 7.1.2 : Triangle linéique décalé en x</h1>
     <div class="figure-placeholder"><img src="figure7.1.2.png"></div>
 
-    <p class="caption">FIGURE 4.2 - Triangle linéique décalé en x de c</p>
+    <p class="caption">FIGURE 7.1.2 - Triangle linéique décalé en x de c</p>
 
     <h2>Méthode requise : Translation du centre de masse (préférable) OU Théorème de Guldin.</h2>
 
     <h2>Concepts Clés :</h2>
     <ul>
         <li><strong>Translation :</strong> Si $G_1$ est le centre d'inertie d'un corps et que le corps est translaté de $\vec{v}$, le nouveau centre d'inertie est $G_2 = G_1 + \vec{v}$.</li>
-        <li><strong>Théorème de Guldin :</strong> $R_G = S_A / (2\pi L)$.</li>
-        <li><strong>Relation avec Figure 4.1 :</strong> Le corps est identique à celui de la Figure 4.1, mais translaté de $\vec{v} = c \vec{i}$.</li>
+        <li><strong>Théorème de Guldin :</strong> $R_G = S_{/\Delta} / (2\pi L)$.</li>
+        <li><strong>Relation avec Figure 7.1.1 :</strong> Le corps est identique à celui de la Figure 7.1.1, mais translaté de $\vec{v} = c \vec{i}$.</li>
     </ul>
 
     <h2>Géométrie et Décomposition (pour Guldin direct):</h2>
@@ -76,33 +76,33 @@
     </ul>
 
     <h2>Méthode 1 : Translation du Centre de Masse</h2>
-    <p>Le centre d'inertie $G_1 = (x_{G1}, y_{G1})$ de la Figure 4.1 est :</p>
+    <p>Le centre d'inertie $G_1 = (x_{G1}, y_{G1})$ de la Figure 7.1.1 est :</p>
     $$ x_{G1} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ y_{G1} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
-    <p>Le centre d'inertie $G_2 = (x_{G2}, y_{G2})$ pour la Figure 4.2 est obtenu par translation ($G_2 = G_1 + c\vec{i}$):</p>
+    <p>Le centre d'inertie $G_2 = (x_{G2}, y_{G2})$ pour la Figure 7.1.2 est obtenu par translation ($G_2 = G_1 + c\vec{i}$):</p>
     $$ x_{G2} = x_{G1} + c = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ y_{G2} = y_{G1} + 0 = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
 
     <h2>Méthode 2 : Application Directe du Théorème de Guldin</h2>
     <h3>Calcul de $x_G$ (Distance à l'axe Oy via rotation autour de Oy) :</h3>
      <ul>
-        <li>Segment O'A': Génère surface cylindrique (rayon c, hauteur a). Aire $S_{A,O'A'} = 2\pi c a$.</li>
-        <li>Segment O'B': Génère un anneau (rayon ext c+b, int c). Aire $S_{A,O'B'} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
-        <li>Segment A'B': Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{A,A'B'} = \pi(c + (c+b)) L_{A'B'} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{A,Oy} = 2\pi c a + \pi(2cb + b^2) + \pi(2c+b)\sqrt{a^2+b^2}$$</li>
+        <li>Segment O'A': Génère surface cylindrique (rayon c, hauteur a). Aire $S_{/\Delta,O'A'} = 2\pi c a$.</li>
+        <li>Segment O'B': Génère un anneau (rayon ext c+b, int c). Aire $S_{/\Delta,O'B'} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
+        <li>Segment A'B': Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{/\Delta,A'B'} = \pi(c + (c+b)) L_{A'B'} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
+        <li>Aire totale générée : $$S_{/\Delta,Oy} = 2\pi c a + \pi(2cb + b^2) + \pi(2c+b)\sqrt{a^2+b^2}$$</li>
         <li>Application de Guldin ($R_{G,Oy} = x_G$):
-         $$ x_G = \frac{S_{A,Oy}}{2\pi L} = \frac{2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}}{2\pi (a + b + \sqrt{a^2+b^2})} $$
+         $$ x_G = \frac{S_{/\Delta,Oy}}{2\pi L} = \frac{2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}}{2\pi (a + b + \sqrt{a^2+b^2})} $$
          <p>Simplification attendue vers $c + x_{G1}$ (calcul laissé en exercice).</p>
          </li>
     </ul>
      <h3>Calcul de $y_G$ (Distance à l'axe Ox via rotation autour de Ox) :</h3>
      <ul>
-        <li>Segment O'A': Génère un anneau (rayon ext a, int 0). Aire $S_{A,O'A'} = \pi a^2$.</li>
-        <li>Segment O'B': Génère une surface d'aire $S_{A,O'B'} = 0$.</li>
-        <li>Segment A'B': Génère surface latérale cône (rayon base a). Aire $S_{A,A'B'} = \pi a L_{A'B'} = \pi a \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{A,Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
+        <li>Segment O'A': Génère un anneau (rayon ext a, int 0). Aire $S_{/\Delta,O'A'} = \pi a^2$.</li>
+        <li>Segment O'B': Génère une surface d'aire $S_{/\Delta,O'B'} = 0$.</li>
+        <li>Segment A'B': Génère surface latérale cône (rayon base a). Aire $S_{/\Delta,A'B'} = \pi a L_{A'B'} = \pi a \sqrt{a^2+b^2}$.</li>
+        <li>Aire totale générée : $$S_{/\Delta,Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
         <li>Application de Guldin ($R_{G,Ox} = y_G$):
-        $$ y_G = \frac{S_{A,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+        $$ y_G = \frac{S_{/\Delta,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
         </li>
     </ul>
     <p>On observe que le calcul de $y_G$ par Guldin direct est identique à celui de $y_{G1}$, et le calcul (non simplifié ici) de $x_G$ par Guldin direct est plus complexe mais doit donner le même résultat que la translation.</p>

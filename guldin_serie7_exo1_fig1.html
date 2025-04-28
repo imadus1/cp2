@@ -38,7 +38,7 @@
         ul { padding-left: 30px; }
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
-   
+
             /* ... (your existing CSS) ... */
 
         .figure-placeholder img {
@@ -54,20 +54,20 @@
 </head>
 <body>
 
-    <h1>Solution Figure 4.1 : Triangle linéique (angle droit en O)</h1>
+    <h1>Solution Figure 7.1.1 : Triangle linéique (angle droit en O)</h1>
 
     <div class="figure-placeholder"><img src="figure7.1.1.png"></div>
 
-    <p class="caption">FIGURE 4.1 - Triangle linéique de côtés a et b</p>
+    <p class="caption">FIGURE 7.1.1 - Triangle linéique de côtés a et b</p>
 
     <h2>Méthode requise : Théorème de Guldin.</h2>
 
     <h2>Concepts Clés :</h2>
     <ul>
-        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_A$ de la surface engendrée par la rotation d'un arc de courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne le coupant pas est :
-        $$S_A = L \times (2\pi R_G)$$
+        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'un arc de courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne le coupant pas est :
+        $$S_{/\Delta} = L \times (2\pi R_G)$$
         où $R_G$ est la distance du centre d'inertie $G$ de l'arc à l'axe $(\Delta)$. On en tire :
-        $$R_G = \frac{S_A}{2\pi L}$$
+        $$R_G = \frac{S_{/\Delta}}{2\pi L}$$
         </li>
         <li><strong>Corps linéique :</strong> L'objet est constitué de segments de droite de densité linéique $\lambda$ constante.</li>
         <li><strong>Centre d'inertie G :</strong> On cherche les coordonnées $(x_G, y_G, 0)$. La coordonnée $x_G$ est la distance à l'axe Oy ($R_{G, Oy}$) et $y_G$ est la distance à l'axe Ox ($R_{G, Ox}$).</li>
@@ -89,9 +89,9 @@
         <li>Segment OA (sur l'axe Oy) : Génère une surface d'aire $S_{A,OA} = 0$.</li>
         <li>Segment OB (sur l'axe Ox) : Génère un disque de rayon b. Aire $S_{A,OB} = \pi b^2$.</li>
         <li>Segment AB (hypoténuse) : Génère la surface latérale d'un cône de rayon de base $r=b$, hauteur $h=a$, et génératrice $l=L_{AB}=\sqrt{a^2+b^2}$. Aire $S_{A,AB} = \pi r l = \pi b \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{A,Oy} = S_{A,OA} + S_{A,OB} + S_{A,AB} = 0 + \pi b^2 + \pi b \sqrt{a^2+b^2} = \pi b (b + \sqrt{a^2+b^2})$$</li>
+        <li>Aire totale générée : $$S_{/\Delta,Oy} = S_{A,OA} + S_{A,OB} + S_{A,AB} = 0 + \pi b^2 + \pi b \sqrt{a^2+b^2} = \pi b (b + \sqrt{a^2+b^2})$$</li>
         <li>Application de Guldin ($R_{G,Oy} = x_G$) :
-         $$ x_G = \frac{S_{A,Oy}}{2\pi L} = \frac{\pi b (b + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+         $$ x_G = \frac{S_{/\Delta,Oy}}{2\pi L} = \frac{\pi b (b + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
          </li>
     </ul>
 
@@ -100,9 +100,9 @@
         <li>Segment OA (sur l'axe Oy) : Génère un disque de rayon a. Aire $S_{A,OA} = \pi a^2$.</li>
         <li>Segment OB (sur l'axe Ox) : Génère une surface d'aire $S_{A,OB} = 0$.</li>
         <li>Segment AB (hypoténuse) : Génère la surface latérale d'un cône de rayon de base $r=a$, hauteur $h=b$, et génératrice $l=L_{AB}=\sqrt{a^2+b^2}$. Aire $S_{A,AB} = \pi r l = \pi a \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{A,Ox} = S_{A,OA} + S_{A,OB} + S_{A,AB} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
+        <li>Aire totale générée : $$S_{/\Delta,Ox} = S_{A,OA} + S_{A,OB} + S_{A,AB} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
         <li>Application de Guldin ($R_{G,Ox} = y_G$):
-        $$ y_G = \frac{S_{A,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+        $$ y_G = \frac{S_{/\Delta,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
         </li>
     </ul>
 

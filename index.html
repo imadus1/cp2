@@ -146,12 +146,14 @@
             margin-bottom: 20px;
         }
 
+        /* --- MODIFIED STYLES FOR H3 BACKGROUND --- */
         .pan-section h3 {
-            margin: 0 0 10px 0;
+            margin: 0 0 10px 0; /* Reduced bottom margin slightly */
             font-size: 1.1em;
             color: #333;
-            border-bottom: 1px dashed #eee;
-            padding-bottom: 5px;
+            border-bottom: 1px dashed #eee; /* Keep the dashed border */
+            padding: 5px 10px; /* Add padding inside the background */
+            background-color: #eee; /* Light gray background */
         }
 
          .pan-section h4 {
@@ -169,7 +171,9 @@
         }
 
         /* Basic style for all LI elements in the pan */
+        /* --- MODIFIED STYLES FOR LI SPACING --- */
         .content-pan li {
+            padding: 4px 0; /* Reduced vertical padding */
             border-bottom: 1px dotted #eee;
             position: relative; /* Needed for icon positioning */
             line-height: 1.4; /* Improve readability */
@@ -230,9 +234,10 @@
         }
 
 
-        /* --- Adjusted LI Styles for Icon/Flexbox/Padding --- */
+        /* --- Adjusted LI Styles for Icon/Padding --- */
 
         /* Style only for LI elements that have a data-url (the clickable items) */
+        /* --- MODIFIED STYLES FOR LI SPACING --- */
         .content-pan li[data-url] {
              cursor: pointer; /* Indicate it's clickable */
              transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
@@ -245,9 +250,8 @@
              align-items: center; /* Vertically center text */
 
              /* Base vertical and horizontal padding */
-             /* Need space on the left for the absolute icon (icon size 12px + left pos 8px + margin right 6px = ~26px visual offset) */
-             /* Let's set padding-left to slightly more than the icon's right edge */
-             padding: 8px 10px 8px 30px; /* Adjusted padding-left */
+             /* vertical padding is now 4px. horizontal padding adjusted for icon space */
+             padding: 4px 10px 4px 30px; /* top, right, bottom, left (adjusted for icon) */
         }
 
         /* The actual text content needs to allow space for the absolute icon */
@@ -271,6 +275,7 @@
         }
 
         /* Style for the highlighted item - Apply only to LI with data-url */
+        /* --- MODIFIED STYLES FOR SELECTED LI PADDING --- */
         .content-pan li[data-url].is-selected {
             background-color: #e9ecef; /* Light blue-gray background */
             font-weight: bold;
@@ -278,28 +283,26 @@
             border-left: 3px solid #007bff; /* Add a colored bar on the left */
             /* Adjust padding-left for selected state: Original was 30px. Add border width (3px) */
             padding-left: calc(30px + 3px); /* Use calc for clarity */
+            /* Vertical padding remains the same as base li[data-url] (4px) */
         }
 
-         /* Adjust padding for indented style */
+         /* Adjust padding for indented style - uses margin-left */
+         /* --- MODIFIED STYLES FOR INDENTED LI --- */
          .content-pan li.indent {
-              /* Original indent padding-left was 30px. We are setting the base LI padding-left to 30px. */
-              /* An indent means adding *additional* space *before* the icon positioning. */
-              /* Let's apply the indent margin/padding to the LI directly */
-              /* This requires re-thinking how indent works with absolute icon */
-              /* Alternative: Use margin-left for indent */
               margin-left: 20px; /* Add margin for indentation */
-              /* The icon position (left: 8px) will be relative to the LI's new left edge */
+              /* Padding top/bottom remain 4px from base li rule */
          }
 
          /* Adjust padding for indented AND selected items */
+         /* --- MODIFIED STYLES FOR INDENTED & SELECTED LI --- */
         .content-pan li[data-url].is-selected.indent {
              /* Keep the margin-left for indent */
-             /* The border-left will be added to the LI's left edge (which is now indented) */
-             /* Padding-left is already adjusted for selected state based on the new base */
-             /* No additional padding adjustment needed here, margin handles indent */
              margin-left: 20px; /* Maintain margin */
              border-left: 3px solid #007bff; /* Border starts after the margin */
+             /* Padding left adjusts based on the base indented rule's padding-left + border */
+             /* The base padding-left for indented LIs comes from the li[data-url] rule (30px) */
              padding-left: calc(30px + 3px); /* Padding remains consistent based on non-indented selected state */
+             /* Vertical padding remains 4px */
         }
 
         /* Adjust icon position for indented list items */
@@ -378,11 +381,11 @@
                 <li> <!-- This LI contains the h4 and the nested ul -->
                     <h4>Série N°4</h4>
                     <ul>
-                        <li data-url="torseurs_serie4_exo1.html">Exercice 1 (Énoncé + Solution)</li>
-                        <li data-url="torseurs_serie4_exo2.html">Exercice 2 (Énoncé + Solution)</li>
-                        <li data-url="torseurs_serie4_exo3.html">Exercice 3 (Énoncé + Solution)</li>
-                        <li data-url="torseurs_serie4_exo4.html">Exercice 4 (Énoncé + Solution)</li>
-                        <li data-url="torseurs_serie4_exo5.html">Exercice 5 (Énoncé + Solution)</li>
+                        <li data-url="torseurs_serie4_exo1.html">Exercice 1 + Solution</li>
+                        <li data-url="torseurs_serie4_exo2.html">Exercice 2 + Solution</li>
+                        <li data-url="torseurs_serie4_exo3.html">Exercice 3 + Solution</li>
+                        <li data-url="torseurs_serie4_exo4.html">Exercice 4 + Solution</li>
+                        <li data-url="torseurs_serie4_exo5.html">Exercice 5 + Solution</li>
                     </ul>
                 </li>
             </ul>
@@ -396,26 +399,26 @@
                     <h4>Série N°6</h4>
                     <ul>
                         <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo1_fig1.html" class="indent">  Figure 1.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig2.html" class="indent">  Figure 1.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig3.html" class="indent">  Figure 1.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig4.html" class="indent">  Figure 1.4 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig5.html" class="indent">  Figure 1.5 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig6.html" class="indent">  Figure 1.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig1.html" class="indent">  Fig 1.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig2.html" class="indent">  Fig 1.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig3.html" class="indent">  Fig 1.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig4.html" class="indent">  Fig 1.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig5.html" class="indent">  Fig 1.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig6.html" class="indent">  Fig 1.6 + Solution</li>
                         <li data-url="tenseurs_serie6_exo2_enonce.html">Exercice 2 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo2_fig1.html" class="indent">  Figure 2.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig2.html" class="indent">  Figure 2.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig3.html" class="indent">  Figure 2.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig4.html" class="indent">  Figure 2.4 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig5.html" class="indent">  Figure 2.5 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig6.html" class="indent">  Figure 2.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig1.html" class="indent">  Fig 2.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig2.html" class="indent">  Fig 2.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig3.html" class="indent">  Fig 2.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig4.html" class="indent">  Fig 2.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig5.html" class="indent">  Fig 2.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig6.html" class="indent">  Fig 2.6 + Solution</li>
                         <li data-url="tenseurs_serie6_exo3_enonce.html">Exercice 3 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo3_fig1.html" class="indent">  Figure 3.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig2.html" class="indent">  Figure 3.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig3.html" class="indent">  Figure 3.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig4.html" class="indent">  Figure 3.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig1.html" class="indent">  Fig 3.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig2.html" class="indent">  Fig 3.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig3.html" class="indent">  Fig 3.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig4.html" class="indent">  Fig 3.4 + Solution</li>
                         <li data-url="tenseurs_serie6_exo4_enonce.html">Exercice 4 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo4_fig4.html" class="indent">  Figure 4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo4_fig4.html" class="indent">  Fig 4 + Solution</li>
                     </ul>
                  </li>
             </ul>
@@ -428,20 +431,20 @@
                 <li> <!-- This LI contains the h4 and the nested ul -->
                     <h4>Série N°7</h4>
                     <ul>
-                        <li data-url="guldin_serie7_exo1.html">Exercice 1 (Énoncé + Solution)</li>
-                        <li data-url="guldin_serie7_exo1_fig1.html" class="indent">  Figure 7.1.1 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig2.html" class="indent">  Figure 7.1.2 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig3.html" class="indent">  Figure 7.1.3 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig4.html" class="indent">  Figure 7.1.4 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig5.html" class="indent">  Figure 7.1.5 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig6.html" class="indent">  Figure 7.1.6 + Solution</li>
-                        <li data-url="guldin_serie7_exo2.html">Exercice 2 (Énoncé + Solution)</li>
-                        <li data-url="guldin_serie7_exo2_fig1.html" class="indent">  Figure 7.2.1 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig2.html" class="indent">  Figure 7.2.2 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig3.html" class="indent">  Figure 7.2.3 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig4.html" class="indent">  Figure 7.2.4 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig5.html" class="indent">  Figure 7.2.5 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig6.html" class="indent">  Figure 7.2.6 + Solution</li>
+                        <li data-url="guldin_serie7_exo1.html">Exercice 1 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig1.html" class="indent">  Fig 7.1.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig2.html" class="indent">  Fig 7.1.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig3.html" class="indent">  Fig 7.1.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig4.html" class="indent">  Fig 7.1.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig5.html" class="indent">  Fig 7.1.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig6.html" class="indent">  Fig 7.1.6 + Solution</li>
+                        <li data-url="guldin_serie7_exo2.html">Exercice 2 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig1.html" class="indent">  Fig 7.2.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig2.html" class="indent">  Fig 7.2.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig3.html" class="indent">  Fig 7.2.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig4.html" class="indent">  Fig 7.2.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig5.html" class="indent">  Fig 7.2.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig6.html" class="indent">  Fig 7.2.6 + Solution</li>
                     </ul>
                 </li>
             </ul>
@@ -506,7 +509,7 @@
             });
         }
 
-        // --- NEW FUNCTION TO CHECK LINK STATUS AND ADD ICON ---
+        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON ---
         async function checkLinkStatus(liElement) {
             const url = liElement.dataset.url;
             if (!url) return; // Skip if no data-url

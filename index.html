@@ -170,53 +170,89 @@
 
         /* Basic style for all LI elements in the pan */
         .content-pan li {
-            /* padding: 8px 0; */ /* Base padding - Adjust below */
             border-bottom: 1px dotted #eee;
-            position: relative; /* Needed for potential future effects or indicators */
+            position: relative; /* Needed for icon positioning */
             line-height: 1.4; /* Improve readability */
         }
 
-        /* --- NEW STYLES FOR LINK STATUS ICON --- */
+        /* --- NEW & MODIFIED STYLES FOR LINK STATUS ICON --- */
 
         /* Style for the icon container span */
         .link-status-icon {
-            display: inline-block; /* Use inline-block to control size and margin */
-            width: 8px; /* Small size */
-            height: 8px; /* Small size */
-            border-radius: 50%; /* Make it round */
-            margin-right: 8px; /* Space between icon and text */
-            flex-shrink: 0; /* Prevent it from shrinking in flex layouts if any */
+            display: inline-block;
+            /* Base size for the icon area */
+            width: 12px; /* Increased size slightly to fit the cross */
+            height: 12px; /* Increased size slightly to fit the cross */
+            border-radius: 50%; /* Default is round (for the green dot) */
+            margin-right: 6px; /* Space between icon and text */
+            flex-shrink: 0;
+            vertical-align: middle; /* Align with text base line */
+            position: absolute; /* Position relative to the LI */
+            left: 8px; /* Position from the left edge of the LI padding area */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for exact vertical centering */
             background-color: #ccc; /* Default/Checking color */
-            /* If not using flex on LI, uncomment vertical-align: middle; */
-            /* vertical-align: middle; */
+             box-sizing: border-box; /* Include padding/border in size */
         }
 
-        /* Status colors for the icon */
+        /* Status colors/appearance for the icon */
         .link-status-icon.status-available {
-            background-color: #28a745; /* Green */
-        }
-        .link-status-icon.status-unavailable {
-            background-color: #6c757d; /* Gray */
+            /* Bright Green with subtle glow/3D effect */
+            background-color: #5cb85c; /* A brighter green */
+            box-shadow: 0 0 3px 1px rgba(92, 184, 92, 0.7), /* Outer glow */
+                        inset 0 0 2px 1px rgba(255, 255, 255, 0.3); /* Inner highlight */
+             border: 1px solid #4cae4c; /* Subtle border */
         }
 
-        /* --- Adjusted LI Styles for Icon/Flexbox --- */
+        .link-status-icon.status-unavailable {
+            background-color: transparent; /* No background for the cross */
+            border-radius: 0; /* Remove rounded corners for the cross */
+            box-shadow: none; /* No shadow for the cross */
+            border: none; /* No border for the cross */
+            position: absolute; /* Keep positioning */
+        }
+
+        /* Create the red cross using pseudo-elements for status-unavailable */
+        .link-status-icon.status-unavailable::before,
+        .link-status-icon.status-unavailable::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px; /* Length of the cross bars */
+            height: 2px; /* Thickness of the cross bars */
+            background-color: #dc3545; /* Red color */
+            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate for one bar */
+        }
+
+        .link-status-icon.status-unavailable::after {
+            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate for the other bar */
+        }
+
+
+        /* --- Adjusted LI Styles for Icon/Flexbox/Padding --- */
 
         /* Style only for LI elements that have a data-url (the clickable items) */
         .content-pan li[data-url] {
              cursor: pointer; /* Indicate it's clickable */
-             transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease; /* Removed padding-left transition as we handle padding below */
-             border-bottom: 1px dotted #eee; /* Keep border bottom */
-             position: relative;
+             transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
+             border-bottom: 1px dotted #eee;
+             position: relative; /* Needed for positioning the absolute icon */
              line-height: 1.4;
 
-             /* Use flexbox to align icon and text vertically */
+             /* Use flexbox for text alignment, NOT for icon. Icon is absolute. */
              display: flex;
-             align-items: center;
+             align-items: center; /* Vertically center text */
 
-             /* Base vertical and horizontal padding - make space for icon+margin on the left */
-             /* Original was 8px 10px. Icon+margin is 16px. Add this to left padding */
-             padding: 8px 10px 8px 26px; /* top, right, bottom, left */
+             /* Base vertical and horizontal padding */
+             /* Need space on the left for the absolute icon (icon size 12px + left pos 8px + margin right 6px = ~26px visual offset) */
+             /* Let's set padding-left to slightly more than the icon's right edge */
+             padding: 8px 10px 8px 30px; /* Adjusted padding-left */
         }
+
+        /* The actual text content needs to allow space for the absolute icon */
+        /* We don't need a specific span for the text content itself, as the icon is absolute */
+
 
         .content-pan li:last-child {
              border-bottom: none;
@@ -240,22 +276,37 @@
             font-weight: bold;
             color: #0056b3; /* Darker blue text color for selected item */
             border-left: 3px solid #007bff; /* Add a colored bar on the left */
-            /* Adjust padding-left for selected state: */
-            /* Original base padding-left was 26px. Add border width (3px) to push text further right */
-            padding-left: calc(26px + 3px); /* Use calc for clarity */
+            /* Adjust padding-left for selected state: Original was 30px. Add border width (3px) */
+            padding-left: calc(30px + 3px); /* Use calc for clarity */
         }
 
-         /* Adjust padding for indented style - applies to the LI flex container */
+         /* Adjust padding for indented style */
          .content-pan li.indent {
-              /* Original indent padding-left was 30px. Replace base 10px with 30px, then add icon space (16px) */
-              padding-left: calc(30px + 16px); /* Base indent + Icon space */
+              /* Original indent padding-left was 30px. We are setting the base LI padding-left to 30px. */
+              /* An indent means adding *additional* space *before* the icon positioning. */
+              /* Let's apply the indent margin/padding to the LI directly */
+              /* This requires re-thinking how indent works with absolute icon */
+              /* Alternative: Use margin-left for indent */
+              margin-left: 20px; /* Add margin for indentation */
+              /* The icon position (left: 8px) will be relative to the LI's new left edge */
          }
 
          /* Adjust padding for indented AND selected items */
         .content-pan li[data-url].is-selected.indent {
-             /* Original indented+selected padding-left was 33px (30 + 3 border) -> Recalculate with new base */
-             /* New indented base padding-left is calc(30px + 16px). Add border width (3px). */
-             padding-left: calc(30px + 16px + 3px);
+             /* Keep the margin-left for indent */
+             /* The border-left will be added to the LI's left edge (which is now indented) */
+             /* Padding-left is already adjusted for selected state based on the new base */
+             /* No additional padding adjustment needed here, margin handles indent */
+             margin-left: 20px; /* Maintain margin */
+             border-left: 3px solid #007bff; /* Border starts after the margin */
+             padding-left: calc(30px + 3px); /* Padding remains consistent based on non-indented selected state */
+        }
+
+        /* Adjust icon position for indented list items */
+        .content-pan li.indent .link-status-icon {
+            /* Icon left position needs to account for the margin-left */
+            /* If margin-left is 20px, and base left was 8px, new left is 20px + 8px = 28px */
+            left: calc(8px + 20px);
         }
 
 
@@ -279,14 +330,14 @@
         @font-face {
           font-family: 'Computer Modern Serif';
           src: url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff2') format('woff2'),
-               url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff') format('woff');
+               url('https://cdn.jsdelivr.com/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff') format('woff');
           font-weight: normal;
           font-style: normal;
         }
         @font-face {
           font-family: 'Computer Modern Sans';
           src: url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunsx.woff2') format('woff2'),
-               url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunsx.woff') format('woff');
+               url('https://cdn.jsdelivr.com/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunsx.woff') format('woff');
           font-weight: normal;
           font-style: normal;
         }
@@ -345,26 +396,26 @@
                     <h4>Série N°6</h4>
                     <ul>
                         <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo1_fig1.html" class="indent">   ↳ Figure 1.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig2.html" class="indent">   ↳ Figure 1.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig3.html" class="indent">   ↳ Figure 1.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig4.html" class="indent">   ↳ Figure 1.4 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig5.html" class="indent">   ↳ Figure 1.5 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo1_fig6.html" class="indent">   ↳ Figure 1.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig1.html" class="indent">  Figure 1.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig2.html" class="indent">  Figure 1.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig3.html" class="indent">  Figure 1.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig4.html" class="indent">  Figure 1.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig5.html" class="indent">  Figure 1.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo1_fig6.html" class="indent">  Figure 1.6 + Solution</li>
                         <li data-url="tenseurs_serie6_exo2_enonce.html">Exercice 2 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo2_fig1.html" class="indent">   ↳ Figure 2.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig2.html" class="indent">   ↳ Figure 2.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig3.html" class="indent">   ↳ Figure 2.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig4.html" class="indent">   ↳ Figure 2.4 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig5.html" class="indent">   ↳ Figure 2.5 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo2_fig6.html" class="indent">   ↳ Figure 2.6 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig1.html" class="indent">  Figure 2.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig2.html" class="indent">  Figure 2.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig3.html" class="indent">  Figure 2.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig4.html" class="indent">  Figure 2.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig5.html" class="indent">  Figure 2.5 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo2_fig6.html" class="indent">  Figure 2.6 + Solution</li>
                         <li data-url="tenseurs_serie6_exo3_enonce.html">Exercice 3 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo3_fig1.html" class="indent">   ↳ Figure 3.1 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig2.html" class="indent">   ↳ Figure 3.2 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig3.html" class="indent">   ↳ Figure 3.3 + Solution</li>
-                        <li data-url="tenseurs_serie6_exo3_fig4.html" class="indent">   ↳ Figure 3.4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig1.html" class="indent">  Figure 3.1 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig2.html" class="indent">  Figure 3.2 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig3.html" class="indent">  Figure 3.3 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo3_fig4.html" class="indent">  Figure 3.4 + Solution</li>
                         <li data-url="tenseurs_serie6_exo4_enonce.html">Exercice 4 (Énoncé)</li>
-                        <li data-url="tenseurs_serie6_exo4_fig4.html" class="indent">   ↳ Figure 4 + Solution</li>
+                        <li data-url="tenseurs_serie6_exo4_fig4.html" class="indent">  Figure 4 + Solution</li>
                     </ul>
                  </li>
             </ul>
@@ -378,19 +429,19 @@
                     <h4>Série N°7</h4>
                     <ul>
                         <li data-url="guldin_serie7_exo1.html">Exercice 1 (Énoncé + Solution)</li>
-                        <li data-url="guldin_serie7_exo1_fig1.html" class="indent">   ↳ Figure 7.1.1 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig2.html" class="indent">   ↳ Figure 7.1.2 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig3.html" class="indent">   ↳ Figure 7.1.3 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig4.html" class="indent">   ↳ Figure 7.1.4 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig5.html" class="indent">   ↳ Figure 7.1.5 + Solution</li>
-                        <li data-url="guldin_serie7_exo1_fig6.html" class="indent">   ↳ Figure 7.1.6 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig1.html" class="indent">  Figure 7.1.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig2.html" class="indent">  Figure 7.1.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig3.html" class="indent">  Figure 7.1.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig4.html" class="indent">  Figure 7.1.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig5.html" class="indent">  Figure 7.1.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo1_fig6.html" class="indent">  Figure 7.1.6 + Solution</li>
                         <li data-url="guldin_serie7_exo2.html">Exercice 2 (Énoncé + Solution)</li>
-                        <li data-url="guldin_serie7_exo2_fig1.html" class="indent">   ↳ Figure 7.2.1 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig2.html" class="indent">   ↳ Figure 7.2.2 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig3.html" class="indent">   ↳ Figure 7.2.3 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig4.html" class="indent">   ↳ Figure 7.2.4 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig5.html" class="indent">   ↳ Figure 7.2.5 + Solution</li>
-                        <li data-url="guldin_serie7_exo2_fig6.html" class="indent">   ↳ Figure 7.2.6 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig1.html" class="indent">  Figure 7.2.1 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig2.html" class="indent">  Figure 7.2.2 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig3.html" class="indent">  Figure 7.2.3 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig4.html" class="indent">  Figure 7.2.4 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig5.html" class="indent">  Figure 7.2.5 + Solution</li>
+                        <li data-url="guldin_serie7_exo2_fig6.html" class="indent">  Figure 7.2.6 + Solution</li>
                     </ul>
                 </li>
             </ul>
@@ -437,7 +488,11 @@
                 const itemUrl = item.dataset.url;
                  // Check if the current iframe path ends with the data-url
                  // This handles cases where the base path might differ
-                if (currentPath.endsWith('/' + itemUrl) || currentPath === '/' + itemUrl || currentPath === itemUrl) {
+                // Handle potential leading slashes differences
+                const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath.substring(1) : currentPath;
+                const normalizedItemUrl = itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl;
+
+                if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
                     item.classList.add('is-selected');
                     // Optional: Scroll the highlighted item into view in the pan
                     // Only scroll if the pan is visible when highlighting
@@ -467,7 +522,7 @@
 
             // Reset status classes
             iconSpan.classList.remove('status-available', 'status-unavailable');
-            // Optional: Add a 'checking' color if needed, though default #ccc handles this
+            // iconSpan.style.backgroundColor = '#ccc'; // Indicate checking state visually if needed
 
             try {
                 // Use HEAD request as it's lighter than GET
@@ -488,7 +543,19 @@
         // --- Initial check for all links on DOM load ---
         document.addEventListener('DOMContentLoaded', () => {
              const listItemsWithUrl = contentPan.querySelectorAll('li[data-url]');
-             listItemsWithUrl.forEach(checkLinkStatus);
+             // Process synchronously first to add spans immediately, then check status async
+             listItemsWithUrl.forEach(item => {
+                 // Create the span first so it's in the DOM
+                 let iconSpan = item.querySelector('.link-status-icon');
+                 if (!iconSpan) {
+                    iconSpan = document.createElement('span');
+                    iconSpan.classList.add('link-status-icon');
+                    // Insert the span at the beginning of the li's content
+                    item.insertBefore(iconSpan, item.firstChild);
+                 }
+                 // Then start the async check for status
+                 checkLinkStatus(item);
+             });
         });
 
         // Event listener for the button to open/close the pan
@@ -514,7 +581,6 @@
                 const url = targetLi.dataset.url;
                 iframe.src = url; // Load the content
                 // Highlighting will happen when the iframe's 'load' event fires
-                // No need to check link status again here, it's already done on DOM load
                 closePan(); // Close the pan
             }
              // If the click was on an LI without data-url (like the one containing H4), do nothing.
@@ -528,16 +594,17 @@
                  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                  // Check for common indicators of a successful load vs error page
                  // This is not foolproof, but helps avoid trying to typeset 404 pages etc.
-                 if (iframeDoc && iframeDoc.body && iframeDoc.body.children.length > 0 && iframe.contentWindow.location.href !== 'about:blank') {
+                 // Also check if location.href is accessible and not 'about:blank'
+                 if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
                      // Check if MathJax is defined in the iframe's window and if it's ready
-                    if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
+                    if (typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                          iframe.contentWindow.MathJax.typesetPromise();
                     } else {
                          console.warn("MathJax might not be immediately available or configured in the iframe.");
                     }
                  } else {
-                     // Likely loaded about:blank initially or an error page
-                      console.log("Iframe loaded, but content might be empty or an error page.");
+                     // Likely loaded about:blank initially or an error page, or cross-origin
+                      console.log("Iframe loaded, but content might be inaccessible, empty, or an error page.");
                  }
 
 

@@ -67,11 +67,11 @@
     </ul>
 
     <h2>Géométrie et Décomposition (pour Guldin direct):</h2>
-    <p>Soit O'=(c,0), A'=(c,a), B'=(c+b,0).</p>
+    <p>Soit C=(c,0), A=(c,a), B=(c+b,0).</p>
     <ul>
-        <li>Segment O'A' : Longueur $L_{O'A'} = a$.</li>
-        <li>Segment O'B' : Longueur $L_{O'B'} = b$.</li>
-        <li>Segment A'B' (hypoténuse) : Longueur $L_{A'B'} = \sqrt{a^2 + b^2}$.</li>
+        <li>Segment CA : Longueur $L_{CA} = a$.</li>
+        <li>Segment CB : Longueur $L_{CB} = b$.</li>
+        <li>Segment AB (hypoténuse) : Longueur $L_{AB} = \sqrt{a^2 + b^2}$.</li>
         <li>Longueur totale : $$L = a + b + \sqrt{a^2 + b^2}$$</li>
     </ul>
 
@@ -86,9 +86,9 @@
     <h2>Méthode 2 : Application Directe du Théorème de Guldin</h2>
     <h3>Calcul de $x_G$ (Distance à l'axe Oy via rotation autour de Oy) :</h3>
      <ul>
-        <li>Segment O'A': Génère surface cylindrique (rayon c, hauteur a). Aire $S_{/\Delta,O'A'} = 2\pi c a$.</li>
-        <li>Segment O'B': Génère un anneau (rayon ext c+b, int c). Aire $S_{/\Delta,O'B'} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
-        <li>Segment A'B': Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{/\Delta,A'B'} = \pi(c + (c+b)) L_{A'B'} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
+        <li>Segment CA: Génère surface cylindrique (rayon c, hauteur a). Aire $S_{/\Delta,CA} = 2\pi c a$.</li>
+        <li>Segment CB: Génère un anneau (rayon ext c+b, int c). Aire $S_{/\Delta,CB} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
+        <li>Segment AB: Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{/\Delta,AB} = \pi(c + (c+b)) L_{AB} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
         <li>Aire totale générée : $$S_{/\Delta,Oy} = 2\pi c a + \pi(2cb + b^2) + \pi(2c+b)\sqrt{a^2+b^2}$$</li>
         <li>Application de Guldin ($R_{G,Oy} = x_G$):
          $$ x_G = \frac{S_{/\Delta,Oy}}{2\pi L} = \frac{2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}}{2\pi (a + b + \sqrt{a^2+b^2})} $$
@@ -97,9 +97,9 @@
     </ul>
      <h3>Calcul de $y_G$ (Distance à l'axe Ox via rotation autour de Ox) :</h3>
      <ul>
-        <li>Segment O'A': Génère un anneau (rayon ext a, int 0). Aire $S_{/\Delta,O'A'} = \pi a^2$.</li>
-        <li>Segment O'B': Génère une surface d'aire $S_{/\Delta,O'B'} = 0$.</li>
-        <li>Segment A'B': Génère surface latérale cône (rayon base a). Aire $S_{/\Delta,A'B'} = \pi a L_{A'B'} = \pi a \sqrt{a^2+b^2}$.</li>
+        <li>Segment CA: Génère un anneau (rayon ext a, int 0). Aire $S_{/\Delta,CA} = \pi a^2$.</li>
+        <li>Segment CB: Génère une surface d'aire $S_{/\Delta,CB} = 0$.</li>
+        <li>Segment AB: Génère surface latérale cône (rayon base a). Aire $S_{/\Delta,AB} = \pi a L_{AB} = \pi a \sqrt{a^2+b^2}$.</li>
         <li>Aire totale générée : $$S_{/\Delta,Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
         <li>Application de Guldin ($R_{G,Ox} = y_G$):
         $$ y_G = \frac{S_{/\Delta,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$

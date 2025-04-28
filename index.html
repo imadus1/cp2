@@ -170,16 +170,52 @@
 
         /* Basic style for all LI elements in the pan */
         .content-pan li {
-            padding: 8px 0; /* Base padding */
+            /* padding: 8px 0; */ /* Base padding - Adjust below */
             border-bottom: 1px dotted #eee;
             position: relative; /* Needed for potential future effects or indicators */
             line-height: 1.4; /* Improve readability */
         }
 
+        /* --- NEW STYLES FOR LINK STATUS ICON --- */
+
+        /* Style for the icon container span */
+        .link-status-icon {
+            display: inline-block; /* Use inline-block to control size and margin */
+            width: 8px; /* Small size */
+            height: 8px; /* Small size */
+            border-radius: 50%; /* Make it round */
+            margin-right: 8px; /* Space between icon and text */
+            flex-shrink: 0; /* Prevent it from shrinking in flex layouts if any */
+            background-color: #ccc; /* Default/Checking color */
+            /* If not using flex on LI, uncomment vertical-align: middle; */
+            /* vertical-align: middle; */
+        }
+
+        /* Status colors for the icon */
+        .link-status-icon.status-available {
+            background-color: #28a745; /* Green */
+        }
+        .link-status-icon.status-unavailable {
+            background-color: #6c757d; /* Gray */
+        }
+
+        /* --- Adjusted LI Styles for Icon/Flexbox --- */
+
         /* Style only for LI elements that have a data-url (the clickable items) */
         .content-pan li[data-url] {
              cursor: pointer; /* Indicate it's clickable */
-             transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease, padding-left 0.2s ease; /* Add padding transition */
+             transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease; /* Removed padding-left transition as we handle padding below */
+             border-bottom: 1px dotted #eee; /* Keep border bottom */
+             position: relative;
+             line-height: 1.4;
+
+             /* Use flexbox to align icon and text vertically */
+             display: flex;
+             align-items: center;
+
+             /* Base vertical and horizontal padding - make space for icon+margin on the left */
+             /* Original was 8px 10px. Icon+margin is 16px. Add this to left padding */
+             padding: 8px 10px 8px 26px; /* top, right, bottom, left */
         }
 
         .content-pan li:last-child {
@@ -204,46 +240,24 @@
             font-weight: bold;
             color: #0056b3; /* Darker blue text color for selected item */
             border-left: 3px solid #007bff; /* Add a colored bar on the left */
-            padding-left: 17px; /* Adjust padding because of the border (20 - 3 if starting from 20, but we have 8px top/bottom) -> Let's adjust based on base padding */
-            /* Re-evaluate padding for selected state: */
-            /* Base padding was 8px 0. When adding 3px border-left, content shifts. */
-            /* To maintain alignment, we *add* 3px to left padding. Original left padding was 0. */
-            /* New left padding should be 3px. The visual appearance will be border + 3px space + text. */
-            /* Let's set a consistent base horizontal padding first for all data-url items for clarity */
-        }
-
-        /* Refined padding for LI with data-url */
-        .content-pan li[data-url] {
-            padding: 8px 10px; /* Base vertical and horizontal padding */
-            cursor: pointer;
-            transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease, padding-left 0.2s ease;
-            border-bottom: 1px dotted #eee; /* Keep border bottom */
-            position: relative;
-            line-height: 1.4;
-        }
-
-        /* Indent style - Adjusted to work with base padding */
-        .content-pan li.indent {
-             padding-left: 30px; /* Base 10px + 20px indent */
-        }
-
-
-        /* Selected style with refined padding */
-        .content-pan li[data-url].is-selected {
-            background-color: #e9ecef;
-            font-weight: bold;
-            color: #0056b3;
-            border-left: 3px solid #007bff;
             /* Adjust padding-left for selected state: */
-            /* Original padding-left was 10px. Add the border width (3px) to push text further right */
-            padding-left: 13px; /* 10px (original) + 3px (border) */
+            /* Original base padding-left was 26px. Add border width (3px) to push text further right */
+            padding-left: calc(26px + 3px); /* Use calc for clarity */
         }
+
+         /* Adjust padding for indented style - applies to the LI flex container */
+         .content-pan li.indent {
+              /* Original indent padding-left was 30px. Replace base 10px with 30px, then add icon space (16px) */
+              padding-left: calc(30px + 16px); /* Base indent + Icon space */
+         }
 
          /* Adjust padding for indented AND selected items */
         .content-pan li[data-url].is-selected.indent {
-             /* Original indented padding-left was 30px. Add border width (3px). */
-             padding-left: 33px; /* 30px (original indented) + 3px (border) */
+             /* Original indented+selected padding-left was 33px (30 + 3 border) -> Recalculate with new base */
+             /* New indented base padding-left is calc(30px + 16px). Add border width (3px). */
+             padding-left: calc(30px + 16px + 3px);
         }
+
 
          /* Ensure non-data-url list items don't have pointer cursor or hover/active effects */
          .content-pan li:not([data-url]) {
@@ -406,11 +420,8 @@
         // Function to highlight the item in the pan corresponding to the iframe content
         function highlightCurrentItemInPan() {
             // Get the current iframe source, normalize path for comparison
+            // Use iframe.contentWindow.location.pathname for the actual loaded URL path
             let currentPath = iframe.contentWindow.location.pathname;
-            // Remove leading slash if present for comparison with data-url
-            if (currentPath.startsWith('/')) {
-                currentPath = currentPath.substring(1);
-            }
 
             // Find currently selected item and remove highlight
             const currentlySelected = contentPan.querySelector('li.is-selected');
@@ -423,8 +434,10 @@
 
             // Iterate through list items and find the match
             listItems.forEach(item => {
-                // Check if the current iframe path ends with the data-url
-                if (currentPath.endsWith(item.dataset.url)) {
+                const itemUrl = item.dataset.url;
+                 // Check if the current iframe path ends with the data-url
+                 // This handles cases where the base path might differ
+                if (currentPath.endsWith('/' + itemUrl) || currentPath === '/' + itemUrl || currentPath === itemUrl) {
                     item.classList.add('is-selected');
                     // Optional: Scroll the highlighted item into view in the pan
                     // Only scroll if the pan is visible when highlighting
@@ -438,6 +451,45 @@
             });
         }
 
+        // --- NEW FUNCTION TO CHECK LINK STATUS AND ADD ICON ---
+        async function checkLinkStatus(liElement) {
+            const url = liElement.dataset.url;
+            if (!url) return; // Skip if no data-url
+
+            // Create or find the icon span
+            let iconSpan = liElement.querySelector('.link-status-icon');
+            if (!iconSpan) {
+                iconSpan = document.createElement('span');
+                iconSpan.classList.add('link-status-icon');
+                // Insert the span at the beginning of the li's content
+                liElement.insertBefore(iconSpan, liElement.firstChild);
+            }
+
+            // Reset status classes
+            iconSpan.classList.remove('status-available', 'status-unavailable');
+            // Optional: Add a 'checking' color if needed, though default #ccc handles this
+
+            try {
+                // Use HEAD request as it's lighter than GET
+                const response = await fetch(url, { method: 'HEAD' });
+
+                if (response.ok) { // Status 200-299
+                    iconSpan.classList.add('status-available');
+                } else { // 404, 500, etc.
+                    iconSpan.classList.add('status-unavailable');
+                }
+            } catch (error) {
+                // Network errors, CORS issues, etc.
+                console.warn(`Failed to check status for ${url}:`, error);
+                iconSpan.classList.add('status-unavailable');
+            }
+        }
+
+        // --- Initial check for all links on DOM load ---
+        document.addEventListener('DOMContentLoaded', () => {
+             const listItemsWithUrl = contentPan.querySelectorAll('li[data-url]');
+             listItemsWithUrl.forEach(checkLinkStatus);
+        });
 
         // Event listener for the button to open/close the pan
         openMenuButton.addEventListener('click', () => {
@@ -457,11 +509,12 @@
         // Event listener for clicks within the pan to handle item selection
         contentPan.addEventListener('click', (event) => {
             // Check if the clicked element is an LI or is inside an LI with data-url
-            const targetLi = event.target.closest('li[data-url]'); // <-- Added [data-url] here!
+            const targetLi = event.target.closest('li[data-url]');
             if (targetLi) { // Check if a valid targetLi was found
                 const url = targetLi.dataset.url;
                 iframe.src = url; // Load the content
                 // Highlighting will happen when the iframe's 'load' event fires
+                // No need to check link status again here, it's already done on DOM load
                 closePan(); // Close the pan
             }
              // If the click was on an LI without data-url (like the one containing H4), do nothing.
@@ -471,19 +524,34 @@
          // This part remains the same as it handles content inside the iframe
          iframe.addEventListener('load', () => {
             try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                 // Check if MathJax is defined in the iframe's window and if it's ready
-                if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
-                     iframe.contentWindow.MathJax.typesetPromise();
-                } else if (iframeDoc) {
-                    console.warn("MathJax might not be immediately available or configured in the iframe.");
-                }
+                // Check if the iframe successfully loaded a page (not an error page)
+                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                 // Check for common indicators of a successful load vs error page
+                 // This is not foolproof, but helps avoid trying to typeset 404 pages etc.
+                 if (iframeDoc && iframeDoc.body && iframeDoc.body.children.length > 0 && iframe.contentWindow.location.href !== 'about:blank') {
+                     // Check if MathJax is defined in the iframe's window and if it's ready
+                    if (iframe.contentWindow && typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
+                         iframe.contentWindow.MathJax.typesetPromise();
+                    } else {
+                         console.warn("MathJax might not be immediately available or configured in the iframe.");
+                    }
+                 } else {
+                     // Likely loaded about:blank initially or an error page
+                      console.log("Iframe loaded, but content might be empty or an error page.");
+                 }
+
 
                  // --- Highlight the item in the pan when the iframe finishes loading ---
-                 highlightCurrentItemInPan();
+                 // Add a slight delay to ensure iframe location is updated after load event fires
+                 setTimeout(highlightCurrentItemInPan, 50);
+
 
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
+                 // If access fails (e.g., cross-origin, though unlikely with local files),
+                 // highlighting might not work perfectly.
+                 // Still attempt to highlight, maybe based on the requested URL if available
+                 // (Though iframe.contentWindow.location is best if accessible).
             }
          });
 
@@ -491,14 +559,9 @@
          // This ensures that if the iframe starts with a specific src (not about:blank)
          // or if you refresh on a page, the pan highlights correctly when first opened.
          // Using a slight delay can help ensure the iframe src is truly available.
-         // Or even better, add a listener specifically for the *initial* load if needed,
-         // but the event listener added above should handle all loads including the first.
-         // Let's make sure the pan event listener is added *before* any potential initial load.
-         // The current structure ensures this. The initial call might still need a delay
-         // if the iframe src is set very early or by other scripts. Let's add a simple timeout for safety on initial load.
          window.addEventListener('load', () => {
              // Small delay to allow initial iframe loading or default src to be set
-             setTimeout(highlightCurrentItemInPan, 100);
+             setTimeout(highlightCurrentItemInPan, 150); // Increased delay slightly
          });
 
 

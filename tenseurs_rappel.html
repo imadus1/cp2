@@ -44,83 +44,7 @@
 
     <p>Le tenseur d'inertie (ou opérateur d'inertie) est un concept central en mécanique du solide rigide. Il décrit mathématiquement comment la masse d'un corps est distribuée spatialement par rapport à un point donné, et par conséquent, comment le corps résiste aux changements de son état de rotation autour des axes passant par ce point. Il s'agit d'un tenseur symétrique de second ordre.</p>
 
-    <h2>1. Prérequis : Centre d'Inertie (Centre de Masse)</h2>
-    <p>La connaissance du centre d'inertie (ou centre de masse) $G$ d'un solide $(S)$ est fondamentale avant d'aborder le calcul du tenseur d'inertie.</p>
-    <div class="definition">
-        <p><strong>Définition :</strong> Le centre d'inertie $G$ d'un système matériel $(S)$ de masse totale $m$ est défini comme le barycentre des masses du système. Il est le point unique tel que :</p>
-        <div class="formula">
-            $$ \int_{P \in (S)} \vec{GP} dm = \vec{0} $$
-        </div>
-        <p>où $dm$ est l'élément de masse infinitésimal situé au point géométrique $P$ du solide.</p>
-        <p>Par rapport à une origine fixe $O$ d'un repère, la position du centre d'inertie $G$ est donnée par :</p>
-        <div class="formula">
-            $$ \vec{OG} = \frac{1}{m} \int_{P \in (S)} \vec{OP} dm $$
-        </div>
-        <p>où $m = \int_{P \in (S)} dm$ est la masse totale du solide.</p>
-        <p>Dans un repère cartésien $R(O, \vec{i}, \vec{j}, \vec{k})$, si $\vec{OP} = x\vec{i} + y\vec{j} + z\vec{k}$, les coordonnées de $G$ sont :</p>
-        <div class="formula">
-             $$ x_G = \frac{1}{m} \int_{(S)} x dm $$
-             $$ y_G = \frac{1}{m} \int_{(S)} y dm $$
-             $$ z_G = \frac{1}{m} \int_{(S)} z dm $$
-        </div>
-         <p>Le point $G$ est donc donné par :</p>
-         $$ G \begin{pmatrix} x_G \\ y_G \\ z_G \end{pmatrix} $$
-        <p>L'élément de masse $dm$ s'exprime différemment selon la distribution de masse :</p>
-        <ul>
-            <li><strong>Corps Linéique (1D, fil) :</strong> $dm = \lambda dl$, où $\lambda$ est la masse linéique (constante ou variable) et $dl$ l'élément de longueur.</li>
-            <li><strong>Corps Surfacique (2D, plaque mince) :</strong> $dm = \sigma ds$, où $\sigma$ est la masse surfacique et $ds$ l'élément de surface.</li>
-            <li><strong>Corps Volumique (3D) :</strong> $dm = \rho dv$, où $\rho$ est la masse volumique et $dv$ l'élément de volume.</li>
-        </ul>
-         <p><strong>Corps Homogène :</strong> Si la masse volumique ($\rho$), surfacique ($\sigma$) ou linéique ($\lambda$) est constante sur tout le corps, on dit qu'il est homogène. Dans ce cas, le centre d'inertie $G$ coïncide avec le centre géométrique (centroïde du volume, de la surface ou de la ligne).</p>
-    </div>
-    <div class="example">
-        <p><strong>Exemple (inspiré Solutions Ex. 1.1) :</strong> Pour une tige rectiligne homogène de longueur $L$ placée sur l'axe $Ox$ entre $-L/2$ et $+L/2$, le centre de masse $G$ est, par symétrie, à l'origine $O$.</p>
-         $$ O \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} $$
-    </div>
-
-    <h3>1.1 Théorèmes de Guldin</h3>
-    <p>Ces théorèmes offrent une méthode élégante pour déterminer la position du centre d'inertie ($R_G$, sa distance à un axe) pour des lignes ou surfaces planes homogènes, en les reliant à la géométrie des objets qu'elles génèrent par rotation.</p>
-    <div class="definition">
-        <p><strong>Premier Théorème de Guldin (Surface engendrée par une courbe) :</strong></p>
-        <p>Soit un arc de courbe plane $(L)$ de longueur $L$ et de centre d'inertie $G$. La rotation de cet arc autour d'un axe $(\Delta)$ coplanaire ne le coupant pas engendre une surface d'aire $S_A$. Cette aire est égale au produit de la longueur $L$ de l'arc par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
-        <div class="formula">
-            $$ S_A = L \times (2\pi R_G) $$
-        </div>
-        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de l'arc à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
-        <div class="formula">
-            $$ R_G = \frac{S_A}{2\pi L} $$
-        </div>
-    </div>
-     <div class="example">
-        <p><strong>Exemple Guldin 1 :</strong> Trouver le centre d'inertie d'un demi-anneau mince homogène de rayon $R$. La longueur est $L = \pi R$. Faisons-le tourner autour du diamètre joignant ses extrémités. Il engendre une surface sphérique d'aire $S_A = 4\pi R^2$. La distance $R_G$ du centre d'inertie au diamètre est :</p>
-         <div class="formula">
-            $$ R_G = \frac{S_A}{2\pi L} = \frac{4\pi R^2}{2\pi (\pi R)} = \frac{2R}{\pi} $$
-         </div>
-         <p>Le centre d'inertie est donc sur l'axe de symétrie du demi-anneau, à une distance $2R/\pi$ du centre du cercle.</p>
-    </div>
-    <div class="definition">
-        <p><strong>Deuxième Théorème de Guldin (Volume engendré par une surface) :</strong></p>
-        <p>Soit une surface plane $(S)$ d'aire $S$ et de centre d'inertie $G$. La rotation de cette surface autour d'un axe $(\Delta)$ coplanaire ne la coupant pas (sauf éventuellement sur sa frontière) engendre un volume $V_A$. Ce volume est égal au produit de l'aire $S$ de la surface par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
-        <div class="formula">
-            $$ V_A = S \times (2\pi R_G) $$
-        </div>
-        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de la surface à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
-        <div class="formula">
-            $$ R_G = \frac{V_A}{2\pi S} $$
-        </div>
-    </div>
-
-
-     <h3>1.2 Simplification par Symétrie pour le Centre d'Inertie</h3>
-     <p>Les propriétés de symétrie d'un corps homogène simplifient grandement la localisation de son centre d'inertie $G$ :</p>
-     <ul>
-        <li>Si le corps admet un <strong>plan de symétrie</strong> matérielle, $G$ appartient à ce plan.</li>
-        <li>Si le corps admet un <strong>axe de symétrie</strong> matérielle, $G$ appartient à cet axe.</li>
-        <li>Si le corps admet un <strong>centre de symétrie</strong> matérielle, $G$ coïncide avec ce centre.</li>
-     </ul>
-     <div class="example">
-        <p><strong>Exemple (inspiré Solutions Ex. 2.1 & 3.4) :</strong> Le centre d'inertie d'un rectangle homogène est à l'intersection de ses diagonales (centre de symétrie). Le centre d'inertie d'un cylindre droit homogène est au milieu de son axe de révolution (axe de symétrie).</p>
-     </div>
+    
 
     <h2>2. Définition du Tenseur d'Inertie</h2>
     <p>L'opérateur d'inertie $[I_O]$ (ou tenseur d'inertie) d'un solide $(S)$ en un point $O$ est un opérateur linéaire qui caractérise la répartition de la masse du solide par rapport à $O$. Il quantifie la "difficulté" à faire tourner le solide autour d'axes passant par $O$.</p>
@@ -303,6 +227,86 @@
          Cette matrice représente l'inertie de la barre inclinée dans le repère fixe $R_0$.
          </p>
     </div>
+	
+	
+	
+	<h2>1. Prérequis : Centre d'Inertie (Centre de Masse)</h2>
+    <p>La connaissance du centre d'inertie (ou centre de masse) $G$ d'un solide $(S)$ est fondamentale avant d'aborder le calcul du tenseur d'inertie.</p>
+    <div class="definition">
+        <p><strong>Définition :</strong> Le centre d'inertie $G$ d'un système matériel $(S)$ de masse totale $m$ est défini comme le barycentre des masses du système. Il est le point unique tel que :</p>
+        <div class="formula">
+            $$ \int_{P \in (S)} \vec{GP} dm = \vec{0} $$
+        </div>
+        <p>où $dm$ est l'élément de masse infinitésimal situé au point géométrique $P$ du solide.</p>
+        <p>Par rapport à une origine fixe $O$ d'un repère, la position du centre d'inertie $G$ est donnée par :</p>
+        <div class="formula">
+            $$ \vec{OG} = \frac{1}{m} \int_{P \in (S)} \vec{OP} dm $$
+        </div>
+        <p>où $m = \int_{P \in (S)} dm$ est la masse totale du solide.</p>
+        <p>Dans un repère cartésien $R(O, \vec{i}, \vec{j}, \vec{k})$, si $\vec{OP} = x\vec{i} + y\vec{j} + z\vec{k}$, les coordonnées de $G$ sont :</p>
+        <div class="formula">
+             $$ x_G = \frac{1}{m} \int_{(S)} x dm $$
+             $$ y_G = \frac{1}{m} \int_{(S)} y dm $$
+             $$ z_G = \frac{1}{m} \int_{(S)} z dm $$
+        </div>
+         <p>Le point $G$ est donc donné par :</p>
+         $$ G \begin{pmatrix} x_G \\ y_G \\ z_G \end{pmatrix} $$
+        <p>L'élément de masse $dm$ s'exprime différemment selon la distribution de masse :</p>
+        <ul>
+            <li><strong>Corps Linéique (1D, fil) :</strong> $dm = \lambda dl$, où $\lambda$ est la masse linéique (constante ou variable) et $dl$ l'élément de longueur.</li>
+            <li><strong>Corps Surfacique (2D, plaque mince) :</strong> $dm = \sigma ds$, où $\sigma$ est la masse surfacique et $ds$ l'élément de surface.</li>
+            <li><strong>Corps Volumique (3D) :</strong> $dm = \rho dv$, où $\rho$ est la masse volumique et $dv$ l'élément de volume.</li>
+        </ul>
+         <p><strong>Corps Homogène :</strong> Si la masse volumique ($\rho$), surfacique ($\sigma$) ou linéique ($\lambda$) est constante sur tout le corps, on dit qu'il est homogène. Dans ce cas, le centre d'inertie $G$ coïncide avec le centre géométrique (centroïde du volume, de la surface ou de la ligne).</p>
+    </div>
+    <div class="example">
+        <p><strong>Exemple (inspiré Solutions Ex. 1.1) :</strong> Pour une tige rectiligne homogène de longueur $L$ placée sur l'axe $Ox$ entre $-L/2$ et $+L/2$, le centre de masse $G$ est, par symétrie, à l'origine $O$.</p>
+         $$ O \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix} $$
+    </div>
+
+    <h3>1.1 Théorèmes de Guldin</h3>
+    <p>Ces théorèmes offrent une méthode élégante pour déterminer la position du centre d'inertie ($R_G$, sa distance à un axe) pour des lignes ou surfaces planes homogènes, en les reliant à la géométrie des objets qu'elles génèrent par rotation.</p>
+    <div class="definition">
+        <p><strong>Premier Théorème de Guldin (Surface engendrée par une courbe) :</strong></p>
+        <p>Soit un arc de courbe plane $(L)$ de longueur $L$ et de centre d'inertie $G$. La rotation de cet arc autour d'un axe $(\Delta)$ coplanaire ne le coupant pas engendre une surface d'aire $S_A$. Cette aire est égale au produit de la longueur $L$ de l'arc par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
+        <div class="formula">
+            $$ S_A = L \times (2\pi R_G) $$
+        </div>
+        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de l'arc à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
+        <div class="formula">
+            $$ R_G = \frac{S_A}{2\pi L} $$
+        </div>
+    </div>
+     <div class="example">
+        <p><strong>Exemple Guldin 1 :</strong> Trouver le centre d'inertie d'un demi-anneau mince homogène de rayon $R$. La longueur est $L = \pi R$. Faisons-le tourner autour du diamètre joignant ses extrémités. Il engendre une surface sphérique d'aire $S_A = 4\pi R^2$. La distance $R_G$ du centre d'inertie au diamètre est :</p>
+         <div class="formula">
+            $$ R_G = \frac{S_A}{2\pi L} = \frac{4\pi R^2}{2\pi (\pi R)} = \frac{2R}{\pi} $$
+         </div>
+         <p>Le centre d'inertie est donc sur l'axe de symétrie du demi-anneau, à une distance $2R/\pi$ du centre du cercle.</p>
+    </div>
+    <div class="definition">
+        <p><strong>Deuxième Théorème de Guldin (Volume engendré par une surface) :</strong></p>
+        <p>Soit une surface plane $(S)$ d'aire $S$ et de centre d'inertie $G$. La rotation de cette surface autour d'un axe $(\Delta)$ coplanaire ne la coupant pas (sauf éventuellement sur sa frontière) engendre un volume $V_A$. Ce volume est égal au produit de l'aire $S$ de la surface par la distance $2\pi R_G$ parcourue par son centre d'inertie $G$.</p>
+        <div class="formula">
+            $$ V_A = S \times (2\pi R_G) $$
+        </div>
+        <p>où $R_G$ est la distance orthogonale du centre d'inertie $G$ de la surface à l'axe de rotation $(\Delta)$. Ce théorème permet de trouver $R_G$ :</p>
+        <div class="formula">
+            $$ R_G = \frac{V_A}{2\pi S} $$
+        </div>
+    </div>
+
+
+     <h3>1.2 Simplification par Symétrie pour le Centre d'Inertie</h3>
+     <p>Les propriétés de symétrie d'un corps homogène simplifient grandement la localisation de son centre d'inertie $G$ :</p>
+     <ul>
+        <li>Si le corps admet un <strong>plan de symétrie</strong> matérielle, $G$ appartient à ce plan.</li>
+        <li>Si le corps admet un <strong>axe de symétrie</strong> matérielle, $G$ appartient à cet axe.</li>
+        <li>Si le corps admet un <strong>centre de symétrie</strong> matérielle, $G$ coïncide avec ce centre.</li>
+     </ul>
+     <div class="example">
+        <p><strong>Exemple (inspiré Solutions Ex. 2.1 & 3.4) :</strong> Le centre d'inertie d'un rectangle homogène est à l'intersection de ses diagonales (centre de symétrie). Le centre d'inertie d'un cylindre droit homogène est au milieu de son axe de révolution (axe de symétrie).</p>
+     </div>
 
 </body>
 </html>

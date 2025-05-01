@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Ex 4 - Tenseurs d'inertie de corps composés</title>
+     <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+              // Removed: tilde: ['\\tilde{#1}', 1] - MathJax has built-in \tilde
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
+        .mjx-math, mjx-container { font-size: 105% !important; text-align: left !important; }
+         mjx-container[display="true"] {
+             display: block;
+             margin: 1em 0;
+             overflow-x: visible; /* Allow horizontal scrolling for wide equations */
+             padding: 0.5em 0;
+         }
+         ul { padding-left: 30px; }
+         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
+
+        .figure-placeholder img {
+            max-width: 100%; /* Make sure the image is never wider than its parent container */
+            height: auto;    /* Maintain the image's aspect ratio */
+            display: block;  /* Treat the image as a block element (helps with centering) */
+            margin-left: auto; /* Center the image horizontally */
+            margin-right: auto; /* Center the image horizontally */
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Exercice 4 : Tenseurs d'inertie de corps composés</h1>
+
+    <p>Une pièce mécanique homogène est constituée d'un cylindre creux (S1) de masse $m_1$, d'axe Oy, et soudé à sa base à un parallélépipède droit (S2) de masse $m_2$ tel que représenté sur la figure ci-dessous.</p>
+
+    <div class="figure-placeholder">
+        <img src="figure4_description.png" alt="Description of the mechanical system">
+        <div class="caption">FIGURE 1 – Système mécanique composé</div>
+    </div>
+
+
+    <h2>Description de la géométrie</h2>
+    <ul>
+        <li>Le cylindre creux (S1) a son axe confondu avec l'axe Oy. Sa base inférieure est centrée en O. Sa hauteur est H le long de l'axe Oy positif. Son rayon extérieur est R. On considère le cylindre comme une coque mince d'épaisseur négligeable.</li>
+        <li>Le parallélépipède droit (S2) n'est pas creux. Sa face supérieure (de dimensions b selon Ox et a selon Oz) est centrée en O. Sa hauteur est c le long de l'axe Oy négatif.</li>
+        <li>Le système (S) est composé de S1 et S2.</li>
+    </ul>
+
+    <h2>Déterminer</h2>
+    <ol>
+        <li>Le tenseur d'inertie de la surface cylindrique au point O;</li>
+        <li>Le tenseur d'inertie du système $I_O(S)$ au point O;</li>
+        <li>Le moment d'inertie du système par rapport à la droite ($\Delta$) faisant un angle de 30° dans le sens positif avec l'axe Ox et passant par O;</li>
+        <li>Le produit d'inertie du système par rapport aux droites $\Delta$ et $\Delta'$ appartenant au plan (xOy) tel que $\Delta \perp \Delta'$.</li>
+    </ol>
+
+    <h2>Méthodologie</h2>
+    <h3>Calcul direct et Superposition</h3>
+    <p>Les tenseurs d'inertie sont calculés au point O dans la base cartésienne $R(O,\vec i,\vec j,\vec k)$. Le tenseur d'inertie du système total est la somme des tenseurs d'inertie de ses composants (principe de superposition). La distribution de masse est homogène pour chaque composant (densité surfacique $\sigma$ pour S1 et masse volumique $\rho_2$ pour S2). Pour S₁ (coque mince), on utilisera sa masse surfacique $\sigma = m_1/(2\pi RH)$. Pour S₂, on utilisera sa masse $m_2$ et ses dimensions a, b, c, de sorte que $\rho_2 = m_2/(abc)$.</p>
+
+    <h2>Concepts Clés</h2>
+    <ul>
+        <li>Matrice d'inertie, Corps volumique ($dm = \rho_2 dV$ pour S2), Coque mince ($dm = \sigma dA$ pour S1).</li>
+        <li>Densité surfacique $\sigma$ (pour S1), Masse volumique $\rho_2$ (pour S2).</li>
+        <li>Tenseur d'inertie d'une coque mince.</li>
+        <li>Superposition des tenseurs d'inertie pour un système composé.</li>
+        <li>Moment d'inertie par rapport à un axe quelconque passant par l'origine ($I_\Delta = \tilde{u}_\Delta^T I_O \tilde{u}_\Delta$).</li>
+        <li>Produit d'inertie par rapport à deux axes orthogonaux passant par l'origine ($I_{\Delta\Delta'} = \tilde{u}_\Delta^T I_O \tilde{u}_{\Delta'}$ pour la convention $I_{ij} = \int x_i x_j dm$).</li>
+    </ul>
+
+    <h2>Calculs</h2>
+
+    <h3>1. Tenseur d'inertie de la surface cylindrique (S1) au point O</h3>
+    <p>La coque cylindrique S₁ d'axe Oy, de rayon R et de hauteur H, a sa base inférieure en O. Sa masse est $m_1$. On utilise les coordonnées cylindriques adaptées à l'axe Oy : $x = R \cos \theta$, $y = y$, $z = R\sin\theta$. L'élément de surface est $dA = R d\theta dy$. Avec une densité surfacique homogène $\sigma = \frac{m_1}{2\pi RH}$, l'élément de masse est $dm = \sigma dA = \frac{m_1}{2\pi RH} R d\theta dy = \frac{m_1}{2\pi H} d\theta dy$. Le domaine d'intégration est $\theta \in [0,2\pi]$ et $y \in [0, H]$.</p>
+
+    <h4>Calcul de $I_{xx}$</h4>
+    $$ I_{xx} = \iiint_{S_1} (y^2 + z^2)dm $$
+    $$ I_{xx} = \int_0^H \int_0^{2\pi} (y^2 + (R\sin\theta)^2)\frac{m_1}{2\pi H} d\theta dy $$
+    $$ = \frac{m_1}{2\pi H} \int_0^H \int_0^{2\pi} (y^2 + R^2 \sin^2 \theta)d\theta dy $$
+    $$ = \frac{m_1}{2\pi H} \int_0^H \left[ y^2\theta + R^2 \left( \frac{\theta}{2} - \frac{\sin(2\theta)}{4} \right) \right]_0^{2\pi} dy $$
+    $$ = \frac{m_1}{2\pi H} \int_0^H (y^2(2\pi) + R^2( \pi - 0))dy $$
+    $$ = \frac{m_1}{2\pi H} \int_0^H (2\pi y^2 + \pi R^2)dy $$
+    $$ = \frac{m_1}{2H} \int_0^H (2y^2 + R^2)dy $$
+    $$ = \frac{m_1}{2H} \left[ \frac{2y^3}{3} + R^2y \right]_0^H $$
+    $$ = \frac{m_1}{2H} \left( \frac{2H^3}{3} + R^2H \right) $$
+    $$ = m_1 \left( \frac{H^2}{3} + \frac{R^2}{2} \right) $$
+
+    <h4>Calcul de $I_{yy}$</h4>
+    $$ I_{yy} = \iiint_{S_1} (x^2 + z^2)dm $$
+    $$ I_{yy} = \int_0^H \int_0^{2\pi} ((R\cos\theta)^2 + (R\sin\theta)^2)\frac{m_1}{2\pi H} d\theta dy $$
+    $$ = \frac{m_1 R^2}{2\pi H} \int_0^H \int_0^{2\pi} d\theta dy $$
+    $$ = \frac{m_1 R^2}{2\pi H} \int_0^H [\theta]_0^{2\pi} dy $$
+    $$ = \frac{m_1 R^2}{2\pi H} \int_0^H (2\pi)dy $$
+    $$ = \frac{m_1 R^2}{H} \int_0^H dy $$
+    $$ = \frac{m_1 R^2}{H} [y]_0^H $$
+    $$ = \frac{m_1 R^2}{H} H = m_1 R^2 $$
+
+    <p>Calcul de $I_{zz}$ : Par symétrie de révolution autour de l'axe Oy, $I_{zz} = I_{xx}$.</p>
+    $$ I_{zz} = m_1 \left( \frac{R^2}{2} + \frac{H^2}{3} \right) $$
+
+    <h4>Calcul des produits d'inertie ($I_{xy}, I_{xz}, I_{yz}$)</h4>
+    $$ I_{xy} = \iiint_{S_1} xy dm $$
+    $$ I_{xy} = \int_0^H \int_0^{2\pi} (R\cos\theta)y \frac{m_1}{2\pi H} d\theta dy $$
+    $$ = \frac{m_1 R}{2\pi H} \int_0^H ydy \int_0^{2\pi} \cos\theta d\theta $$
+    $$ = \frac{m_1 R}{2\pi H} \left[ \frac{y^2}{2} \right]_0^H [\sin\theta]_0^{2\pi} $$
+    $$ = \frac{m_1 R}{2\pi H} \left( \frac{H^2}{2} \right) (0 - 0) = 0 $$
+     $$ I_{xz} = \iiint_{S_1} xz dm $$
+     $$ I_{xz} = \int_0^H \int_0^{2\pi} (R\cos\theta)(R\sin\theta) \frac{m_1}{2\pi H} d\theta dy $$
+     $$ = \frac{m_1 R^2}{2\pi H} \int_0^H dy \int_0^{2\pi} \cos\theta \sin\theta d\theta $$
+     $$ = \frac{m_1 R^2}{2\pi H} [y]_0^H \left[ \frac{\sin^2\theta}{2} \right]_0^{2\pi} $$
+     $$ = \frac{m_1 R^2}{2\pi H} H (0 - 0) = 0 $$
+    $$ I_{yz} = \iiint_{S_1} yz dm $$
+    $$ I_{yz} = \int_0^H \int_0^{2\pi} y(R\sin\theta) \frac{m_1}{2\pi H} d\theta dy $$
+    $$ = \frac{m_1 R}{2\pi H} \int_0^H ydy \int_0^{2\pi} \sin\theta d\theta $$
+    $$ = \frac{m_1 R}{2\pi H} \left[ \frac{y^2}{2} \right]_0^H [-\cos\theta]_0^{2\pi} $$
+    $$ = \frac{m_1 R}{2\pi H} \left( \frac{H^2}{2} \right) (-1 - (-1)) = 0 $$
+    <p>Les produits d'inertie sont nuls par symétrie de révolution autour de l'axe Oy.</p>
+
+    <h3>Matrice du tenseur d'inertie de S₁ au point O</h3>
+    $$ [I_O(S_1)] = \begin{pmatrix} m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) & 0 & 0 \\ 0 & m_1 R^2 & 0 \\ 0 & 0 & m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) \end{pmatrix} \quad (1) $$
+
+    <h3>2. Tenseur d'inertie du parallélépipède droit (S2) au point O</h3>
+    <p>Le parallélépipède S2 a ses dimensions b (selon Ox), a (selon Oz) et c (selon Oy). Sa face supérieure est centrée en O et sa hauteur c est dirigée vers les y négatifs. Sa masse est $m_2$. Avec une masse volumique homogène $\rho_2$, l'élément de masse est $dm = \rho_2 dV = \frac{m_2}{abc}dxdydz$. Son domaine d'intégration est $x \in [-b/2, b/2]$, $y \in [-c, 0]$, $z \in [-a/2, a/2]$.</p>
+
+    <h4>Calcul de $I_{xx}$</h4>
+    $$ I_{xx} = \iiint_{S_2} (y^2 + z^2)dm $$
+    $$ I_{xx} = \int_{-b/2}^{b/2} dx \int_{-c}^{0} dy \int_{-a/2}^{a/2} (y^2 + z^2) \frac{m_2}{abc} dz $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left[ y^2 z + \frac{z^3}{3} \right]_{-a/2}^{a/2} dy $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( y^2 \left(\frac{a}{2} - (-\frac{a}{2})\right) + \frac{1}{3} \left((\frac{a}{2})^3 - (-\frac{a}{2})^3\right) \right) dy $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( ay^2 + \frac{a^3}{12} \right) dy $$
+    $$ = \frac{m_2 a}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( y^2 + \frac{a^2}{12} \right) dy $$
+    $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ \frac{y^3}{3} + \frac{a^2}{12} y \right]_{-c}^0 dx $$
+    $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ (0) - \left( \frac{(-c)^3}{3} + \frac{a^2}{12}(-c) \right) \right] dx $$
+    $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left( \frac{c^3}{3} + \frac{a^2 c}{12} \right) dx $$
+    $$ = \frac{m_2 c}{bc} \int_{-b/2}^{b/2} \left( \frac{c^2}{3} + \frac{a^2}{12} \right) dx $$
+    $$ = \frac{m_2}{b} \left( \frac{c^2}{3} + \frac{a^2}{12} \right) [x]_{-b/2}^{b/2} $$
+    $$ = \frac{m_2}{b} \left( \frac{c^2}{3} + \frac{a^2}{12} \right) \left( \frac{b}{2} - (-\frac{b}{2}) \right) $$
+    $$ = \frac{m_2}{b} \left( \frac{c^2}{3} + \frac{a^2}{12} \right) b $$
+    $$ = m_2 \left( \frac{c^2}{3} + \frac{a^2}{12} \right) = \frac{m_2}{12} (4c^2 + a^2) $$
+
+    <h4>Calcul de $I_{yy}$</h4>
+    $$ I_{yy} = \iiint_{S_2} (x^2 + z^2)dm $$
+    $$ I_{yy} = \int_{-b/2}^{b/2} dx \int_{-c}^{0} dy \int_{-a/2}^{a/2} (x^2 + z^2) \frac{m_2}{abc} dz $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left[ x^2 z + \frac{z^3}{3} \right]_{-a/2}^{a/2} dy $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( x^2 \left(\frac{a}{2} - (-\frac{a}{2})\right) + \frac{1}{3} \left((\frac{a}{2})^3 - (-\frac{a}{2})^3\right) \right) dy $$
+    $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( ax^2 + \frac{a^3}{12} \right) dy $$
+     $$ = \frac{m_2 a}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} \left( x^2 + \frac{a^2}{12} \right) dy $$
+     $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ x^2 y + \frac{a^2}{12} y \right]_{-c}^0 dx $$
+     $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ (0) - \left( x^2 (-c) + \frac{a^2}{12} (-c) \right) \right] dx $$
+     $$ = \frac{m_2 c}{bc} \int_{-b/2}^{b/2} \left( x^2 + \frac{a^2}{12} \right) dx $$
+     $$ = \frac{m_2}{b} \left[ \frac{x^3}{3} + \frac{a^2}{12} x \right]_{-b/2}^{b/2} $$
+     $$ = \frac{m_2}{b} \left[ \left( \frac{(b/2)^3}{3} + \frac{a^2}{12} \frac{b}{2} \right) - \left( \frac{(-b/2)^3}{3} + \frac{a^2}{12} (-\frac{b}{2}) \right) \right] $$
+     $$ = \frac{m_2}{b} \left[ \left( \frac{b^3}{24} + \frac{a^2 b}{24} \right) - \left( -\frac{b^3}{24} - \frac{a^2 b}{24} \right) \right] $$
+     $$ = \frac{m_2}{b} \left( \frac{2b^3}{24} + \frac{2a^2 b}{24} \right) = \frac{m_2}{b} \left( \frac{b^3}{12} + \frac{a^2 b}{12} \right) $$
+     $$ = \frac{m_2 b}{b} \left( \frac{b^2}{12} + \frac{a^2}{12} \right) = \frac{m_2}{12} (a^2 + b^2) $$
+
+    <h4>Calcul de $I_{zz}$</h4>
+    $$ I_{zz} = \iiint_{S_2} (x^2 + y^2)dm $$
+    $$ I_{zz} = \int_{-b/2}^{b/2} dx \int_{-c}^{0} dy \int_{-a/2}^{a/2} (x^2 + y^2) \frac{m_2}{abc} dz $$
+     $$ = \frac{m_2}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} (x^2 + y^2) [z]_{-a/2}^{a/2} dy $$
+     $$ = \frac{m_2 a}{abc} \int_{-b/2}^{b/2} dx \int_{-c}^{0} (x^2 + y^2) dy $$
+     $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ x^2 y + \frac{y^3}{3} \right]_{-c}^0 dx $$
+     $$ = \frac{m_2}{bc} \int_{-b/2}^{b/2} \left[ (0) - \left( x^2 (-c) + \frac{(-c)^3}{3} \right) \right] dx $$
+     $$ = \frac{m_2 c}{bc} \int_{-b/2}^{b/2} \left( x^2 + \frac{c^2}{3} \right) dx $$
+     $$ = \frac{m_2}{b} \left[ \frac{x^3}{3} + \frac{c^2}{3} x \right]_{-b/2}^{b/2} $$
+     $$ = \frac{m_2}{b} \left[ \left( \frac{(b/2)^3}{3} + \frac{c^2}{3} \frac{b}{2} \right) - \left( \frac{(-b/2)^3}{3} + \frac{c^2}{3} (-\frac{b}{2}) \right) \right] $$
+     $$ = \frac{m_2}{b} \left[ \left( \frac{b^3}{24} + \frac{c^2 b}{6} \right) - \left( -\frac{b^3}{24} - \frac{c^2 b}{6} \right) \right] $$
+     $$ = \frac{m_2}{b} \left( \frac{2b^3}{24} + \frac{2c^2 b}{6} \right) = \frac{m_2}{b} \left( \frac{b^3}{12} + \frac{c^2 b}{3} \right) $$
+     $$ = \frac{m_2 b}{b} \left( \frac{b^2}{12} + \frac{c^2}{3} \right) = \frac{m_2}{12} (b^2 + 4c^2) $$
+
+    <h4>Calcul des produits d'inertie ($I_{xy}, I_{xz}, I_{yz}$)</h4>
+    $$ I_{xy} = \iiint_{S_2} xy dm $$
+    $$ I_{xy} = \int_{-b/2}^{b/2} x \frac{m_2}{abc} dx \int_{-c}^0 y dy \int_{-a/2}^{a/2} dz $$
+    $$ = \frac{m_2}{abc} \left[ \frac{x^2}{2} \right]_{-b/2}^{b/2} \left[ \frac{y^2}{2} \right]_{-c}^0 [z]_{-a/2}^{a/2} $$
+    $$ = \frac{m_2}{abc} (0) \left( 0 - \frac{(-c)^2}{2} \right) (a) = 0 $$
+    $$ I_{xz} = \iiint_{S_2} xz dm $$
+    $$ I_{xz} = \int_{-b/2}^{b/2} x \frac{m_2}{abc} dx \int_{-c}^0 dy \int_{-a/2}^{a/2} z dz $$
+     $$ = \frac{m_2}{abc} \left[ \frac{x^2}{2} \right]_{-b/2}^{b/2} [y]_{-c}^0 \left[ \frac{z^2}{2} \right]_{-a/2}^{a/2} $$
+     $$ = \frac{m_2}{abc} (0) (c) (0) = 0 $$
+    $$ I_{yz} = \iiint_{S_2} yz dm $$
+    $$ I_{yz} = \int_{-b/2}^{b/2} dx \int_{-c}^0 y \frac{m_2}{abc} dy \int_{-a/2}^{a/2} z dz $$
+    $$ = \frac{m_2}{abc} [x]_{-b/2}^{b/2} \left[ \frac{y^2}{2} \right]_{-c}^0 \left[ \frac{z^2}{2} \right]_{-a/2}^{a/2} $$
+    $$ = \frac{m_2}{abc} (b) \left( 0 - \frac{(-c)^2}{2} \right) (0) = 0 $$
+    <p>Les produits d'inertie sont nuls car le domaine d'intégration est symétrique en x et z autour de l'origine pour l'intégrale correspondante (e.g. $\int xdx = 0$, $\int zdz = 0$).</p>
+
+    <h3>Matrice du tenseur d'inertie de S₂ au point O</h3>
+    $$ [I_O(S_2)] = \begin{pmatrix} \frac{m_2}{12}(a^2 + 4c^2) & 0 & 0 \\ 0 & \frac{m_2}{12}(a^2 + b^2) & 0 \\ 0 & 0 & \frac{m_2}{12}(b^2 + 4c^2) \end{pmatrix} \quad (2) $$
+
+    <h3>3. Tenseur d'inertie du système S au point O</h3>
+    <p>Par superposition, le tenseur d'inertie du système S = S₁ + S₂ au point O est la somme des tenseurs individuels : $[I_O(S)] = [I_O(S_1)] + [I_O(S_2)]$.</p>
+    $$ [I_O(S)] = \begin{pmatrix} m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(a^2 + 4c^2) & 0 & 0 \\ 0 & m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) & 0 \\ 0 & 0 & m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(b^2 + 4c^2) \end{pmatrix} \quad (3) $$
+    <p>Notons les composants diagonaux :</p>
+    $$ I_{xx} = m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(a^2 + 4c^2) $$
+    $$ I_{yy} = m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) $$
+    $$ I_{zz} = m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(b^2 + 4c^2) $$
+
+    <h3>4. Moment d'inertie par rapport à la droite $\Delta$</h3>
+    <p>La droite $\Delta$ passe par O et fait un angle de 30° dans le sens positif avec l'axe Ox dans le plan xOy. Son vecteur unitaire est $\tilde{u}_\Delta$. $\tilde{u}_\Delta = (\cos 30^\circ, \sin 30^\circ, 0) = \left(\frac{\sqrt{3}}{2}, \frac{1}{2}, 0\right)$. Le moment d'inertie $I_\Delta$ par rapport à $\Delta$ est donné par $I_\Delta = \tilde{u}_\Delta^T [I_O(S)] \tilde{u}_\Delta$.</p>
+    $$ I_\Delta = \begin{pmatrix} \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 \end{pmatrix} \begin{pmatrix} I_{xx} & 0 & 0 \\ 0 & I_{yy} & 0 \\ 0 & 0 & I_{zz} \end{pmatrix} \begin{pmatrix} \frac{\sqrt{3}}{2} \\ \frac{1}{2} \\ 0 \end{pmatrix} $$
+     $$ I_\Delta = \begin{pmatrix} \frac{\sqrt{3}}{2} I_{xx} & \frac{1}{2} I_{yy} & 0 \end{pmatrix} \begin{pmatrix} \frac{\sqrt{3}}{2} \\ \frac{1}{2} \\ 0 \end{pmatrix} $$
+     $$ I_\Delta = \frac{\sqrt{3}}{2} \left( \frac{\sqrt{3}}{2} I_{xx} \right) + \frac{1}{2} \left( \frac{1}{2} I_{yy} \right) + 0 \cdot 0 $$
+     $$ I_\Delta = \frac{3}{4} I_{xx} + \frac{1}{4} I_{yy} $$
+     $$ I_\Delta = \frac{1}{4} (3I_{xx} + I_{yy}) $$
+     $$ I_\Delta = \frac{1}{4} \left[ 3 \left( m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(a^2 + 4c^2) \right) + \left( m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) \right) \right] $$
+     $$ I_\Delta = \frac{1}{4} \left[ m_1\left(\frac{3R^2}{2} + H^2\right) + \frac{m_2}{12}(3a^2 + 12c^2) + m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) \right] $$
+     $$ I_\Delta = \frac{1}{4} \left[ m_1\left(\frac{3R^2}{2} + R^2 + H^2\right) + \frac{m_2}{12}(3a^2 + a^2 + 12c^2 + b^2) \right] $$
+     $$ I_\Delta = \frac{1}{4} \left[ m_1\left(\frac{5R^2}{2} + H^2\right) + \frac{m_2}{12}(4a^2 + b^2 + 12c^2) \right] $$
+     $$ I_\Delta = m_1 \left( \frac{5R^2}{8} + \frac{H^2}{4} \right) + \frac{m_2}{48}(4a^2 + b^2 + 12c^2) $$
+     $$ I_\Delta = m_1 \left( \frac{5R^2}{8} + \frac{H^2}{4} \right) + \frac{m_2}{12}(a^2 + \frac{b^2}{4} + 3c^2) $$
+
+    <h3>5. Produit d'inertie par rapport aux droites $\Delta$ et $\Delta'$</h3>
+    <p>La droite $\Delta'$ passe par O et est orthogonale à $\Delta$ dans le plan xOy. Si $\Delta$ fait 30° avec Ox, $\Delta'$ peut faire 30°+90° = 120° ou 30° - 90° = -60° avec Ox. On choisit l'orientation où $\Delta'$ fait -60° avec l'axe Ox. Son vecteur unitaire est $\tilde{u}_{\Delta'}$. $\tilde{u}_{\Delta'} = (\cos(-60^\circ), \sin(-60^\circ), 0) = \left(\frac{1}{2}, -\frac{\sqrt{3}}{2}, 0\right)$. Le produit d'inertie $I_{\Delta\Delta'}$ par rapport aux axes $\Delta$ et $\Delta'$ (avec la convention $I_{ij} = \int x_i x_j dm$) est donné par $I_{\Delta\Delta'} = \tilde{u}_\Delta^T [I_O(S)] \tilde{u}_{\Delta'}$.</p>
+    $$ I_{\Delta\Delta'} = \begin{pmatrix} \frac{\sqrt{3}}{2} & \frac{1}{2} & 0 \end{pmatrix} \begin{pmatrix} I_{xx} & 0 & 0 \\ 0 & I_{yy} & 0 \\ 0 & 0 & I_{zz} \end{pmatrix} \begin{pmatrix} \frac{1}{2} \\ -\frac{\sqrt{3}}{2} \\ 0 \end{pmatrix} $$
+     $$ I_{\Delta\Delta'} = \begin{pmatrix} \frac{\sqrt{3}}{2} I_{xx} & \frac{1}{2} I_{yy} & 0 \end{pmatrix} \begin{pmatrix} \frac{1}{2} \\ -\frac{\sqrt{3}}{2} \\ 0 \end{pmatrix} $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{2} \left( \frac{1}{2} I_{xx} \right) + \frac{1}{2} \left( -\frac{\sqrt{3}}{2} I_{yy} \right) + 0 \cdot 0 $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} I_{xx} - \frac{\sqrt{3}}{4} I_{yy} = \frac{\sqrt{3}}{4} (I_{xx} - I_{yy}) $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} \left[ \left( m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(a^2 + 4c^2) \right) - \left( m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) \right) \right] $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} \left[ m_1\left(\frac{R^2}{2} + \frac{H^2}{3} - R^2\right) + \frac{m_2}{12}(a^2 + 4c^2 - a^2 - b^2) \right] $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} \left[ m_1\left(\frac{H^2}{3} - \frac{R^2}{2}\right) + \frac{m_2}{12}(4c^2 - b^2) \right] $$
+     $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} \left[ m_1\left(\frac{H^2}{3} - \frac{R^2}{2}\right) - \frac{m_2}{12}(b^2 - 4c^2) \right] $$
+
+    <h2>Résultat</h2>
+    <ol>
+        <li>Tenseur d'inertie de S₁ au point O :
+        $$ [I_O(S_1)] = \begin{pmatrix} m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) & 0 & 0 \\ 0 & m_1 R^2 & 0 \\ 0 & 0 & m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) \end{pmatrix} $$
+        </li>
+        <li>Tenseur d'inertie du système S au point O :
+        $$ [I_O(S)] = \begin{pmatrix} m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(a^2 + 4c^2) & 0 & 0 \\ 0 & m_1 R^2 + \frac{m_2}{12}(a^2 + b^2) & 0 \\ 0 & 0 & m_1\left(\frac{R^2}{2} + \frac{H^2}{3}\right) + \frac{m_2}{12}(b^2 + 4c^2) \end{pmatrix} $$
+        </li>
+        <li>Moment d'inertie du système par rapport à la droite $\Delta$ :
+        $$ I_\Delta = m_1 \left( \frac{5R^2}{8} + \frac{H^2}{4} \right) + \frac{m_2}{12}(a^2 + \frac{b^2}{4} + 3c^2) $$
+        </li>
+        <li>Produit d'inertie par rapport aux droites $\Delta$ et $\Delta'$ (orientées comme choisi) :
+        $$ I_{\Delta\Delta'} = \frac{\sqrt{3}}{4} \left[ m_1\left(\frac{H^2}{3} - \frac{R^2}{2}\right) - \frac{m_2}{12}(b^2 - 4c^2) \right] $$
+        </li>
+    </ol>
+
+    <h2>Vérification</h2>
+    <p>Les tenseurs d'inertie des composants individuels ont été calculés par intégration directe en O, en tenant compte de la géométrie et de la position spécifiques de chaque corps par rapport à l'origine. Les résultats pour les composants diagonaux sont cohérents avec ce que l'on obtiendrait en utilisant le théorème de Huygens-Steiner à partir des moments d'inertie au centre de masse. Les produits d'inertie pour chaque composant en O sont nuls en raison des symétries des domaines d'intégration par rapport aux plans coordonnés passant par O (pour S1, révolution autour de Y; pour S2, symétrie en X et Z autour de O, entraînant la nullité des intégrales de produit). Le tenseur total est la somme directe. Le moment et le produit d'inertie par rapport aux axes inclinés sont calculés par transformation matricielle des composantes du tenseur en O, ce qui est la méthode standard. Le produit d'inertie $I_{\Delta\Delta'}$ dépend du choix d'orientation de l'axe $\Delta'$ (ici -60°), l'autre choix orthogonal (120°) conduirait à un résultat de signe opposé.</p>
+
+</body>
+</html>

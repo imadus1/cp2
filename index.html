@@ -31,7 +31,7 @@
             flex-direction: column;
             height: 100vh; /* Full viewport height */
             background-color: #f4f4f4;
-            /* overflow: hidden; */ /* Removed this to allow body scroll if content is too large, might need adjusting based on layout needs */
+            overflow: hidden; /* Prevent body scroll when pan is open */
             position: relative; /* Necessary for potential positioning contexts */
         }
 
@@ -127,33 +127,59 @@
             cursor: pointer;
             padding: 5px;
             color: #555;
-            z-index: 1; /* Ensure it's clickable above content */
         }
 
         .pan-close-button:hover {
             color: #000;
         }
 
+        /* --- Styles for the transparent overlay --- */
+        #pan-overlay {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0; /* Start full width, will be adjusted when visible */
+            right: 0;
+            background-color: rgba(0, 0, 0, 0); /* Transparent */
+            z-index: 999; /* Below pan (1000), above iframe */
+            display: none; /* Hidden by default */
+            cursor: pointer; /* Indicate it's clickable */
+        }
 
-        /* Style for the "Available Content" title */
+        #pan-overlay.is-visible {
+            display: block;
+            /* Position it to the right of the open pan */
+            /* Assumes pan width is 300px */
+            left: 300px; /* Needs to match the width of the content-pan */
+            right: 0;
+            /* If pan max-width: 90% is active, this needs more complex JS */
+            /* but for fixed 300px, this is simple and effective */
+        }
+
+
         .content-pan h2 {
             margin-top: 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
             margin-bottom: 15px;
             font-size: 1.3em;
+            /* Add padding/margin adjustments if needed for the link */
         }
 
-        /* Style for the link within the H2 */
-        #available-content-title a {
-             text-decoration: none; /* Remove underline */
-             color: inherit; /* Inherit color from H2 */
-             cursor: pointer; /* Indicate it's clickable */
-             display: block; /* Make the whole area clickable */
+         /* --- Styles for the "Available Content" link --- */
+        .content-pan h2 a {
+            text-decoration: none; /* Remove default underline */
+            color: inherit; /* Inherit color from h2 */
+            cursor: pointer; /* Indicate clickable */
+            display: block; /* Make the link fill the h2 area for easier clicking */
+            /* Adjust padding if necessary to align text within the h2 area */
+            /* padding: 0; margin: 0; /* Reset default link spacing */
         }
-         #available-content-title a:hover {
-             color: #007bff; /* Optional: Hover effect for the link */
-         }
+
+        .content-pan h2 a:hover {
+            text-decoration: underline; /* Add underline on hover */
+            color: #007bff; /* Change color on hover */
+        }
 
 
         .pan-section {
@@ -386,12 +412,12 @@
 <!--  <script type="text/javascript" src="https://www.free-counters.org/count/hr7i"></script><br> -->
 <!--  <a href='https://www.free-counters.org/'>...</a> <script type='text/javascript' src='https://whomania.com/ctr?id=6a9d578b5c88f5103bc09ae736b1197c4dbc2913'></script> -->
 
-
+    
     <!-- The Pan/Sidebar (appears from Left) -->
     <div id="content-pan" class="content-pan">
         <button class="pan-close-button" id="close-pan-button">X</button>
-        <!-- MODIFIED: Wrapped "Available Content" in an anchor tag -->
-        <h2 id="available-content-title"><a href="index.html">Available Content</a></h2>
+        <!-- --- MODIFIED H2 TO INCLUDE A LINK --- -->
+        <h2><a href="#" id="refresh-link">Available Content</a></h2>
 
         <div class="pan-section">
             <h3>Les Torseurs</h3>
@@ -470,6 +496,9 @@
         </div>
     </div>
 
+    <!-- --- NEW TRANSPARENT OVERLAY --- -->
+    <div id="pan-overlay" class="pan-overlay"></div>
+
     <iframe id="content-iframe" name="content-iframe" src="about:blank">
         Votre navigateur ne supporte pas les iframes.
     </iframe>
@@ -479,38 +508,35 @@
         const contentPan = document.getElementById('content-pan');
         const closePanButton = document.getElementById('close-pan-button');
         const iframe = document.getElementById('content-iframe');
-        // NEW: Get reference to the "Available Content" link
-        const availableContentLink = document.querySelector('#available-content-title a');
+        const panOverlay = document.getElementById('pan-overlay'); // Get the new overlay
+        const refreshLink = document.getElementById('refresh-link'); // Get the new refresh link
 
 
         // Function to show the pan
         function openPan() {
             contentPan.classList.add('is-visible');
-             // Optional: Disable body scroll when pan is open (if you removed overflow: hidden from body)
-             // document.body.style.overflow = 'hidden';
+            panOverlay.classList.add('is-visible'); // Show the overlay
         }
 
         // Function to hide the pan
         function closePan() {
             contentPan.classList.remove('is-visible');
-             // Optional: Re-enable body scroll
-             // document.body.style.overflow = ''; // Reset to default
+            panOverlay.classList.remove('is-visible'); // Hide the overlay
         }
 
         // Function to highlight the item in the pan corresponding to the iframe content
         function highlightCurrentItemInPan() {
             // Get the current iframe source, normalize path for comparison
             // Use iframe.contentWindow.location.pathname for the actual loaded URL path
-            // Add a check for cross-origin access or if the iframe is still on about:blank
-            let currentPath = '';
+            let currentPath = null;
             try {
+                 // Attempt to get iframe location if accessible
                  if (iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
-                    currentPath = iframe.contentWindow.location.pathname;
+                     currentPath = iframe.contentWindow.location.pathname;
                  }
             } catch (e) {
-                 console.warn("Could not access iframe location for highlighting:", e);
-                 // If access is denied (e.g., cross-origin), we can't highlight.
-                 // The variable remains empty, and no item will be highlighted.
+                 console.warn("Could not access iframe location for highlighting.", e);
+                 // currentPath remains null, no item will be highlighted
             }
 
 
@@ -518,6 +544,11 @@
             const currentlySelected = contentPan.querySelector('li.is-selected');
             if (currentlySelected) {
                 currentlySelected.classList.remove('is-selected');
+            }
+
+            if (!currentPath) {
+                 // If iframe content isn't a standard page (e.g., about:blank, error), no highlight
+                 return;
             }
 
             // Find all list items with a data-url
@@ -528,24 +559,20 @@
                 const itemUrl = item.dataset.url;
                  // Check if the current iframe path ends with the data-url
                  // This handles cases where the base path might differ
-                // Handle potential leading slashes differences and decode URIs
-                try {
-                    const normalizedCurrentPath = decodeURIComponent(currentPath.startsWith('/') ? currentPath.substring(1) : currentPath);
-                    const normalizedItemUrl = decodeURIComponent(itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl);
+                // Handle potential leading slashes differences
+                const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath.substring(1) : currentPath;
+                const normalizedItemUrl = itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl;
 
-                    if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
-                        item.classList.add('is-selected');
-                        // Optional: Scroll the highlighted item into view in the pan
-                        // Only scroll if the pan is visible when highlighting
-                        if (contentPan.classList.contains('is-visible')) {
-                            // Use requestAnimationFrame to ensure scroll happens after pan transition starts
-                            requestAnimationFrame(() => {
-                                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                            });
-                        }
+                if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
+                    item.classList.add('is-selected');
+                    // Optional: Scroll the highlighted item into view in the pan
+                    // Only scroll if the pan is visible when highlighting
+                    if (contentPan.classList.contains('is-visible')) {
+                         // Use requestAnimationFrame to ensure scroll happens after pan transition starts
+                         requestAnimationFrame(() => {
+                            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                         });
                     }
-                } catch (e) {
-                    console.error("Error comparing URLs for highlighting:", e);
                 }
             });
         }
@@ -561,35 +588,41 @@
                 iconSpan = document.createElement('span');
                 iconSpan.classList.add('link-status-icon');
                 // Insert the span at the beginning of the li's content
-                liElement.insertBefore(iconSpan, liElement.firstChild);
+                // Make sure it's inserted before any text nodes, or the first child element
+                const firstChild = liElement.firstChild;
+                if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
+                   // If first child is text, insert before it
+                   liElement.insertBefore(iconSpan, firstChild);
+                } else {
+                   // Otherwise, insert as the first child
+                   liElement.prepend(iconSpan);
+                }
             }
 
             // Reset status classes
             iconSpan.classList.remove('status-available', 'status-unavailable');
             // iconSpan.style.backgroundColor = '#ccc'; // Indicate checking state visually if needed
 
-            try {
-                // Use HEAD request as it's lighter than GET
-                // If CORS is an issue, a GET request to a tiny dummy file on the server might work,
-                // or rely solely on data-url loading success (iframe load event).
-                // For local files (file://), HEAD might not work, GET is required.
-                // Let's try GET for broader compatibility, but fetch errors might still occur.
-                const response = await fetch(url, { method: 'GET', cache: 'no-cache' }); // Use GET, no-cache helps during development
-
-                if (response.ok) { // Status 200-299
-                    iconSpan.classList.add('status-available');
-                } else { // 404, 500, etc.
-                    iconSpan.classList.add('status-unavailable');
-                    console.warn(`Link check failed for ${url}: Status ${response.status}`);
-                }
-            } catch (error) {
-                // Network errors, CORS issues, file not found (for file:// URLs that don't trigger response.ok=false)
-                console.warn(`Failed to fetch ${url} for status check:`, error);
+            // --- Use a temporary image request for status check to bypass CORS issues ---
+            // Browsers typically allow loading images from different origins,
+            // and will trigger an error event on 404/network issues without
+            // CORS blocking it like fetch might for HEAD.
+            const img = new Image();
+            img.onload = () => {
+                // Image loaded successfully (usually means resource exists)
+                iconSpan.classList.add('status-available');
+            };
+            img.onerror = () => {
+                // Image failed to load (404, network error, resource doesn't exist as an image)
+                 // This method isn't perfect (might fail for valid non-image URLs),
+                 // but it's a common workaround for same-origin restrictions on status checks.
                 iconSpan.classList.add('status-unavailable');
-            }
+            };
+            img.src = url; // Set the source to trigger the check
         }
 
-        // --- Initial setup on DOM load ---
+
+        // --- Initial check for all links on DOM load ---
         document.addEventListener('DOMContentLoaded', () => {
              const listItemsWithUrl = contentPan.querySelectorAll('li[data-url]');
              // Process synchronously first to add spans immediately, then check status async
@@ -599,27 +632,30 @@
                  if (!iconSpan) {
                     iconSpan = document.createElement('span');
                     iconSpan.classList.add('link-status-icon');
-                    // Insert the span at the beginning of the li's content
-                    item.insertBefore(iconSpan, item.firstChild);
+                     const firstChild = item.firstChild;
+                    if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
+                       item.insertBefore(iconSpan, firstChild);
+                    } else {
+                       item.prepend(iconSpan);
+                    }
                  }
                  // Then start the async check for status
                  checkLinkStatus(item);
              });
 
-             // NEW: Activate the pan on page load
-             // Add a small delay to ensure smooth animation and DOM readiness
-             setTimeout(() => {
-                 highlightCurrentItemInPan(); // Highlight initial content if any
-                 openPan();
-             }, 100); // 100ms delay
+             // --- ACTIVATE PAN ON PAGE LOAD ---
+             // Delay slightly to ensure rendering is ready
+             setTimeout(openPan, 100); // Open pan after a short delay on load
         });
 
-        // MODIFIED: Event listener for the button to toggle the pan
+        // Event listener for the button to open/close the pan
         openMenuButton.addEventListener('click', () => {
             if (contentPan.classList.contains('is-visible')) {
+                // If pan is visible, close it
                 closePan();
             } else {
-                highlightCurrentItemInPan(); // Highlight current item before opening
+                // If pan is hidden, highlight the current item and open it
+                highlightCurrentItemInPan(); // Highlight first, then open
                 openPan();
             }
         });
@@ -627,17 +663,8 @@
         // Event listener for the close button inside the pan
         closePanButton.addEventListener('click', closePan);
 
-        // NEW: Event listener for the "Available Content" link
-        availableContentLink.addEventListener('click', () => {
-             // The link will navigate to index.html by default.
-             // We just need to close the pan when it's clicked.
-             closePan();
-             // Note: Clicking this link and navigating will reload the page,
-             // which will automatically re-open the pan due to the DOMContentLoaded listener.
-             // If you wanted to navigate without a full reload (e.g., via JS),
-             // you'd need to handle history API or SPA-like routing.
-             // For a simple link href, the reload is expected.
-        });
+        // --- Event listener for the transparent overlay to close the pan ---
+        panOverlay.addEventListener('click', closePan);
 
 
         // Event listener for clicks within the pan to handle item selection
@@ -649,24 +676,15 @@
                 iframe.src = url; // Load the content
                 // Highlighting will happen when the iframe's 'load' event fires
                 closePan(); // Close the pan
-                event.preventDefault(); // Prevent any default action from the LI itself (though there isn't one)
             }
              // If the click was on an LI without data-url (like the one containing H4), do nothing.
-             // If the click was on the "Available Content" link, the separate listener handles it.
         });
 
-        // NEW: Event listener for clicks outside the pan to close it
-        document.addEventListener('click', (event) => {
-            // Check if the pan is currently visible
-            // Check if the click target is NOT inside the pan AND is NOT the open button itself
-            if (contentPan.classList.contains('is-visible') &&
-                !contentPan.contains(event.target) &&
-                event.target !== openMenuButton &&
-                 !openMenuButton.contains(event.target) // Also check if click was inside the button (e.g., on the icon span)
-               )
-            {
-                closePan();
-            }
+        // --- Event listener for the "Available Content" link ---
+        refreshLink.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default link behavior (navigating to #)
+            window.location.reload(); // Reload the entire page
+             // The pan will close automatically because the page reloads
         });
 
 
@@ -674,30 +692,42 @@
          // This part remains the same as it handles content inside the iframe
          iframe.addEventListener('load', () => {
             try {
-                // Check if the iframe successfully loaded a page (not an error page or about:blank)
+                // Check if the iframe successfully loaded a page (not an error page)
                  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                 const iframeLocation = iframe.contentWindow ? iframe.contentWindow.location : null;
-
-                 if (iframeDoc && iframeDoc.body && iframeLocation && iframeLocation.href !== 'about:blank') {
+                 // Check for common indicators of a successful load vs error page
+                 // This is not foolproof, but helps avoid trying to typeset 404 pages etc.
+                 // Also check if location.href is accessible and not 'about:blank'
+                 if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
                      // Check if MathJax is defined in the iframe's window and if it's ready
                     if (typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                          iframe.contentWindow.MathJax.typesetPromise();
                     } else {
                          console.warn("MathJax might not be immediately available or configured in the iframe.");
+                         // Optionally try typesetting the whole document if MathJax is in the main frame
+                         if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
+                              MathJax.typesetPromise([iframeDoc.body]);
+                         }
                     }
+                     // --- Highlight the item in the pan when the iframe finishes loading ---
+                    // Add a slight delay to ensure iframe location is updated after load event fires
+                     setTimeout(highlightCurrentItemInPan, 50);
+
                  } else {
                      // Likely loaded about:blank initially or an error page, or cross-origin
                       console.log("Iframe loaded, but content might be inaccessible, empty, or an error page.");
+                      // Attempt to highlight based on previous source if possible, or clear highlight
+                      // Let highlightCurrentItemInPan handle null currentPath
+                     setTimeout(highlightCurrentItemInPan, 50);
                  }
 
-                 // --- Highlight the item in the pan when the iframe finishes loading ---
-                 // Add a slight delay to ensure iframe location is updated after load event fires
-                 setTimeout(highlightCurrentItemInPan, 50);
 
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
                  // If access fails (e.g., cross-origin, though unlikely with local files),
                  // highlighting might not work perfectly.
+                 // Still attempt to highlight, maybe based on the requested URL if available
+                 // (Though iframe.contentWindow.location is best if accessible).
+                 setTimeout(highlightCurrentItemInPan, 50); // Attempt highlight even on error
             }
          });
 
@@ -705,20 +735,15 @@
          // This ensures that if the iframe starts with a specific src (not about:blank)
          // or if you refresh on a page, the pan highlights correctly when first opened.
          // Using a slight delay can help ensure the iframe src is truly available.
-         // This is now handled by the setTimeout call in DOMContentLoaded which also opens the pan.
-         // Keep the iframe default src as 'about:blank' so the pan opens first,
-         // and then you load the initial content (e.g., index.html or the first item)
-         // either by simulating a click or setting the iframe src after the pan opens.
-         // Let's set the iframe src to 'index.html' initially or to the first item.
-         // Setting iframe src here means it loads immediately, which might finish *before*
-         // the pan is open by the DOMContentLoaded + setTimeout.
-         // A better approach for initial load: Load index.html *into* the iframe
-         // as the default content, and then the iframe 'load' listener will highlight it
-         // and the pan opening logic will show the pan with the correct item highlighted.
-         iframe.src = "index.html"; // Load index.html as default content
+         // The initial openPan call on DOMContentLoaded will trigger highlightCurrentItemInPan
+         // *before* it opens. Let's keep this separate call for robustness if iframe loads later.
+         window.addEventListener('load', () => {
+             // Small delay to allow initial iframe loading or default src to be set
+             // This is in addition to the one inside iframe.load
+             // This handles the case where the page loads with an initial iframe src.
+             setTimeout(highlightCurrentItemInPan, 200); // Increased delay slightly
+         });
 
-         // We can remove the separate window.onload highlight call now,
-         // as the iframe.load listener will handle highlighting the initial content.
 
     </script>
 

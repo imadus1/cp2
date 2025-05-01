@@ -109,24 +109,37 @@
             z-index: 1000; /* Ensure it's on top of other content */
             transform: translateX(-100%); /* Initially hide it to the LEFT */
             transition: transform 0.3s ease-in-out; /* Smooth sliding effect */
-            padding: 20px;
+            padding: 20px; /* Keep initial padding */
             box-sizing: border-box; /* Include padding in width */
+            padding-bottom: 10px; /* Add padding at the bottom for footer */
         }
 
         .content-pan.is-visible {
             transform: translateX(0); /* Slide into view (back to left: 0) */
         }
 
+         /* --- NEW Styles for the Sticky Header Container --- */
+         .pan-sticky-header {
+            position: sticky; /* Make the container sticky */
+            top: 0; /* Stick to the top of the scroll container */
+            background-color: #fff; /* Ensure content scrolls underneath */
+            z-index: 10; /* Ensure it stays above scrolling content */
+            /* Padding for content inside the sticky header is handled by its children */
+            /* Using the pan's left/right padding (20px) implicitly */
+         }
+
+
         .pan-close-button {
-            position: absolute;
+            position: absolute; /* Position relative to the .pan-sticky-header */
             top: 10px;
-            right: 10px; /* Still positioned in the upper right corner of the pan */
+            right: 10px;
             font-size: 1.5em;
-            background: none;
+            background: none; /* Keep background none */
             border: none;
             cursor: pointer;
             padding: 5px;
             color: #555;
+            z-index: 15; /* Ensure it's above the h2 */
         }
 
         .pan-close-button:hover {
@@ -141,7 +154,7 @@
             left: 0; /* Start full width, will be adjusted when visible */
             right: 0;
             background-color: rgba(0, 0, 0, 0); /* Transparent */
-            z-index: 999; /* Below pan (1000), above iframe and counter */
+            z-index: 999; /* Below pan (1000), above iframe */
             display: none; /* Hidden by default */
             cursor: pointer; /* Indicate it's clickable */
         }
@@ -154,16 +167,26 @@
             right: 0;
             /* If pan max-width: 90% is active, this needs more complex JS */
             /* but for fixed 300px, this is simple and effective */
+             /* Consider responsiveness: if max-width: 90% is active,
+                left should be 90vw on small screens. This requires JS.
+                Keeping it simple with 300px for now as per fixed width. */
         }
 
-
+        /* --- MODIFIED STYLES FOR H2 (Now inside sticky header) --- */
         .content-pan h2 {
             margin-top: 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
-            margin-bottom: 15px;
+            margin-bottom: 15px; /* Margin below the sticky header */
             font-size: 1.3em;
+            /* Removed sticky properties - they are on the parent container now */
+            /* Add padding top back if needed for spacing inside the sticky bar */
+            padding-top: 10px;
+            /* Padding left/right inherited from .content-pan padding */
+            padding-left: 0;
+            padding-right: 0;
         }
+
 
          /* --- Styles for the "Available Content" link --- */
         .content-pan h2 a {
@@ -171,6 +194,8 @@
             color: inherit; /* Inherit color from h2 */
             cursor: pointer; /* Indicate clickable */
             display: block; /* Make the link fill the h2 area for easier clicking */
+            /* Adjust padding if necessary to align text within the h2 area */
+            /* padding: 0; margin: 0; /* Reset default link spacing */
         }
 
         .content-pan h2 a:hover {
@@ -358,6 +383,49 @@
              background-color: transparent; /* Ensure no hover effect */
          }
 
+        /* --- Styles for the pan footer/counter area --- */
+        .pan-footer {
+             text-align: center; /* Center the image */
+             margin-top: 20px; /* Space above the footer */
+             padding-top: 15px; /* Space below the last list item */
+             border-top: 1px solid #eee; /* Visual separator */
+             font-size: 0.8em; /* Smaller font for any text here */
+             color: #888; /* Gray text color */
+        }
+
+        /* --- NEW Styles for the image wrapper and image cropping --- */
+        .pan-footer .flag-counter-wrapper {
+            overflow: hidden; /* Hide parts of the image that go outside this div */
+            display: inline-block; /* Make the container width fit the cropped area */
+            vertical-align: middle; /* Align the wrapper vertically */
+
+            /* --- Define cropping amounts and original image size using CSS variables --- */
+            /* Adjust these values as needed based on the image you want to crop */
+            --crop-left: 20px;   /* Pixels to hide from the left side */
+            --crop-right: 110px;  /* Pixels to hide from the right side */
+            --intrinsic-width: 160px; /* Assumed original width of the image */
+            --intrinsic-height: 20px; /* Assumed original height of the image */
+
+            /* Calculate the visible width of the container */
+            width: calc(var(--intrinsic-width) - var(--crop-left) - var(--crop-right));
+            height: var(--intrinsic-height); /* Set the height of the container */
+            /* No need for 'position: relative' here if using margin method */
+        }
+
+         .pan-footer .flag-counter-wrapper img {
+            display: block; /* Remove any extra space below the image */
+            width: var(--intrinsic-width); /* Image retains its full width */
+            height: auto; /* Maintain aspect ratio (should match --intrinsic-height) */
+            padding: 0; /* Remove padding */
+            margin: 0; /* Remove default margins */
+
+            /* Shift the image left by the --crop-left amount */
+            /* This makes the left part overflow the container and be hidden */
+            margin-left: calc(-1 * var(--crop-left));
+
+            /* No need for margin-right with overflow: hidden on the parent */
+         }
+
 
         #content-iframe {
             flex-grow: 1; /* Takes remaining vertical space */
@@ -365,29 +433,6 @@
             border: none; /* Remove iframe border */
             background-color: #fff; /* White background for content area */
         }
-
-        /* --- NEW STYLE FOR THE FLOATING COUNTER --- */
-        #counter-container {
-            position: fixed; /* Fix its position relative to the viewport */
-            bottom: 10px;    /* 10px from the bottom */
-            right: 10px;     /* 10px from the right */
-            z-index: 1010;   /* Ensure it's above the pan and overlay */
-            /* Optional styles for a cleaner look */
-            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
-            padding: 5px;    /* Padding around the image */
-            border-radius: 5px; /* Rounded corners */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Subtle shadow */
-            line-height: 0; /* Collapse line height to prevent extra space below img */
-        }
-
-        #counter-container a {
-            display: block; /* Make the link fill the padding area */
-        }
-
-        #counter-container img {
-            display: block; /* Remove default bottom margin from inline images */
-        }
-
 
          /* Basic styling for Computer Modern fonts */
         @font-face {
@@ -431,9 +476,13 @@
 
     <!-- The Pan/Sidebar (appears from Left) -->
     <div id="content-pan" class="content-pan">
-        <button class="pan-close-button" id="close-pan-button">X</button>
-        <!-- --- MODIFIED H2 TO INCLUDE A LINK --- -->
-        <h2><a href="#" id="refresh-link">Available Content</a></h2>
+
+        <!-- --- NEW Sticky Header Container --- -->
+        <div class="pan-sticky-header">
+             <button class="pan-close-button" id="close-pan-button">X</button>
+             <h2><a href="#" id="refresh-link">Available Content</a></h2>
+        </div>
+
 
         <div class="pan-section">
             <h3>Les Torseurs</h3>
@@ -506,20 +555,25 @@
                         <li data-url="guldin_serie7_exo2_fig4.html" class="indent">  Fig 7.2.4 + Solution</li>
                         <li data-url="guldin_serie7_exo2_fig5.html" class="indent">  Fig 7.2.5 + Solution</li>
                         <li data-url="guldin_serie7_exo2_fig6.html" class="indent">  Fig 7.2.6 + Solution</li>
-                        <img src="https://s01.flagcounter.com/mini/0RsR/bg_FFFFFF/txt_6E6E6E/border_FFFFFF/flags_0/" alt="Flag Counter" border="0">
-                       
                     </ul>
                 </li>
             </ul>
         </div>
+
+        <!-- --- ADDED PAN FOOTER WITH IMAGE WRAPPER FOR CROPPING --- -->
+        <div class="pan-footer">
+            <div class="flag-counter-wrapper">
+                 <!-- The image URL goes inside the wrapper -->
+                <img src="https://s01.flagcounter.com/mini/0RsR/bg_FFFFFF/txt_6E6E6E/border_FFFFFF/flags_0/" alt="Flag Counter">
+            </div>
+            <!-- You can optionally add text here if needed -->
+            <!-- e.g., <div>Visits:</div> -->
+        </div>
+
     </div>
 
     <!-- --- NEW TRANSPARENT OVERLAY --- -->
     <div id="pan-overlay" class="pan-overlay"></div>
-
-    <!-- --- NEW CONTAINER FOR THE FLOATING COUNTER --- -->
-
-
 
     <iframe id="content-iframe" name="content-iframe" src="about:blank">
         Votre navigateur ne supporte pas les iframes.
@@ -532,7 +586,6 @@
         const iframe = document.getElementById('content-iframe');
         const panOverlay = document.getElementById('pan-overlay'); // Get the new overlay
         const refreshLink = document.getElementById('refresh-link'); // Get the new refresh link
-        // No need to get the counter-container element in JS unless you want to manipulate it
 
 
         // Function to show the pan
@@ -553,8 +606,8 @@
             // Use iframe.contentWindow.location.pathname for the actual loaded URL path
             let currentPath = null;
             try {
-                 // Attempt to get iframe location if accessible and not about:blank
-                 if (iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href && iframe.contentWindow.location.href !== 'about:blank') {
+                 // Attempt to get iframe location if accessible
+                 if (iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
                      // Use decodeURIComponent to handle potential encoded characters in path
                      currentPath = decodeURIComponent(iframe.contentWindow.location.pathname);
                  }
@@ -562,6 +615,8 @@
                  // This can happen due to cross-origin restrictions, network errors in iframe, etc.
                  console.warn("Could not access iframe location for highlighting.", e);
                  // currentPath remains null, no item will be highlighted based on current iframe content
+                 // In this case, we might try to use the *requested* src, but it's less reliable
+                 // than the actual loaded location. For local files, this shouldn't be an issue.
             }
 
 
@@ -588,7 +643,7 @@
                 const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath.substring(1) : currentPath;
                 const normalizedItemUrl = itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl;
 
-                // Ensure both are decoded before comparison and perform the check
+                // Ensure both are decoded before comparison
                  if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
                     item.classList.add('is-selected');
                     // Optional: Scroll the highlighted item into view in the pan
@@ -599,13 +654,11 @@
                             item.scrollIntoView({ behavior: 'smooth', block: 'center' });
                          });
                     }
-                    // Stop searching once the match is found
-                    // return; // Can't 'return' from forEach like this, but efficient enough for typical menu sizes
                 }
             });
         }
 
-        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON (Reverted to Fetch) ---
+        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON (Using Fetch) ---
         async function checkLinkStatus(liElement) {
             const url = liElement.dataset.url;
             if (!url) return; // Skip if no data-url
@@ -633,8 +686,8 @@
 
             try {
                 // Use HEAD request as it's lighter than GET and less prone to CORS issues than GET on some servers
-                // For local files, CORS is usually not an issue, but HEAD is still preferable to GET.
-                const response = await fetch(url, { method: 'HEAD', mode: 'cors' }); // Explicitly set mode: 'cors'
+                // For local files, CORS is generally not an issue, but 'cors' mode is standard.
+                const response = await fetch(url, { method: 'HEAD', mode: 'cors' });
 
                 if (response.ok) { // Status 200-299
                     iconSpan.classList.add('status-available');
@@ -705,6 +758,7 @@
                 closePan(); // Close the pan
             }
              // If the click was on an LI without data-url (like the one containing H4), do nothing.
+             // Also ignore clicks on the footer div and the flag counter wrapper
         });
 
         // --- Event listener for the "Available Content" link ---
@@ -724,7 +778,7 @@
                  // Check for common indicators of a successful load vs error page
                  // This is not foolproof, but helps avoid trying to typeset 404 pages etc.
                  // Also check if location.href is accessible and not 'about:blank'
-                 if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href && iframe.contentWindow.location.href !== 'about:blank') {
+                 if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
                      // Check if MathJax is defined in the iframe's window and if it's ready
                     if (typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                          iframe.contentWindow.MathJax.typesetPromise();

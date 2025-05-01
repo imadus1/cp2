@@ -412,7 +412,7 @@
 <!--  <script type="text/javascript" src="https://www.free-counters.org/count/hr7i"></script><br> -->
 <!--  <a href='https://www.free-counters.org/'>...</a> <script type='text/javascript' src='https://whomania.com/ctr?id=6a9d578b5c88f5103bc09ae736b1197c4dbc2913'></script> -->
 
-    
+
     <!-- The Pan/Sidebar (appears from Left) -->
     <div id="content-pan" class="content-pan">
         <button class="pan-close-button" id="close-pan-button">X</button>
@@ -532,11 +532,15 @@
             try {
                  // Attempt to get iframe location if accessible
                  if (iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
-                     currentPath = iframe.contentWindow.location.pathname;
+                     // Use decodeURIComponent to handle potential encoded characters in path
+                     currentPath = decodeURIComponent(iframe.contentWindow.location.pathname);
                  }
             } catch (e) {
+                 // This can happen due to cross-origin restrictions, network errors in iframe, etc.
                  console.warn("Could not access iframe location for highlighting.", e);
-                 // currentPath remains null, no item will be highlighted
+                 // currentPath remains null, no item will be highlighted based on current iframe content
+                 // In this case, we might try to use the *requested* src, but it's less reliable
+                 // than the actual loaded location. For local files, this shouldn't be an issue.
             }
 
 
@@ -547,7 +551,7 @@
             }
 
             if (!currentPath) {
-                 // If iframe content isn't a standard page (e.g., about:blank, error), no highlight
+                 // If iframe content isn't a standard page or access failed, no highlight
                  return;
             }
 
@@ -559,11 +563,12 @@
                 const itemUrl = item.dataset.url;
                  // Check if the current iframe path ends with the data-url
                  // This handles cases where the base path might differ
-                // Handle potential leading slashes differences
+                // Handle potential leading slashes differences and decode for comparison
                 const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath.substring(1) : currentPath;
                 const normalizedItemUrl = itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl;
 
-                if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
+                // Ensure both are decoded before comparison
+                 if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
                     item.classList.add('is-selected');
                     // Optional: Scroll the highlighted item into view in the pan
                     // Only scroll if the pan is visible when highlighting
@@ -577,7 +582,7 @@
             });
         }
 
-        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON ---
+        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON (Reverted to Fetch) ---
         async function checkLinkStatus(liElement) {
             const url = liElement.dataset.url;
             if (!url) return; // Skip if no data-url
@@ -601,24 +606,22 @@
 
             // Reset status classes
             iconSpan.classList.remove('status-available', 'status-unavailable');
-            // iconSpan.style.backgroundColor = '#ccc'; // Indicate checking state visually if needed
+            // iconSpan.style.backgroundColor = '#ccc'; // Indicate checking state visually if needed - CSS handles this
 
-            // --- Use a temporary image request for status check to bypass CORS issues ---
-            // Browsers typically allow loading images from different origins,
-            // and will trigger an error event on 404/network issues without
-            // CORS blocking it like fetch might for HEAD.
-            const img = new Image();
-            img.onload = () => {
-                // Image loaded successfully (usually means resource exists)
-                iconSpan.classList.add('status-available');
-            };
-            img.onerror = () => {
-                // Image failed to load (404, network error, resource doesn't exist as an image)
-                 // This method isn't perfect (might fail for valid non-image URLs),
-                 // but it's a common workaround for same-origin restrictions on status checks.
+            try {
+                // Use HEAD request as it's lighter than GET and less prone to CORS issues than GET on some servers
+                const response = await fetch(url, { method: 'HEAD', mode: 'cors' }); // Explicitly set mode: 'cors'
+
+                if (response.ok) { // Status 200-299
+                    iconSpan.classList.add('status-available');
+                } else { // 404, 500, etc. - Resource not found or server error
+                    iconSpan.classList.add('status-unavailable');
+                }
+            } catch (error) {
+                // Network errors, actual CORS issues, etc. - Failed to reach or communicate with resource
+                console.warn(`Failed to fetch HEAD for ${url}:`, error);
                 iconSpan.classList.add('status-unavailable');
-            };
-            img.src = url; // Set the source to trigger the check
+            }
         }
 
 
@@ -704,6 +707,7 @@
                     } else {
                          console.warn("MathJax might not be immediately available or configured in the iframe.");
                          // Optionally try typesetting the whole document if MathJax is in the main frame
+                         // Pass the iframe's document body to the main MathJax instance
                          if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
                               MathJax.typesetPromise([iframeDoc.body]);
                          }

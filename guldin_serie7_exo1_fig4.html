@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Figure 7.1.4 - Linéique (Segment + Demi-cercle)</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']],
+            processEscapes: true,
+            processEnvironments: true,
+            macros: {
+              vec: ['\\overrightarrow{#1}', 1]
+            }
+          },
+          options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+          }
+        };
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
+        h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
+        h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
+        h2 { font-size: 1.5em; margin-top: 1.5em; }
+        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
+        .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
+        mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
+        mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
+        mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
+        ul { padding-left: 30px; }
+        .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
+        .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
+        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
+
+        .figure-placeholder img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Solution Figure 7.1.4 : Corps linéique (Segment + Demi-cercle)</h1>
+
+    <div class="figure-placeholder">
+        <!-- Placeholder for Figure 7.1.4 -->
+        <!-- Segment a(R,-r,0) to b(R,r,0) -->
+        <!-- Semicircle center c(R,0,0), radius r, passing through a, b, d(R+r,0,0) -->
+        <img src="figure7.1.4.png" alt="Figure 7.1.4 - Segment et Demi-cercle">
+    </div>
+    <p class="caption">FIGURE 7.1.4 - Corps linéique composé d'un segment [ab] et d'un demi-cercle (adb)</p>
+
+    <h2>Méthode requise : Théorème de Guldin (uniquement).</h2>
+
+    <h2>Concepts Clés :</h2>
+    <ul>
+        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'un arc de courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne le coupant pas (ou le touchant seulement) est :
+        $$S_{/\Delta} = L \times (2\pi R_G)$$
+        où $R_G$ est la distance du centre d'inertie $G$ de l'arc à l'axe $(\Delta)$. On peut donc trouver cette distance par :
+        $$R_G = \frac{S_{/\Delta}}{2\pi L}$$
+        </li>
+        <li><strong>Corps linéique :</strong> L'objet est constitué d'éléments (segment, arc) de densité linéique $\lambda$ constante.</li>
+        <li><strong>Centre d'inertie G :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. La coordonnée $x_G$ est la distance $R_{G, Oy}$ à l'axe Oy, et $y_G$ est la distance $R_{G, Ox}$ à l'axe Ox. Vu la géométrie (dans le plan z=0), $z_G=0$.</li>
+        <li><strong>Superposition :</strong> Le centre d'inertie $G$ du corps total est le barycentre des centres d'inertie de ses composantes ($G_{seg}$ pour le segment, $G_{semi}$ pour le demi-cercle), pondérés par leurs longueurs respectives ($L_{seg}$, $L_{semi}$).</li>
+    </ul>
+
+    <h2>Géométrie et Décomposition :</h2>
+    <p>Le corps linéique est dans le plan z=0 et se compose de deux parties :</p>
+    <ol>
+        <li><strong>Segment [ab] :</strong>
+            <ul>
+                <li>Extrémités : a(R, -r, 0) et b(R, r, 0).</li>
+                <li>Description : Segment vertical situé à l'abscisse $x=R$.</li>
+                <li>Longueur : $L_{seg} = \sqrt{(R-R)^2 + (r-(-r))^2 + (0-0)^2} = \sqrt{(2r)^2} = 2r$.</li>
+            </ul>
+        </li>
+        <li><strong>Demi-cercle (adb) :</strong>
+            <ul>
+                <li>Description : Arc de cercle dans le plan z=0, centré en c(R, 0, 0) de rayon r, reliant a(R, -r, 0) et b(R, r, 0) en passant par d(R+r, 0, 0). C'est la moitié droite du cercle d'équation $(x-R)^2 + y^2 = r^2$.</li>
+                <li>Paramétrisation : $x(\theta) = R + r\cos\theta$, $y(\theta) = r\sin\theta$, pour $\theta \in [-\pi/2, \pi/2]$.</li>
+                <li>Longueur : $L_{semi} = \frac{1}{2} \times (2\pi r) = \pi r$.</li>
+            </ul>
+        </li>
+    </ol>
+    <p>Longueur totale du corps : $L_{tot} = L_{seg} + L_{semi} = 2r + \pi r = r(2+\pi)$.</p>
+
+    <h2>Calcul des Centres d'Inertie (par Guldin)</h2>
+
+    <h3>1. Centre d'Inertie $G_{semi} = (x_{G,semi}, y_{G,semi}, 0)$ du Demi-cercle (adb)</h3>
+
+    <p>Le demi-cercle est symétrique par rapport à l'axe passant par c(R,0,0) et d(R+r,0,0), qui est la droite y=0 (l'axe Ox pour le cercle relatif à son centre c). Par conséquent, son centre d'inertie doit se trouver sur cet axe de symétrie : $y_{G,semi} = 0$.</p>
+    <p>Confirmons $y_{G,semi}=0$ avec Guldin. Effectuons une rotation autour d'un axe $y=k$ ne coupant pas l'arc, par exemple $y=-2r$. La distance d'un point $(x(\theta), y(\theta))$ de l'arc à l'axe $y=-2r$ est $y(\theta) - (-2r) = r\sin\theta + 2r$. L'élément de longueur est $ds = \sqrt{(dx/d\theta)^2 + (dy/d\theta)^2} d\theta = \sqrt{(-r\sin\theta)^2 + (r\cos\theta)^2} d\theta = r d\theta$.</p>
+    <ul>
+        <li>Surface générée par rotation autour de $y=-2r$ :
+        $$ S_{/y=-2r, semi} = \int_{-\pi/2}^{\pi/2} (2\pi \times \text{distance}) ds = \int_{-\pi/2}^{\pi/2} 2\pi (r\sin\theta + 2r) (r d\theta) $$
+        $$ S_{/y=-2r, semi} = 2\pi r^2 \int_{-\pi/2}^{\pi/2} (\sin\theta + 2) d\theta = 2\pi r^2 [-\cos\theta + 2\theta]_{-\pi/2}^{\pi/2} $$
+        $$ S_{/y=-2r, semi} = 2\pi r^2 [ (0 + 2\frac{\pi}{2}) - (0 + 2(-\frac{\pi}{2})) ] = 2\pi r^2 [\pi - (-\pi)] = 4\pi^2 r^2 $$</li>
+        <li>Application de Guldin : La distance du centre d'inertie $G_{semi}$ à l'axe $y=-2r$ est $R_G = y_{G,semi} - (-2r) = y_{G,semi} + 2r$.
+        $$ S_{/y=-2r, semi} = L_{semi} \times (2\pi R_G) = (\pi r) \times 2\pi (y_{G,semi} + 2r) $$
+        $$ 4\pi^2 r^2 = 2\pi^2 r (y_{G,semi} + 2r) \implies y_{G,semi} + 2r = \frac{4\pi^2 r^2}{2\pi^2 r} = 2r $$
+        $$ y_{G,semi} = 0 $$
+        Ce qui confirme le résultat obtenu par symétrie.</li>
+    </ul>
+
+    <p>Calculons $x_{G,semi}$. Effectuons une rotation autour de l'axe Oy (équation x=0). Cet axe ne coupe pas l'arc (car $x=R+r\cos\theta \ge R > 0$ si $R>0$).</p>
+    <ul>
+        <li>Surface générée par rotation autour de Oy : La distance d'un point de l'arc à Oy est $x(\theta) = R + r\cos\theta$.
+        $$ S_{/Oy, semi} = \int_{-\pi/2}^{\pi/2} (2\pi \times \text{distance}) ds = \int_{-\pi/2}^{\pi/2} 2\pi (R + r\cos\theta) (r d\theta) $$
+        $$ S_{/Oy, semi} = 2\pi r \int_{-\pi/2}^{\pi/2} (R + r\cos\theta) d\theta = 2\pi r [R\theta + r\sin\theta]_{-\pi/2}^{\pi/2} $$
+        $$ S_{/Oy, semi} = 2\pi r [ (R\frac{\pi}{2} + r\sin(\frac{\pi}{2})) - (R(-\frac{\pi}{2}) + r\sin(-\frac{\pi}{2})) ] $$
+        $$ S_{/Oy, semi} = 2\pi r [ (R\frac{\pi}{2} + r) - (-R\frac{\pi}{2} - r) ] = 2\pi r [R\pi + 2r] = 2\pi^2 Rr + 4\pi r^2 $$</li>
+        <li>Application de Guldin : La distance du centre d'inertie $G_{semi}$ à l'axe Oy est $R_G = x_{G,semi}$.
+        $$ S_{/Oy, semi} = L_{semi} \times (2\pi R_G) = (\pi r) \times (2\pi x_{G,semi}) = 2\pi^2 r x_{G,semi} $$
+        $$ 2\pi^2 Rr + 4\pi r^2 = 2\pi^2 r x_{G,semi} \implies x_{G,semi} = \frac{2\pi^2 Rr + 4\pi r^2}{2\pi^2 r} = R + \frac{4\pi r^2}{2\pi^2 r} $$
+        $$ x_{G,semi} = R + \frac{2r}{\pi} $$</li>
+    </ul>
+    <p>Donc, le centre d'inertie du demi-cercle est $G_{semi} = (R + \frac{2r}{\pi}, 0, 0)$.</p>
+    <p><em>Vérification alternative pour $x_{G,semi}$:</em> Rotation autour de l'axe $x=R$ (axe passant par a et b). Distance d'un point $(R+r\cos\theta, r\sin\theta)$ à $x=R$ est $r\cos\theta$. Surface $S_{/x=R, semi} = \int_{-\pi/2}^{\pi/2} 2\pi (r\cos\theta) (r d\theta) = 2\pi r^2 [\sin\theta]_{-\pi/2}^{\pi/2} = 2\pi r^2 [1 - (-1)] = 4\pi r^2$. Guldin: $S_{/x=R, semi} = L_{semi} \times 2\pi |x_{G,semi} - R|$. $4\pi r^2 = (\pi r) \times 2\pi (x_{G,semi} - R)$ (car $x_{G,semi} > R$). $x_{G,semi} - R = \frac{4\pi r^2}{2\pi^2 r} = \frac{2r}{\pi}$. $x_{G,semi} = R + \frac{2r}{\pi}$. Cohérent.</p>
+
+
+    <h3>2. Centre d'Inertie $G_{seg} = (x_{G,seg}, y_{G,seg}, 0)$ du Segment [ab]</h3>
+
+    <p>Le segment [ab] est vertical, allant de (R, -r, 0) à (R, r, 0). Par symétrie, son centre d'inertie est son milieu : $G_{seg} = (\frac{R+R}{2}, \frac{-r+r}{2}, \frac{0+0}{2}) = (R, 0, 0)$.</p>
+    <p>Confirmons avec Guldin :</p>
+    <ul>
+        <li>Calcul de $x_{G,seg}$ : Rotation autour de l'axe Oy (x=0). Le segment est à une distance constante $R$ de Oy. La rotation engendre une portion de cylindre de rayon R et hauteur $2r$.
+        $$ S_{/Oy, seg} = \text{Circonférence} \times \text{Hauteur} = (2\pi R) \times (2r) = 4\pi Rr $$
+        Application de Guldin : $S_{/Oy, seg} = L_{seg} \times (2\pi x_{G,seg})$.
+        $$ 4\pi Rr = (2r) \times (2\pi x_{G,seg}) \implies x_{G,seg} = \frac{4\pi Rr}{4\pi r} = R $$
+        </li>
+        <li>Calcul de $y_{G,seg}$ : 
+        $$ y_{G,seg} = 0 $$
+        </li>
+    </ul>
+     <p>Donc, le centre d'inertie du segment est $G_{seg} = (R, 0, 0)$, par symétrie.</p>
+
+    <h3>3. Centre d'Inertie $G = (x_G, y_G, 0)$ du Corps Composite</h3>
+
+    <p>Le centre d'inertie global $G$ est le barycentre de $G_{seg}$ (pondéré par $L_{seg}=2r$) et $G_{semi}$ (pondéré par $L_{semi}=\pi r$).</p>
+    $$ G = \frac{L_{seg} G_{seg} + L_{semi} G_{semi}}{L_{seg} + L_{semi}} $$
+    Les coordonnées sont :
+    $$ x_G = \frac{L_{seg} x_{G,seg} + L_{semi} x_{G,semi}}{L_{seg} + L_{semi}} $$
+    $$ y_G = \frac{L_{seg} y_{G,seg} + L_{semi} y_{G,semi}}{L_{seg} + L_{semi}} $$
+    $$ z_G = 0 $$
+
+    <p>En substituant les valeurs trouvées :</p>
+    <ul>
+        <li>$G_{seg} = (R, 0, 0)$, $L_{seg} = 2r$</li>
+        <li>$G_{semi} = (R + \frac{2r}{\pi}, 0, 0)$, $L_{semi} = \pi r$</li>
+        <li>$L_{tot} = 2r + \pi r = r(2+\pi)$</li>
+    </ul>
+    $$ x_G = \frac{(2r)(R) + (\pi r)(R + \frac{2r}{\pi})}{r(2+\pi)} = \frac{2rR + \pi r R + (\pi r)(\frac{2r}{\pi})}{r(2+\pi)} $$
+    $$ x_G = \frac{2rR + \pi r R + 2r^2}{r(2+\pi)} = \frac{r(2R + \pi R + 2r)}{r(2+\pi)} $$
+    $$ x_G = \frac{R(2+\pi) + 2r}{2+\pi} = R + \frac{2r}{2+\pi} $$
+
+    $$ y_G = \frac{(2r)(0) + (\pi r)(0)}{r(2+\pi)} = \frac{0}{r(2+\pi)} = 0 $$
+
+    <h2>Résultat :</h2>
+    <p>Le centre d'inertie G du corps linéique complet a pour coordonnées :</p>
+    $$ x_G = R + \frac{2r}{2+\pi} $$
+    $$ y_G = 0 $$
+    $$ z_G = 0 $$
+    <p>Le centre d'inertie se trouve sur l'axe Ox, légèrement décalé vers la droite ($x>R$) par rapport au centre c(R,0,0) du demi-cercle, ce qui est logique car le demi-cercle s'étend davantage vers les x positifs que le segment.</p>
+
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rappel Cinématique du Solide</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+              vec: ["{\\overrightarrow{#1}}", 1],
+              mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
+              deriv: ["{\\frac{d#1}{dt}}", 1] // Macro for time derivative
+            }
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body {
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6;
+            margin: 1em; /* Add margin for content inside iframe */
+            color: #333;
+        }
+        h1, h2, h3 {
+            font-family: "Computer Modern Serif", serif; /* Imitation LaTeX font for titles */
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+            color: #003366; /* Dark blue title color */
+        }
+        h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366;}
+        h2 { font-size: 1.5em; }
+        h3 { font-size: 1.2em; border-bottom: none; color: #0055A4; } /* Slightly different color for subheadings */
+        mjx-container { /* Ensure MathJax output isn't shrunk */
+            font-size: 105% !important;
+            text-align: left !important;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .math-display {
+             margin-top: 1em;
+             margin-bottom: 1em;
+             padding: 0.5em;
+             background-color: #f8f8f8; /* Light background for displayed math */
+             border: 1px solid #eee;
+             border-radius: 4px;
+             overflow-x: auto; /* Handle potentially wide equations */
+        }
+        .example {
+            border-left: 3px solid #ff9900; /* Orange border for examples */
+            padding-left: 1em;
+            margin: 1em 0;
+            font-style: italic;
+            color: #555;
+            background-color: #fff8e1; /* Light yellow background */
+            padding: 0.8em;
+            border-radius: 4px;
+        }
+        .definition {
+            border: 1px solid #007bff; /* Blue border for definitions */
+            background-color: #e7f3ff; /* Light blue background */
+            padding: 0.8em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        ul { margin-left: 1.5em; }
+        li { margin-bottom: 0.5em; }
+        strong { color: #003366; } /* Consistent color for emphasis */
+        code {
+            background-color: #eee;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: "Computer Modern Typewriter", monospace;
+        }
+        /* Style specific to Euler angles diagrams */
+        .euler-diagram { text-align: center; margin: 1em 0; }
+        .euler-diagram img { max-width: 80%; height: auto; border: 1px solid #ccc; } /* Example style */
+    </style>
+</head>
+<body>
+
+    <h1>Cinématique du Solide - Rappels</h1>
+
+    <h2>Introduction</h2>
+    <p>
+        La <strong>cinématique du solide</strong> est la branche de la mécanique qui étudie le mouvement des solides considérés comme indéformables, sans s'intéresser aux causes (forces) qui provoquent ce mouvement. Son objectif principal est de décrire et de quantifier la position, la vitesse et l'accélération de chaque point d'un solide au cours du temps par rapport à un référentiel donné.
+    </p>
+    <div class="definition">
+        Un <strong>solide (indéformable)</strong> est un système matériel tel que la distance entre deux points quelconques \( A \) et \( B \) appartenant au solide reste constante au cours du temps :
+        <div class="math-display">
+        \[ d(A(t), B(t)) = ||\vec{AB}(t)|| = \text{Cte} \]
+        </div>
+    </div>
+    <p>
+        L'étude nécessite la définition de <strong>référentiels</strong> (ou repères d'espace-temps) pour localiser les points et décrire leur mouvement. La notion de <strong>torseur</strong> est particulièrement adaptée pour décrire le champ des vitesses d'un solide.
+    </p>
+
+    <h2>1. Référentiels et Repères</h2>
+    <p>
+        Pour décrire le mouvement, un observateur définit un <strong>référentiel</strong>, qui est un système de référence par rapport auquel le mouvement est étudié. En cinématique classique, un référentiel est constitué de :
+    </p>
+    <ul>
+        <li>Un <strong>repère d'espace</strong> : défini par une origine \( O \) et une base orthonormée directe \( (\vec{i}, \vec{j}, \vec{k}) \). On le note \( R(O, \vec{i}, \vec{j}, \vec{k}) \).</li>
+        <li>Un <strong>repère de temps</strong> (ou échelle de temps), où le temps \( t \) est considéré comme absolu et uniforme.</li>
+    </ul>
+    <p>On distingue souvent :</p>
+    <ul>
+        <li>Le <strong>référentiel fixe</strong> (ou absolu) \( R_0(O_0, \vec{x}_0, \vec{y}_0, \vec{z}_0) \), considéré comme immobile ou de référence.</li>
+        <li>Le <strong>référentiel mobile</strong> \( R_1(O_1, \vec{x}_1, \vec{y}_1, \vec{z}_1) \), souvent lié à l'objet en mouvement ou à une partie de celui-ci.</li>
+    </ul>
+
+    <h2>2. Dérivation Vectorielle et Changement de Repère</h2>
+    <p>
+        Lorsqu'un vecteur \( \vec{U} \) est exprimé dans une base mobile \( (\vec{i}_1, \vec{j}_1, \vec{k}_1) \) par rapport à un repère fixe \( R_0 \), sa dérivée temporelle par rapport à \( R_0 \) doit tenir compte de la variation des vecteurs de base de \( R_1 \).
+    </p>
+    <div class="definition">
+        <strong>Vecteur Rotation Instantanée :</strong> Le mouvement de \( R_1 \) par rapport à \( R_0 \) est caractérisé par le vecteur rotation instantanée \( \vec{\Omega}_{R_1/R_0} \). Ses composantes dans une base sont les vitesses angulaires de rotation autour des axes de cette base.
+        <br/> On a les relations : \( \frac{d\vec{i}_1}{dt}|_{R_0} = \vec{\Omega}_{R_1/R_0} \wedge \vec{i}_1 \), et de même pour \( \vec{j}_1, \vec{k}_1 \).
+    </div>
+    <div class="definition">
+        <strong>Formule de Dérivation Vectorielle (ou de Transport) :</strong> Pour tout vecteur \( \vec{U} \), sa dérivée temporelle dans le référentiel fixe \( R_0 \) est liée à sa dérivée dans le référentiel mobile \( R_1 \) par :
+        <div class="math-display">
+        \[ \frac{d\vec{U}}{dt}\bigg|_{R_0} = \frac{d\vec{U}}{dt}\bigg|_{R_1} + \vec{\Omega}_{R_1/R_0} \wedge \vec{U} \]
+        </div>
+        <ul>
+            <li>\( \frac{d\vec{U}}{dt}|_{R_0} \) : Dérivée absolue (par rapport au référentiel fixe).</li>
+            <li>\( \frac{d\vec{U}}{dt}|_{R_1} \) : Dérivée relative (par rapport au référentiel mobile). Prend en compte la variation des composantes de \( \vec{U} \) dans la base de \( R_1 \).</li>
+            <li>\( \vec{\Omega}_{R_1/R_0} \wedge \vec{U} \) : Terme d'entraînement (dû à la rotation de la base de \( R_1 \) par rapport à \( R_0 \)).</li>
+        </ul>
+    </div>
+
+    <h2>3. Cinématique du Point</h2>
+    <ul>
+        <li><strong>Position :</strong> Le vecteur position d'un point \( P \) par rapport à l'origine \( O_0 \) du repère fixe \( R_0 \) est \( \vec{O_0P} \).</li>
+        <li>
+            <strong>Vitesse Absolue :</strong> \( \vec{V}_{P/R_0} = \frac{d\vec{O_0P}}{dt}\big|_{R_0} \).
+            La notation \( \vec{V}(P) \) ou \( \vec{V}_P \) est souvent utilisée lorsque le référentiel \( R_0 \) est implicite.
+        </li>
+        <li>
+            <strong>Accélération Absolue :</strong> \( \vec{a}_{P/R_0} = \frac{d\vec{V}_{P/R_0}}{dt}\big|_{R_0} = \frac{d^2\vec{O_0P}}{dt^2}\big|_{R_0} \).
+            Notée aussi \( \vec{a}(P) \) ou \( \vec{a}_P \).
+        </li>
+    </ul>
+
+    <h2>4. Mouvement d'un Solide Indéformable</h2>
+    <h3>4.1. Champ des Vitesses</h3>
+    <div class="definition">
+        <strong>Relation Fondamentale du Champ des Vitesses :</strong> Pour deux points quelconques \( A \) et \( B \) d'un même solide \( S \) en mouvement par rapport à un référentiel \( R_0 \), leurs vitesses sont liées par :
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = \vec{V}_{A/R_0} + \vec{\Omega}_{S/R_0} \wedge \vec{AB} \]
+        </div>
+        où \( \vec{\Omega}_{S/R_0} \) est le vecteur rotation instantanée du solide \( S \) par rapport à \( R_0 \). Ce vecteur est <strong>unique</strong> pour tout le solide à un instant donné.
+    </div>
+    <p>Cette relation montre que le champ des vitesses \( P \mapsto \vec{V}_{P/R_0} \) d'un solide est un champ <strong>équiprojectif</strong> :</p>
+    <div class="math-display">
+    \[ (\vec{V}_{B/R_0} - \vec{V}_{A/R_0}) \cdot \vec{AB} = (\vec{\Omega}_{S/R_0} \wedge \vec{AB}) \cdot \vec{AB} = 0 \]
+    </div>
+    <p>Cela signifie que la projection de la vitesse relative \( \vec{V}_{B/R_0} - \vec{V}_{A/R_0} \) sur la direction \( \vec{AB} \) est nulle, ce qui est cohérent avec la condition d'indéformabilité (la distance \( AB \) ne varie pas).</p>
+
+    <h3>4.2. Torseur Cinématique</h3>
+    <p>
+        Le champ des vitesses d'un solide indéformable a la structure mathématique d'un <strong>torseur</strong>.
+    </p>
+    <div class="definition">
+        Le <strong>Torseur Cinématique</strong> du solide \( S \) par rapport au référentiel \( R_0 \), noté \( \{V(S/R_0)\} \), est défini par ses éléments de réduction en un point \( A \):
+        <div class="math-display">
+        \[ \{V(S/R_0)\}_A = \begin{Bmatrix} \vec{\Omega}_{S/R_0} & \text{(Résultante)} \\ \vec{V}_{A/R_0} & \text{(Moment en A)} \end{Bmatrix}_A \]
+        </div>
+        <ul>
+            <li>La <strong>résultante</strong> est le vecteur rotation instantanée \( \vec{\Omega}_{S/R_0} \).</li>
+            <li>Le <strong>moment</strong> au point \( A \) est le vecteur vitesse de ce point \( \vec{V}_{A/R_0} \).</li>
+        </ul>
+        La formule de transport des moments du torseur correspond exactement à la relation fondamentale des vitesses : \( \vec{V}_{B/R_0} = \vec{V}_{A/R_0} + \vec{BA} \wedge \vec{\Omega}_{S/R_0} \). (Attention au sens \( \vec{BA} = -\vec{AB} \)).
+    </div>
+
+    <h3>4.3. Axe Instantané de Rotation (AIR)</h3>
+    <p>
+        Si \( \vec{\Omega}_{S/R_0} \neq \vec{0} \), le torseur cinématique admet un <strong>axe central</strong>, appelé Axe Instantané de Rotation (AIR). C'est l'ensemble des points \( I \) de l'espace (pas nécessairement sur le solide) dont la vitesse est colinéaire à \( \vec{\Omega}_{S/R_0} \).
+    </p>
+    <ul>
+        <li>Les points \( I \) de l'AIR ont la vitesse de norme minimale.</li>
+        <li>Si le mouvement est une rotation pure ou un mouvement plan, l'invariant scalaire \( \vec{\Omega}_{S/R_0} \cdot \vec{V}_A \) est nul (le torseur est un glisseur), et la vitesse des points de l'AIR est nulle \( \vec{V}_{I/R_0} = \vec{0} \). Le mouvement peut être vu, à cet instant, comme une rotation pure autour de l'AIR.</li>
+        <li>Si l'invariant scalaire est non nul (torseur quelconque ou vis), la vitesse sur l'AIR est non nulle et parallèle à \( \vec{\Omega}_{S/R_0} \). Le mouvement est dit hélicoïdal.</li>
+    </ul>
+
+    <h3>4.4. Champ des Accélérations</h3>
+    <p>
+        En dérivant la relation fondamentale des vitesses par rapport au temps dans \( R_0 \), on obtient la relation entre les accélérations de deux points \( A \) et \( B \) du solide \( S \):
+    </p>
+    <div class="math-display">
+    \[ \vec{a}_{B/R_0} = \vec{a}_{A/R_0} + \frac{d\vec{\Omega}_{S/R_0}}{dt}\bigg|_{R_0} \wedge \vec{AB} + \vec{\Omega}_{S/R_0} \wedge (\vec{\Omega}_{S/R_0} \wedge \vec{AB}) \]
+    </div>
+    <ul>
+        <li>\( \vec{a}_{A/R_0} \) : Accélération du point A.</li>
+        <li>\( \frac{d\vec{\Omega}_{S/R_0}}{dt}|_{R_0} \wedge \vec{AB} \) : Accélération tangentielle, due à la variation du vecteur rotation (accélération angulaire).</li>
+        <li>\( \vec{\Omega}_{S/R_0} \wedge (\vec{\Omega}_{S/R_0} \wedge \vec{AB}) \) : Accélération normale (ou centripète), dirigée de \( B \) vers l'axe instantané de rotation (si \( \vec{a}_A = \vec{0} \) et \( \dot{\vec{\Omega}} = \vec{0} \)).</li>
+    </ul>
+    <p>Le champ des accélérations <strong>n'est pas</strong> un torseur.</p>
+
+    <h2>5. Composition des Mouvements</h2>
+    <p>
+        On considère un point \( P \) en mouvement par rapport à un référentiel mobile \( R_1(O_1, \vec{x}_1, \vec{y}_1, \vec{z}_1) \), lui-même en mouvement par rapport à un référentiel fixe \( R_0(O_0, \vec{x}_0, \vec{y}_0, \vec{z}_0) \).
+    </p>
+    <h3>5.1. Composition des Vitesses</h3>
+    <div class="definition">
+        La vitesse absolue de \( P \) par rapport à \( R_0 \) est la somme de sa vitesse relative par rapport à \( R_1 \) et de la vitesse d'entraînement du point coïncident de \( R_1 \) :
+        <div class="math-display">
+        \[ \vec{V}_{P/R_0} = \vec{V}_{P/R_1} + \vec{V}_{E(P)/R_0} \]
+        </div>
+        On note souvent : \( \vec{V}_a = \vec{V}_r + \vec{V}_e \)
+        <ul>
+            <li>\( \vec{V}_a = \vec{V}_{P/R_0} \) : Vitesse absolue.</li>
+            <li>\( \vec{V}_r = \vec{V}_{P/R_1} = \frac{d\vec{O_1P}}{dt}|_{R_1} \) : Vitesse relative (vitesse de P vu par un observateur lié à \( R_1 \)).</li>
+            <li>\( \vec{V}_e = \vec{V}_{E(P)/R_0} = \vec{V}_{O_1/R_0} + \vec{\Omega}_{R_1/R_0} \wedge \vec{O_1P} \) : Vitesse d'entraînement (vitesse qu'aurait P s'il était fixe dans \( R_1 \)).</li>
+        </ul>
+        <strong>Note:</strong> \( \vec{V}_{O_1/R_0} \) est la vitesse de l'origine de \( R_1 \) par rapport à \( R_0 \).
+    </div>
+
+    <h3>5.2. Composition des Accélérations (Formule de Coriolis)</h3>
+     <div class="definition">
+        L'accélération absolue de \( P \) par rapport à \( R_0 \) est donnée par :
+        <div class="math-display">
+        \[ \vec{a}_{P/R_0} = \vec{a}_{P/R_1} + \vec{a}_{E(P)/R_0} + \vec{a}_{C} \]
+        </div>
+        On note souvent : \( \vec{a}_a = \vec{a}_r + \vec{a}_e + \vec{a}_c \)
+        <ul>
+            <li>\( \vec{a}_a = \vec{a}_{P/R_0} \) : Accélération absolue.</li>
+            <li>\( \vec{a}_r = \vec{a}_{P/R_1} = \frac{d\vec{V}_{P/R_1}}{dt}|_{R_1} \) : Accélération relative.</li>
+            <li>\( \vec{a}_e = \vec{a}_{E(P)/R_0} = \vec{a}_{O_1/R_0} + \frac{d\vec{\Omega}_{R_1/R_0}}{dt}\big|_{R_0} \wedge \vec{O_1P} + \vec{\Omega}_{R_1/R_0} \wedge (\vec{\Omega}_{R_1/R_0} \wedge \vec{O_1P}) \) : Accélération d'entraînement.</li>
+            <li>\( \vec{a}_c = 2 \vec{\Omega}_{R_1/R_0} \wedge \vec{V}_{P/R_1} \) : <strong>Accélération de Coriolis</strong> (ou complémentaire).</li>
+        </ul>
+        L'accélération de Coriolis est nulle si :
+        <ul>
+            <li>Le mouvement d'entraînement est une translation \( (\vec{\Omega}_{R_1/R_0} = \vec{0}) \).</li>
+            <li>Le point \( P \) est fixe dans \( R_1 \) \( (\vec{V}_{P/R_1} = \vec{0}) \).</li>
+            <li>La vitesse relative \( \vec{V}_{P/R_1} \) est parallèle au vecteur rotation \( \vec{\Omega}_{R_1/R_0} \).</li>
+        </ul>
+    </div>
+
+    <h2>6. Paramétrage de l'Orientation : Angles d'Euler</h2>
+    <p>
+        L'orientation d'un solide (ou d'un repère mobile \( R_k \) par rapport à un repère fixe \( R_i \)) peut être décrite par trois rotations successives autour d'axes spécifiques. Les <strong>Angles d'Euler</strong> (type ZXZ ou type 1 dans le PDF) sont une convention courante :
+    </p>
+    <ol>
+        <li><strong>Précession \( \psi \) :</strong> Rotation autour de l'axe \( \vec{z}_i \), transformant \( R_i \) en \( R_1(\vec{x}_1, \vec{y}_1, \vec{z}_1 = \vec{z}_i) \).</li>
+        <li><strong>Nutation \( \theta \) :</strong> Rotation autour du nouvel axe \( \vec{x}_1 \) (ligne des nœuds), transformant \( R_1 \) en \( R_2(\vec{x}_2 = \vec{x}_1, \vec{y}_2, \vec{z}_2) \).</li>
+        <li><strong>Rotation Propre \( \phi \) :</strong> Rotation autour du nouvel axe \( \vec{z}_2 \), transformant \( R_2 \) en \( R_k(\vec{x}_k, \vec{y}_k, \vec{z}_k = \vec{z}_2) \).</li>
+    </ol>
+    <p>Le vecteur rotation instantanée résultant est la somme des vecteurs rotations de chaque étape :</p>
+    <div class="math-display">
+    \[ \vec{\Omega}_{R_k/R_i} = \dot{\psi} \vec{z}_i + \dot{\theta} \vec{x}_1 + \dot{\phi} \vec{z}_2 \]
+    </div>
+    <p>Les composantes de \( \vec{\Omega} \) peuvent être exprimées dans la base fixe \( R_i \) ou la base mobile \( R_k \) en utilisant les matrices de passage entre les repères (voir PDF p. 225-226):</p>
+    <ul>
+        <li>Composantes dans \( R_i \) (repère fixe) :
+            <div class="math-display">
+            \[ \vec{\Omega} = \begin{pmatrix} \dot{\theta}\cos\psi + \dot{\phi}\sin\theta\sin\psi \\ \dot{\theta}\sin\psi - \dot{\phi}\sin\theta\cos\psi \\ \dot{\psi} + \dot{\phi}\cos\theta \end{pmatrix}_{R_i} \]
+        </li>
+         <li>Composantes dans \( R_k \) (repère mobile lié au solide) :
+            <div class="math-display">
+            \[ \vec{\Omega} = \begin{pmatrix} \dot{\psi}\sin\theta\sin\phi + \dot{\theta}\cos\phi \\ \dot{\psi}\sin\theta\cos\phi - \dot{\theta}\sin\phi \\ \dot{\psi}\cos\theta + \dot{\phi} \end{pmatrix}_{R_k} \]
+        </li>
+    </ul>
+    <p class="example">Les angles d'Euler sont utilisés pour décrire l'orientation des avions, des satellites, des gyroscopes, etc.</p>
+
+    <h2>7. Mouvements Particuliers Fondamentaux</h2>
+
+    <h3>7.1. Mouvement de Translation</h3>
+    <ul>
+        <li><strong>Définition :</strong> L'orientation du solide reste constante par rapport au repère fixe (\( \vec{\Omega}_{S/R_0} = \vec{0} \)).</li>
+        <li><strong>Champ des vitesses :</strong> Tous les points du solide ont le même vecteur vitesse à chaque instant : \( \vec{V}_{P/R_0} = \vec{V}_{trans}(t) \). Le champ est uniforme.</li>
+        <li><strong>Trajectoires :</strong> Toutes les trajectoires sont identiques à une translation près (parallèles). Translation <strong>rectiligne</strong> si \( \vec{V}_{trans} \) garde une direction constante, <strong>curviligne</strong> sinon.</li>
+        <li><strong>Torseur cinématique :</strong> C'est un torseur couple : \( \{V(S/R_0)\}_A = \{\vec{0}, \vec{V}_{A/R_0}\} \).</li>
+    </ul>
+
+    <h3>7.2. Mouvement de Rotation autour d'un Axe Fixe</h3>
+    <ul>
+        <li><strong>Définition :</strong> Il existe une droite \( (\Delta) \) fixe dans \( R_0 \) telle que tous les points du solide appartenant à \( (\Delta) \) sont immobiles par rapport à \( R_0 \).</li>
+        <li><strong>Vecteur rotation :</strong> \( \vec{\Omega}_{S/R_0} = \dot{\theta}(t) \vec{u} \), où \( \vec{u} \) est le vecteur unitaire directeur de \( (\Delta) \) et \( \theta(t) \) l'angle de rotation.</li>
+        <li><strong>Champ des vitesses :</strong> Pour tout point \( P \) du solide, \( \vec{V}_{P/R_0} = \vec{\Omega}_{S/R_0} \wedge \vec{IP} \), où \( I \) est un point quelconque de l'axe \( (\Delta) \). Les trajectoires sont des cercles centrés sur \( (\Delta) \).</li>
+        <li><strong>Torseur cinématique :</strong> C'est un torseur glisseur dont l'axe est l'axe de rotation \( (\Delta) \): \( \{V(S/R_0)\}_I = \{\vec{\Omega}, \vec{0}\} \) pour \( I \in (\Delta) \).</li>
+    </ul>
+
+     <h3>7.3. Mouvement Plan sur Plan</h3>
+     <ul>
+        <li><strong>Définition :</strong> Tous les points du solide se déplacent dans des plans parallèles à un plan fixe \( \Pi \).</li>
+        <li><strong>Vecteur rotation :</strong> Il est toujours orthogonal au plan fixe \( \Pi \): \( \vec{\Omega}_{S/R_0} = \omega(t) \vec{k} \), où \( \vec{k} \) est normal à \( \Pi \).</li>
+        <li><strong>Simplification :</strong> L'étude peut souvent être réduite à une analyse 2D dans un plan. L'AIR est une droite perpendiculaire au plan de mouvement.</li>
+     </ul>
+
+     <h3>7.4. Mouvement Hélicoïdal</h3>
+     <ul>
+        <li><strong>Définition :</strong> Mouvement résultant de la composition d'une rotation autour d'un axe \( (\Delta) \) et d'une translation le long de ce même axe.</li>
+        <li><strong>Torseur cinématique :</strong> C'est un torseur quelconque (vis) dont l'axe central est l'axe du mouvement hélicoïdal. L'invariant scalaire \( \vec{\Omega} \cdot \vec{V}_A \neq 0 \).</li>
+     </ul>
+
+</body>
+</html>

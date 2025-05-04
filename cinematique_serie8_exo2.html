@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Exercice 2 - Cinématique du Solide</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+              vec: ["{\\overrightarrow{#1}}", 1],
+              mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
+              deriv: ["{\\frac{d#1}{dt}}", 1], // Macro for time derivative
+              matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1] // Macro for pmatrix
+            }
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body {
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6;
+            margin: 1em;
+            color: #333;
+        }
+        h1, h2, h3 {
+            font-family: "Computer Modern Serif", serif;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+            color: #003366;
+        }
+        h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366;}
+        h2 { font-size: 1.5em; color: #D2691E; /* Chocolate color for Solution title */}
+        h3 { font-size: 1.3em; border-bottom: none; color: #0055A4; margin-top: 1.2em;} /* Sub-question titles */
+        h4 { font-size: 1.1em; border-bottom: none; color: #006400; margin-top: 1em;} /* Sub-step titles */
+        mjx-container {
+            font-size: 105% !important;
+            text-align: left !important;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .math-display {
+             margin-top: 1em;
+             margin-bottom: 1em;
+             padding: 0.5em;
+             background-color: #f8f8f8;
+             border: 1px solid #eee;
+             border-radius: 4px;
+             overflow-x: auto;
+        }
+        .explanation {
+            border-left: 3px solid #1E90FF; /* Dodger blue border */
+            padding-left: 1em;
+            margin: 1em 0;
+            color: #444;
+            background-color: #f0f8ff; /* Alice blue background */
+            padding: 0.8em;
+            border-radius: 4px;
+        }
+        .definition { /* Using definition style for system description and final results */
+            border: 1px solid #28a745; /* Green border */
+            background-color: #f0fff0; /* Honeydew background */
+            padding: 0.8em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        ul { margin-left: 1.5em; list-style-type: disc; }
+        li { margin-bottom: 0.5em; }
+        strong { color: #003366; }
+        code {
+            background-color: #eee;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: "Computer Modern Typewriter", monospace;
+        }
+        .question-list ol {
+            list-style-type: decimal;
+            margin-left: 1.5em;
+            padding-left: 0;
+        }
+        .question-list li {
+            margin-bottom: 0.8em; /* Space between questions */
+        }
+        .figure-ref {
+            text-align: center;
+            margin: 1.5em 0;
+            font-style: italic;
+            color: #555;
+        }
+        .figure-ref img {
+             max-width: 70%; /* Adjust as needed */
+             height: auto;
+             border: 1px solid #ccc;
+             margin-top: 0.5em;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Exercice N°2 : Pendule Double</h1>
+
+    <div class="definition">
+        <p><strong>Description du Système :</strong></p>
+        <p>On considère un système de pendule double constitué de deux tiges rigides homogènes OA et AB, de longueurs respectives \( L_1 \) et \( L_2 \). Le point O est un point fixe. Le système oscille dans le plan vertical \( (O, \vec{x}_0, \vec{y}_0) \).</p>
+        <p><strong>Référentiels :</strong></p>
+        <ul>
+            <li>\( R_0(O, \vec{x}_0, \vec{y}_0, \vec{z}_0) \) : Référentiel fixe, avec \( \vec{x}_0 \) vertical descendant et \( \vec{y}_0 \) horizontal.</li>
+            <li>\( R_1(O, \vec{x}_1, \vec{y}_1, \vec{z}_1) \) : Référentiel lié à la tige OA, tel que \( \vec{x}_1 \) est porté par OA (\( \vec{OA} = L_1 \vec{x}_1 \)).</li>
+            <li>\( R_2(A, \vec{x}_2, \vec{y}_2, \vec{z}_2) \) : Référentiel lié à la tige AB, tel que \( \vec{x}_2 \) est porté par AB (\( \vec{AB} = L_2 \vec{x}_2 \)).</li>
+        </ul>
+        <p><strong>Paramétrage Angulaire :</strong></p>
+        <ul>
+            <li>L'angle \( \theta = (\vec{x}_0, \vec{x}_1) \) repère l'orientation de la tige OA par rapport à la verticale \( \vec{x}_0 \).</li>
+            <li>L'angle \( \phi = (\vec{x}_1, \vec{x}_2) \) repère l'orientation de la tige AB par rapport à la direction de la tige OA (\( \vec{x}_1 \)).</li>
+        </ul>
+        <p><strong>Hypothèse :</strong> Le mouvement étant plan dans \( (O, \vec{x}_0, \vec{y}_0) \), les rotations se font autour de l'axe \( \vec{z}_0 \), qui reste parallèle aux axes \( \vec{z}_1 \) et \( \vec{z}_2 \). On a donc \( \vec{z}_0 = \vec{z}_1 = \vec{z}_2 \).</p>
+    </div>
+
+    <div class="figure-ref">
+        <p>Figure 2 : Schéma du pendule double.</p>
+        <!-- Placeholder for the actual image if available -->
+         <img src="IMAGE_PLACEHOLDER_EX2.png" alt="Diagramme du pendule double Exercice 2">
+         <!-- Note: Replace IMAGE_PLACEHOLDER_EX2.png with the actual image path/data if you have it -->
+    </div>
+
+
+    <h2>Déterminer :</h2>
+    <div class="question-list">
+        <ol>
+            <li>
+                Les <strong>vecteurs vitesse de rotation instantanée</strong> \( \vec{\Omega}_{R_1/R_0} \) (rotation de la première tige par rapport au fixe) et \( \vec{\Omega}_{R_2/R_0} \) (rotation de la seconde tige par rapport au fixe).
+            </li>
+            <li>
+                Les <strong>vitesses absolues</strong> des points A et B, notées \( \vec{V}_{A/R_0} \) et \( \vec{V}_{B/R_0} \). Exprimer ces vecteurs dans les bases mobiles \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \) et \( B_2 = (\vec{x}_2, \vec{y}_2, \vec{z}_2) \).
+            </li>
+            <li>
+                L'<strong>accélération absolue</strong> du point A, notée \( \vec{a}_{A/R_0} \), en utilisant la méthode de dérivation du vecteur vitesse \( \vec{V}_{A/R_0} \). Exprimer ce vecteur accélération dans les bases mobiles \( B_1 \) et \( B_2 \).
+            </li>
+        </ol>
+    </div>
+
+    <hr style="border: 1px solid #003366; margin: 2em 0;">
+
+    <h2>Solution Détaillée</h2>
+
+    <h3>1. Vecteurs Vitesse de Rotation Instantanée</h3>
+
+    <div class="explanation">
+        <h4>Vecteur \( \vec{\Omega}_{R_1/R_0} \)</h4>
+        <p>Le référentiel \( R_1 \) (lié à la tige OA) est obtenu par rotation du référentiel fixe \( R_0 \) d'un angle \( \theta \) autour de l'axe \( (O, \vec{z}_0) \). La vitesse angulaire associée à cette rotation est \( \dot{\theta} = \deriv{\theta} \).</p>
+        <p>Le vecteur vitesse de rotation instantanée de \( R_1 \) par rapport à \( R_0 \) est donc :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_0 \]
+        </div>
+        <p>Comme \( \vec{z}_0 = \vec{z}_1 = \vec{z}_2 \), on peut l'écrire aussi :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 = \dot{\theta} \vec{z}_2 \]
+        </div>
+    </div>
+
+    <div class="explanation">
+        <h4>Vecteur \( \vec{\Omega}_{R_2/R_0} \)</h4>
+        <p>Pour trouver la vitesse de rotation absolue de \( R_2 \) (lié à la tige AB) par rapport à \( R_0 \), on utilise la <strong>loi de composition des vitesses de rotation</strong> :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_2/R_0} = \vec{\Omega}_{R_1/R_0} + \vec{\Omega}_{R_2/R_1} \]
+        </div>
+        <p>Il nous faut déterminer \( \vec{\Omega}_{R_2/R_1} \), qui représente la rotation de \( R_2 \) par rapport à \( R_1 \).</p>
+        <p>Le référentiel \( R_2 \) est obtenu par rotation de \( R_1 \) d'un angle \( \phi \) autour de l'axe \( (A, \vec{z}_1) \) (puisque \( \vec{x}_2 \) fait l'angle \( \phi \) avec \( \vec{x}_1 \) dans le plan \( ( \vec{x}_1, \vec{y}_1 ) \)). La vitesse angulaire relative est \( \dot{\phi} = \deriv{\phi} \).</p>
+        <p>Le vecteur vitesse de rotation relative est donc :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_2/R_1} = \dot{\phi} \vec{z}_1 \]
+        </div>
+        <p>Maintenant, appliquons la loi de composition :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_2/R_0} = \dot{\theta} \vec{z}_1 + \dot{\phi} \vec{z}_1 = (\dot{\theta} + \dot{\phi}) \vec{z}_1 \]
+        </div>
+        <p>Puisque \( \vec{z}_1 = \vec{z}_2 = \vec{z}_0 \), ce vecteur est le même dans les trois bases.</p>
+    </div>
+
+    <div class="definition">
+        <strong>Résultats Question 1 :</strong>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 = \matrice{0 \\ 0 \\ \dot{\theta}}_{B_1} = \matrice{0 \\ 0 \\ \dot{\theta}}_{B_2} \]
+        \[ \vec{\Omega}_{R_2/R_0} = (\dot{\theta} + \dot{\phi}) \vec{z}_1 = \matrice{0 \\ 0 \\ \dot{\theta} + \dot{\phi}}_{B_1} = \matrice{0 \\ 0 \\ \dot{\theta} + \dot{\phi}}_{B_2} \]
+        </div>
+    </div>
+
+    <h3>2. Vitesses Absolues des Points A et B</h3>
+
+    <div class="explanation">
+        <h4>Vitesse \( \vec{V}_{A/R_0} \)</h4>
+        <p>Le point A appartient à la tige OA (solide 1), dont le mouvement par rapport à \( R_0 \) est décrit par \( \vec{\Omega}_{R_1/R_0} \). On utilise la formule fondamentale du champ des vitesses pour les solides, appliquée entre le point fixe O et le point A :</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \vec{V}_{O/R_0} + \vec{\Omega}_{R_1/R_0} \wedge \vec{OA} \]
+        </div>
+        <p>On sait que \( \vec{V}_{O/R_0} = \vec{0} \) (point fixe), \( \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 \), et \( \vec{OA} = L_1 \vec{x}_1 \).</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \vec{0} + (\dot{\theta} \vec{z}_1) \wedge (L_1 \vec{x}_1) = L_1 \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) \]
+        </div>
+        <p>Dans la base orthonormée directe \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \), on a \( \vec{z}_1 \wedge \vec{x}_1 = \vec{y}_1 \). Donc :</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L_1 \dot{\theta} \vec{y}_1 \]
+        </div>
+        <p>Ceci est l'expression de la vitesse de A dans la base \( B_1 \). Pour l'exprimer dans la base \( B_2 \), il faut exprimer \( \vec{y}_1 \) en fonction de \( B_2 \). On sait que \( B_2 \) est obtenue par rotation de \( \phi \) de \( B_1 \) autour de \( \vec{z}_1=\vec{z}_2 \).</p>
+        <p>Les relations de passage sont :<br/>
+        \( \vec{x}_1 = \cos\phi \vec{x}_2 - \sin\phi \vec{y}_2 \) <br/>
+        \( \vec{y}_1 = \sin\phi \vec{x}_2 + \cos\phi \vec{y}_2 \) <br/>
+        \( \vec{z}_1 = \vec{z}_2 \)
+        </p>
+        <p>En substituant \( \vec{y}_1 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L_1 \dot{\theta} (\sin\phi \vec{x}_2 + \cos\phi \vec{y}_2) \]
+        </div>
+    </div>
+    <div class="definition">
+        <strong>Vitesse de A :</strong>
+        <p>Expression dans \( B_1 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L_1 \dot{\theta} \vec{y}_1 = \matrice{0 \\ L_1 \dot{\theta} \\ 0}_{B_1} \]
+        </div>
+        <p>Expression dans \( B_2 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L_1 \dot{\theta} \sin\phi \vec{x}_2 + L_1 \dot{\theta} \cos\phi \vec{y}_2 = \matrice{L_1 \dot{\theta} \sin\phi \\ L_1 \dot{\theta} \cos\phi \\ 0}_{B_2} \]
+        </div>
+    </div>
+
+    <div class="explanation">
+        <h4>Vitesse \( \vec{V}_{B/R_0} \)</h4>
+        <p>Le point B appartient à la tige AB (solide 2), dont le mouvement par rapport à \( R_0 \) est décrit par \( \vec{\Omega}_{R_2/R_0} \). On utilise la formule fondamentale du champ des vitesses appliquée entre le point A (dont on connaît la vitesse) et le point B :</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = \vec{V}_{A/R_0} + \vec{\Omega}_{R_2/R_0} \wedge \vec{AB} \]
+        </div>
+        <p>On sait que \( \vec{AB} = L_2 \vec{x}_2 \) et \( \vec{\Omega}_{R_2/R_0} = (\dot{\theta} + \dot{\phi}) \vec{z}_2 \). Utilisons l'expression de \( \vec{V}_{A/R_0} \) dans \( B_2 \) :</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = (L_1 \dot{\theta} \sin\phi \vec{x}_2 + L_1 \dot{\theta} \cos\phi \vec{y}_2) + ((\dot{\theta} + \dot{\phi}) \vec{z}_2) \wedge (L_2 \vec{x}_2) \]
+        </div>
+        <p>Calculons le produit vectoriel dans la base \( B_2 \): \( \vec{z}_2 \wedge \vec{x}_2 = \vec{y}_2 \).</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = L_1 \dot{\theta} \sin\phi \vec{x}_2 + L_1 \dot{\theta} \cos\phi \vec{y}_2 + L_2 (\dot{\theta} + \dot{\phi}) \vec{y}_2 \]
+        </div>
+        <p>En regroupant les termes :</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = (L_1 \dot{\theta} \sin\phi) \vec{x}_2 + (L_1 \dot{\theta} \cos\phi + L_2 (\dot{\theta} + \dot{\phi})) \vec{y}_2 \]
+        </div>
+        <p>Ceci est l'expression dans \( B_2 \). Pour l'exprimer dans \( B_1 \), il faut remplacer \( \vec{x}_2 \) et \( \vec{y}_2 \) par leurs expressions en fonction de \( B_1 \):<br/>
+        \( \vec{x}_2 = \cos\phi \vec{x}_1 + \sin\phi \vec{y}_1 \) <br/>
+        \( \vec{y}_2 = -\sin\phi \vec{x}_1 + \cos\phi \vec{y}_1 \)
+        </p>
+         <div class="math-display">
+         \begin{align*} \label{eq:1} \vec{V}_{B/R_0} = &(L_1 \dot{\theta} \sin\phi) (\cos\phi \vec{x}_1 + \sin\phi \vec{y}_1) \\ &+ (L_1 \dot{\theta} \cos\phi + L_2 \dot{\theta} + L_2 \dot{\phi}) (-\sin\phi \vec{x}_1 + \cos\phi \vec{y}_1) \end{align*} 
+         </div>
+         <p>Regroupons les termes en \( \vec{x}_1 \) et \( \vec{y}_1 \) :</p>
+         <p>Termes en \( \vec{x}_1 \):</p>
+         <div class="math-display">
+         \[ (L_1 \dot{\theta} \sin\phi \cos\phi) - (L_1 \dot{\theta} \cos\phi + L_2 \dot{\theta} + L_2 \dot{\phi}) \sin\phi \]
+         \[ = L_1 \dot{\theta} \sin\phi \cos\phi - L_1 \dot{\theta} \cos\phi \sin\phi - L_2 \dot{\theta} \sin\phi - L_2 \dot{\phi} \sin\phi \]
+         \[ = -(L_2 \dot{\theta} + L_2 \dot{\phi}) \sin\phi \]
+         </div>
+          <p>Termes en \( \vec{y}_1 \):</p>
+         <div class="math-display">
+         \[ (L_1 \dot{\theta} \sin\phi) \sin\phi + (L_1 \dot{\theta} \cos\phi + L_2 \dot{\theta} + L_2 \dot{\phi}) \cos\phi \]
+         \[ = L_1 \dot{\theta} \sin^2\phi + L_1 \dot{\theta} \cos^2\phi + L_2 \dot{\theta} \cos\phi + L_2 \dot{\phi} \cos\phi \]
+          \[ = L_1 \dot{\theta} (\sin^2\phi + \cos^2\phi) + L_2 (\dot{\theta} + \dot{\phi}) \cos\phi \]
+         \[ = L_1 \dot{\theta} + L_2 (\dot{\theta} + \dot{\phi}) \cos\phi \]
+         </div>
+         <p>Donc, l'expression dans \( B_1 \) est :</p>
+          <div class="math-display">
+         \[ \vec{V}_{B/R_0} = -(L_2 \dot{\theta} + L_2 \dot{\phi}) \sin\phi \vec{x}_1 + (L_1 \dot{\theta} + L_2 (\dot{\theta} + \dot{\phi}) \cos\phi) \vec{y}_1 \]
+         </div>
+    </div>
+     <div class="definition">
+        <strong>Vitesse de B :</strong>
+        <p>Expression dans \( B_1 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = -L_2 (\dot{\theta} + \dot{\phi}) \sin\phi \vec{x}_1 + (L_1 \dot{\theta} + L_2 (\dot{\theta} + \dot{\phi}) \cos\phi) \vec{y}_1 = \matrice{-L_2 (\dot{\theta} + \dot{\phi}) \sin\phi \\ L_1 \dot{\theta} + L_2 (\dot{\theta} + \dot{\phi}) \cos\phi \\ 0}_{B_1} \]
+        </div>
+        <p>Expression dans \( B_2 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{B/R_0} = (L_1 \dot{\theta} \sin\phi) \vec{x}_2 + (L_1 \dot{\theta} \cos\phi + L_2 (\dot{\theta} + \dot{\phi})) \vec{y}_2 = \matrice{L_1 \dot{\theta} \sin\phi \\ L_1 \dot{\theta} \cos\phi + L_2 (\dot{\theta} + \dot{\phi}) \\ 0}_{B_2} \]
+        </div>
+    </div>
+
+     <h3>3. Accélération Absolue du Point A</h3>
+     <div class="explanation">
+         <p>On cherche \( \vec{a}_{A/R_0} \) en dérivant \( \vec{V}_{A/R_0} \) par rapport au temps dans le référentiel fixe \( R_0 \). Utilisons l'expression de la vitesse dans \( B_1 \), car c'est plus simple pour la dérivation :</p>
+         <div class="math-display">
+         \[ \vec{V}_{A/R_0} = L_1 \dot{\theta} \vec{y}_1 \]
+         </div>
+         <div class="math-display">
+         \[ \vec{a}_{A/R_0} = \frac{d}{dt} (L_1 \dot{\theta} \vec{y}_1) \bigg|_{R_0} \]
+         </div>
+         <p>On utilise la règle de dérivation d'un produit scalaire-vecteur : \( \deriv{(uv)} = \dot{u}v + u\dot{v} \). Ici \( u = L_1 \dot{\theta} \) et \( v = \vec{y}_1 \).</p>
+         <div class="math-display">
+         \[ \vec{a}_{A/R_0} = \left( \frac{d(L_1 \dot{\theta})}{dt} \right) \vec{y}_1 + (L_1 \dot{\theta}) \frac{d\vec{y}_1}{dt}\bigg|_{R_0} \]
+         </div>
+         <p>Comme \( L_1 \) est constant, \( \frac{d(L_1 \dot{\theta})}{dt} = L_1 \ddot{\theta} \).</p>
+         <p>Pour dériver \( \vec{y}_1 \) dans \( R_0 \), on utilise la formule de dérivation vectorielle (ou transport), car \( \vec{y}_1 \) est un vecteur de la base mobile \( B_1 \):</p>
+         <div class="math-display">
+         \[ \frac{d\vec{y}_1}{dt}\bigg|_{R_0} = \underbrace{\frac{d\vec{y}_1}{dt}\bigg|_{R_1}}_{=\vec{0}} + \vec{\Omega}_{R_1/R_0} \wedge \vec{y}_1 \]
+         </div>
+         <p>\( \frac{d\vec{y}_1}{dt}|_{R_1} = \vec{0} \) car \( \vec{y}_1 \) est fixe dans \( R_1 \).</p>
+         <div class="math-display">
+         \[ \frac{d\vec{y}_1}{dt}\bigg|_{R_0} = \vec{\Omega}_{R_1/R_0} \wedge \vec{y}_1 = (\dot{\theta} \vec{z}_1) \wedge \vec{y}_1 \]
+         </div>
+         <p>Dans la base directe \( B_1 \), \( \vec{z}_1 \wedge \vec{y}_1 = -\vec{x}_1 \).</p>
+         <div class="math-display">
+         \[ \frac{d\vec{y}_1}{dt}\bigg|_{R_0} = -\dot{\theta} \vec{x}_1 \]
+         </div>
+         <p>En substituant dans l'expression de l'accélération :</p>
+         <div class="math-display">
+         \[ \vec{a}_{A/R_0} = (L_1 \ddot{\theta}) \vec{y}_1 + (L_1 \dot{\theta}) (-\dot{\theta} \vec{x}_1) \]
+         \[ \vec{a}_{A/R_0} = -L_1 \dot{\theta}^2 \vec{x}_1 + L_1 \ddot{\theta} \vec{y}_1 \]
+         </div>
+         <p>Ceci est l'expression de l'accélération de A dans la base \( B_1 \).</p>
+         <p>Pour l'exprimer dans la base \( B_2 \), on substitue \( \vec{x}_1 \) et \( \vec{y}_1 \) par leurs expressions en fonction de \( \vec{x}_2, \vec{y}_2 \):</p>
+         <div class="math-display">
+         \[ \vec{a}_{A/R_0} = -L_1 \dot{\theta}^2 (\cos\phi \vec{x}_2 - \sin\phi \vec{y}_2) + L_1 \ddot{\theta} (\sin\phi \vec{x}_2 + \cos\phi \vec{y}_2) \]
+         </div>
+          <p>Regroupons les termes en \( \vec{x}_2 \) et \( \vec{y}_2 \):</p>
+         <div class="math-display">
+         \[ \vec{a}_{A/R_0} = (-L_1 \dot{\theta}^2 \cos\phi + L_1 \ddot{\theta} \sin\phi) \vec{x}_2 + (L_1 \dot{\theta}^2 \sin\phi + L_1 \ddot{\theta} \cos\phi) \vec{y}_2 \]
+         </div>
+     </div>
+      <div class="definition">
+        <strong>Accélération de A :</strong>
+        <p>Expression dans \( B_1 \):</p>
+        <div class="math-display">
+        \[ \vec{a}_{A/R_0} = -L_1 \dot{\theta}^2 \vec{x}_1 + L_1 \ddot{\theta} \vec{y}_1 = \matrice{-L_1 \dot{\theta}^2 \\ L_1 \ddot{\theta} \\ 0}_{B_1} \]
+        </div>
+        <p>Expression dans \( B_2 \):</p>
+        <div class="math-display">
+        \[ \vec{a}_{A/R_0} = (-L_1 \dot{\theta}^2 \cos\phi + L_1 \ddot{\theta} \sin\phi) \vec{x}_2 + (L_1 \dot{\theta}^2 \sin\phi + L_1 \ddot{\theta} \cos\phi) \vec{y}_2 = \matrice{-L_1 \dot{\theta}^2 \cos\phi + L_1 \ddot{\theta} \sin\phi \\ L_1 \dot{\theta}^2 \sin\phi + L_1 \ddot{\theta} \cos\phi \\ 0}_{B_2} \]
+        </div>
+        <p><strong>Interprétation :</strong> L'accélération de A dans \( B_1 \) a deux composantes :
+        <ul>
+            <li>\( -L_1 \dot{\theta}^2 \vec{x}_1 \): Accélération normale (centripète), dirigée de A vers O, due à la rotation de OA.</li>
+            <li>\( L_1 \ddot{\theta} \vec{y}_1 \): Accélération tangentielle, perpendiculaire à OA, due à la variation de la vitesse angulaire \( \dot{\theta} \).</li>
+        </ul>
+        </p>
+    </div>
+
+</body>
+</html>

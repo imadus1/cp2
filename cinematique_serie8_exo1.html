@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution Exercice 1 - Cinématique du Solide</title>
+    <script>
+        MathJax = {
+          tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [['\\[', '\\]']],
+            macros: {
+              vec: ["{\\overrightarrow{#1}}", 1],
+              mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
+              deriv: ["{\\frac{d#1}{dt}}", 1], // Macro for time derivative
+              matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1] // Macro for pmatrix
+            }
+          },
+          svg: {
+            fontCache: 'global'
+          }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+    </script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+    <style>
+        body {
+            font-family: "Computer Modern Sans", sans-serif;
+            line-height: 1.6;
+            margin: 1em;
+            color: #333;
+        }
+        h1, h2, h3 {
+            font-family: "Computer Modern Serif", serif;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 0.2em;
+            color: #003366;
+        }
+        h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366;}
+        h2 { font-size: 1.5em; }
+        h3 { font-size: 1.2em; border-bottom: none; color: #0055A4; margin-top: 1em;}
+        mjx-container {
+            font-size: 105% !important;
+            text-align: left !important;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .math-display {
+             margin-top: 1em;
+             margin-bottom: 1em;
+             padding: 0.5em;
+             background-color: #f8f8f8;
+             border: 1px solid #eee;
+             border-radius: 4px;
+             overflow-x: auto;
+        }
+        .explanation {
+            border-left: 3px solid #1E90FF; /* Dodger blue border */
+            padding-left: 1em;
+            margin: 1em 0;
+            color: #444;
+            background-color: #f0f8ff; /* Alice blue background */
+            padding: 0.8em;
+            border-radius: 4px;
+        }
+        .definition {
+            border: 1px solid #007bff;
+            background-color: #e7f3ff;
+            padding: 0.8em;
+            margin: 1em 0;
+            border-radius: 4px;
+        }
+        ul { margin-left: 1.5em; }
+        li { margin-bottom: 0.5em; }
+        strong { color: #003366; }
+        code {
+            background-color: #eee;
+            padding: 0.2em 0.4em;
+            border-radius: 3px;
+            font-family: "Computer Modern Typewriter", monospace;
+        }
+        .question {
+            font-weight: bold;
+            color: #D2691E; /* Chocolate color */
+            margin-top: 1.5em;
+        }
+        .figure-ref {
+            text-align: center;
+            margin: 1em 0;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Solution Exercice N°1 : Rotation d'une Barre</h1>
+
+    <div class="explanation">
+        <p>Cet exercice concerne le mouvement de rotation simple d'une barre OA autour d'un axe fixe \( (O, \vec{z}_0) \). Nous allons utiliser les concepts de changement de base et de dérivation vectorielle pour déterminer les caractéristiques cinématiques du mouvement.</p>
+        <p><strong>Référentiels :</strong></p>
+        <ul>
+            <li>\( R_0(O, \vec{x}_0, \vec{y}_0, \vec{z}_0) \) : Référentiel fixe.</li>
+            <li>\( R_1(O, \vec{x}_1, \vec{y}_1, \vec{z}_1) \) : Référentiel mobile lié à la barre OA. L'axe \( \vec{x}_1 \) est porté par la barre.</li>
+        </ul>
+        <p><strong>Mouvement :</strong> Rotation d'angle \( \theta \) autour de l'axe \( \vec{z}_0 \).</p>
+        <p><strong>Observation Clé (Diagramme) :</strong> Le repère \( R_1 \) est obtenu par rotation de \( R_0 \) d'un angle \( \theta \) autour de l'axe commun \( \vec{z}_0 = \vec{z}_1 \).</p>
+    </div>
+
+    <h2 class="question">1. Déterminer la matrice de passage de R<sub>0</sub> vers R<sub>1</sub></h2>
+
+    <div class="explanation">
+        <p>La matrice de passage de la base \( B_0 = (\vec{x}_0, \vec{y}_0, \vec{z}_0) \) vers la base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \), notée \( \mat{P}_{0 \to 1} \), permet d'exprimer les composantes d'un vecteur de la base \( B_0 \) dans la base \( B_1 \). Ses colonnes sont les composantes des vecteurs \( \vec{x}_0, \vec{y}_0, \vec{z}_0 \) exprimées dans la base \( B_1 \).</p>
+        <p>Il est souvent plus facile de déterminer d'abord la matrice de passage inverse, \( \mat{P}_{1 \to 0} \), dont les colonnes sont les composantes des vecteurs \( \vec{x}_1, \vec{y}_1, \vec{z}_1 \) exprimées dans la base \( B_0 \).</p>
+        <p>D'après le diagramme et la description de la rotation :</p>
+        <ul>
+            <li>\( \vec{x}_1 \) est obtenu en faisant tourner \( \vec{x}_0 \) de \( \theta \) autour de \( \vec{z}_0 \) : \( \vec{x}_1 = \cos\theta \vec{x}_0 + \sin\theta \vec{y}_0 \)</li>
+            <li>\( \vec{y}_1 \) est obtenu en faisant tourner \( \vec{y}_0 \) de \( \theta \) autour de \( \vec{z}_0 \) : \( \vec{y}_1 = -\sin\theta \vec{x}_0 + \cos\theta \vec{y}_0 \)</li>
+            <li>L'axe de rotation est commun : \( \vec{z}_1 = \vec{z}_0 \)</li>
+        </ul>
+        <p>On peut donc écrire \( \mat{P}_{1 \to 0} \) :</p>
+        <div class="math-display">
+        \[ \mat{P}_{1 \to 0} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \]
+        </div>
+        <p>Comme les bases \( B_0 \) et \( B_1 \) sont orthonormées, la matrice de passage est orthogonale. Cela signifie que son inverse est égale à sa transposée : \( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^{-1} = (\mat{P}_{1 \to 0})^T \).</p>
+        <p>En transposant \( \mat{P}_{1 \to 0} \), on obtient :</p>
+    </div>
+    <div class="definition">
+        <strong>Matrice de passage de \( R_0 \) vers \( R_1 \) :</strong>
+        <div class="math-display">
+        \[ \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T = \matrice{\cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \]
+        </div>
+        Cette matrice permet de trouver les composantes dans \( R_1 \) d'un vecteur dont on connaît les composantes dans \( R_0 \) : \( \begin{pmatrix} V_{x1} \\ V_{y1} \\ V_{z1} \end{pmatrix}_{R_1} = \mat{P}_{0 \to 1} \begin{pmatrix} V_{x0} \\ V_{y0} \\ V_{z0} \end{pmatrix}_{R_0} \).
+    </div>
+
+    <h2 class="question">2. La vitesse de rotation instantanée de R<sub>1</sub> par rapport à R<sub>0</sub> exprimé dans R<sub>1</sub></h2>
+
+    <div class="explanation">
+        <p>Le mouvement de \( R_1 \) par rapport à \( R_0 \) est une rotation unique autour de l'axe fixe \( (O, \vec{z}_0) \) à la vitesse angulaire \( \dot{\theta} = \deriv{\theta} \).</p>
+        <p>Le vecteur vitesse de rotation instantanée est donc dirigé selon l'axe de rotation et a pour norme la vitesse angulaire :</p>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_0 \]
+        </div>
+        <p>On nous demande d'exprimer ce vecteur dans la base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \). D'après la configuration du problème, nous savons que l'axe de rotation est commun aux deux repères : \( \vec{z}_1 = \vec{z}_0 \).</p>
+        <p>Donc, l'expression du vecteur rotation dans \( R_1 \) est :</p>
+    </div>
+    <div class="definition">
+        <strong>Vecteur Vitesse de Rotation de \( R_1/R_0 \) exprimé dans \( R_1 \) :</strong>
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 \]
+        </div>
+        En composantes dans la base \( B_1 \) :
+        <div class="math-display">
+        \[ \vec{\Omega}_{R_1/R_0} = \matrice{0 \\ 0 \\ \dot{\theta}}_{R_1} \]
+        </div>
+    </div>
+
+    <h2 class="question">3. Trouver la vitesse de point O et A par rapport à R1 puis R0 (absolu)</h2>
+
+    <div class="explanation">
+        <h3>Vitesse par rapport à R<sub>1</sub> (Vitesse Relative)</h3>
+        <p>Le référentiel \( R_1 \) est lié à la barre OA. Les points O et A sont donc fixes dans \( R_1 \). La vitesse d'un point M appartenant à un solide S par rapport au référentiel \( R_1 \) lié à ce solide est, par définition, nulle.</p>
+    </div>
+    <div class="definition">
+        <strong>Vitesse de O / R<sub>1</sub> :</strong>
+        <div class="math-display">
+        \[ \vec{V}_{O/R_1} = \vec{0} \]
+        </div>
+         <strong>Vitesse de A / R<sub>1</sub> :</strong>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_1} = \vec{0} \]
+        </div>
+    </div>
+
+    <div class="explanation">
+        <h3>Vitesse par rapport à R<sub>0</sub> (Vitesse Absolue)</h3>
+        <p>Nous cherchons maintenant les vitesses \( \vec{V}_{O/R_0} \) et \( \vec{V}_{A/R_0} \), qui représentent le mouvement de ces points vu depuis le référentiel fixe.</p>
+
+        <h3>Vitesse du point O par rapport à R<sub>0</sub></h3>
+        <p>Le point O est l'origine commune des deux repères et est défini comme fixe dans \( R_0 \).</p>
+    </div>
+    <div class="definition">
+        <strong>Vitesse de O / R<sub>0</sub> :</strong>
+        <div class="math-display">
+        \[ \vec{V}_{O/R_0} = \vec{0} \]
+        </div>
+        Expression dans \( B_1 \) : \( \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}_{R_1} \). <br/>
+        Expression dans \( B_0 \) : \( \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}_{R_0} \).
+    </div>
+
+    <div class="explanation">
+        <h3>Vitesse du point A par rapport à R<sub>0</sub></h3>
+        <p>Le point A est l'extrémité de la barre OA de longueur L. Son vecteur position par rapport à O est \( \vec{OA} \). Comme \( R_1 \) est lié à la barre et que \( \vec{x}_1 \) est porté par OA :</p>
+        <div class="math-display">
+        \[ \vec{OA} = L \vec{x}_1 \]
+        </div>
+        <p>Pour trouver la vitesse absolue \( \vec{V}_{A/R_0} \), on peut utiliser la formule fondamentale du champ des vitesses des solides (relation entre vitesse de A et O) ou dériver le vecteur position \( \vec{OA} \) par rapport au temps dans \( R_0 \).</p>
+
+        <p><strong>Méthode 1 : Relation fondamentale des vitesses</strong></p>
+        <p>Pour deux points O et A d'un même solide (la barre) en mouvement par rapport à \( R_0 \):</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \vec{V}_{O/R_0} + \vec{\Omega}_{R_1/R_0} \wedge \vec{OA} \]
+        </div>
+        <p>En utilisant les résultats précédents :</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \vec{0} + (\dot{\theta} \vec{z}_1) \wedge (L \vec{x}_1) \]
+        </div>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) \]
+        </div>
+        <p>Comme \( (\vec{x}_1, \vec{y}_1, \vec{z}_1) \) forme une base orthonormée directe, le produit vectoriel \( \vec{z}_1 \wedge \vec{x}_1 = \vec{y}_1 \).</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L \dot{\theta} \vec{y}_1 \]
+        </div>
+
+        <p><strong>Méthode 2 : Dérivation du vecteur position</strong></p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \frac{d(\vec{OA})}{dt}\bigg|_{R_0} = \frac{d(L \vec{x}_1)}{dt}\bigg|_{R_0} \]
+        </div>
+        <p>Puisque L est constant, et en utilisant la formule de dérivation vectorielle :</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L \frac{d\vec{x}_1}{dt}\bigg|_{R_0} = L \left( \frac{d\vec{x}_1}{dt}\bigg|_{R_1} + \vec{\Omega}_{R_1/R_0} \wedge \vec{x}_1 \right) \]
+        </div>
+        <p>Le vecteur \( \vec{x}_1 \) est fixe dans \( R_1 \), donc \( \frac{d\vec{x}_1}{dt}|_{R_1} = \vec{0} \).</p>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L (\vec{0} + (\dot{\theta} \vec{z}_1) \wedge \vec{x}_1) = L \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) = L \dot{\theta} \vec{y}_1 \]
+        </div>
+        <p>Les deux méthodes donnent le même résultat. Ce vecteur vitesse absolue est pour l'instant exprimé dans la base mobile \( B_1 \).</p>
+
+    </div>
+    <div class="definition">
+        <strong>Vitesse de A / R<sub>0</sub> (exprimée dans R<sub>1</sub>) :</strong>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = L \dot{\theta} \vec{y}_1 \]
+        </div>
+        En composantes dans la base \( B_1 \) :
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \]
+        </div>
+    </div>
+
+    <div class="explanation">
+        <p>Pour exprimer ce vecteur vitesse absolue \( \vec{V}_{A/R_0} \) dans la base fixe \( B_0 \), nous utilisons la matrice de passage \( \mat{P}_{1 \to 0} \) :</p>
+        <div class="math-display">
+        \[ \begin{pmatrix} V_{Ax0} \\ V_{Ay0} \\ V_{Az0} \end{pmatrix}_{R_0} = \mat{P}_{1 \to 0} \begin{pmatrix} V_{Ax1} \\ V_{Ay1} \\ V_{Az1} \end{pmatrix}_{R_1} \]
+        </div>
+        <div class="math-display">
+        \[ \matrice{V_{Ax0} \\ V_{Ay0} \\ V_{Az0}}_{R_0} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \]
+        </div>
+        <div class="math-display">
+        \[ \matrice{V_{Ax0} \\ V_{Ay0} \\ V_{Az0}}_{R_0} = \matrice{(\cos\theta)(0) + (-\sin\theta)(L\dot{\theta}) + (0)(0) \\ (\sin\theta)(0) + (\cos\theta)(L\dot{\theta}) + (0)(0) \\ (0)(0) + (0)(L\dot{\theta}) + (1)(0)} = \matrice{-L\dot{\theta}\sin\theta \\ L\dot{\theta}\cos\theta \\ 0}_{R_0} \]
+        </div>
+    </div>
+    <div class="definition">
+        <strong>Vitesse de A / R<sub>0</sub> (exprimée dans R<sub>0</sub>) :</strong>
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = -L\dot{\theta}\sin\theta \vec{x}_0 + L\dot{\theta}\cos\theta \vec{y}_0 \]
+        </div>
+        En composantes dans la base \( B_0 \) :
+        <div class="math-display">
+        \[ \vec{V}_{A/R_0} = \matrice{-L\dot{\theta}\sin\theta \\ L\dot{\theta}\cos\theta \\ 0}_{R_0} \]
+        </div>
+        <p><strong>Vérification :</strong> Le point A décrit un cercle de rayon L dans le plan \( (O, \vec{x}_0, \vec{y}_0) \). Sa vitesse doit être tangente à ce cercle. Le vecteur vitesse trouvé \( (-L\dot{\theta}\sin\theta, L\dot{\theta}\cos\theta, 0)_{R_0} \) est bien orthogonal au vecteur position \( \vec{OA} = L\vec{x}_1 = L(\cos\theta \vec{x}_0 + \sin\theta \vec{y}_0) \) car leur produit scalaire est nul : \( L(\cos\theta)(-L\dot{\theta}\sin\theta) + L(\sin\theta)(L\dot{\theta}\cos\theta) = 0 \). La norme de la vitesse est \( \sqrt{(-L\dot{\theta}\sin\theta)^2 + (L\dot{\theta}\cos\theta)^2} = \sqrt{L^2\dot{\theta}^2(\sin^2\theta + \cos^2\theta)} = |L\dot{\theta}| \), ce qui correspond bien à la vitesse \( R\omega \) d'un point sur un cercle de rayon L à la vitesse angulaire \( \dot{\theta} \).</p>
+    </div>
+
+</body>
+</html>

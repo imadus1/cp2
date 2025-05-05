@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Ex 4.2 - Triangle Linéique Décalé</title>
+    <title>Solution Ex 4.2 - Triangle Linéique Décalé (Simplifiée)</title>
      <script>
         MathJax = {
           tex: {
@@ -23,6 +23,7 @@
       <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
     <style>
+        /* Styles identiques à l'original */
         body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
@@ -37,84 +38,82 @@
         ul { padding-left: 30px; }
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
-            /* ... (your existing CSS) ... */
-
-        .figure-placeholder img {
-            max-width: 100%; /* Make sure the image is never wider than its parent container */
-            height: auto;    /* Maintain the image's aspect ratio */
-            display: block;  /* Treat the image as a block element (helps with centering) */
-            margin-left: auto; /* Center the image horizontally */
-            margin-right: auto; /* Center the image horizontally */
-        }
-
-        /* ... (rest of your existing CSS) ... */
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
 
     <h1>Solution Figure 7.1.2 : Triangle linéique décalé en x</h1>
     <div class="figure-placeholder"><img src="figure7.1.2.png"></div>
-
     <p class="caption">FIGURE 7.1.2 - Triangle linéique décalé en x de c</p>
 
-    <h2>Méthode requise : Translation du centre de masse (préférable) OU Théorème de Guldin.</h2>
-
-    <h2>Concepts Clés :</h2>
+    <h2>Approche et Concepts Clés</h2>
+    <p>On cherche le centre d'inertie $G = (x_G, y_G, 0)$ de ce triangle linéique. Ce triangle est identique à celui de la Figure 7.1.1 (Exercice 4.1), mais translaté horizontalement de $c$. Deux méthodes sont possibles :</p>
     <ul>
-        <li><strong>Translation :</strong> Si $G_1$ est le centre d'inertie d'un corps et que le corps est translaté de $\vec{v}$, le nouveau centre d'inertie est $G_2 = G_1 + \vec{v}$.</li>
-        <li><strong>Théorème de Guldin :</strong> $R_G = S_{/\Delta} / (2\pi L)$.</li>
-        <li><strong>Relation avec Figure 7.1.1 :</strong> Le corps est identique à celui de la Figure 7.1.1, mais translaté de $\vec{v} = c \vec{i}$.</li>
+        <li><strong>Méthode 1 : Translation (Préférable)</strong> - Utiliser le résultat de l'exercice précédent et appliquer la propriété de translation du centre d'inertie. Si un corps est translaté par $\vec{v}$, son centre d'inertie est translaté par le même $\vec{v}$. Ici, $\vec{v} = c \vec{i}$.</li>
+        <li><strong>Méthode 2 : Théorème de Guldin</strong> - Appliquer directement le premier théorème de Guldin ($R_G = S_{/\Delta} / (2\pi L)$), comme dans l'exercice précédent, mais avec la nouvelle géométrie.</li>
     </ul>
 
-    <h2>Géométrie et Décomposition (pour Guldin direct):</h2>
-    <p>Soit C=(c,0), A=(c,a), B=(c+b,0).</p>
+    <h2>Géométrie et Longueur Totale</h2>
+    <p>Les sommets sont C=(c,0), A=(c,a), B=(c+b,0).</p>
     <ul>
-        <li>Segment CA : Longueur $L_{CA} = a$.</li>
-        <li>Segment CB : Longueur $L_{CB} = b$.</li>
+        <li>Segment CA (vertical) : Longueur $L_{CA} = a$.</li>
+        <li>Segment CB (horizontal) : Longueur $L_{CB} = b$.</li>
         <li>Segment AB (hypoténuse) : Longueur $L_{AB} = \sqrt{a^2 + b^2}$.</li>
-        <li>Longueur totale : $$L = a + b + \sqrt{a^2 + b^2}$$</li>
+        <li>Longueur totale : $L = L_{CA} + L_{CB} + L_{AB} = a + b + \sqrt{a^2 + b^2}$ (identique à l'Ex 4.1).</li>
     </ul>
 
-    <h2>Méthode 1 : Translation du Centre de Masse</h2>
-    <p>Le centre d'inertie $G_1 = (x_{G1}, y_{G1})$ de la Figure 7.1.1 est :</p>
-    $$ x_{G1} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
-    $$ y_{G1} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
-    <p>Le centre d'inertie $G_2 = (x_{G2}, y_{G2})$ pour la Figure 7.1.2 est obtenu par translation ($G_2 = G_1 + c\vec{i}$):</p>
-    $$ x_{G2} = x_{G1} + c = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
-    $$ y_{G2} = y_{G1} + 0 = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    <h2>Méthode 1 : Utilisation de la Translation (Recommandée)</h2>
+    <p>Soit $G_1 = (x_{G1}, y_{G1})$ le centre d'inertie du triangle non décalé (Figure 7.1.1) :</p>
+    $$ x_{G1} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})}, \quad y_{G1} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    <p>Le triangle de la Figure 7.1.2 est obtenu en translatant celui de la Figure 7.1.1 de $c$ selon l'axe des x ($\vec{v} = c\vec{i}$). Le nouveau centre d'inertie $G = (x_G, y_G)$ est donc :</p>
+    $$ x_G = x_{G1} + c = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    $$ y_G = y_{G1} + 0 = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+    <p>Cette méthode est directe et évite de nouveaux calculs complexes.</p>
 
     <h2>Méthode 2 : Application Directe du Théorème de Guldin</h2>
-    <h3>Calcul de $x_G$ (Distance à l'axe Oy via rotation autour de Oy) :</h3>
+    <p>Cette méthode recalcule tout, servant de vérification.</p>
+
+    <h3>Calcul de $x_G$ (Rotation autour de Oy)</h3>
      <ul>
-        <li>Segment CA: Génère surface cylindrique (rayon c, hauteur a). Aire $S_{/\Delta,CA} = 2\pi c a$.</li>
-        <li>Segment CB: Génère un anneau (rayon ext c+b, int c). Aire $S_{/\Delta,CB} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
-        <li>Segment AB: Génère un frustum de cône (rayons c et c+b, hauteur a). Aire $S_{/\Delta,AB} = \pi(c + (c+b)) L_{AB} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{/\Delta,Oy} = 2\pi c a + \pi(2cb + b^2) + \pi(2c+b)\sqrt{a^2+b^2}$$</li>
-        <li>Application de Guldin ($R_{G,Oy} = x_G$):
+        <li>Surfaces générées par rotation autour de l'axe Oy:
+            <ul>
+                <li>CA : Cylindre (rayon c, hauteur a) $\implies S_{CA} = 2\pi c a$.</li>
+                <li>CB : Anneau (rayons c et c+b) $\implies S_{CB} = \pi(c+b)^2 - \pi c^2 = \pi(2cb + b^2)$.</li>
+                <li>AB : Tronc de cône (rayons c et c+b, génératrice $L_{AB}$) $\implies S_{AB} = \pi(c + (c+b)) L_{AB} = \pi(2c+b)\sqrt{a^2+b^2}$.</li>
+            </ul>
+        </li>
+        <li>Aire totale générée : $S_{/\Delta, Oy} = S_{CA} + S_{CB} + S_{AB} = 2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}$.</li>
+        <li>Application de Guldin :
          $$ x_G = \frac{S_{/\Delta,Oy}}{2\pi L} = \frac{2\pi c a + \pi b(2c + b) + \pi(2c+b)\sqrt{a^2+b^2}}{2\pi (a + b + \sqrt{a^2+b^2})} $$
-         <p>Simplification attendue vers $c + x_{G1}$ (calcul laissé en exercice).</p>
+         <p><em>Note : Ce résultat est plus complexe à écrire mais, après simplification (non détaillée ici), il est égal à $c + x_{G1}$.</em></p>
          </li>
     </ul>
-     <h3>Calcul de $y_G$ (Distance à l'axe Ox via rotation autour de Ox) :</h3>
+
+     <h3>Calcul de $y_G$ (Rotation autour de Ox)</h3>
      <ul>
-        <li>Segment CA: Génère un anneau (rayon ext a, int 0). Aire $S_{/\Delta,CA} = \pi a^2$.</li>
-        <li>Segment CB: Génère une surface d'aire $S_{/\Delta,CB} = 0$.</li>
-        <li>Segment AB: Génère surface latérale cône (rayon base a). Aire $S_{/\Delta,AB} = \pi a L_{AB} = \pi a \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{/\Delta,Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
-        <li>Application de Guldin ($R_{G,Ox} = y_G$):
+        <li>Surfaces générées par rotation autour de l'axe Ox :
+            <ul>
+                <li>CA : Anneau (rayon a) $\implies S_{CA} = \pi a^2$.</li>
+                <li>CB (sur l'axe Ox) : $S_{CB} = 0$.</li>
+                <li>AB : Surface latérale de cône (rayon a, génératrice $L_{AB}$) $\implies S_{AB} = \pi a L_{AB} = \pi a \sqrt{a^2+b^2}$.</li>
+            </ul>
+        </li>
+        <li>Aire totale générée : $S_{/\Delta, Ox} = S_{CA} + S_{CB} + S_{AB} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$.</li>
+        <li>Application de Guldin :
         $$ y_G = \frac{S_{/\Delta,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
+        <p><em>Note : Ce calcul est identique à celui pour $y_{G1}$ dans l'exercice précédent, ce qui est logique car la translation était horizontale.</em></p>
         </li>
     </ul>
-    <p>On observe que le calcul de $y_G$ par Guldin direct est identique à celui de $y_{G1}$, et le calcul (non simplifié ici) de $x_G$ par Guldin direct est plus complexe mais doit donner le même résultat que la translation.</p>
 
-    <h2>Résultat (confirmé par les deux méthodes) :</h2>
-    <p>Le centre d'inertie G du triangle linéique décalé a pour coordonnées :</p>
+    <h2>Résultat Final</h2>
+    <p>Les deux méthodes donnent le même centre d'inertie G pour le triangle linéique décalé :</p>
     $$ x_G = c + \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ y_G = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ z_G = 0 $$
 
-    <h2>Vérification :</h2>
-    <p>La méthode par translation est la plus simple et donne un résultat cohérent. La méthode par Guldin direct confirme le résultat pour $y_G$ et (après simplification) pour $x_G$.</p>
+    <h2>Conclusion</h2>
+    <p>La méthode par translation est nettement plus simple et efficace lorsque la géométrie est une simple translation d'une forme dont le centre d'inertie est déjà connu. La méthode directe par Guldin, bien que plus laborieuse pour $x_G$ ici, confirme les résultats.</p>
 
 </body>
 </html>

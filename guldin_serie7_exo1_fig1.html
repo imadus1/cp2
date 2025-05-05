@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Ex 4.1 - Triangle Linéique</title>
+    <title>Solution Ex 4.1 - Triangle Linéique (Simplifiée)</title>
     <script>
         MathJax = {
           tex: {
@@ -24,6 +23,7 @@
       <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
       <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
     <style>
+        /* Styles identiques à l'original */
         body { font-family: "Computer Modern Sans", sans-serif; line-height: 1.6; margin: 1em; }
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
@@ -38,18 +38,7 @@
         ul { padding-left: 30px; }
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; }
-
-            /* ... (your existing CSS) ... */
-
-        .figure-placeholder img {
-            max-width: 100%; /* Make sure the image is never wider than its parent container */
-            height: auto;    /* Maintain the image's aspect ratio */
-            display: block;  /* Treat the image as a block element (helps with centering) */
-            margin-left: auto; /* Center the image horizontally */
-            margin-right: auto; /* Center the image horizontally */
-        }
-
-        /* ... (rest of your existing CSS) ... */
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -57,72 +46,83 @@
     <h1>Solution Figure 7.1.1 : Triangle linéique (angle droit en O)</h1>
 
     <div class="figure-placeholder"><img src="figure7.1.1.png"></div>
-
     <p class="caption">FIGURE 7.1.1 - Triangle linéique de côtés a et b</p>
 
-    <h2>Méthode requise : Théorème de Guldin.</h2>
+    <h2>Préparation et Méthode : Théorème de Guldin</h2>
 
-    <h2>Concepts Clés :</h2>
+    <p>On cherche le centre d'inertie $G = (x_G, y_G, 0)$ d'un triangle formé de trois segments droits (corps linéique) de densité constante.</p>
+
     <ul>
-        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'un arc de courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne le coupant pas est :
-        $$S_{/\Delta} = L \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie $G$ de l'arc à l'axe $(\Delta)$. On en tire :
-        $$R_G = \frac{S_{/\Delta}}{2\pi L}$$
+        <li><strong>Géométrie :</strong>
+            <ul>
+                <li>Segment OA : sur l'axe Oy, de (0,0) à (0,a). Longueur $L_{OA} = a$.</li>
+                <li>Segment OB : sur l'axe Ox, de (0,0) à (b,0). Longueur $L_{OB} = b$.</li>
+                <li>Segment AB : hypoténuse, de (0,a) à (b,0). Longueur $L_{AB} = \sqrt{a^2 + b^2}$.</li>
+            </ul>
         </li>
-        <li><strong>Corps linéique :</strong> L'objet est constitué de segments de droite de densité linéique $\lambda$ constante.</li>
-        <li><strong>Centre d'inertie G :</strong> On cherche les coordonnées $(x_G, y_G, 0)$. La coordonnée $x_G$ est la distance à l'axe Oy ($R_{G, Oy}$) et $y_G$ est la distance à l'axe Ox ($R_{G, Ox}$).</li>
-        <li><strong>Superposition :</strong> On peut calculer la surface générée par chaque segment et les additionner pour obtenir la surface totale générée par l'ensemble.</li>
-    </ul>
-
-    <h2>Géométrie et Décomposition :</h2>
-    <ul>
-        <li>Segment OA sur l'axe Oy : de (0,0) à (0,a). Longueur $L_{OA} = a$.</li>
-        <li>Segment OB sur l'axe Ox : de (0,0) à (b,0). Longueur $L_{OB} = b$.</li>
-        <li>Segment AB (hypoténuse) : de (0,a) à (b,0). Longueur $L_{AB} = \sqrt{a^2 + b^2}$.</li>
-        <li>Longueur totale : $$L = L_{OA} + L_{OB} + L_{AB} = a + b + \sqrt{a^2 + b^2}$$</li>
+        <li><strong>Longueur totale :</strong> $L = L_{OA} + L_{OB} + L_{AB} = a + b + \sqrt{a^2 + b^2}$</li>
+        <li><strong>Théorème de Guldin (1er) :</strong> Pour trouver le centre d'inertie G, on utilise la relation entre l'aire $S_{/\Delta}$ générée par la rotation d'une ligne de longueur L autour d'un axe $(\Delta)$ et la distance $R_G$ de G à cet axe :
+            $$S_{/\Delta} = L \times (2\pi R_G) \implies R_G = \frac{S_{/\Delta}}{2\pi L}$$
+        </li>
+        <li><strong>Application :</strong>
+            <ul>
+                <li>Pour $x_G$, on fait tourner la ligne autour de l'axe Oy ($R_{G, Oy} = x_G$).</li>
+                <li>Pour $y_G$, on fait tourner la ligne autour de l'axe Ox ($R_{G, Ox} = y_G$).</li>
+            </ul>
+        </li>
     </ul>
 
     <h2>Calcul du Centre d'Inertie $G = (x_G, y_G)$</h2>
 
-    <h3>Calcul de $x_G$ (rotation autour de l'axe Oy) :</h3>
+    <p>On calcule l'aire totale générée par la rotation autour de chaque axe en additionnant les aires générées par chaque segment.</p>
+
+    <h3>1. Calcul de $x_G$ (Rotation autour de Oy)</h3>
     <ul>
-        <li>Segment OA (sur l'axe Oy) : Génère une surface d'aire $S_{A,OA} = 0$.</li>
-        <li>Segment OB (sur l'axe Ox) : Génère un disque de rayon b. Aire $S_{A,OB} = \pi b^2$.</li>
-        <li>Segment AB (hypoténuse) : Génère la surface latérale d'un cône de rayon de base $r=b$, hauteur $h=a$, et génératrice $l=L_{AB}=\sqrt{a^2+b^2}$. Aire $S_{A,AB} = \pi r l = \pi b \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{/\Delta,Oy} = S_{A,OA} + S_{A,OB} + S_{A,AB} = 0 + \pi b^2 + \pi b \sqrt{a^2+b^2} = \pi b (b + \sqrt{a^2+b^2})$$</li>
-        <li>Application de Guldin ($R_{G,Oy} = x_G$) :
+        <li>Surface générée $S_{/\Delta, Oy}$ par les segments :
+            <ul>
+                <li>OA (sur l'axe Oy) : $S_{A,OA} = 0$.</li>
+                <li>OB (sur l'axe Ox) : génère un disque de rayon b $\implies S_{A,OB} = \pi b^2$.</li>
+                <li>AB (hypoténuse) : génère un cône (rayon b, génératrice $L_{AB}$) $\implies S_{A,AB} = \pi b L_{AB} = \pi b \sqrt{a^2+b^2}$.</li>
+            </ul>
+        </li>
+        <li>Aire totale générée : $S_{/\Delta, Oy} = 0 + \pi b^2 + \pi b \sqrt{a^2+b^2} = \pi b (b + \sqrt{a^2+b^2})$.</li>
+        <li>Application de Guldin :
          $$ x_G = \frac{S_{/\Delta,Oy}}{2\pi L} = \frac{\pi b (b + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
-         </li>
+        </li>
     </ul>
 
-    <h3>Calcul de $y_G$ (rotation autour de l'axe Ox) :</h3>
+    <h3>2. Calcul de $y_G$ (Rotation autour de Ox)</h3>
      <ul>
-        <li>Segment OA (sur l'axe Oy) : Génère un disque de rayon a. Aire $S_{A,OA} = \pi a^2$.</li>
-        <li>Segment OB (sur l'axe Ox) : Génère une surface d'aire $S_{A,OB} = 0$.</li>
-        <li>Segment AB (hypoténuse) : Génère la surface latérale d'un cône de rayon de base $r=a$, hauteur $h=b$, et génératrice $l=L_{AB}=\sqrt{a^2+b^2}$. Aire $S_{A,AB} = \pi r l = \pi a \sqrt{a^2+b^2}$.</li>
-        <li>Aire totale générée : $$S_{/\Delta,Ox} = S_{A,OA} + S_{A,OB} + S_{A,AB} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$$</li>
-        <li>Application de Guldin ($R_{G,Ox} = y_G$):
+        <li>Surface générée $S_{/\Delta, Ox}$ par les segments :
+            <ul>
+                <li>OA (sur l'axe Oy) : génère un disque de rayon a $\implies S_{A,OA} = \pi a^2$.</li>
+                <li>OB (sur l'axe Ox) : $S_{A,OB} = 0$.</li>
+                <li>AB (hypoténuse) : génère un cône (rayon a, génératrice $L_{AB}$) $\implies S_{A,AB} = \pi a L_{AB} = \pi a \sqrt{a^2+b^2}$.</li>
+            </ul>
+        </li>
+        <li>Aire totale générée : $S_{/\Delta, Ox} = \pi a^2 + 0 + \pi a \sqrt{a^2+b^2} = \pi a (a + \sqrt{a^2+b^2})$.</li>
+        <li>Application de Guldin :
         $$ y_G = \frac{S_{/\Delta,Ox}}{2\pi L} = \frac{\pi a (a + \sqrt{a^2+b^2})}{2\pi (a + b + \sqrt{a^2+b^2})} = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
         </li>
     </ul>
 
-    <h2>Résultat :</h2>
+    <h2>Résultat Final</h2>
     <p>Le centre d'inertie G du triangle linéique a pour coordonnées :</p>
     $$ x_G = \frac{b (b + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ y_G = \frac{a (a + \sqrt{a^2+b^2})}{2 (a + b + \sqrt{a^2+b^2})} $$
     $$ z_G = 0 $$
 
-    <h2>Vérification :</h2>
-    <p>Le résultat est symétrique en $(a,b)$ si on échange $(x,y)$. Si $a=b$, on a :
-     $$ x_G = y_G = \frac{a(a+\sqrt{2a^2})}{2(2a+\sqrt{2a^2})} = \frac{a^2(1+\sqrt{2})}{2a(2+\sqrt{2})} = \frac{a(1+\sqrt{2})}{2\sqrt{2}(\sqrt{2}+1)} = \frac{a}{2\sqrt{2}} $$
-     ce qui semble plausible (G est sur la bissectrice). Les coordonnées sont positives et inférieures à $b/2$ et $a/2$ respectivement (pour $a,b>0$).</p>
+    <h2>Vérification (Cas Particulier a=b)</h2>
+    <p>Si $a=b$, le triangle est isocèle rectangle. G doit être sur la bissectrice ($x_G=y_G$).</p>
+    <p>Le calcul donne :
+     $$ x_G = y_G = \frac{a(a+\sqrt{a^2+a^2})}{2(a+a+\sqrt{a^2+a^2})} = \frac{a(a+\sqrt{2a^2})}{2(2a+\sqrt{2a^2})} = \frac{a^2(1+\sqrt{2})}{2a(2+\sqrt{2})} = \frac{a(1+\sqrt{2})}{2\sqrt{2}(\sqrt{2}+1)} = \frac{a}{2\sqrt{2}} $$
+     Le résultat est cohérent.</p>
 
     <div class="alternative">
-        <h3>  </h3>
-        <p>Le calcul direct du centre d'inertie par intégration ($\vec{OG} = \frac{1}{L} \int_{(L)} \vec{OP} dl$) serait plus complexe :</p>
-        $$ x_G = \frac{1}{L} \left( \int_{OA} x dl + \int_{OB} x dl + \int_{AB} x dl \right) $$
-        $$ y_G = \frac{1}{L} \left( \int_{OA} y dl + \int_{OB} y dl + \int_{AB} y dl \right) $$
-        <p>Le théorème de Guldin est nettement plus simple ici car les surfaces générées (disques, cônes) sont standards.</p>
+        <h3>Note sur une Méthode Alternative</h3>
+        <p>Le calcul direct du centre d'inertie par intégration ($\vec{OG} = \frac{1}{L} \int_{(L)} \vec{OP} dl$) est possible mais plus complexe :</p>
+        $$ x_G = \frac{1}{L} \left( \int_{OA} x dl + \int_{OB} x dl + \int_{AB} x dl \right) \quad ; \quad y_G = \frac{1}{L} \left( \int_{OA} y dl + \int_{OB} y dl + \int_{AB} y dl \right) $$
+        <p>Le théorème de Guldin est nettement plus simple ici car les surfaces générées par rotation (disques, surfaces latérales de cônes) sont des formes géométriques standards dont les aires sont connues.</p>
     </div>
 
 </body>

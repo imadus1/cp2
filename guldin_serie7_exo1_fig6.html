@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Figure 7.1.6 - Rectangle Linéique</title>
+    <title>Solution Figure 7.1.6 - Rectangle Linéique (Optimisé)</title>
     <script>
         MathJax = {
           tex: {
@@ -27,25 +27,17 @@
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        h3 { font-size: 1.2em; margin-top: 1em; color: #004080; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
         .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
         mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
         mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
-        ul { padding-left: 30px; }
+        ul { padding-left: 20px; list-style-position: inside; }
+        ul ul { margin-top: 0.2em; margin-bottom: 0.2em; padding-left: 20px;}
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
-        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
-
-        .figure-placeholder img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -53,95 +45,88 @@
     <h1>Solution Figure 7.1.6 : Rectangle linéique</h1>
 
     <div class="figure-placeholder">
-        <!-- Placeholder for Figure 7.1.6 -->
-        <!-- Rectangle A(0,a/2,0) B(0,-a/2,0) C(b,-a/2,0) D(b,a/2,0) -->
         <img src="figure7.1.6.png" alt="Figure 7.1.6 - Rectangle Linéique">
     </div>
-    <p class="caption">FIGURE 7.1.6 - Rectangle linéique de sommets A(0,a/2,0), B(0,-a/2,0), C(b,-a/2,0), D(b,a/2,0)</p>
+    <p class="caption">FIGURE 7.1.6 - Rectangle A(0,a/2), B(0,-a/2), C(b,-a/2), D(b,a/2)</p>
 
-    <h2>Méthode requise : Théorème de Guldin (uniquement).</h2>
-
-    <h2>Concepts Clés :</h2>
+    <h2>Méthode : Théorème de Guldin</h2>
     <ul>
-        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'une courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne la coupant pas (ou la touchant seulement) est :
-        $$S_{/\Delta} = L \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie $G$ de la courbe à l'axe $(\Delta)$. On peut donc trouver cette distance par :
-        $$R_G = \frac{S_{/\Delta}}{2\pi L}$$
+        <li><strong>Principe :</strong> L'aire $S_{/\Delta}$ générée par la rotation d'une courbe de longueur $L$ autour d'un axe $\Delta$ (ne la coupant pas) est $S_{/\Delta} = L \times (2\pi R_G)$. $R_G$ est la distance de G (centre d'inertie) à $\Delta$.</li>
+        <li><strong>Objectif :</strong> Trouver $G=(x_G, y_G, z_G)$. Vu la planarité ($z=0$), $z_G=0$.</li>
+    </ul>
+
+    <h2>Géométrie</h2>
+    <ul>
+        <li>Segments :
+            <ul>
+                <li>AB : sur Oy, de (0, a/2) à (0, -a/2). Longueur $L_{AB} = a$.</li>
+                <li>BC : $y=-a/2$, de (0, -a/2) à (b, -a/2). Longueur $L_{BC} = b$.</li>
+                <li>CD : $x=b$, de (b, -a/2) à (b, a/2). Longueur $L_{CD} = a$.</li>
+                <li>DA : $y=a/2$, de (b, a/2) à (0, a/2). Longueur $L_{DA} = b$.</li>
+            </ul>
         </li>
-        <li><strong>Corps linéique :</strong> L'objet est constitué des quatre segments formant le périmètre du rectangle, supposés de densité linéique $\lambda$ constante.</li>
-        <li><strong>Centre d'inertie G :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. $x_G$ est la distance $R_{G, Oy}$ à l'axe Oy, et $y_G$ est la distance $R_{G, Ox}$ à l'axe Ox. Vu que le rectangle est dans le plan z=0, $z_G=0$.</li>
-        <li><strong>Décomposition :</strong> Pour calculer la surface totale générée, on peut sommer les surfaces générées par chaque segment du rectangle.</li>
+        <li><strong>Longueur totale (périmètre) :</strong> $L_{tot} = 2a + 2b = 2(a+b)$.</li>
     </ul>
-
-    <h2>Géométrie et Décomposition :</h2>
-    <p>Le rectangle linéique ABCD est dans le plan z=0 et se compose de quatre segments :</p>
-    <ul>
-        <li><strong>Segment AB :</strong> De A(0, a/2, 0) à B(0, -a/2, 0). Situé sur l'axe Oy. Longueur $L_{AB} = a$.</li>
-        <li><strong>Segment BC :</strong> De B(0, -a/2, 0) à C(b, -a/2, 0). Parallèle à l'axe Ox à $y = -a/2$. Longueur $L_{BC} = b$.</li>
-        <li><strong>Segment CD :</strong> De C(b, -a/2, 0) à D(b, a/2, 0). Parallèle à l'axe Oy à $x = b$. Longueur $L_{CD} = a$.</li>
-        <li><strong>Segment DA :</strong> De D(b, a/2, 0) à A(0, a/2, 0). Parallèle à l'axe Ox à $y = a/2$. Longueur $L_{DA} = b$.</li>
-    </ul>
-    <p>Longueur totale du périmètre : $L_{tot} = L_{AB} + L_{BC} + L_{CD} + L_{DA} = a + b + a + b = 2a + 2b = 2(a+b)$.</p>
-    <p>Comme le rectangle est dans le plan z=0, on a immédiatement $z_G = 0$.</p>
 
     <h2>Calcul du Centre d'Inertie $G = (x_G, y_G, 0)$</h2>
 
-    <h3>Calcul de $x_G$ (Rotation autour de l'axe Oy) :</h3>
-    <p>On fait tourner le périmètre du rectangle autour de l'axe Oy (équation x=0). La distance du centre d'inertie $G$ à cet axe est $R_{G, Oy} = x_G$. Calculons la surface totale générée $S_{/Oy}$ en sommant les contributions de chaque segment :</p>
+    <h3>1. Coordonnée $x_G$ (Rotation autour de l'axe Oy)</h3>
     <ul>
-        <li>Segment AB : Ce segment est <strong>sur</strong> l'axe de rotation Oy. Sa rotation ne génère aucune surface. Aire $S_{/Oy, AB} = 0$.</li>
-        <li>Segment BC : De (0, -a/2) à (b, -a/2). Ce segment est perpendiculaire à l'axe Oy et commence sur l'axe (au point B). Sa rotation génère un <strong>disque</strong> de rayon $b$ situé dans le plan $y=-a/2$. Aire $S_{/Oy, BC} = \pi b^2$.</li>
-        <li>Segment CD : De (b, -a/2) à (b, a/2). Ce segment est parallèle à l'axe Oy, à une distance constante $x=b$. Sa rotation génère une <strong>surface cylindrique</strong> de rayon $b$ et de hauteur $a$. Aire $S_{/Oy, CD} = (\text{Circonférence}) \times (\text{Hauteur}) = (2\pi b) \times a = 2\pi ab$.</li>
-        <li>Segment DA : De (b, a/2) à (0, a/2). Ce segment est perpendiculaire à l'axe Oy et termine sur l'axe (au point A). Sa rotation génère un <strong>disque</strong> de rayon $b$ situé dans le plan $y=a/2$. Aire $S_{/Oy, DA} = \pi b^2$.</li>
-        <li>Aire totale générée :
-            $$S_{/Oy} = S_{/Oy, AB} + S_{/Oy, BC} + S_{/Oy, CD} + S_{/Oy, DA} = 0 + \pi b^2 + 2\pi ab + \pi b^2$$
-            $$S_{/Oy} = 2\pi b^2 + 2\pi ab = 2\pi b (b+a)$$
+        <li><strong>Axe de rotation :</strong> Oy ($x=0$). Distance de G à Oy : $R_{G, Oy} = x_G$.</li>
+        <li><strong>Surfaces générées par chaque segment :</strong>
+            <ul>
+                <li>AB (sur Oy) : $S_{/Oy, AB} = 0$.</li>
+                <li>BC (de $x=0$ à $x=b$, à $y=-a/2$) : Disque de rayon $b \implies S_{/Oy, BC} = \pi b^2$.</li>
+                <li>CD (à $x=b$, de $y=-a/2$ à $y=a/2$) : Cylindre (rayon $b$, hauteur $a$) $\implies S_{/Oy, CD} = (2\pi b)a = 2\pi ab$.</li>
+                <li>DA (de $x=b$ à $x=0$, à $y=a/2$) : Disque de rayon $b \implies S_{/Oy, DA} = \pi b^2$.</li>
+            </ul>
         </li>
-        <li>Application de Guldin :
-            $$S_{/Oy} = L_{tot} \times (2\pi R_{G, Oy}) = (2(a+b)) \times (2\pi x_G)$$
+        <li><strong>Aire totale générée :</strong> $S_{/Oy} = 0 + \pi b^2 + 2\pi ab + \pi b^2 = 2\pi b^2 + 2\pi ab = 2\pi b (a+b)$.</li>
+        <li><strong>Application de Guldin :</strong> $S_{/Oy} = L_{tot} \times (2\pi x_G)$.
+            $$ 2\pi b (a+b) = (2(a+b)) \times (2\pi x_G) $$
         </li>
-        <li>Calcul de $x_G$ :
-            $$2\pi b (a+b) = 4\pi (a+b) x_G$$
-            En supposant $a+b \neq 0$, on peut simplifier par $2\pi(a+b)$ :
-            $$x_G = \frac{2\pi b (a+b)}{4\pi (a+b)} = \frac{b}{2}$$
+        <li><strong>Calcul de $x_G$ :</strong> (Simplification par $4\pi(a+b)$, si $a+b \neq 0$)
+            $$ x_G = \frac{2\pi b (a+b)}{4\pi (a+b)} = \frac{b}{2} $$
         </li>
     </ul>
 
-    <h3>Calcul de $y_G$ (Rotation autour d'un axe parallèle à Ox) :</h3>
-    <p>On pourrait faire tourner autour de l'axe Ox (y=0). Cependant, les segments AB et CD croisent cet axe (ou ont leur centre dessus), ce qui peut compliquer l'interprétation directe de Guldin pour la surface générée par ces segments individuellement. Pour éviter cette complication, choisissons un axe de rotation parallèle qui ne coupe pas le rectangle, par exemple l'axe $\Delta$ d'équation $y = -a/2$ (qui contient le segment BC).</p>
-    <p>La distance du centre d'inertie $G=(x_G, y_G)$ à cet axe $\Delta$ est $R_{G, \Delta} = |y_G - (-a/2)| = |y_G + a/2|$. Comme on s'attend (par symétrie) à ce que $y_G=0$, cette distance sera $a/2$. Calculons la surface totale générée $S_{/\Delta}$ par rotation autour de $y=-a/2$ :</p>
+    <h3>2. Coordonnée $y_G$ (Rotation autour de l'axe $\Delta : y=-a/2$)</h3>
     <ul>
-        <li>Segment AB : De (0, a/2) à (0, -a/2). Ce segment est perpendiculaire à l'axe $\Delta$ et se termine sur l'axe (au point B). Sa rotation génère un <strong>disque</strong>. Le rayon du disque est la distance entre A(0, a/2) et l'axe $y=-a/2$, soit $a/2 - (-a/2) = a$. Aire $S_{/\Delta, AB} = \pi a^2$.</li>
-        <li>Segment BC : Ce segment est <strong>sur</strong> l'axe de rotation $\Delta$. Sa rotation ne génère aucune surface. Aire $S_{/\Delta, BC} = 0$.</li>
-        <li>Segment CD : De (b, -a/2) à (b, a/2). Ce segment est parallèle à l'axe $z$ (virtuel, car rotation dans l'espace) et perpendiculaire à l'axe de rotation $\Delta$. Il commence sur l'axe (au point C). Sa rotation génère un <strong>disque</strong>. Le rayon est la distance entre D(b, a/2) et l'axe $y=-a/2$, soit $a/2 - (-a/2) = a$. Aire $S_{/\Delta, CD} = \pi a^2$.</li>
-        <li>Segment DA : De (b, a/2) à (0, a/2). Ce segment est parallèle à l'axe $\Delta$, à une distance constante égale à $a/2 - (-a/2) = a$. Sa rotation génère une <strong>surface cylindrique</strong> de rayon $a$ et de longueur (hauteur du cylindre) $b$. Aire $S_{/\Delta, DA} = (\text{Circonférence}) \times (\text{Longueur}) = (2\pi a) \times b = 2\pi ab$.</li>
-        <li>Aire totale générée :
-            $$S_{/\Delta} = S_{/\Delta, AB} + S_{/\Delta, BC} + S_{/\Delta, CD} + S_{/\Delta, DA} = \pi a^2 + 0 + \pi a^2 + 2\pi ab$$
-            $$S_{/\Delta} = 2\pi a^2 + 2\pi ab = 2\pi a (a+b)$$
+        <li><strong>Axe de rotation :</strong> $\Delta$ (ligne $y=-a/2$, contient BC). Distance de G à $\Delta$ : $R_{G, \Delta} = |y_G - (-a/2)| = |y_G + a/2|$.
+            (Attendu $y_G=0$, donc $R_{G,\Delta} = a/2$).
         </li>
-        <li>Application de Guldin :
-            $$S_{/\Delta} = L_{tot} \times (2\pi R_{G, \Delta}) = (2(a+b)) \times (2\pi |y_G + a/2|)$$
+        <li><strong>Surfaces générées par chaque segment :</strong>
+            <ul>
+                <li>AB (de $y=a/2$ à $y=-a/2$, à $x=0$) : Disque (rayon $a/2 - (-a/2) = a$) $\implies S_{/\Delta, AB} = \pi a^2$.</li>
+                <li>BC (sur $\Delta$) : $S_{/\Delta, BC} = 0$.</li>
+                <li>CD (de $y=-a/2$ à $y=a/2$, à $x=b$) : Disque (rayon $a/2 - (-a/2) = a$) $\implies S_{/\Delta, CD} = \pi a^2$.</li>
+                <li>DA (à $y=a/2$, de $x=b$ à $x=0$) : Cylindre (rayon $a/2 - (-a/2) = a$, longueur $b$) $\implies S_{/\Delta, DA} = (2\pi a)b = 2\pi ab$.</li>
+            </ul>
         </li>
-        <li>Calcul de $y_G$ :
-            $$2\pi a (a+b) = 4\pi (a+b) |y_G + a/2|$$
-            En supposant $a+b \neq 0$, on peut simplifier par $2\pi(a+b)$ :
-            $$a = 2 |y_G + a/2|$$
-            Comme le rectangle s'étend de $y=-a/2$ à $y=a/2$, son centre d'inertie $y_G$ doit être dans cet intervalle. Donc $y_G + a/2 \ge 0$. On peut retirer la valeur absolue :
-            $$a = 2 (y_G + a/2) = 2y_G + a$$
-            $$2y_G = a - a = 0$$
-            $$y_G = 0$$
+        <li><strong>Aire totale générée :</strong> $S_{/\Delta} = \pi a^2 + 0 + \pi a^2 + 2\pi ab = 2\pi a^2 + 2\pi ab = 2\pi a (a+b)$.</li>
+        <li><strong>Application de Guldin :</strong> $S_{/\Delta} = L_{tot} \times (2\pi R_{G, \Delta})$.
+            $$ 2\pi a (a+b) = (2(a+b)) \times (2\pi |y_G + a/2|) $$
+        </li>
+        <li><strong>Calcul de $y_G$ :</strong> (Simplification par $4\pi(a+b)$, si $a+b \neq 0$)
+            $$ |y_G + a/2| = \frac{2\pi a (a+b)}{4\pi (a+b)} = \frac{a}{2} $$
+            Comme $y_G$ est entre $-a/2$ et $a/2$ par symétrie, $y_G+a/2 \ge 0$.
+            $$ y_G + a/2 = a/2 \implies y_G = 0 $$
         </li>
     </ul>
 
-    <h2>Résultat :</h2>
+    <h2>Résultat</h2>
     <p>Le centre d'inertie G du rectangle linéique a pour coordonnées :</p>
     $$ x_G = \frac{b}{2} $$
     $$ y_G = 0 $$
     $$ z_G = 0 $$
     <p>Soit $G = (b/2, 0, 0)$.</p>
 
-    <h2>Conclusion :</h2>
-    <p>Le centre d'inertie G du périmètre du rectangle coïncide avec son centre géométrique $(b/2, 0, 0)$. Ce résultat est conforme aux attentes basées sur la double symétrie du rectangle par rapport aux droites $x=b/2$ et $y=0$. L'utilisation du théorème de Guldin avec des axes de rotation appropriés (Oy pour $x_G$ et $y=-a/2$ pour $y_G$) a permis de dériver ce résultat par le calcul.</p>
+    <h2>Conclusion</h2>
+    <ul>
+        <li>Le centre d'inertie G du périmètre du rectangle coïncide avec son centre géométrique $(b/2, 0, 0)$.</li>
+        <li>Ce résultat est conforme à la double symétrie du rectangle (par rapport à $x=b/2$ et $y=0$).</li>
+        <li>Le théorème de Guldin, appliqué avec des axes de rotation appropriés (Oy et $y=-a/2$), a permis de dériver ce résultat.</li>
+    </ul>
 
 </body>
 </html>

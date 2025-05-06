@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Figure 7.2.3 - Triangle Surfacique (OAB)</title>
+    <title>Solution Figure 7.2.3 - Triangle Surfacique (OAB) - Optimisé</title>
     <script>
         MathJax = {
           tex: {
@@ -27,25 +27,18 @@
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        h3 { font-size: 1.2em; margin-top: 1em; color: #004080; }
+        h4 { font-size: 1.1em; margin-top: 0.8em; color: #003366; } /* For sub-methods */
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
         .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
         mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
         mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
-        ul { padding-left: 30px; }
+        ul { padding-left: 20px; list-style-position: inside; }
+        ul ul { margin-top: 0.2em; margin-bottom: 0.2em; padding-left: 20px;}
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
-        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
-
-        .figure-placeholder img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -53,102 +46,93 @@
     <h1>Solution Figure 7.2.3 : Triangle surfacique (OAB)</h1>
 
     <div class="figure-placeholder">
-        <!-- Placeholder for Figure 7.2.3 -->
-        <!-- Triangle O(0,0,0) A(b,a,0) B(b,0,0) -->
         <img src="figure7.2.3.png" alt="Figure 7.2.3 - Triangle Surfacique OAB">
     </div>
-    <p class="caption">FIGURE 7.2.3 - Triangle surfacique de sommets O(0,0,0), A(b,a,0), B(b,0,0)</p>
+    <p class="caption">FIGURE 7.2.3 - Triangle surfacique O(0,0), A(b,a), B(b,0)</p>
 
-    <h2>Méthode requise : Deuxième Théorème de Guldin (uniquement).</h2>
-
-    <h2>Concepts Clés :</h2>
+    <h2>Méthode et Géométrie</h2>
     <ul>
-        <li><strong>Deuxième Théorème de Guldin :</strong> Le volume $V_{/\Delta}$ engendré par la rotation d'une surface plane $(S)$ d'aire $S$ autour d'un axe $(\Delta)$ coplanaire ne traversant pas la surface est :
-        $$V_{/\Delta} = S \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie (centroïde) $G$ de la surface à l'axe $(\Delta)$. On peut donc trouver cette distance par :
-        $$R_G = \frac{V_{/\Delta}}{2\pi S}$$
-        </li>
-        <li><strong>Corps surfacique :</strong> L'objet est une surface plane (l'aire du triangle) de densité surfacique $\sigma$ constante.</li>
-        <li><strong>Centre d'inertie G (Centroïde) :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. $x_G$ est la distance $R_{G, Oy}$ à l'axe Oy, et $y_G$ est la distance $R_{G, Ox}$ à l'axe Ox. Puisque la surface est dans le plan z=0, $z_G=0$.</li>
-    </ul>
-
-    <h2>Géométrie :</h2>
-    <p>La surface est un triangle rectangle OAB dans le plan z=0.</p>
-    <ul>
-        <li>Sommets : O(0,0,0), A(b,a,0), B(b,0,0).</li>
-        <li>Côté OB (horizontal) : sur l'axe Ox ($y=0$), de $x=0$ à $x=b$. Longueur $b$.</li>
-        <li>Côté BA (vertical) : le long de la droite $x=b$, de $y=0$ à $y=a$. Longueur $a$.</li>
-        <li>Angle droit en B(b,0,0).</li>
-        <li>Aire de la surface : $$ S = \frac{1}{2} \times \text{base} \times \text{hauteur} = \frac{1}{2} \times (OB) \times (BA) = \frac{ab}{2} $$</li>
-    </ul>
-    <p>Puisque le triangle est dans le plan z=0, on a immédiatement $z_G = 0$.</p>
-
-    <h2>Calcul du Centre d'Inertie $G = (x_G, y_G, 0)$</h2>
-
-    <h3>Calcul de $x_G$ (Rotation autour de l'axe Oy) :</h3>
-    <p>On fait tourner la surface triangulaire $S$ (OAB) autour de l'axe Oy (équation x=0).</p>
-    <ul>
-        <li>Axe de rotation : Oy ($x=0$).</li>
-        <li>Surface génératrice : Triangle OAB, aire $S = \frac{ab}{2}$.</li>
-        <li>Volume généré $V_{/Oy}$: Le volume généré par la rotation d'un élément d'aire $dA=dx\,dy$ situé à la distance $x$ de l'axe Oy est $dV = (2\pi x) dA$. Le volume total est l'intégrale sur la surface S:
-            $$ V_{/Oy} = \iint_S (2\pi x) \, dA = \iint_S (2\pi x) \, dx \, dy $$
-        </li>
-        <li>Définition des limites d'intégration :
-            Le triangle est défini par les droites $y=0$ (axe Ox), $x=b$ (droite BA), et la droite OA.
-            L'équation de la droite OA (passant par O(0, 0) et A(b, a)) est $y = \frac{a}{b}x$.
-            On intègre d'abord par rapport à $y$ puis par rapport à $x$:
-            $$ V_{/Oy} = \int_{x=0}^{x=b} \left( \int_{y=0}^{y=\frac{a}{b}x} (2\pi x) \, dy \right) dx $$
-        </li>
-        <li>Évaluation de l'intégrale :
-            Évaluation de l'intégrale interne (par rapport à $y$) :
-            $$ \int_{0}^{\frac{a}{b}x} (2\pi x) \, dy = (2\pi x) [y]_{0}^{\frac{a}{b}x} = (2\pi x) \left(\frac{a}{b}x\right) = \frac{2\pi a}{b} x^2 $$
-            Évaluation de l'intégrale externe (par rapport à $x$) :
-            $$ V_{/Oy} = \int_{0}^{b} \frac{2\pi a}{b} x^2 \, dx = \frac{2\pi a}{b} \left[ \frac{x^3}{3} \right]_0^b = \frac{2\pi a}{b} \left( \frac{b^3}{3} - 0 \right) = \frac{2\pi a b^2}{3} $$
-        </li>
-        <li>Application de Guldin : La distance du centre d'inertie $G$ à l'axe Oy est $R_{G, Oy} = x_G$.
-            $$ V_{/Oy} = S \times (2\pi R_{G, Oy}) = S \times (2\pi x_G) $$
-        </li>
-        <li>Calcul de $x_G$ :
-            $$ x_G = \frac{V_{/Oy}}{2\pi S} = \frac{\frac{2}{3}\pi a b^2}{2\pi (\frac{ab}{2})} = \frac{\frac{2}{3}\pi a b^2}{\pi a b} $$
-            $$ x_G = \frac{2b}{3} $$
-        </li>
-    </ul>
-
-     <h3>Calcul de $y_G$ (Rotation autour de l'axe Ox) :</h3>
-    <p>On fait tourner la surface triangulaire OAB autour de l'axe Ox (équation y=0). Le côté OB est sur l'axe de rotation.</p>
-    <ul>
-        <li>Axe de rotation : Ox ($y=0$).</li>
-        <li>Surface génératrice : Triangle OAB, aire $S = \frac{ab}{2}$.</li>
-        <li>Volume généré $V_{/Ox}$: La rotation du triangle OAB autour de l'axe Ox engendre un <strong>cône</strong>.
+        <li><strong>Objectif :</strong> Trouver le centroïde $G=(x_G, y_G, z_G)$ du triangle surfacique OAB.
             <ul>
-                <li>Le sommet du cône est en O(0,0,0).</li>
-                <li>La base du cône est un disque généré par la rotation du segment BA (vertical à $x=b$, de $y=0$ à $y=a$). Ce disque est dans le plan $x=b$, centré en B(b,0,0), de rayon $r = a$.</li>
-                <li>La hauteur du cône est la distance le long de l'axe Ox entre le sommet O(0,0,0) et le plan de la base ($x=b$), soit $h = b$.</li>
+                <li>La surface étant dans le plan $z=0$, on a $z_G=0$.</li>
             </ul>
         </li>
-        <li>Calcul du volume du cône :
-            $$ V_{/Ox} = \frac{1}{3} \pi (\text{rayon de base})^2 \times (\text{hauteur}) = \frac{1}{3} \pi a^2 b $$
+        <li><strong>Méthode :</strong> Deuxième Théorème de Guldin.
+            <ul>
+                <li>Principe : Le volume $V_{/\Delta}$ généré par la rotation d'une surface d'aire $S$ autour d'un axe $\Delta$ (ne la traversant pas) est $V_{/\Delta} = S \times (2\pi R_G)$. $R_G$ est la distance du centroïde G de $S$ à $\Delta$.</li>
+            </ul>
         </li>
-        <li>Application de Guldin : La distance du centre d'inertie $G$ à l'axe Ox est $R_{G, Ox} = y_G$ (car $y_G$ sera positif).
-            $$ V_{/Ox} = S \times (2\pi R_{G, Ox}) = S \times (2\pi y_G) $$
-        </li>
-        <li>Calcul de $y_G$ :
-             $$ y_G = \frac{V_{/Ox}}{2\pi S} = \frac{\frac{1}{3}\pi a^2 b}{2\pi (\frac{ab}{2})} = \frac{\frac{1}{3}\pi a^2 b}{\pi a b} $$
-            $$ y_G = \frac{a}{3} $$
+        <li><strong>Géométrie du Triangle OAB :</strong>
+            <ul>
+                <li>Sommets : O(0,0,0), A(b,a,0), B(b,0,0).</li>
+                <li>Description : Triangle rectangle en B.
+                    <ul>
+                        <li>Côté OB (sur l'axe Ox) : de O(0,0) à B(b,0). Longueur $b$.</li>
+                        <li>Côté BA (parallèle à l'axe Oy) : de B(b,0) à A(b,a). Longueur $a$.</li>
+                    </ul>
+                </li>
+                <li>Aire de la surface : $S_{OAB} = \frac{1}{2} \times \text{base (OB)} \times \text{hauteur (BA)} = \frac{1}{2} ba = \frac{ab}{2}$.</li>
+            </ul>
         </li>
     </ul>
 
-    <h2>Résultat :</h2>
-    <p>Le centre d'inertie G (centroïde) du triangle surfacique OAB (Fig 7.2.3) a pour coordonnées :</p>
+    <h2>Calcul du Centroïde $G = (x_G, y_G, 0)$</h2>
+
+    <h3>1. Coordonnée $y_G$ (Rotation autour de l'axe Ox)</h3>
+    <ul>
+        <li><strong>Axe de rotation :</strong> Ox ($y=0$). Le côté OB est sur cet axe. Distance de G à Ox : $R_{G, Ox} = y_G$.</li>
+        <li><strong>Volume généré ($V_{/Ox}$) :</strong> La rotation du triangle OAB autour de Ox engendre un cône.
+            <ul>
+                <li>Base : Disque (rayon $a$) par rotation de BA. Sommet : O(0,0). Hauteur : $b$.</li>
+            </ul>
+        </li>
+        <li><strong>Calcul du volume du cône :</strong> $V_{/Ox} = \frac{1}{3} \pi a^2 b$.</li>
+        <li><strong>Application de Guldin :</strong> $V_{/Ox} = S_{OAB} \times (2\pi y_G) \implies \frac{1}{3} \pi a^2 b = \left(\frac{ab}{2}\right) \times (2\pi y_G) = \pi ab y_G$.</li>
+        <li><strong>Calcul de $y_G$ :</strong> $y_G = \frac{a}{3}$.</li>
+    </ul>
+
+    <h3>2. Coordonnée $x_G$ (Rotation autour de l'axe Oy)</h3>
+    <p>Distance de G à Oy : $R_{G, Oy} = x_G$.</p>
+
+    <h4>Méthode par décomposition des volumes de révolution (Guldin)</h4>
+    <ul>
+        <li><strong>Décomposition :</strong> $S_{OAB} = S_{Rect(OBA'(0,a)A)} - S_{Tr(OA'(0,a)A)}$.</li>
+        <li><strong>Volume généré $V_{OAB,/Oy}$ :</strong> $V_{OAB,/Oy} = V_{Rect,/Oy} - V_{Tr,/Oy}$.
+            <ul>
+                <li><strong>Rectangle $S_R = OBA'A$ :</strong> Rotation $\rightarrow$ Cylindre (rayon $b$, hauteur $a$). $V_{R,/Oy} = \pi b^2 a$.</li>
+                <li><strong>Triangle $S_{T1} = OA'A$ :</strong> Rotation autour de Oy (OA' sur Oy) $\rightarrow$ Cône (base rayon $b$, hauteur $a$). $V_{T1,/Oy} = \frac{1}{3}\pi b^2 a$.</li>
+            </ul>
+        </li>
+        <li><strong>Volume pour $S_{OAB}$ :</strong> $V_{OAB,/Oy} = \pi ab^2 - \frac{1}{3}\pi ab^2 = \frac{2}{3}\pi ab^2$.</li>
+        <li><strong>Application de Guldin à $S_{OAB}$ :</strong> $V_{OAB,/Oy} = S_{OAB} \times (2\pi x_G) \implies \frac{2}{3}\pi ab^2 = \left(\frac{ab}{2}\right) \times (2\pi x_G) = \pi ab x_G$.</li>
+        <li><strong>Calcul de $x_G$ :</strong> $x_G = \frac{2b}{3}$.</li>
+    </ul>
+
+    <h4>Méthode alternative pour $x_G$ par Réflexion (utilisant le résultat de Fig. 7.2.1)</h4>
+    <ul>
+        <li>Le triangle de la Figure 7.2.3 (OAB) est l'image par réflexion du triangle de la Figure 7.2.1 (O(0,0)-A$_1$(0,a)-B$_1$(b,0)) par rapport à l'axe $x=b/2$.</li>
+        <li>Centroïde de Fig. 7.2.1 : $G_{7.2.1} = (x_{G1}, y_{G1}) = (b/3, a/3)$.</li>
+        <li>Par réflexion, le centroïde $G_{7.2.3} = (x_G, y_G)$ de la Figure 7.2.3 a pour coordonnées :
+            <ul>
+                <li>$x_G = b - x_{G1} = b - \frac{b}{3} = \frac{2b}{3}$.</li>
+                <li>$y_G = y_{G1} = \frac{a}{3}$.</li>
+            </ul>
+        </li>
+        <li>Cela confirme $G_{7.2.3} = (2b/3, a/3, 0)$.</li>
+    </ul>
+
+    <h2>Résultat</h2>
+    <p>Le centroïde G du triangle surfacique OAB (Fig 7.2.3) a pour coordonnées :</p>
     $$ x_G = \frac{2b}{3} $$
     $$ y_G = \frac{a}{3} $$
     $$ z_G = 0 $$
-    <p>Soit $G_3 = (2b/3, a/3, 0)$.</p>
+    <p>Soit $G = (2b/3, a/3, 0)$.</p>
 
-    
-
-    <h2>Conclusion :</h2>
-    <p>Le centre d'inertie (centroïde) G du triangle surfacique OAB (Figure 7.2.3) a pour coordonnées $G_3 = (2b/3, a/3, 0)$. Ce résultat est cohérent avec la formule générale du centroïde d'un triangle comme moyenne des coordonnées de ses sommets : $x_G = (0+b+b)/3 = 2b/3$ et $y_G = (0+a+0)/3 = a/3$. L'application du deuxième théorème de Guldin a permis de dériver ce résultat par le calcul des volumes de révolution.</p>
+    <h2>Conclusion</h2>
+    <ul>
+        <li>Le centroïde du triangle OAB (Fig 7.2.3) est $G=(2b/3, a/3, 0)$.</li>
+        <li>Ce résultat est cohérent avec la moyenne des coordonnées des sommets et la relation de symétrie avec la Figure 7.2.1.</li>
+    </ul>
 
 </body>
 </html>

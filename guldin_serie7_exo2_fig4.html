@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Figure 7.2.4 - Rectangle Surfacique</title>
+    <title>Solution Figure 7.2.4 - Rectangle Surfacique (Optimisé)</title>
     <script>
         MathJax = {
           tex: {
@@ -27,25 +27,17 @@
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        h3 { font-size: 1.2em; margin-top: 1em; color: #004080; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
         .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
         mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
         mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
-        ul { padding-left: 30px; }
+        ul { padding-left: 20px; list-style-position: inside; }
+        ul ul { margin-top: 0.2em; margin-bottom: 0.2em; padding-left: 20px;}
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
-        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
-
-        .figure-placeholder img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -53,95 +45,80 @@
     <h1>Solution Figure 7.2.4 : Rectangle surfacique (OABC)</h1>
 
     <div class="figure-placeholder">
-        <!-- Placeholder for Figure 7.2.4 -->
-        <!-- Rectangle O(0,0,0), A(0,a,0), B(b,a,0), C(b,0,0) -->
         <img src="figure7.2.4.png" alt="Figure 7.2.4 - Rectangle Surfacique OABC">
     </div>
-    <p class="caption">FIGURE 7.2.4 - Rectangle surfacique de sommets O(0,0,0), A(0,a,0), B(b,a,0), C(b,0,0)</p>
+    <p class="caption">FIGURE 7.2.4 - Rectangle surfacique O(0,0), A(0,a), B(b,a), C(b,0)</p>
 
-    <h2>Méthode requise : Deuxième Théorème de Guldin (uniquement).</h2>
-
-    <h2>Concepts Clés :</h2>
+    <h2>Méthode et Géométrie</h2>
     <ul>
-        <li><strong>Deuxième Théorème de Guldin :</strong> Le volume $V_{/\Delta}$ engendré par la rotation d'une surface plane $(S)$ d'aire $S$ autour d'un axe $(\Delta)$ coplanaire ne traversant pas la surface est :
-        $$V_{/\Delta} = S \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie (centroïde) $G$ de la surface à l'axe $(\Delta)$. On peut donc trouver cette distance par :
-        $$R_G = \frac{V_{/\Delta}}{2\pi S}$$
-        </li>
-        <li><strong>Corps surfacique :</strong> L'objet est une surface plane (l'aire du rectangle) de densité surfacique $\sigma$ constante.</li>
-        <li><strong>Centre d'inertie G (Centroïde) :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. $x_G$ est la distance $R_{G, Oy}$ à l'axe Oy, et $y_G$ est la distance $R_{G, Ox}$ à l'axe Ox. Puisque la surface est dans le plan z=0, $z_G=0$.</li>
-    </ul>
-
-    <h2>Géométrie :</h2>
-    <p>La surface est un rectangle OABC dans le plan z=0.</p>
-    <ul>
-        <li>Sommets : O(0,0,0), A(0,a,0), B(b,a,0), C(b,0,0).</li>
-        <li>Largeur (le long de l'axe Ox) : OC de longueur $b$.</li>
-        <li>Hauteur (le long de l'axe Oy) : OA de longueur $a$.</li>
-        <li>Aire de la surface : $$ S = \text{largeur} \times \text{hauteur} = b \times a = ab $$</li>
-    </ul>
-    <p>Puisque le rectangle est dans le plan z=0, on a immédiatement $z_G = 0$.</p>
-
-    <h2>Calcul du Centre d'Inertie $G = (x_G, y_G, 0)$</h2>
-
-    <h3>Calcul de $x_G$ (Rotation autour de l'axe Oy) :</h3>
-    <p>On fait tourner la surface rectangulaire OABC autour de l'axe Oy (équation x=0). Le côté OA est sur l'axe de rotation.</p>
-    <ul>
-        <li>Axe de rotation : Oy ($x=0$).</li>
-        <li>Surface génératrice : Rectangle OABC, aire $S = ab$.</li>
-        <li>Volume généré $V_{/Oy}$: La rotation du rectangle OABC autour de l'axe Oy engendre un <strong>cylindre droit</strong>.
+        <li><strong>Objectif :</strong> Trouver le centroïde $G=(x_G, y_G, z_G)$ du rectangle OABC.
             <ul>
-                <li>La base du cylindre est un disque généré par la rotation du segment OC (ou AB) autour de Oy. Le rayon de la base est la distance de C (ou B) à l'axe Oy, soit $r = b$.</li>
-                <li>La hauteur du cylindre est le long de l'axe Oy, de O à A, soit $h = a$.</li>
+                <li>La surface étant dans le plan $z=0$, on a $z_G=0$.</li>
             </ul>
         </li>
-        <li>Calcul du volume du cylindre :
-            $$ V_{/Oy} = \pi (\text{rayon de base})^2 \times (\text{hauteur}) = \pi b^2 a $$
-        </li>
-        <li>Application de Guldin : La distance du centre d'inertie $G$ à l'axe Oy est $R_{G, Oy} = x_G$ (car $x_G > 0$).
-            $$ V_{/Oy} = S \times (2\pi R_{G, Oy}) = S \times (2\pi x_G) $$
-        </li>
-        <li>Calcul de $x_G$ :
-            $$ \pi a b^2 = (ab) \times (2\pi x_G) $$
-            $$ \pi a b^2 = 2\pi a b x_G $$
-            En simplifiant par $2\pi a b$ (supposant $a, b \neq 0$) :
-            $$ x_G = \frac{\pi a b^2}{2\pi a b} = \frac{b}{2} $$
-        </li>
-    </ul>
-
-     <h3>Calcul de $y_G$ (Rotation autour de l'axe Ox) :</h3>
-    <p>On fait tourner la surface rectangulaire OABC autour de l'axe Ox (équation y=0). Le côté OC est sur l'axe de rotation.</p>
-    <ul>
-        <li>Axe de rotation : Ox ($y=0$).</li>
-        <li>Surface génératrice : Rectangle OABC, aire $S = ab$.</li>
-        <li>Volume généré $V_{/Ox}$: La rotation du rectangle OABC autour de l'axe Ox engendre également un <strong>cylindre droit</strong>.
+        <li><strong>Méthode :</strong> Deuxième Théorème de Guldin.
             <ul>
-                <li>La base du cylindre est un disque généré par la rotation du segment OA (ou BC) autour de Ox. Le rayon de la base est la distance de A (ou B) à l'axe Ox, soit $r = a$.</li>
-                <li>La hauteur du cylindre est le long de l'axe Ox, de O à C, soit $h = b$.</li>
+                <li>Principe : Le volume $V_{/\Delta}$ généré par la rotation d'une surface d'aire $S$ autour d'un axe $\Delta$ (ne la traversant pas) est $V_{/\Delta} = S \times (2\pi R_G)$. $R_G$ est la distance du centroïde G de $S$ à $\Delta$.</li>
             </ul>
         </li>
-        <li>Calcul du volume du cylindre :
-            $$ V_{/Ox} = \pi (\text{rayon de base})^2 \times (\text{hauteur}) = \pi a^2 b $$
-        </li>
-        <li>Application de Guldin : La distance du centre d'inertie $G$ à l'axe Ox est $R_{G, Ox} = y_G$ (car $y_G > 0$).
-            $$ V_{/Ox} = S \times (2\pi R_{G, Ox}) = S \times (2\pi y_G) $$
-        </li>
-        <li>Calcul de $y_G$ :
-            $$ \pi a^2 b = (ab) \times (2\pi y_G) $$
-            $$ \pi a^2 b = 2\pi a b y_G $$
-            En simplifiant par $2\pi a b$ (supposant $a, b \neq 0$) :
-            $$ y_G = \frac{\pi a^2 b}{2\pi a b} = \frac{a}{2} $$
+        <li><strong>Géométrie du Rectangle OABC :</strong>
+            <ul>
+                <li>Sommets : O(0,0,0), A(0,a,0), B(b,a,0), C(b,0,0).</li>
+                <li>Largeur (le long de Ox) : OC, longueur $b$.</li>
+                <li>Hauteur (le long de Oy) : OA, longueur $a$.</li>
+                <li>Aire de la surface : $S_{OABC} = \text{largeur} \times \text{hauteur} = ba = ab$.</li>
+            </ul>
         </li>
     </ul>
 
-    <h2>Résultat :</h2>
-    <p>Le centre d'inertie G (centroïde) du rectangle surfacique OABC a pour coordonnées :</p>
+    <h2>Calcul du Centroïde $G = (x_G, y_G, 0)$</h2>
+
+    <h3>1. Coordonnée $x_G$ (Rotation autour de l'axe Oy)</h3>
+    <ul>
+        <li><strong>Axe de rotation :</strong> Oy ($x=0$). Le côté OA est sur cet axe. Distance de G à Oy : $R_{G, Oy} = x_G$.</li>
+        <li><strong>Volume généré ($V_{/Oy}$) :</strong> La rotation du rectangle OABC autour de Oy engendre un cylindre droit.
+            <ul>
+                <li>Rayon de base : $b$ (distance de C ou B à Oy). Hauteur : $a$ (longueur de OA).</li>
+            </ul>
+        </li>
+        <li><strong>Calcul du volume du cylindre :</strong> $V_{/Oy} = \pi (\text{rayon base})^2 \times (\text{hauteur}) = \pi b^2 a$.</li>
+        <li><strong>Application de Guldin :</strong> $V_{/Oy} = S_{OABC} \times (2\pi x_G)$.
+            $$ \pi a b^2 = (ab) \times (2\pi x_G) = 2\pi ab x_G $$
+        </li>
+        <li><strong>Calcul de $x_G$ :</strong> (Simplification par $2\pi ab$, si $a,b \neq 0$)
+            $$ x_G = \frac{\pi a b^2}{2\pi ab} = \frac{b}{2} $$
+        </li>
+    </ul>
+
+    <h3>2. Coordonnée $y_G$ (Rotation autour de l'axe Ox)</h3>
+    <ul>
+        <li><strong>Axe de rotation :</strong> Ox ($y=0$). Le côté OC est sur cet axe. Distance de G à Ox : $R_{G, Ox} = y_G$.</li>
+        <li><strong>Volume généré ($V_{/Ox}$) :</strong> La rotation du rectangle OABC autour de Ox engendre un cylindre droit.
+            <ul>
+                <li>Rayon de base : $a$ (distance de A ou B à Ox). Hauteur : $b$ (longueur de OC).</li>
+            </ul>
+        </li>
+        <li><strong>Calcul du volume du cylindre :</strong> $V_{/Ox} = \pi (\text{rayon base})^2 \times (\text{hauteur}) = \pi a^2 b$.</li>
+        <li><strong>Application de Guldin :</strong> $V_{/Ox} = S_{OABC} \times (2\pi y_G)$.
+            $$ \pi a^2 b = (ab) \times (2\pi y_G) = 2\pi ab y_G $$
+        </li>
+        <li><strong>Calcul de $y_G$ :</strong> (Simplification par $2\pi ab$, si $a,b \neq 0$)
+            $$ y_G = \frac{\pi a^2 b}{2\pi ab} = \frac{a}{2} $$
+        </li>
+    </ul>
+
+    <h2>Résultat</h2>
+    <p>Le centroïde G du rectangle surfacique OABC a pour coordonnées :</p>
     $$ x_G = \frac{b}{2} $$
     $$ y_G = \frac{a}{2} $$
     $$ z_G = 0 $$
     <p>Soit $G = (b/2, a/2, 0)$.</p>
 
-    
+    <h2>Conclusion</h2>
+    <ul>
+        <li>Le centroïde du rectangle OABC est $G=(b/2, a/2, 0)$.</li>
+        <li>Ce résultat est attendu, car le centroïde d'un rectangle coïncide avec son centre géométrique (intersection des diagonales ou des médianes).</li>
+    </ul>
 
 </body>
 </html>

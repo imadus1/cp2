@@ -1,270 +1,245 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Exercice 1 - Cinématique du Solide</title>
-    <script>
-        MathJax = {
-          tex: {
-            inlineMath: [['\\(', '\\)']],
-            displayMath: [['\\[', '\\]']],
-            macros: {
-              vec: ["{\\overrightarrow{#1}}", 1],
-              mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
-              deriv: ["{\\frac{d#1}{dt}}", 1], // Macro for time derivative
-              matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1] // Macro for pmatrix
-            }
-          },
-          svg: {
-            fontCache: 'global'
-          }
-        };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
-    <style>
-        body {
-            font-family: "Computer Modern Sans", sans-serif;
-            line-height: 1.6;
-            margin: 1em;
-            color: #333;
-        }
-        h1, h2, h3 {
-            font-family: "Computer Modern Serif", serif;
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 0.2em;
-            color: #003366;
-        }
-        h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366;}
-        h2 { font-size: 1.5em; }
-        h3 { font-size: 1.2em; border-bottom: none; color: #0055A4; margin-top: 1em;}
-        mjx-container {
-            font-size: 105% !important;
-            text-align: left !important;
-            margin-top: 0.5em;
-            margin-bottom: 0.5em;
-        }
-        .math-display {
-             margin-top: 1em;
-             margin-bottom: 1em;
-             padding: 0.5em;
-             background-color: #f8f8f8;
-             border: 1px solid #eee;
-             border-radius: 4px;
-             overflow-x: auto;
-        }
-        .explanation {
-            border-left: 3px solid #1E90FF; /* Dodger blue border */
-            padding-left: 1em;
-            margin: 1em 0;
-            color: #444;
-            background-color: #f0f8ff; /* Alice blue background */
-            padding: 0.8em;
-            border-radius: 4px;
-        }
-        .definition {
-            border: 1px solid #007bff;
-            background-color: #e7f3ff;
-            padding: 0.8em;
-            margin: 1em 0;
-            border-radius: 4px;
-        }
-        ul { margin-left: 1.5em; }
-        li { margin-bottom: 0.5em; }
-        strong { color: #003366; }
-        code {
-            background-color: #eee;
-            padding: 0.2em 0.4em;
-            border-radius: 3px;
-            font-family: "Computer Modern Typewriter", monospace;
-        }
-        .question {
-            font-weight: bold;
-            color: #D2691E; /* Chocolate color */
-            margin-top: 1.5em;
-        }
-        .figure-ref {
-            text-align: center;
-            margin: 1em 0;
-            font-style: italic;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Exercice 1 - Cinématique du Solide (Optimisée)</title>
+<script>
+MathJax = {
+tex: {
+inlineMath: [['\\(', '\\)']],
+displayMath: [['\\[', '\\]']],
+macros: {
+vec: ["{\\overrightarrow{#1}}", 1],
+mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
+deriv: ["{\\frac{d#1}{dt}}", 1], // Macro for time derivative
+matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1] // Macro for pmatrix
+}
+},
+svg: {
+fontCache: 'global'
+}
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+font-family: "Computer Modern Sans", sans-serif;
+line-height: 1.6;
+margin: 1em;
+color: #333;
+}
+h1, h2, h3 {
+font-family: "Computer Modern Serif", serif;
+/* Default margins, may be overridden by tree styles */
+margin-top: 1.5em;
+margin-bottom: 0.5em;
+padding-bottom: 0.2em;
+color: #003366;
+}
+h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366; margin-bottom: 1em;}
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; border-bottom: none; color: #0055A4; margin-top: 1em;} /* margin-top will be overridden in tree */
+mjx-container {
+font-size: 105% !important;
+text-align: left !important;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+.math-display {
+margin-top: 1em;
+margin-bottom: 1em;
+padding: 0.5em;
+background-color: #f8f8f8;
+border: 1px solid #eee;
+border-radius: 4px;
+overflow-x: auto;
+}
+/* Removed .definition styles /
+ul { margin-left: 0; padding-left: 1.5em; }
+li { margin-bottom: 0.5em; }
+strong { color: #003366; }
+code {
+background-color: #eee;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-family: "Computer Modern Typewriter", monospace;
+}
+.question { / Applied to H2 /
+font-weight: bold;
+color: #D2691E; / Orange color for question titles /
+/ margin-top is handled by tree styles */
+}
+/* --- Tree Structure Styles --- /
+.solution-branch { / Container for H2 sections /
+position: relative;
+padding-left: 25px; / Space for H2 content to the right of its vertical line + connector /
+border-left: 2px solid black; / Main vertical line /
+margin-left: 10px; / Indent the whole branch structure from the page edge /
+padding-bottom: 0.1em; / Ensures border extends if last child has no bottom margin /
+}
+.solution-branch:not(:last-child) {
+padding-bottom: 1.5em; / Space between content of this branch and start of next, border continues through this */
+}
+.solution-branch > .question { /* The H2 title itself /
+position: relative;
+margin-top: 0; / Override default h2 margin-top /
+/ margin-bottom: 0.5em; (from h1,h2,h3 rule) /
+/ padding-bottom: 0.2em; (from h1,h2,h3 rule) /
+}
+.solution-branch > .question::before { / Horizontal connector for H2 /
+content: "";
+position: absolute;
+background-color: black; / Matches parent's border-left /
+height: 2px; / Thickness of connector /
+width: 18px; / Length of connector /
+left: -25px; / (padding-left of .solution-branch value) Connects to border-left /
+top: 0.9em; / Vertically align with H2 text (approx for 1.5em font) */
+}
+.sub-branch { /* Container for H3 sub-sections /
+position: relative;
+padding-left: 20px; / Space for H3 content to the right of its vertical line + connector /
+border-left: 1px solid black; / Sub-branch vertical line /
+margin-left: 5px; / Indent sub-branch line slightly from where parent H2 content starts /
+padding-top: 0.5em; / Space above H3 content within this sub-branch item /
+padding-bottom: 0.1em; / Ensures border extends if last child has no bottom margin /
+}
+.sub-branch:not(:last-child) {
+padding-bottom: 0.5em; / Space between content of this sub-branch and start of next, border continues /
+}
+.sub-branch > h3 { / The H3 title /
+position: relative;
+margin-top: 0; / Override default h3 margin-top /
+/ margin-bottom: 0.5em; (from h1,h2,h3 rule) /
+/ padding-bottom: 0.2em; (from h1,h2,h3 rule) /
+}
+.sub-branch > h3::before { / Horizontal connector for H3 /
+content: "";
+position: absolute;
+background-color: black; / Matches parent's border-left /
+height: 1px; / Thickness /
+width: 15px; / Length /
+left: -20px; / (padding-left of .sub-branch value) Connects to its border-left /
+top: 0.7em; / Vertically align with H3 text (approx for 1.2em font) */
+}
+/* Adjust general UL/LI styling within tree for better alignment if needed /
+.solution-branch ul, .sub-branch ul {
+margin-top: 0.5em; / Space above lists /
+/ padding-left: 1.5em; is default, which is fine relative to their container /
+}
+.solution-branch ul li, .sub-branch ul li {
+margin-bottom: 0.3em;
+}
+/ --- End Tree Structure Styles --- */
+</style>
 </head>
 <body>
-
-    <h1>Solution Exercice N°1 : Rotation d'une Barre</h1>
-
-    <div class="explanation">
-        <p>Cet exercice concerne le mouvement de rotation simple d'une barre OA autour d'un axe fixe \( (O, \vec{z}_0) \). Nous allons utiliser les concepts de changement de base et de dérivation vectorielle pour déterminer les caractéristiques cinématiques du mouvement.</p>
-        <p><strong>Référentiels :</strong></p>
-        <ul>
-            <li>\( R_0(O, \vec{x}_0, \vec{y}_0, \vec{z}_0) \) : Référentiel fixe.</li>
-            <li>\( R_1(O, \vec{x}_1, \vec{y}_1, \vec{z}_1) \) : Référentiel mobile lié à la barre OA. L'axe \( \vec{x}_1 \) est porté par la barre.</li>
-        </ul>
-        <p><strong>Mouvement :</strong> Rotation d'angle \( \theta \) autour de l'axe \( \vec{z}_0 \).</p>
-        <p><strong>Observation Clé (Diagramme) :</strong> Le repère \( R_1 \) est obtenu par rotation de \( R_0 \) d'un angle \( \theta \) autour de l'axe commun \( \vec{z}_0 = \vec{z}_1 \).</p>
-    </div>
-
-    <h2 class="question">1. Déterminer la matrice de passage de R<sub>0</sub> vers R<sub>1</sub></h2>
-
-    <div class="explanation">
-        <p>La matrice de passage de la base \( B_0 = (\vec{x}_0, \vec{y}_0, \vec{z}_0) \) vers la base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \), notée \( \mat{P}_{0 \to 1} \), permet d'exprimer les composantes d'un vecteur de la base \( B_0 \) dans la base \( B_1 \). Ses colonnes sont les composantes des vecteurs \( \vec{x}_0, \vec{y}_0, \vec{z}_0 \) exprimées dans la base \( B_1 \).</p>
-        <p>Il est souvent plus facile de déterminer d'abord la matrice de passage inverse, \( \mat{P}_{1 \to 0} \), dont les colonnes sont les composantes des vecteurs \( \vec{x}_1, \vec{y}_1, \vec{z}_1 \) exprimées dans la base \( B_0 \).</p>
-        <p>D'après le diagramme et la description de la rotation :</p>
-        <ul>
-            <li>\( \vec{x}_1 \) est obtenu en faisant tourner \( \vec{x}_0 \) de \( \theta \) autour de \( \vec{z}_0 \) : \( \vec{x}_1 = \cos\theta \vec{x}_0 + \sin\theta \vec{y}_0 \)</li>
-            <li>\( \vec{y}_1 \) est obtenu en faisant tourner \( \vec{y}_0 \) de \( \theta \) autour de \( \vec{z}_0 \) : \( \vec{y}_1 = -\sin\theta \vec{x}_0 + \cos\theta \vec{y}_0 \)</li>
-            <li>L'axe de rotation est commun : \( \vec{z}_1 = \vec{z}_0 \)</li>
-        </ul>
-        <p>On peut donc écrire \( \mat{P}_{1 \to 0} \) :</p>
-        <div class="math-display">
-        \[ \mat{P}_{1 \to 0} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \]
-        </div>
-        <p>Comme les bases \( B_0 \) et \( B_1 \) sont orthonormées, la matrice de passage est orthogonale. Cela signifie que son inverse est égale à sa transposée : \( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^{-1} = (\mat{P}_{1 \to 0})^T \).</p>
-        <p>En transposant \( \mat{P}_{1 \to 0} \), on obtient :</p>
-    </div>
-    <div class="definition">
-        <strong>Matrice de passage de \( R_0 \) vers \( R_1 \) :</strong>
-        <div class="math-display">
-        \[ \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T = \matrice{\cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \]
-        </div>
-        Cette matrice permet de trouver les composantes dans \( R_1 \) d'un vecteur dont on connaît les composantes dans \( R_0 \) : \( \begin{pmatrix} V_{x1} \\ V_{y1} \\ V_{z1} \end{pmatrix}_{R_1} = \mat{P}_{0 \to 1} \begin{pmatrix} V_{x0} \\ V_{y0} \\ V_{z0} \end{pmatrix}_{R_0} \).
-    </div>
-
-    <h2 class="question">2. La vitesse de rotation instantanée de R<sub>1</sub> par rapport à R<sub>0</sub> exprimé dans R<sub>1</sub></h2>
-
-    <div class="explanation">
-        <p>Le mouvement de \( R_1 \) par rapport à \( R_0 \) est une rotation unique autour de l'axe fixe \( (O, \vec{z}_0) \) à la vitesse angulaire \( \dot{\theta} = \deriv{\theta} \).</p>
-        <p>Le vecteur vitesse de rotation instantanée est donc dirigé selon l'axe de rotation et a pour norme la vitesse angulaire :</p>
-        <div class="math-display">
-        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_0 \]
-        </div>
-        <p>On nous demande d'exprimer ce vecteur dans la base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \). D'après la configuration du problème, nous savons que l'axe de rotation est commun aux deux repères : \( \vec{z}_1 = \vec{z}_0 \).</p>
-        <p>Donc, l'expression du vecteur rotation dans \( R_1 \) est :</p>
-    </div>
-    <div class="definition">
-        <strong>Vecteur Vitesse de Rotation de \( R_1/R_0 \) exprimé dans \( R_1 \) :</strong>
-        <div class="math-display">
-        \[ \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 \]
-        </div>
-        En composantes dans la base \( B_1 \) :
-        <div class="math-display">
-        \[ \vec{\Omega}_{R_1/R_0} = \matrice{0 \\ 0 \\ \dot{\theta}}_{R_1} \]
-        </div>
-    </div>
-
-    <h2 class="question">3. Trouver la vitesse de point O et A par rapport à R1 puis R0 (absolu)</h2>
-
-    <div class="explanation">
-        <h3>Vitesse par rapport à R<sub>1</sub> (Vitesse Relative)</h3>
-        <p>Le référentiel \( R_1 \) est lié à la barre OA. Les points O et A sont donc fixes dans \( R_1 \). La vitesse d'un point M appartenant à un solide S par rapport au référentiel \( R_1 \) lié à ce solide est, par définition, nulle.</p>
-    </div>
-    <div class="definition">
-        <strong>Vitesse de O / R<sub>1</sub> :</strong>
-        <div class="math-display">
-        \[ \vec{V}_{O/R_1} = \vec{0} \]
-        </div>
-         <strong>Vitesse de A / R<sub>1</sub> :</strong>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_1} = \vec{0} \]
-        </div>
-    </div>
-
-    <div class="explanation">
-        <h3>Vitesse par rapport à R<sub>0</sub> (Vitesse Absolue)</h3>
-        <p>Nous cherchons maintenant les vitesses \( \vec{V}_{O/R_0} \) et \( \vec{V}_{A/R_0} \), qui représentent le mouvement de ces points vu depuis le référentiel fixe.</p>
-
-        <h3>Vitesse du point O par rapport à R<sub>0</sub></h3>
-        <p>Le point O est l'origine commune des deux repères et est défini comme fixe dans \( R_0 \).</p>
-    </div>
-    <div class="definition">
-        <strong>Vitesse de O / R<sub>0</sub> :</strong>
-        <div class="math-display">
-        \[ \vec{V}_{O/R_0} = \vec{0} \]
-        </div>
-        Expression dans \( B_1 \) : \( \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}_{R_1} \). <br/>
-        Expression dans \( B_0 \) : \( \begin{pmatrix} 0 \\ 0 \\ 0 \end{pmatrix}_{R_0} \).
-    </div>
-
-    <div class="explanation">
-        <h3>Vitesse du point A par rapport à R<sub>0</sub></h3>
-        <p>Le point A est l'extrémité de la barre OA de longueur L. Son vecteur position par rapport à O est \( \vec{OA} \). Comme \( R_1 \) est lié à la barre et que \( \vec{x}_1 \) est porté par OA :</p>
-        <div class="math-display">
-        \[ \vec{OA} = L \vec{x}_1 \]
-        </div>
-        <p>Pour trouver la vitesse absolue \( \vec{V}_{A/R_0} \), on peut utiliser la formule fondamentale du champ des vitesses des solides (relation entre vitesse de A et O) ou dériver le vecteur position \( \vec{OA} \) par rapport au temps dans \( R_0 \).</p>
-
-        <p><strong>Méthode 1 : Relation fondamentale des vitesses</strong></p>
-        <p>Pour deux points O et A d'un même solide (la barre) en mouvement par rapport à \( R_0 \):</p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = \vec{V}_{O/R_0} + \vec{\Omega}_{R_1/R_0} \wedge \vec{OA} \]
-        </div>
-        <p>En utilisant les résultats précédents :</p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = \vec{0} + (\dot{\theta} \vec{z}_1) \wedge (L \vec{x}_1) \]
-        </div>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = L \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) \]
-        </div>
-        <p>Comme \( (\vec{x}_1, \vec{y}_1, \vec{z}_1) \) forme une base orthonormée directe, le produit vectoriel \( \vec{z}_1 \wedge \vec{x}_1 = \vec{y}_1 \).</p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = L \dot{\theta} \vec{y}_1 \]
-        </div>
-
-        <p><strong>Méthode 2 : Dérivation du vecteur position</strong></p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = \frac{d(\vec{OA})}{dt}\bigg|_{R_0} = \frac{d(L \vec{x}_1)}{dt}\bigg|_{R_0} \]
-        </div>
-        <p>Puisque L est constant, et en utilisant la formule de dérivation vectorielle :</p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = L \frac{d\vec{x}_1}{dt}\bigg|_{R_0} = L \left( \frac{d\vec{x}_1}{dt}\bigg|_{R_1} + \vec{\Omega}_{R_1/R_0} \wedge \vec{x}_1 \right) \]
-        </div>
-        <p>Le vecteur \( \vec{x}_1 \) est fixe dans \( R_1 \), donc \( \frac{d\vec{x}_1}{dt}|_{R_1} = \vec{0} \).</p>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = L (\vec{0} + (\dot{\theta} \vec{z}_1) \wedge \vec{x}_1) = L \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) = L \dot{\theta} \vec{y}_1 \]
-        </div>
-        <p>Les deux méthodes donnent le même résultat. Ce vecteur vitesse absolue est pour l'instant exprimé dans la base mobile \( B_1 \).</p>
-
-    </div>
-    <div class="definition">
-        <strong>Vitesse de A / R<sub>0</sub> (exprimée dans R<sub>1</sub>) :</strong>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = L \dot{\theta} \vec{y}_1 \]
-        </div>
-        En composantes dans la base \( B_1 \) :
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \]
-        </div>
-    </div>
-
-    <div class="explanation">
-        <p>Pour exprimer ce vecteur vitesse absolue \( \vec{V}_{A/R_0} \) dans la base fixe \( B_0 \), nous utilisons la matrice de passage \( \mat{P}_{1 \to 0} \) :</p>
-        <div class="math-display">
-        \[ \begin{pmatrix} V_{Ax0} \\ V_{Ay0} \\ V_{Az0} \end{pmatrix}_{R_0} = \mat{P}_{1 \to 0} \begin{pmatrix} V_{Ax1} \\ V_{Ay1} \\ V_{Az1} \end{pmatrix}_{R_1} \]
-        </div>
-        <div class="math-display">
-        \[ \matrice{V_{Ax0} \\ V_{Ay0} \\ V_{Az0}}_{R_0} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \]
-        </div>
-        <div class="math-display">
-        \[ \matrice{V_{Ax0} \\ V_{Ay0} \\ V_{Az0}}_{R_0} = \matrice{(\cos\theta)(0) + (-\sin\theta)(L\dot{\theta}) + (0)(0) \\ (\sin\theta)(0) + (\cos\theta)(L\dot{\theta}) + (0)(0) \\ (0)(0) + (0)(L\dot{\theta}) + (1)(0)} = \matrice{-L\dot{\theta}\sin\theta \\ L\dot{\theta}\cos\theta \\ 0}_{R_0} \]
-        </div>
-    </div>
-    <div class="definition">
-        <strong>Vitesse de A / R<sub>0</sub> (exprimée dans R<sub>0</sub>) :</strong>
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = -L\dot{\theta}\sin\theta \vec{x}_0 + L\dot{\theta}\cos\theta \vec{y}_0 \]
-        </div>
-        En composantes dans la base \( B_0 \) :
-        <div class="math-display">
-        \[ \vec{V}_{A/R_0} = \matrice{-L\dot{\theta}\sin\theta \\ L\dot{\theta}\cos\theta \\ 0}_{R_0} \]
-        </div>
-        <p><strong>Vérification :</strong> Le point A décrit un cercle de rayon L dans le plan \( (O, \vec{x}_0, \vec{y}_0) \). Sa vitesse doit être tangente à ce cercle. Le vecteur vitesse trouvé \( (-L\dot{\theta}\sin\theta, L\dot{\theta}\cos\theta, 0)_{R_0} \) est bien orthogonal au vecteur position \( \vec{OA} = L\vec{x}_1 = L(\cos\theta \vec{x}_0 + \sin\theta \vec{y}_0) \) car leur produit scalaire est nul : \( L(\cos\theta)(-L\dot{\theta}\sin\theta) + L(\sin\theta)(L\dot{\theta}\cos\theta) = 0 \). La norme de la vitesse est \( \sqrt{(-L\dot{\theta}\sin\theta)^2 + (L\dot{\theta}\cos\theta)^2} = \sqrt{L^2\dot{\theta}^2(\sin^2\theta + \cos^2\theta)} = |L\dot{\theta}| \), ce qui correspond bien à la vitesse \( R\omega \) d'un point sur un cercle de rayon L à la vitesse angulaire \( \dot{\theta} \).</p>
-    </div>
-
+<h1>Solution Exercice N°1 : Rotation d'une Barre (Optimisée)</h1>
+<p>Objectif : Analyse cinématique d'une barre OA en rotation autour d'un axe fixe \( (O, \vec{z}_0) \), utilisant les changements de base et la dérivation vectorielle.</p>
+<p><strong>Données Clés :</strong></p>
+<ul>
+<li><strong>Référentiels :</strong>
+<ul>
+<li>Fixe \( R_0 \): \( (O, \vec{x}_0, \vec{y}_0, \vec{z}_0) \), base \( B_0 = (\vec{x}_0, \vec{y}_0, \vec{z}_0) \).</li>
+<li>Mobile \( R_1 \): \( (O, \vec{x}_1, \vec{y}_1, \vec{z}_1) \), base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \). Lié à la barre OA (\( \vec{x}_1 \) porté par OA).</li>
+</ul>
+</li>
+<li><strong>Mouvement :</strong> \( R_1 \) tourne par rapport à \( R_0 \) d'un angle \( \theta(t) \) autour de \( \vec{z}_0 \).
+<ul><li>Conséquence : Axe de rotation commun \( \implies \vec{z}_1 = \vec{z}_0 \).</li></ul>
+</li>
+</ul>
+<div class="solution-branch">
+<h2 class="question">1. Matrices de passage \( \mat{P}_{1 \to 0} \) et \( \mat{P}_{0 \to 1} \)</h2>
+<p>Une matrice de passage convertit les composantes d'un vecteur d'une base à une autre. Pour trouver \( \mat{P}_{0 \to 1} \) (de \(B_0\) vers \(B_1\)) et \( \mat{P}_{1 \to 0} \) (de \(B_1\) vers \(B_0\)), il est souvent plus direct de déterminer d'abord \( \mat{P}_{1 \to 0} \). Les colonnes de \( \mat{P}_{1 \to 0} \) sont les vecteurs de la base \(B_1\) exprimés dans la base \(B_0\). Ensuite, comme les bases sont orthonormées, \( \mat{P}_{0 \to 1} \) s'obtient par transposition : \( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T \).</p>
+<ul>
+<li>
+<strong>Matrice \( \mat{P}_{1 \to 0} \) (de \( B_1 \) vers \( B_0 \)) :</strong>
+<ul>
+<li>Colonnes : \( \vec{x}_1, \vec{y}_1, \vec{z}_1 \) exprimés dans \( B_0 \).</li>
+<li>\( \vec{x}_1 = \cos\theta \vec{x}_0 + \sin\theta \vec{y}_0 \)</li>
+<li>\( \vec{y}_1 = -\sin\theta \vec{x}_0 + \cos\theta \vec{y}_0 \)</li>
+<li>\( \vec{z}_1 = \vec{z}_0 \) (axe de rotation commun)</li>
+</ul>
+<p>La matrice de passage \( \mat{P}_{1 \to 0} \) est donc :</p>
+<p>\( \mat{P}_{1 \to 0} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \)</p>
+<p>Usage : \( \begin{pmatrix} V_{x0} \\ V_{y0} \\ V_{z0} \end{pmatrix}_{B_0} = \mat{P}_{1 \to 0} \begin{pmatrix} V_{x1} \\ V_{y1} \\ V_{z1} \end{pmatrix}_{B_1} \).</p>
+</li>
+<li>
+<strong>Matrice \( \mat{P}_{0 \to 1} \) (de \( B_0 \) vers \( B_1 \)) :</strong>
+<ul>
+<li>Obtenue par \( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T \).</li>
+</ul>
+    <p>La matrice de passage \( \mat{P}_{0 \to 1} \) est donc :</p>
+    <p>\( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T = \matrice{\cos\theta & \sin\theta & 0 \\ -\sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \)</p>
+    <p>Usage : \( \begin{pmatrix} V_{x1} \\ V_{y1} \\ V_{z1} \end{pmatrix}_{B_1} = \mat{P}_{0 \to 1} \begin{pmatrix} V_{x0} \\ V_{y0} \\ V_{z0} \end{pmatrix}_{B_0} \).</p>
+</li>
+<li><strong>Propriété :</strong> Pour des bases orthonormées directes, les matrices de passage sont orthogonales, donc \( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^{-1} \).</li>
+</ul>
+</div>
+<div class="solution-branch">
+<h2 class="question">2. Vitesse de rotation instantanée de R<sub>1</sub> par rapport à R<sub>0</sub> exprimée dans R<sub>1</sub></h2>
+<ul>
+<li>Mouvement : Rotation unique de \( R_1/R_0 \) autour de \( \vec{z}_0 \) avec vitesse angulaire \( \dot{\theta} = \deriv{\theta} \).</li>
+<li>Vecteur vitesse de rotation : \( \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_0 \).</li>
+<li>Expression dans \( B_1 \) (sachant \( \vec{z}_1 = \vec{z}_0 \)) :
+<p>\( \vec{\Omega}_{R_1/R_0} = \dot{\theta} \vec{z}_1 \)</p>
+<p>En composantes dans \( B_1 \) :</p>
+<p>\( (\vec{\Omega}_{R_1/R_0})_{/B_1} = \matrice{0 \\ 0 \\ \dot{\theta}}_{R_1} \)</p>
+</li>
+</ul>
+</div>
+<div class="solution-branch">
+<h2 class="question">3. Vitesses des points O et A par rapport à R<sub>1</sub> (relative) puis R<sub>0</sub> (absolue)</h2>
+<div class="sub-branch">
+<h3>Vitesse par rapport à R<sub>1</sub> (Vitesse Relative)</h3>
+<ul>
+<li>\( R_1 \) est lié à la barre OA \( \implies \) Les points O et A sont fixes dans \( R_1 \).</li>
+</ul>
+<p>\( \vec{V}_{O/R_1} = \vec{0} \)</p>
+<p>\( \vec{V}_{A/R_1} = \vec{0} \)</p>
+</div>
+<div class="sub-branch">
+<h3>Vitesse par rapport à R<sub>0</sub> (Vitesse Absolue)</h3>
+<ul>
+<li><strong>Vitesse de O / R<sub>0</sub> :</strong> O est fixe dans \( R_0 \).
+<p>\( \vec{V}_{O/R_0} = \vec{0} \)</p>
+</li>
+<li><strong>Vitesse de A / R<sub>0</sub> :</strong>
+<ul>
+<li>Position : \( \vec{OA} = L \vec{x}_1 \) (L = longueur de la barre).</li>
+<li><strong>Méthode 1 : Relation fondamentale du champ des vitesses</strong>
+<p>\( \vec{V}_{A/R_0} = \underbrace{\vec{V}_{O/R_0}}_{=\vec{0}} + \vec{\Omega}_{R_1/R_0} \wedge \vec{OA} = (\dot{\theta} \vec{z}_1) \wedge (L \vec{x}_1) \)</p>
+<p>\( \vec{V}_{A/R_0} = L \dot{\theta} (\vec{z}_1 \wedge \vec{x}_1) = L \dot{\theta} \vec{y}_1 \quad (\text{car } \vec{z}_1 \wedge \vec{x}_1 = \vec{y}_1 \text{ dans } B_1 \text{ OND}) \)</p>
+</li>
+<li><strong>Méthode 2 : Dérivation du vecteur position</strong>
+<p>\( \vec{V}_{A/R_0} = \frac{d(\vec{OA})}{dt}\bigg|_{R_0} = L \frac{d(\vec{x}_1)}{dt}\bigg|_{R_0} \)</p>
+<p>\( \frac{d\vec{x}_1}{dt}\bigg|_{R_0} = \underbrace{\frac{d\vec{x}_1}{dt}\bigg|_{R_1}}_{=\vec{0} \text{ (fixe dans } R_1)} + \vec{\Omega}_{R_1/R_0} \wedge \vec{x}_1 \)</p>
+<p>\( \vec{V}_{A/R_0} = L (\dot{\theta} \vec{z}_1 \wedge \vec{x}_1) = L \dot{\theta} \vec{y}_1 \)</p>
+</li>
+</ul>
+<p><strong>Vitesse de A / R<sub>0</sub> (exprimée dans B<sub>1</sub>) :</strong></p>
+<p>\( \vec{V}_{A/R_0} = L \dot{\theta} \vec{y}_1 \quad \implies \quad (\vec{V}_{A/R_0})_{/B_1} = \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \)</p>
+<p>Expression dans la base fixe \( B_0 \) (avec \( \mat{P}_{1 \to 0} \)) :</p>
+<p>\( (\vec{V}_{A/R_0})_{/B_0} = \mat{P}_{1 \to 0} (\vec{V}_{A/R_0})_{/B_1} = \matrice{\cos\theta & -\sin\theta & 0 \\ \sin\theta & \cos\theta & 0 \\ 0 & 0 & 1} \matrice{0 \\ L\dot{\theta} \\ 0}_{R_1} \)</p>
+<p>\( (\vec{V}_{A/R_0})_{/B_0} = \matrice{-L\dot{\theta}\sin\theta \\ L\dot{\theta}\cos\theta \\ 0}_{R_0} \)</p>
+<p><strong>Vitesse de A / R<sub>0</sub> (exprimée dans B<sub>0</sub>) :</strong></p>
+<p>\( \vec{V}_{A/R_0} = -L\dot{\theta}\sin\theta \vec{x}_0 + L\dot{\theta}\cos\theta \vec{y}_0 \)</p>
+<p><strong>Vérification :</strong></p>
+<ul>
+<li>\( \vec{OA} = L\vec{x}_1 = L(\cos\theta \vec{x}_0 + \sin\theta \vec{y}_0) \). A décrit un cercle de rayon L.</li>
+<li>Orthogonalité \( \vec{OA} \cdot \vec{V}_{A/R_0} \):
+\( (L\cos\theta)(-L\dot{\theta}\sin\theta) + (L\sin\theta)(L\dot{\theta}\cos\theta) = 0 \). Confirmé.
+</li>
+<li>Norme \( \|\vec{V}_{A/R_0}\| \):
+\( \sqrt{(-L\dot{\theta}\sin\theta)^2 + (L\dot{\theta}\cos\theta)^2} = \sqrt{L^2\dot{\theta}^2(\sin^2\theta + \cos^2\theta)} = |L\dot{\theta}| \). Correspond à \( R\omega \).
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 </body>
 </html>

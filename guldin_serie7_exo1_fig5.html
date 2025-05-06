@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Figure 7.1.5 - Cercle Linéique</title>
+    <title>Solution Figure 7.1.5 - Cercle Linéique (Détaillé)</title>
     <script>
         MathJax = {
           tex: {
@@ -27,25 +27,18 @@
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        h3 { font-size: 1.2em; margin-top: 1em; color: #004080; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
         .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
         mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
         mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
-        ul { padding-left: 30px; }
+        ul { padding-left: 20px; list-style-position: inside; }
+        ul ul { margin-top: 0.2em; margin-bottom: 0.2em; padding-left: 20px;}
+        ul ul ul {padding-left: 20px;}
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
-        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
-
-        .figure-placeholder img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -53,76 +46,116 @@
     <h1>Solution Figure 7.1.5 : Cercle linéique</h1>
 
     <div class="figure-placeholder">
-        <!-- Placeholder for Figure 7.1.5 -->
-        <!-- Circle center c(R,0,0), radius r, R>r -->
         <img src="figure7.1.5.png" alt="Figure 7.1.5 - Cercle Linéique">
     </div>
     <p class="caption">FIGURE 7.1.5 - Cercle linéique centré en c(R,0,0) de rayon r (avec R > r)</p>
 
     <h2>Méthode requise : Théorème de Guldin (uniquement).</h2>
 
-    <h2>Concepts Clés :</h2>
+    <h2>Concepts Clés</h2>
     <ul>
-        <li><strong>Premier Théorème de Guldin :</strong> L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'un arc de courbe plane $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne le coupant pas est :
-        $$S_{/\Delta} = L \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie $G$ de l'arc à l'axe $(\Delta)$. On peut donc trouver cette distance par :
-        $$R_G = \frac{S_{/\Delta}}{2\pi L}$$
+        <li><strong>Premier Théorème de Guldin :</strong>
+            <ul>
+                <li>L'aire $S_{/\Delta}$ de la surface engendrée par la rotation d'une courbe $(L)$ de longueur $L$ autour d'un axe $(\Delta)$ coplanaire ne la coupant pas est : $S_{/\Delta} = L \times (2\pi R_G)$.</li>
+                <li>$R_G$ est la distance du centre d'inertie $G$ de la courbe à l'axe $(\Delta)$.</li>
+                <li>On peut donc trouver $R_G$ par : $R_G = \frac{S_{/\Delta}}{2\pi L}$.</li>
+            </ul>
         </li>
-        <li><strong>Corps linéique :</strong> L'objet est une courbe (cercle) de densité linéique $\lambda$ constante.</li>
-        <li><strong>Centre d'inertie G :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. $x_G$ est la distance à l'axe Oy ($R_{G, Oy}$), $y_G$ est la distance à l'axe Ox ($R_{G, Ox}$). Vu que le cercle est dans le plan z=0, $z_G=0$.</li>
-        <li><strong>Symétrie :</strong> Un cercle est une figure hautement symétrique. Son centre d'inertie coïncide avec son centre géométrique. Bien que nous devions utiliser Guldin, la symétrie nous donne le résultat attendu.</li>
+        <li><strong>Corps linéique :</strong> L'objet est un cercle de densité linéique $\lambda$ constante.</li>
+        <li><strong>Centre d'inertie G :</strong>
+            <ul>
+                <li>On cherche les coordonnées $(x_G, y_G, z_G)$.</li>
+                <li>$x_G$ est la distance à l'axe Oy ($R_{G, Oy}$).</li>
+                <li>$y_G$ est la distance à l'axe Ox ($R_{G, Ox}$).</li>
+                <li>Le cercle étant dans le plan z=0, $z_G=0$.</li>
+            </ul>
+        </li>
+        <li><strong>Symétrie :</strong>
+            <ul>
+                <li>Un cercle est une figure hautement symétrique.</li>
+                <li>Son centre d'inertie coïncide avec son centre géométrique.</li>
+                <li>Bien que Guldin soit requis, la symétrie donne le résultat attendu.</li>
+            </ul>
+        </li>
     </ul>
 
-    <h2>Géométrie :</h2>
-    <p>Le corps est un cercle dans le plan z=0.</p>
+    <h2>Géométrie</h2>
     <ul>
-        <li>Centre géométrique : C(R, 0, 0).</li>
-        <li>Rayon : r.</li>
-        <li>Condition : R > r. Ceci assure que le cercle ne contient pas l'origine O(0,0,0) et ne coupe pas l'axe Oy.</li>
-        <li>Équation : $(x-R)^2 + y^2 = r^2$, $z=0$.</li>
-        <li>Longueur (Périmètre) : $L = 2\pi r$.</li>
+        <li>Le corps est un cercle dans le plan z=0.</li>
+        <li><strong>Centre géométrique :</strong> C(R, 0, 0).</li>
+        <li><strong>Rayon :</strong> r.</li>
+        <li><strong>Condition importante :</strong> R > r.
+            <ul>
+                <li>Assure que le cercle ne contient pas l'origine O(0,0,0) et ne coupe pas l'axe Oy.</li>
+                <li>Essentiel pour l'application de Guldin lors de la rotation autour de Oy.</li>
+            </ul>
+        </li>
+        <li><strong>Équation du cercle :</strong> $(x-R)^2 + y^2 = r^2$, avec $z=0$.</li>
+        <li><strong>Longueur (Périmètre) :</strong> $L = 2\pi r$.</li>
     </ul>
 
     <h2>Calcul du Centre d'Inertie $G = (x_G, y_G, z_G)$</h2>
 
     <h3>Coordonnée $z_G$ :</h3>
-    <p>Le cercle est entièrement contenu dans le plan z=0. Par conséquent, la coordonnée $z$ de son centre d'inertie est nulle :</p>
-    $$ z_G = 0 $$
-
-    <h3>Coordonnée $y_G$ :</h3>
-    <p>Le cercle est centré en C(R, 0, 0) et se trouve dans le plan z=0. Il est donc symétrique par rapport à l'axe Ox (la droite y=0, z=0) qui passe par son centre. En raison de cette symétrie, le centre d'inertie G doit se trouver sur cet axe de symétrie.</p>
-    $$ y_G = 0 $$
-    <p><em></em> </p>
-
-
-    <h3>Coordonnée $x_G$ (Rotation autour de l'axe Oy) :</h3>
-    <p>On fait tourner le cercle autour de l'axe Oy (équation x=0). Puisque $R>r$, le cercle est entièrement situé à $x > 0$ (car $x$ varie de $R-r$ à $R+r$, et $R-r > 0$). L'axe Oy ne coupe donc pas le cercle.</p>
     <ul>
-        <li>Axe de rotation : Oy ($x=0$).</li>
-        <li>Courbe génératrice : Cercle de longueur $L = 2\pi r$.</li>
-        <li>Surface générée : C'est un tore (ou anneau de section circulaire). Le grand rayon du tore (distance du centre du tore au centre de la section circulaire) est R, et le petit rayon (rayon de la section circulaire) est r.</li>
-        <li>Aire de la surface du tore ($S_{/Oy}$) : La formule standard pour l'aire d'un tore est $S = (2\pi R)(2\pi r) = 4\pi^2 Rr$.</li>
-        <li>Application de Guldin : La distance du centre d'inertie $G$ du cercle à l'axe Oy est $R_{G, Oy} = |x_G| = x_G$ (puisque $x_G > 0$). Le théorème de Guldin donne :
-         $$ S_{/Oy} = L \times (2\pi R_{G, Oy}) = (2\pi r) \times (2\pi x_G) $$
-         </li>
-        <li>Calcul de $x_G$ : En égalant l'aire connue du tore et l'expression de Guldin :
-         $$ 4\pi^2 Rr = (2\pi r) \times (2\pi x_G) $$
-         $$ 4\pi^2 Rr = 4\pi^2 r x_G $$
-         En simplifiant par $4\pi^2 r$ (puisque $r \ne 0$), on obtient :
-         $$ x_G = R $$
-         </li>
+        <li>Le cercle est entièrement contenu dans le plan z=0.</li>
+        <li>Par conséquent, la coordonnée $z$ de son centre d'inertie est nulle : $z_G = 0$.</li>
     </ul>
 
-    <h2>Résultat :</h2>
+    <h3>Coordonnée $y_G$ :</h3>
+    <ul>
+        <li>Le cercle est centré en C(R, 0, 0) et se trouve dans le plan z=0.</li>
+        <li>Il est donc symétrique par rapport à l'axe Ox (la droite y=0, z=0) qui passe par son centre.</li>
+        <li>En raison de cette symétrie, le centre d'inertie G doit se trouver sur cet axe de symétrie.</li>
+        <li>Donc, $y_G = 0$.</li>
+        <li><em>Note sur Guldin pour $y_G$ :</em> Si on effectue une rotation autour de l'axe Ox, l'axe de rotation passe par le centre d'inertie G. La distance $R_{G,Ox}$ est nulle. L'aire de la surface générée serait alors $S_{/Ox} = L \times (2\pi \times 0) = 0$. Cela est cohérent mais ne permet pas de calculer $y_G$ directement si on ne le suppose pas nul par symétrie au préalable. La symétrie est l'argument principal ici.</li>
+    </ul>
+
+    <h3>Coordonnée $x_G$ (Rotation autour de l'axe Oy) :</h3>
+    <ul>
+        <li><strong>Axe de rotation :</strong> Axe Oy (d'équation x=0).</li>
+        <li><strong>Condition de non-intersection :</strong> Puisque $R>r$, le cercle est entièrement situé à $x > 0$. (Les valeurs de $x$ sur le cercle varient de $R-r$ à $R+r$, et $R-r > 0$). L'axe Oy ne coupe donc pas le cercle.</li>
+        <li><strong>Courbe génératrice :</strong> Cercle de longueur $L = 2\pi r$.</li>
+        <li><strong>Surface générée :</strong> C'est un tore (ou anneau de section circulaire).
+            <ul>
+                <li>Le grand rayon du tore (distance du centre du tore au centre de la section circulaire) est R.</li>
+                <li>Le petit rayon (rayon de la section circulaire) est r.</li>
+            </ul>
+        </li>
+        <li><strong>Aire de la surface du tore ($S_{/Oy}$) :</strong> La formule standard est $S = (\text{périmètre du cercle de rayon R}) \times (\text{périmètre du cercle de rayon r}) = (2\pi R)(2\pi r) = 4\pi^2 Rr$.</li>
+        <li><strong>Application du Théorème de Guldin :</strong>
+            <ul>
+                <li>La distance du centre d'inertie $G$ du cercle à l'axe Oy est $R_{G, Oy}$. Puisque le cercle est à $x>0$, $G$ sera aussi à $x_G > 0$, donc $R_{G, Oy} = x_G$.</li>
+                <li>Le théorème de Guldin énonce : $S_{/Oy} = L \times (2\pi R_{G, Oy})$.</li>
+                <li>En substituant : $S_{/Oy} = (2\pi r) \times (2\pi x_G)$.</li>
+            </ul>
+        </li>
+        <li><strong>Calcul de $x_G$ :</strong> En égalant l'aire connue du tore et l'expression de Guldin :
+            $$ 4\pi^2 Rr = (2\pi r) \times (2\pi x_G) $$
+            $$ 4\pi^2 Rr = 4\pi^2 r x_G $$
+            En simplifiant par $4\pi^2 r$ (puisque $r \ne 0$) :
+            $$ x_G = R $$
+        </li>
+    </ul>
+
+    <h2>Résultat</h2>
     <p>Le centre d'inertie G du cercle linéique a pour coordonnées :</p>
     $$ x_G = R $$
     $$ y_G = 0 $$
     $$ z_G = 0 $$
     <p>Soit $G = (R, 0, 0)$.</p>
 
-    <h2>Conclusion :</h2>
-    <p>Le centre d'inertie G du cercle coïncide avec son centre géométrique C(R,0,0). Ce résultat était attendu en raison de la double symétrie du cercle par rapport aux axes passant par son centre et parallèles aux axes Oy et Ox.</p>
-    <p>Nous avons utilisé le théorème de Guldin pour confirmer la coordonnée $x_G=R$ en calculant l'aire de la surface du tore généré par rotation autour de Oy. Pour $y_G$ et $z_G$, l'argument de symétrie est le plus direct et fondamental, et Guldin n'apporte pas d'information supplémentaire simple dans le cas où le centre d'inertie est sur l'axe de rotation.</p>
+    <h2>Conclusion</h2>
+    <ul>
+        <li>Le centre d'inertie G du cercle coïncide avec son centre géométrique C(R,0,0).</li>
+        <li>Ce résultat était attendu en raison de la double symétrie du cercle (par rapport à l'axe Ox et par rapport à l'axe vertical x=R).</li>
+        <li>Nous avons utilisé :
+            <ul>
+                <li>L'argument de symétrie pour $y_G=0$ et $z_G=0$.</li>
+                <li>Le théorème de Guldin pour confirmer $x_G=R$, en utilisant l'aire connue d'un tore.</li>
+            </ul>
+        </li>
+    </ul>
 
 </body>
 </html>

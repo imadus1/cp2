@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solution Figure 7.2.6 - Disque Surfacique Creux</title>
+    <title>Solution Figure 7.2.6 - Disque Surfacique Creux (Optimisé)</title>
     <script>
         MathJax = {
           tex: {
@@ -27,25 +27,17 @@
         h1, h2, h3 { color: #0056b3; font-family: "Computer Modern Sans", sans-serif; }
         h1 { font-size: 1.8em; border-bottom: 1px solid #ccc; padding-bottom: 0.2em; }
         h2 { font-size: 1.5em; margin-top: 1.5em; }
-        h3 { font-size: 1.2em; margin-top: 1.2em;}
+        h3 { font-size: 1.2em; margin-top: 1em; color: #004080; }
         code { background-color: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
-        .alternative { border-left: 3px solid #28a745; padding: 10px; margin: 15px 0; background-color: #e9f7ec; }
         .mjx-math, mjx-container { font-size: 110% !important; text-align: left !important; }
         mjx-math[display="false"] { font-size: 125% !important; vertical-align: -0.15em; }
         mjx-container[display="true"] { display: block; margin: 1em 0; overflow-x: visible; font-size: 110% !important; }
         mjx-container[display="true"] mjx-math { font-size: 100% !important; vertical-align: baseline; }
-        ul { padding-left: 30px; }
+        ul { padding-left: 20px; list-style-position: inside; }
+        ul ul { margin-top: 0.2em; margin-bottom: 0.2em; padding-left: 20px;}
         .caption { text-align:center; margin-top: 0.5em; font-style: italic; }
         .figure-placeholder { display: block; margin: 1em auto; max-width: 400px; width: 80%; min-height: 150px; border: 1px solid #ccc; text-align: center; padding-top: 20px; background-color: #f8f8f8; position: relative; }
-        .figure-placeholder::before { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 1.5em; color: #555; }
-
-        .figure-placeholder img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
+        .figure-placeholder img { max-width: 100%; height: auto; display: block; margin-left: auto; margin-right: auto; }
     </style>
 </head>
 <body>
@@ -53,107 +45,78 @@
     <h1>Solution Figure 7.2.6 : Disque surfacique creux (Annulus)</h1>
 
     <div class="figure-placeholder">
-        <!-- Placeholder for Figure 7.2.6 -->
-        <!-- Hollow disk center C(5a,0,0), inner radius a, outer radius 3a -->
         <img src="figure7.2.6.png" alt="Figure 7.2.6 - Disque Surfacique Creux">
     </div>
-    <p class="caption">FIGURE 7.2.6 - Disque surfacique creux centré en C(5a,0,0), de rayon intérieur $r_1=a$ et rayon extérieur $r_2=3a$.</p>
+    <p class="caption">FIGURE 7.2.6 - Annulus : centre C(5a,0), rayons $r_1=a, r_2=3a$.</p>
 
-    <h2>Méthode requise : Deuxième Théorème de Guldin (uniquement).</h2>
-
-    <h2>Concepts Clés :</h2>
+    <h2>Méthode et Géométrie</h2>
     <ul>
-        <li><strong>Deuxième Théorème de Guldin :</strong> Le volume $V_{/\Delta}$ engendré par la rotation d'une surface plane $(S)$ d'aire $S$ autour d'un axe $(\Delta)$ coplanaire ne traversant pas la surface est :
-        $$V_{/\Delta} = S \times (2\pi R_G)$$
-        où $R_G$ est la distance du centre d'inertie (centroïde) $G$ de la surface à l'axe $(\Delta)$. On peut donc trouver cette distance par :
-        $$R_G = \frac{V_{/\Delta}}{2\pi S}$$
-        </li>
-        <li><strong>Corps surfacique :</strong> L'objet est une surface plane (l'aire de l'annulus) de densité surfacique $\sigma$ constante.</li>
-        <li><strong>Centre d'inertie G (Centroïde) :</strong> On cherche les coordonnées $(x_G, y_G, z_G)$. $x_G$ est la distance $R_{G, Oy}$ à l'axe Oy, et $y_G$ est la distance $R_{G, Ox}$ à l'axe Ox. Puisque la surface est dans le plan z=0, $z_G=0$.</li>
-        <li><strong>Symétrie :</strong> L'annulus est centré en C(5a,0,0). Il possède une symétrie par rapport à l'axe $y=0$ (axe Ox passant par C) et par rapport à l'axe $x=5a$ (axe vertical passant par C). Le centroïde G doit donc coïncider avec le centre géométrique C. Nous utiliserons Guldin pour confirmer cela.</li>
-    </ul>
-
-    <h2>Géométrie :</h2>
-    <p>La surface est un annulus (disque creux) dans le plan z=0.</p>
-    <ul>
-        <li>Centre géométrique : C(5a, 0, 0).</li>
-        <li>Rayon intérieur : $r_1 = a$.</li>
-        <li>Rayon extérieur : $r_2 = 3a$.</li>
-        <li>Aire de la surface (Annulus) :
-            $$ S = \text{Aire(Disque Extérieur)} - \text{Aire(Disque Intérieur)} $$
-            $$ S = \pi r_2^2 - \pi r_1^2 = \pi (3a)^2 - \pi (a)^2 = 9\pi a^2 - \pi a^2 = 8\pi a^2 $$
-        </li>
-    </ul>
-    <p>Puisque l'annulus est dans le plan z=0, on a immédiatement $z_G = 0$.</p>
-
-    <h2>Calcul du Centre d'Inertie $G = (x_G, y_G, 0)$</h2>
-
-    <h3>Calcul de $x_G$ (Rotation autour de l'axe Oy) :</h3>
-    <p>On fait tourner l'annulus autour de l'axe Oy (équation x=0). L'axe Oy est extérieur à l'annulus car la coordonnée x minimale de l'annulus est $5a - 3a = 2a$, et on suppose $a>0$.</p>
-    <ul>
-        <li>Axe de rotation : Oy ($x=0$).</li>
-        <li>Surface génératrice : Annulus, aire $S = 8\pi a^2$.</li>
-        <li>Volume généré $V_{/Oy}$: Le volume généré par l'annulus est la différence entre le volume généré par le disque extérieur ($S_2 = \pi r_2^2 = 9\pi a^2$) et celui généré par le disque intérieur ($S_1 = \pi r_1^2 = \pi a^2$). Les deux disques ont leur centroïde en C(5a,0,0).
+        <li><strong>Objectif :</strong> Trouver le centroïde $G=(x_G, y_G, z_G)$ de l'annulus ($z_G=0$).</li>
+        <li><strong>Méthode :</strong> Deuxième Théorème de Guldin ($V_{/\Delta} = S \times (2\pi R_G)$).</li>
+        <li><strong>Géométrie de l'Annulus :</strong>
             <ul>
-                <li>Volume généré par le disque extérieur ($D_2$) : Son centroïde $G_2$ est en C(5a,0,0). Distance à Oy : $R_{G2, Oy} = 5a$.
-                $V_{2, /Oy} = S_2 \times (2\pi R_{G2, Oy}) = (9\pi a^2) \times (2\pi (5a)) = 90 \pi^2 a^3$.</li>
-                <li>Volume généré par le disque intérieur ($D_1$) : Son centroïde $G_1$ est en C(5a,0,0). Distance à Oy : $R_{G1, Oy} = 5a$.
-                $V_{1, /Oy} = S_1 \times (2\pi R_{G1, Oy}) = (\pi a^2) \times (2\pi (5a)) = 10 \pi^2 a^3$.</li>
+                <li>Centre géométrique : C(5a, 0, 0).</li>
+                <li>Rayons : intérieur $r_1 = a$, extérieur $r_2 = 3a$.</li>
+                <li>Aire : $S_{annulus} = \pi r_2^2 - \pi r_1^2 = \pi (3a)^2 - \pi (a)^2 = 9\pi a^2 - \pi a^2 = 8\pi a^2$.</li>
             </ul>
         </li>
-        <li>Calcul du volume généré par l'annulus :
-            $$ V_{/Oy} = V_{2, /Oy} - V_{1, /Oy} = 90 \pi^2 a^3 - 10 \pi^2 a^3 = 80 \pi^2 a^3 $$
+        <li><strong>Symétrie :</strong> L'annulus est symétrique par rapport à son centre C(5a,0,0). Donc, $G$ doit coïncider avec C. $G=(5a,0,0)$. Guldin sert ici de confirmation.</li>
+    </ul>
+
+    <h2>Calcul du Centroïde $G = (x_G, y_G, 0)$ par Guldin</h2>
+
+    <h3>1. Coordonnée $x_G$ (Rotation autour de l'axe Oy)</h3>
+    <ul>
+        <li><strong>Axe de rotation :</strong> Oy ($x=0$). L'axe est extérieur à l'annulus ($x_{min} = 5a-3a = 2a > 0$). Distance de G à Oy : $R_{G, Oy} = x_G$.</li>
+        <li><strong>Volume généré ($V_{/Oy}$) :</strong> Rotation de l'annulus $\rightarrow$ Volume du tore à section annulaire (ou différence des volumes générés par les disques $D_2$ et $D_1$).
+            <ul>
+                <li>Les deux disques $D_1$ (rayon $r_1=a$) et $D_2$ (rayon $r_2=3a$) ont leur centroïde en C(5a,0,0).</li>
+                <li>$V_{D2,/Oy} = (\text{Aire } D_2) \times (2\pi \times \text{dist C à Oy}) = (9\pi a^2) \times (2\pi \cdot 5a) = 90 \pi^2 a^3$.</li>
+                <li>$V_{D1,/Oy} = (\text{Aire } D_1) \times (2\pi \times \text{dist C à Oy}) = (\pi a^2) \times (2\pi \cdot 5a) = 10 \pi^2 a^3$.</li>
+                <li>$V_{annulus,/Oy} = V_{D2,/Oy} - V_{D1,/Oy} = 90 \pi^2 a^3 - 10 \pi^2 a^3 = 80 \pi^2 a^3$.</li>
+            </ul>
         </li>
-        <li>Application de Guldin à l'annulus : La distance du centre d'inertie $G$ de l'annulus à l'axe Oy est $R_{G, Oy} = x_G$.
-            $$ V_{/Oy} = S \times (2\pi R_{G, Oy}) = S \times (2\pi x_G) $$
+        <li><strong>Application de Guldin à l'annulus :</strong> $V_{annulus,/Oy} = S_{annulus} \times (2\pi x_G)$.
+            $$ 80 \pi^2 a^3 = (8\pi a^2) \times (2\pi x_G) = 16 \pi^2 a^2 x_G $$
         </li>
-        <li>Calcul de $x_G$ :
-            $$ 80 \pi^2 a^3 = (8\pi a^2) \times (2\pi x_G) $$
-            $$ 80 \pi^2 a^3 = 16 \pi^2 a^2 x_G $$
-            En simplifiant par $16\pi^2 a^2$ (supposant $a \neq 0$) :
+        <li><strong>Calcul de $x_G$ :</strong>
             $$ x_G = \frac{80 \pi^2 a^3}{16 \pi^2 a^2} = 5a $$
         </li>
     </ul>
 
-     <h3>Calcul de $y_G$ (Rotation autour d'un axe parallèle à Ox) :</h3>
-    <p>L'axe Ox (y=0) passe par le centre C(5a,0,0) de l'annulus. La rotation autour de cet axe génère un volume nul ($V_{/Ox} = S \times (2\pi y_G) = 0$, ce qui implique $y_G=0$). Pour utiliser Guldin de manière plus démonstrative, faisons tourner l'annulus autour d'un axe parallèle $\Delta$ qui ne le traverse pas, par exemple $\Delta: y = -4a$. L'axe $\Delta$ est extérieur car la coordonnée y minimale de l'annulus est $-3a$.</p>
+    <h3>2. Coordonnée $y_G$ (Rotation autour d'un axe parallèle à Ox, e.g., $\Delta: y=-4a$)</h3>
     <ul>
-        <li>Axe de rotation : $\Delta$ ($y=-4a$).</li>
-        <li>Surface génératrice : Annulus, aire $S = 8\pi a^2$.</li>
-        <li>Volume généré $V_{/\Delta}$: Calculé comme la différence des volumes générés par les disques extérieur ($D_2$) et intérieur ($D_1$). Le centroïde des deux disques est C(5a,0,0).
-             <ul>
-                <li>Volume généré par le disque extérieur ($D_2$) : Son centroïde $G_2$ est en C(5a,0,0). Distance à $\Delta$: $R_{G2, \Delta} = |0 - (-4a)| = 4a$.
-                $V_{2, /\Delta} = S_2 \times (2\pi R_{G2, \Delta}) = (9\pi a^2) \times (2\pi (4a)) = 72 \pi^2 a^3$.</li>
-                <li>Volume généré par le disque intérieur ($D_1$) : Son centroïde $G_1$ est en C(5a,0,0). Distance à $\Delta$: $R_{G1, \Delta} = |0 - (-4a)| = 4a$.
-                $V_{1, /\Delta} = S_1 \times (2\pi R_{G1, \Delta}) = (\pi a^2) \times (2\pi (4a)) = 8 \pi^2 a^3$.</li>
+        <li><strong>Axe de rotation :</strong> $\Delta$ ($y=-4a$). L'axe est extérieur à l'annulus ($y_{min} = -3a > -4a$). Distance de G à $\Delta$ : $R_{G, \Delta} = |y_G - (-4a)| = |y_G+4a|$.</li>
+        <li><strong>Volume généré ($V_{/\Delta}$) :</strong> Différence des volumes générés par $D_2$ et $D_1$.
+            <ul>
+                <li>Centroïdes de $D_1, D_2$ en C(5a,0,0). Distance de C à $\Delta$: $|0 - (-4a)| = 4a$.</li>
+                <li>$V_{D2,/\Delta} = (9\pi a^2) \times (2\pi \cdot 4a) = 72 \pi^2 a^3$.</li>
+                <li>$V_{D1,/\Delta} = (\pi a^2) \times (2\pi \cdot 4a) = 8 \pi^2 a^3$.</li>
+                <li>$V_{annulus,/\Delta} = V_{D2,/\Delta} - V_{D1,/\Delta} = 72 \pi^2 a^3 - 8 \pi^2 a^3 = 64 \pi^2 a^3$.</li>
             </ul>
         </li>
-         <li>Calcul du volume généré par l'annulus :
-            $$ V_{/\Delta} = V_{2, /\Delta} - V_{1, /\Delta} = 72 \pi^2 a^3 - 8 \pi^2 a^3 = 64 \pi^2 a^3 $$
+        <li><strong>Application de Guldin à l'annulus :</strong> $V_{annulus,/\Delta} = S_{annulus} \times (2\pi |y_G+4a|)$.
+            $$ 64 \pi^2 a^3 = (8\pi a^2) \times (2\pi |y_G+4a|) = 16 \pi^2 a^2 |y_G+4a| $$
         </li>
-        <li>Application de Guldin à l'annulus : La distance du centre d'inertie $G$ de l'annulus à l'axe $\Delta$ est $R_{G, \Delta} = |y_G - (-4a)| = |y_G + 4a|$.
-            $$ V_{/\Delta} = S \times (2\pi R_{G, \Delta}) = S \times (2\pi |y_G + 4a|) $$
-        </li>
-        <li>Calcul de $y_G$ :
-            $$ 64 \pi^2 a^3 = (8\pi a^2) \times (2\pi |y_G + 4a|) $$
-            $$ 64 \pi^2 a^3 = 16 \pi^2 a^2 |y_G + 4a| $$
-            En simplifiant par $16\pi^2 a^2$ :
-            $$ |y_G + 4a| = \frac{64 \pi^2 a^3}{16 \pi^2 a^2} = 4a $$
-            Puisque nous savons par symétrie que $y_G=0$, $y_G+4a = 4a > 0$. Donc, nous pouvons retirer la valeur absolue :
-            $$ y_G + 4a = 4a $$
-            $$ y_G = 0 $$
+        <li><strong>Calcul de $y_G$ :</strong>
+            $$ |y_G+4a| = \frac{64 \pi^2 a^3}{16 \pi^2 a^2} = 4a $$
+            Sachant $y_G=0$ par symétrie, $y_G+4a = 4a > 0$.
+            $$ y_G+4a = 4a \implies y_G = 0 $$
         </li>
     </ul>
 
-    <h2>Résultat :</h2>
-    <p>Le centre d'inertie G (centroïde) du disque surfacique creux a pour coordonnées :</p>
+    <h2>Résultat</h2>
+    <p>Le centroïde G de l'annulus a pour coordonnées :</p>
     $$ x_G = 5a $$
     $$ y_G = 0 $$
     $$ z_G = 0 $$
     <p>Soit $G = (5a, 0, 0)$.</p>
 
-    <h2>Conclusion :</h2>
-    <p>Le centre d'inertie G de l'annulus coïncide avec son centre géométrique C(5a,0,0). Ce résultat était attendu en raison de la double symétrie de la figure. L'application rigoureuse du deuxième théorème de Guldin, en effectuant des rotations autour des axes Oy et d'un axe parallèle à Ox (y=-4a), a permis de confirmer mathématiquement les coordonnées $(5a, 0, 0)$ du centroïde.</p>
+    <h2>Conclusion</h2>
+    <ul>
+        <li>Le centroïde G de l'annulus coïncide avec son centre géométrique C(5a,0,0).</li>
+        <li>Ce résultat, attendu par symétrie, est confirmé par le théorème de Guldin.</li>
+    </ul>
 
 </body>
 </html>

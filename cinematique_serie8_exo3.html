@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solution Exercice N°03 - Cinématique d'un système de ventilation</title>
+<script>
+MathJax = {
+tex: {
+inlineMath: [['\\(', '\\)']],
+displayMath: [['\\[', '\\]']],
+macros: {
+vec: ["{\\overrightarrow{#1}}", 1],
+mat: ["{\\mathbf{#1}}", 1], // Macro for matrices
+deriv: ["{\\frac{d#1}{dt}}", 1], // Macro for time derivative
+matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1] // Macro for pmatrix
+}
+},
+svg: {
+fontCache: 'global'
+}
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+font-family: "Computer Modern Sans", sans-serif;
+line-height: 1.6;
+margin: 1em;
+color: #333;
+}
+h1, h2, h3 {
+font-family: "Computer Modern Serif", serif;
+/* Default margins, may be overridden by tree styles */
+margin-top: 1.5em;
+margin-bottom: 0.5em;
+padding-bottom: 0.2em;
+color: #003366;
+}
+h1 { font-size: 1.8em; text-align: center; border-bottom: 2px solid #003366; margin-bottom: 1em;}
+h2 { font-size: 1.5em; }
+h3 { font-size: 1.2em; border-bottom: none; color: #0055A4; margin-top: 1em;} /* margin-top will be overridden in tree */
+mjx-container {
+font-size: 105% !important;
+text-align: left !important;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+.math-display {
+margin-top: 1em;
+margin-bottom: 1em;
+padding: 0.5em;
+background-color: #f8f8f8;
+border: 1px solid #eee;
+border-radius: 4px;
+overflow-x: auto;
+}
+ul { margin-left: 0; padding-left: 1.5em; }
+li { margin-bottom: 0.5em; }
+strong { color: #003366; }
+code {
+background-color: #eee;
+padding: 0.2em 0.4em;
+border-radius: 3px;
+font-family: "Computer Modern Typewriter", monospace;
+}
+.question { /* Applied to H2 */
+font-weight: bold;
+color: #D2691E; /* Orange color for question titles */
+}
+/* --- Tree Structure Styles --- */
+.solution-branch { /* Container for H2 sections */
+position: relative;
+padding-left: 25px; /* Space for H2 content to the right of its vertical line + connector */
+border-left: 2px solid black; /* Main vertical line */
+margin-left: 10px; /* Indent the whole branch structure from the page edge */
+padding-bottom: 0.1em; /* Ensures border extends if last child has no bottom margin */
+}
+.solution-branch:not(:last-child) {
+padding-bottom: 1.5em; /* Space between content of this branch and start of next, border continues through this */
+}
+.solution-branch > .question { /* The H2 title itself */
+position: relative;
+margin-top: 0; /* Override default h2 margin-top */
+}
+.solution-branch > .question::before { /* Horizontal connector for H2 */
+content: "";
+position: absolute;
+background-color: black; /* Matches parent's border-left */
+height: 2px; /* Thickness of connector */
+width: 18px; /* Length of connector */
+left: -25px; /* (padding-left of .solution-branch value) Connects to border-left */
+top: 0.9em; /* Vertically align with H2 text (approx for 1.5em font) */
+}
+.sub-branch { /* Container for H3 sub-sections */
+position: relative;
+padding-left: 20px; /* Space for H3 content to the right of its vertical line + connector */
+border-left: 1px solid black; /* Sub-branch vertical line */
+margin-left: 5px; /* Indent sub-branch line slightly from where parent H2 content starts */
+padding-top: 0.5em; /* Space above H3 content within this sub-branch item */
+padding-bottom: 0.1em; /* Ensures border extends if last child has no bottom margin */
+}
+.sub-branch:not(:last-child) {
+padding-bottom: 0.5em; /* Space between content of this sub-branch and start of next, border continues */
+}
+.sub-branch > h3 { /* The H3 title */
+position: relative;
+margin-top: 0; /* Override default h3 margin-top */
+}
+.sub-branch > h3::before { /* Horizontal connector for H3 */
+content: "";
+position: absolute;
+background-color: black; /* Matches parent's border-left */
+height: 1px; /* Thickness */
+width: 15px; /* Length */
+left: -20px; /* (padding-left of .sub-branch value) Connects to its border-left */
+top: 0.7em; /* Vertically align with H3 text (approx for 1.2em font) */
+}
+.solution-branch ul, .sub-branch ul {
+margin-top: 0.5em; /* Space above lists */
+}
+.solution-branch ul li, .sub-branch ul li {
+margin-bottom: 0.3em;
+}
+/* --- End Tree Structure Styles --- */
+</style>
+</head>
+<body>
+<h1>Solution Exercice N°03 : Cinématique d'un Système de Ventilation</h1>
+<p>Analyse cinématique d'un système de ventilation automatisé composé de deux barres et d'une hélice.</p>
+<p><strong>Données Clés :</strong></p>
+<ul>
+<li><strong>Composants et géométrie :</strong>
+<ul>
+<li>Barre \( (S_1) \): \( OA = L \), le long de \( \vec{z}_0 \). Donc \( \vec{OA} = L\vec{z}_0 \).</li>
+<li>Barre \( (S_2) \): \( AB = L \), le long de \( \vec{y}_2 \). Donc \( \vec{AB} = L\vec{y}_2 \).</li>
+<li>Hélice \( (S_3) \): \( BM = BN = R \). \( \vec{BM} = R\vec{x}_3 \), \( \vec{BN} = R\vec{z}_3 \).</li>
+</ul>
+</li>
+<li><strong>Référentiels :</strong>
+<ul>
+<li>\( R_0 (O, \vec{x}_0, \vec{y}_0, \vec{z}_0) \): Référentiel fixe. Base \( B_0 = (\vec{x}_0, \vec{y}_0, \vec{z}_0) \).</li>
+<li>\( R_1 (O, \vec{x}_1, \vec{y}_1, \vec{z}_1) \): En rotation par rapport à \( R_0 \) autour de \( \vec{z}_0 \) d'un angle \( \psi(t) \) (sens positif). Base \( B_1 = (\vec{x}_1, \vec{y}_1, \vec{z}_1) \). On a \( \vec{z}_1 = \vec{z}_0 \).</li>
+<li>\( R_2 (A, \vec{x}_2, \vec{y}_2, \vec{z}_2) \): Centre A. Tel que \( \vec{y}_1 // \vec{y}_2 \) et \( \vec{z}_2 = \vec{z}_1 \). Cela implique \( \vec{x}_1 // \vec{x}_2 \). On considère \( B_2 = B_1 \). \( R_2 \) est le repère de projection.</li>
+<li>\( R_3 (B, \vec{x}_3, \vec{y}_3, \vec{z}_3) \): En rotation par rapport à \( R_2 \) autour de \( \vec{y}_2 \) d'un angle \( \varphi(t) \) (sens négatif). Base \( B_3 = (\vec{x}_3, \vec{y}_3, \vec{z}_3) \). On a \( \vec{y}_3 = \vec{y}_2 \).</li>
+</ul>
+</li>
+<li><strong>Vitesses angulaires :</strong>
+<ul>
+<li>\( \dot{\psi} = \deriv{\psi} = Cte \implies \ddot{\psi} = 0 \). \( \vec{\Omega}_{R_1/R_0} = \dot{\psi}\vec{z}_0 \).</li>
+<li>Comme \( B_1=B_2 \), \( \vec{\Omega}_{R_2/R_1} = \vec{0} \), donc \( \vec{\Omega}_{R_2/R_0} = \vec{\Omega}_{R_1/R_0} = \dot{\psi}\vec{z}_0 = \dot{\psi}\vec{z}_2 \).</li>
+<li>\( \dot{\varphi} = \deriv{\varphi} = Cte \implies \ddot{\varphi} = 0 \). \( \vec{\Omega}_{R_3/R_2} = -\dot{\varphi}\vec{y}_2 \) (sens négatif).</li>
+</ul>
+</li>
+</ul>
+<div class="solution-branch">
+<h2 class="question">1. Matrices de passage de \( R_0 \) vers \( R_1 \) et de \( R_3 \) vers \( R_2 \)</h2>
+<div class="sub-branch">
+<h3>Matrices \( \mat{P}_{1 \to 0} \) et \( \mat{P}_{0 \to 1} \)</h3>
+<p>La rotation de \(R_1\) par rapport à \(R_0\) est d'angle \(\psi\) autour de \(\vec{z}_0 = \vec{z}_1\).</p>
+<ul>
+<li>\( \vec{x}_1 = \cos\psi \vec{x}_0 + \sin\psi \vec{y}_0 \)</li>
+<li>\( \vec{y}_1 = -\sin\psi \vec{x}_0 + \cos\psi \vec{y}_0 \)</li>
+<li>\( \vec{z}_1 = \vec{z}_0 \)</li>
+</ul>
+<p>La matrice de passage \( \mat{P}_{1 \to 0} \) (de \( B_1 \) vers \( B_0 \)) a pour colonnes les vecteurs de \( B_1 \) exprimés dans \( B_0 \):</p>
+<p>\( \mat{P}_{1 \to 0} = \matrice{\cos\psi & -\sin\psi & 0 \\ \sin\psi & \cos\psi & 0 \\ 0 & 0 & 1} \)</p>
+<p>La matrice de passage \( \mat{P}_{0 \to 1} \) (de \( B_0 \) vers \( B_1 \)) est la transposée de \( \mat{P}_{1 \to 0} \):</p>
+<p>\( \mat{P}_{0 \to 1} = (\mat{P}_{1 \to 0})^T = \matrice{\cos\psi & \sin\psi & 0 \\ -\sin\psi & \cos\psi & 0 \\ 0 & 0 & 1} \)</p>
+</div>
+<div class="sub-branch">
+<h3>Matrices \( \mat{P}_{3 \to 2} \) et \( \mat{P}_{2 \to 3} \)</h3>
+<p>La rotation de \(R_3\) par rapport à \(R_2\) est d'angle \(-\varphi\) (angle \(\varphi\) en sens négatif) autour de \(\vec{y}_2 = \vec{y}_3\).</p>
+<p>Les vecteurs de \(B_3\) exprimés dans \(B_2\) sont (avec \(\theta = -\varphi\)):</p>
+<ul>
+<li>\( \vec{x}_3 = \cos(-\varphi)\vec{x}_2 + \sin(-\varphi)\vec{z}_2 = \cos\varphi \vec{x}_2 - \sin\varphi \vec{z}_2 \)</li>
+<li>\( \vec{y}_3 = \vec{y}_2 \)</li>
+<li>\( \vec{z}_3 = -\sin(-\varphi)\vec{x}_2 + \cos(-\varphi)\vec{z}_2 = \sin\varphi \vec{x}_2 + \cos\varphi \vec{z}_2 \)</li>
+</ul>
+<p>La matrice de passage \( \mat{P}_{3 \to 2} \) (de \( B_3 \) vers \( B_2 \)) a pour colonnes les vecteurs de \( B_3 \) exprimés dans \( B_2 \):</p>
+<p>\( \mat{P}_{3 \to 2} = \matrice{\cos\varphi & 0 & \sin\varphi \\ 0 & 1 & 0 \\ -\sin\varphi & 0 & \cos\varphi} \)</p>
+<p>La matrice de passage \( \mat{P}_{2 \to 3} \) (de \( B_2 \) vers \( B_3 \)) est la transposée de \( \mat{P}_{3 \to 2} \):</p>
+<p>\( \mat{P}_{2 \to 3} = (\mat{P}_{3 \to 2})^T = \matrice{\cos\varphi & 0 & -\sin\varphi \\ 0 & 1 & 0 \\ \sin\varphi & 0 & \cos\varphi} \)</p>
+</div>
+</div>
+<div class="solution-branch">
+<h2 class="question">2. Vitesse de rotation instantanée du repère \( R_3 \) par rapport à \( R_0 \)</h2>
+<p>Par composition des vitesses angulaires : \( \vec{\Omega}_{R_3/R_0} = \vec{\Omega}_{R_3/R_2} + \vec{\Omega}_{R_2/R_0} \).</p>
+<ul>
+<li>\( \vec{\Omega}_{R_2/R_0} = \dot{\psi}\vec{z}_2 \) (puisque \( \vec{z}_0 = \vec{z}_2 \) et \( B_1=B_2 \))</li>
+<li>\( \vec{\Omega}_{R_3/R_2} = -\dot{\varphi}\vec{y}_2 \)</li>
+</ul>
+<p>Donc, la vitesse de rotation de \( R_3 \) par rapport à \( R_0 \), exprimée dans la base \( B_2 \):</p>
+<p>\( \vec{\Omega}_{R_3/R_0} = -\dot{\varphi}\vec{y}_2 + \dot{\psi}\vec{z}_2 \)</p>
+<p>En composantes dans \( B_2 \) (repère de projection) :</p>
+<p>\( (\vec{\Omega}_{R_3/R_0})_{/B_2} = \matrice{0 \\ -\dot{\varphi} \\ \dot{\psi}}_{R_2} \)</p>
+</div>
+<div class="solution-branch">
+<h2 class="question">3. Vitesse et l'accélération absolues du point B par dérivation</h2>
+<p>Le vecteur position du point B est \( \vec{OB} = \vec{OA} + \vec{AB} \).</p>
+<ul>
+<li>\( \vec{OA} = L\vec{z}_0 \). Ce vecteur est constant dans \(R_0\).</li>
+<li>\( \vec{AB} = L\vec{y}_2 \).</li>
+</ul>
+<p>Donc \( \vec{OB} = L\vec{z}_0 + L\vec{y}_2 \). Exprimons \( \vec{y}_2 \) dans \(B_0\): \( \vec{y}_2 = \vec{y}_1 = -\sin\psi \vec{x}_0 + \cos\psi \vec{y}_0 \).</p>
+<p>\( \vec{OB} = L(-\sin\psi \vec{x}_0 + \cos\psi \vec{y}_0) + L\vec{z}_0 \)</p>
+<div class="sub-branch">
+<h3>Vitesse absolue de B (\( \vec{V}_{B/R_0} \))</h3>
+<p>\( \vec{V}_{B/R_0} = \deriv{(\vec{OB})}{dt}\bigg|_{R_0} = L(-\dot{\psi}\cos\psi \vec{x}_0 - \dot{\psi}\sin\psi \vec{y}_0) \)</p>
+<p>\( \vec{V}_{B/R_0} = -L\dot{\psi}(\cos\psi \vec{x}_0 + \sin\psi \vec{y}_0) = -L\dot{\psi}\vec{x}_1 \)</p>
+<p>Comme \( \vec{x}_1 = \vec{x}_2 \), exprimé dans \( B_2 \):</p>
+<p>\( \vec{V}_{B/R_0} = -L\dot{\psi}\vec{x}_2 \quad \implies \quad (\vec{V}_{B/R_0})_{/B_2} = \matrice{-L\dot{\psi} \\ 0 \\ 0}_{R_2} \)</p>
+</div>
+<div class="sub-branch">
+<h3>Accélération absolue de B (\( \vec{a}_{B/R_0} \))</h3>
+<p>\( \vec{a}_{B/R_0} = \deriv{(\vec{V}_{B/R_0})}{dt}\bigg|_{R_0} = \deriv{(-L\dot{\psi}\vec{x}_2)}{dt}\bigg|_{R_0} \)</p>
+<p>Sachant que \( \dot{\psi} \) est constant :</p>
+<p>\( \vec{a}_{B/R_0} = -L\dot{\psi} \left( \deriv{\vec{x}_2}{dt}\bigg|_{R_0} \right) \)</p>
+<p>\( \deriv{\vec{x}_2}{dt}\bigg|_{R_0} = \vec{\Omega}_{R_2/R_0} \wedge \vec{x}_2 = (\dot{\psi}\vec{z}_2) \wedge \vec{x}_2 = \dot{\psi}\vec{y}_2 \)</p>
+<p>Donc,</p>
+<p>\( \vec{a}_{B/R_0} = -L\dot{\psi}(\dot{\psi}\vec{y}_2) = -L\dot{\psi}^2\vec{y}_2 \)</p>
+<p>Exprimé dans \( B_2 \):</p>
+<p>\( (\vec{a}_{B/R_0})_{/B_2} = \matrice{0 \\ -L\dot{\psi}^2 \\ 0}_{R_2} \)</p>
+</div>
+</div>
+<div class="solution-branch">
+<h2 class="question">4. Vitesse et l'accélération absolues du point M par dérivation</h2>
+<p>Le vecteur position du point M est \( \vec{OM} = \vec{OA} + \vec{AB} + \vec{BM} \).</p>
+<p>\( \vec{OM} = L\vec{z}_0 + L\vec{y}_2 + R\vec{x}_3 \)</p>
+<div class="sub-branch">
+<h3>Vitesse absolue de M (\( \vec{V}_{M/R_0} \))</h3>
+<p>\( \vec{V}_{M/R_0} = \deriv{(\vec{OM})}{dt}\bigg|_{R_0} = \underbrace{\deriv{(L\vec{z}_0)}{dt}\bigg|_{R_0}}_{=\vec{0}} + \deriv{(L\vec{y}_2)}{dt}\bigg|_{R_0} + \deriv{(R\vec{x}_3)}{dt}\bigg|_{R_0} \)</p>
+<p>\( \deriv{(L\vec{y}_2)}{dt}\bigg|_{R_0} = L(\vec{\Omega}_{R_2/R_0} \wedge \vec{y}_2) = L(\dot{\psi}\vec{z}_2 \wedge \vec{y}_2) = -L\dot{\psi}\vec{x}_2 \)</p>
+<p>\( \deriv{(R\vec{x}_3)}{dt}\bigg|_{R_0} = R(\vec{\Omega}_{R_3/R_0} \wedge \vec{x}_3) \)</p>
+<p>On a \( \vec{\Omega}_{R_3/R_0} = -\dot{\varphi}\vec{y}_2 + \dot{\psi}\vec{z}_2 \) et \( \vec{x}_3 = \cos\varphi \vec{x}_2 - \sin\varphi \vec{z}_2 \).</p>
+<p>\( \vec{\Omega}_{R_3/R_0} \wedge \vec{x}_3 = (-\dot{\varphi}\vec{y}_2 + \dot{\psi}\vec{z}_2) \wedge (\cos\varphi \vec{x}_2 - \sin\varphi \vec{z}_2) \)</p>
+<p>\( = -\dot{\varphi}\cos\varphi(\vec{y}_2 \wedge \vec{x}_2) + \dot{\varphi}\sin\varphi(\vec{y}_2 \wedge \vec{z}_2) + \dot{\psi}\cos\varphi(\vec{z}_2 \wedge \vec{x}_2) - \dot{\psi}\sin\varphi(\vec{z}_2 \wedge \vec{z}_2) \)</p>
+<p>\( = \dot{\varphi}\cos\varphi\vec{z}_2 + \dot{\varphi}\sin\varphi\vec{x}_2 + \dot{\psi}\cos\varphi\vec{y}_2 \)</p>
+<p>Donc \( \deriv{(R\vec{x}_3)}{dt}\bigg|_{R_0} = R(\dot{\varphi}\sin\varphi \vec{x}_2 + \dot{\psi}\cos\varphi \vec{y}_2 + \dot{\varphi}\cos\varphi \vec{z}_2) \)</p>
+<p>Finalement, \( \vec{V}_{M/R_0} = -L\dot{\psi}\vec{x}_2 + R(\dot{\varphi}\sin\varphi \vec{x}_2 + \dot{\psi}\cos\varphi \vec{y}_2 + \dot{\varphi}\cos\varphi \vec{z}_2) \)</p>
+<p>\( \vec{V}_{M/R_0} = (R\dot{\varphi}\sin\varphi - L\dot{\psi})\vec{x}_2 + (R\dot{\psi}\cos\varphi)\vec{y}_2 + (R\dot{\varphi}\cos\varphi)\vec{z}_2 \)</p>
+<p>Exprimé dans \( B_2 \):</p>
+<p>\( (\vec{V}_{M/R_0})_{/B_2} = \matrice{R\dot{\varphi}\sin\varphi - L\dot{\psi} \\ R\dot{\psi}\cos\varphi \\ R\dot{\varphi}\cos\varphi}_{R_2} \)</p>
+</div>
+<div class="sub-branch">
+<h3>Accélération absolue de M (\( \vec{a}_{M/R_0} \))</h3>
+<p>\( \vec{a}_{M/R_0} = \deriv{(\vec{V}_{M/R_0})}{dt}\bigg|_{R_0} \). Soit \( \vec{V}_{M/R_0} = V_{Mx2}\vec{x}_2 + V_{My2}\vec{y}_2 + V_{Mz2}\vec{z}_2 \).</p>
+<p>Les dérivées des composantes (sachant \( \dot{\psi}, \dot{\varphi} \) constants, \( \ddot{\psi}=\ddot{\varphi}=0 \)):</p>
+<ul>
+<li>\( \deriv{V_{Mx2}}{dt} = \deriv{(R\dot{\varphi}\sin\varphi - L\dot{\psi})}{dt} = R\dot{\varphi}^2\cos\varphi \)</li>
+<li>\( \deriv{V_{My2}}{dt} = \deriv{(R\dot{\psi}\cos\varphi)}{dt} = -R\dot{\psi}\dot{\varphi}\sin\varphi \)</li>
+<li>\( \deriv{V_{Mz2}}{dt} = \deriv{(R\dot{\varphi}\cos\varphi)}{dt} = -R\dot{\varphi}^2\sin\varphi \)</li>
+</ul>
+<p>Les dérivées des vecteurs de base de \(B_2\) par rapport à \(R_0\):</p>
+<ul>
+<li>\( \deriv{\vec{x}_2}{dt}\big|_{R_0} = \vec{\Omega}_{R_2/R_0} \wedge \vec{x}_2 = \dot{\psi}\vec{y}_2 \)</li>
+<li>\( \deriv{\vec{y}_2}{dt}\big|_{R_0} = \vec{\Omega}_{R_2/R_0} \wedge \vec{y}_2 = -\dot{\psi}\vec{x}_2 \)</li>
+<li>\( \deriv{\vec{z}_2}{dt}\big|_{R_0} = \vec{\Omega}_{R_2/R_0} \wedge \vec{z}_2 = \vec{0} \) (car \( \vec{z}_2 = \vec{z}_0 \) est fixe dans \(R_0\))</li>
+</ul>
+<p>\( \vec{a}_{M/R_0} = (\deriv{V_{Mx2}}{dt})\vec{x}_2 + (\deriv{V_{My2}}{dt})\vec{y}_2 + (\deriv{V_{Mz2}}{dt})\vec{z}_2 + V_{Mx2}(\dot{\psi}\vec{y}_2) + V_{My2}(-\dot{\psi}\vec{x}_2) + V_{Mz2}(\vec{0}) \)</p>
+<p>Composante en \( \vec{x}_2 \): \( R\dot{\varphi}^2\cos\varphi - (R\dot{\psi}\cos\varphi)\dot{\psi} = R\cos\varphi(\dot{\varphi}^2 - \dot{\psi}^2) \)</p>
+<p>Composante en \( \vec{y}_2 \): \( -R\dot{\psi}\dot{\varphi}\sin\varphi + (R\dot{\varphi}\sin\varphi - L\dot{\psi})\dot{\psi} = -R\dot{\psi}\dot{\varphi}\sin\varphi + R\dot{\varphi}\dot{\psi}\sin\varphi - L\dot{\psi}^2 = -L\dot{\psi}^2 \)</p>
+<p>Composante en \( \vec{z}_2 \): \( -R\dot{\varphi}^2\sin\varphi \)</p>
+<p>\( \vec{a}_{M/R_0} = R\cos\varphi(\dot{\varphi}^2 - \dot{\psi}^2)\vec{x}_2 - L\dot{\psi}^2\vec{y}_2 - R\dot{\varphi}^2\sin\varphi\vec{z}_2 \)</p>
+<p>Exprimé dans \( B_2 \):</p>
+<p>\( (\vec{a}_{M/R_0})_{/B_2} = \matrice{R\cos\varphi(\dot{\varphi}^2 - \dot{\psi}^2) \\ -L\dot{\psi}^2 \\ -R\dot{\varphi}^2\sin\varphi}_{R_2} \)</p>
+</div>
+</div>
+<div class="solution-branch">
+<h2 class="question">5. Vitesse et l'accélération absolues du point N par dérivation</h2>
+<p>Le vecteur position du point N est \( \vec{ON} = \vec{OA} + \vec{AB} + \vec{BN} \).</p>
+<p>\( \vec{ON} = L\vec{z}_0 + L\vec{y}_2 + R\vec{z}_3 \)</p>
+<div class="sub-branch">
+<h3>Vitesse absolue de N (\( \vec{V}_{N/R_0} \))</h3>
+<p>\( \vec{V}_{N/R_0} = \deriv{(L\vec{y}_2)}{dt}\bigg|_{R_0} + \deriv{(R\vec{z}_3)}{dt}\bigg|_{R_0} = -L\dot{\psi}\vec{x}_2 + R(\vec{\Omega}_{R_3/R_0} \wedge \vec{z}_3) \)</p>
+<p>On a \( \vec{z}_3 = \sin\varphi \vec{x}_2 + \cos\varphi \vec{z}_2 \).</p>
+<p>\( \vec{\Omega}_{R_3/R_0} \wedge \vec{z}_3 = (-\dot{\varphi}\vec{y}_2 + \dot{\psi}\vec{z}_2) \wedge (\sin\varphi \vec{x}_2 + \cos\varphi \vec{z}_2) \)</p>
+<p>\( = -\dot{\varphi}\sin\varphi(\vec{y}_2 \wedge \vec{x}_2) - \dot{\varphi}\cos\varphi(\vec{y}_2 \wedge \vec{z}_2) + \dot{\psi}\sin\varphi(\vec{z}_2 \wedge \vec{x}_2) + \dot{\psi}\cos\varphi(\vec{z}_2 \wedge \vec{z}_2) \)</p>
+<p>\( = \dot{\varphi}\sin\varphi\vec{z}_2 - \dot{\varphi}\cos\varphi\vec{x}_2 + \dot{\psi}\sin\varphi\vec{y}_2 \)</p>
+<p>Donc \( \deriv{(R\vec{z}_3)}{dt}\bigg|_{R_0} = R(-\dot{\varphi}\cos\varphi \vec{x}_2 + \dot{\psi}\sin\varphi \vec{y}_2 + \dot{\varphi}\sin\varphi \vec{z}_2) \)</p>
+<p>Finalement, \( \vec{V}_{N/R_0} = -L\dot{\psi}\vec{x}_2 + R(-\dot{\varphi}\cos\varphi \vec{x}_2 + \dot{\psi}\sin\varphi \vec{y}_2 + \dot{\varphi}\sin\varphi \vec{z}_2) \)</p>
+<p>\( \vec{V}_{N/R_0} = (-L\dot{\psi} - R\dot{\varphi}\cos\varphi)\vec{x}_2 + (R\dot{\psi}\sin\varphi)\vec{y}_2 + (R\dot{\varphi}\sin\varphi)\vec{z}_2 \)</p>
+<p>Exprimé dans \( B_2 \):</p>
+<p>\( (\vec{V}_{N/R_0})_{/B_2} = \matrice{-L\dot{\psi} - R\dot{\varphi}\cos\varphi \\ R\dot{\psi}\sin\varphi \\ R\dot{\varphi}\sin\varphi}_{R_2} \)</p>
+</div>
+<div class="sub-branch">
+<h3>Accélération absolue de N (\( \vec{a}_{N/R_0} \))</h3>
+<p>\( \vec{a}_{N/R_0} = \deriv{(\vec{V}_{N/R_0})}{dt}\bigg|_{R_0} \). Soit \( \vec{V}_{N/R_0} = V_{Nx2}\vec{x}_2 + V_{Ny2}\vec{y}_2 + V_{Nz2}\vec{z}_2 \).</p>
+<p>Les dérivées des composantes (sachant \( \dot{\psi}, \dot{\varphi} \) constants, \( \ddot{\psi}=\ddot{\varphi}=0 \)):</p>
+<ul>
+<li>\( \deriv{V_{Nx2}}{dt} = \deriv{(-L\dot{\psi} - R\dot{\varphi}\cos\varphi)}{dt} = R\dot{\varphi}^2\sin\varphi \)</li>
+<li>\( \deriv{V_{Ny2}}{dt} = \deriv{(R\dot{\psi}\sin\varphi)}{dt} = R\dot{\psi}\dot{\varphi}\cos\varphi \)</li>
+<li>\( \deriv{V_{Nz2}}{dt} = \deriv{(R\dot{\varphi}\sin\varphi)}{dt} = R\dot{\varphi}^2\cos\varphi \)</li>
+</ul>
+<p>\( \vec{a}_{N/R_0} = (\deriv{V_{Nx2}}{dt})\vec{x}_2 + (\deriv{V_{Ny2}}{dt})\vec{y}_2 + (\deriv{V_{Nz2}}{dt})\vec{z}_2 + V_{Nx2}(\dot{\psi}\vec{y}_2) + V_{Ny2}(-\dot{\psi}\vec{x}_2) + V_{Nz2}(\vec{0}) \)</p>
+<p>Composante en \( \vec{x}_2 \): \( R\dot{\varphi}^2\sin\varphi - (R\dot{\psi}\sin\varphi)\dot{\psi} = R\sin\varphi(\dot{\varphi}^2 - \dot{\psi}^2) \)</p>
+<p>Composante en \( \vec{y}_2 \): \( R\dot{\psi}\dot{\varphi}\cos\varphi + (-L\dot{\psi} - R\dot{\varphi}\cos\varphi)\dot{\psi} = R\dot{\psi}\dot{\varphi}\cos\varphi - L\dot{\psi}^2 - R\dot{\varphi}\dot{\psi}\cos\varphi = -L\dot{\psi}^2 \)</p>
+<p>Composante en \( \vec{z}_2 \): \( R\dot{\varphi}^2\cos\varphi \)</p>
+<p>\( \vec{a}_{N/R_0} = R\sin\varphi(\dot{\varphi}^2 - \dot{\psi}^2)\vec{x}_2 - L\dot{\psi}^2\vec{y}_2 + R\dot{\varphi}^2\cos\varphi\vec{z}_2 \)</p>
+<p>Exprimé dans \( B_2 \):</p>
+<p>\( (\vec{a}_{N/R_0})_{/B_2} = \matrice{R\sin\varphi(\dot{\varphi}^2 - \dot{\psi}^2) \\ -L\dot{\psi}^2 \\ R\dot{\varphi}^2\cos\varphi}_{R_2} \)</p>
+</div>
+</div>
+</body>
+</html>

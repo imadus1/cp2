@@ -66,36 +66,26 @@
     <ul>
         <li><strong>Additivité :</strong> Le tenseur total est la somme des tenseurs des parties. $[I_O]_{\text{total}} = \sum_i [I_O]_i$.</li>
         <li><strong>Théorème de Huygens :</strong> Utilisé pour chaque segment pour trouver $[I_O]_i$ à partir de $[I_{G_i}]$. $[I_O]_i = [I_{G_i}] + [I_{O/G_i}]$.</li>
-        <li><strong>Plan de symétrie :</strong> Le corps est dans le plan $z = 0$, qui est un plan de symétrie matérielle. Donc, $E = I_{xz} = 0$ et $F = I_{yz} = 0$. Le produit d'inertie $D = I_{xy}$ n'est généralement pas nul car il n'y a pas de symétrie par rapport aux plans $x = 0$ ou $y = 0$.</li>
+        <li><strong>Plan de symétrie :</strong> Le corps est dans le plan $z = 0$, qui est un plan de symétrie matérielle. Donc, $E = I_{xz} = 0$ et $F = I_{yz} = 0$. Le produit d'inertie $D = I_{xy}$ n'est généralement pas nul.</li>
         <li><strong>Corps linéique :</strong> Chaque segment est modélisé comme un corps linéique ($dm = \lambda dl$).</li>
-        <li><strong>Définition de la Matrice de Passage pour Tenseur d'Inertie (Rotation de Base) :</strong>
-            Lorsqu'on connaît le tenseur d'inertie d'un solide $[I_G]_{R_{loc}}$ dans un repère local $R_{loc}(G, X'Y'Z')$ (souvent un repère où les axes coïncident avec les axes principaux d'inertie, simplifiant la matrice), et qu'on veut l'exprimer dans un repère global $R_{glob}(G, XYZ)$, on utilise une matrice de passage.
+        <li><strong>Changement de Repère pour Tenseur d'Inertie (Rotation de Base) :</strong>
+            <p>Soit un repère $R_1(G, X_1Y_1Z_1)$ (par exemple, un repère local où le tenseur d'inertie $[I_G]_{/R_1}$ est connu et simple) et un repère $R_0(G, X_0Y_0Z_0)$ (par exemple, un repère global dans lequel on souhaite exprimer le tenseur). Les deux repères partagent la même origine $G$ pour cette transformation.</p>
             <ul>
-                <li><strong>Qu'est-ce qu'une matrice de passage ?</strong> C'est une matrice qui permet de transformer les composantes de tenseurs d'une base à une autre.</li>
-                <li><strong>Comment la construire ?</strong>
-                    Soit $R_{glob}(G, \vec{i}, \vec{j}, \vec{k})$ la base globale et $R_{loc}(G, \vec{i}', \vec{j}', \vec{k}')$ la base locale.
-                    Supposons que le repère global $R_{glob}$ est obtenu en faisant tourner le repère local $R_{loc}$ d'un angle $\alpha$ autour d'un axe commun (par exemple, $GZ=GZ'$).
-                    La matrice de passage $P$ utilisée dans la formule $[I_G]_{R_{glob}} = P [I_G]_{R_{loc}} P^T$ a pour colonnes les composantes des vecteurs de la base <em>locale</em> $R_{loc}$ exprimées dans la base <em>globale</em> $R_{glob}$.
-                    $$ P = [\vec{i}'_{R_{glob}} | \vec{j}'_{R_{glob}} | \vec{k}'_{R_{glob}}] = \begin{pmatrix} (\vec{i}')_x & (\vec{j}')_x & (\vec{k}')_x \\ (\vec{i}')_y & (\vec{j}')_y & (\vec{k}')_y \\ (\vec{i}')_z & (\vec{j}')_z & (\vec{k}')_z \end{pmatrix} $$
+                <li><strong>Matrice de Passage des Coordonnées :</strong>
+                    La matrice de passage $P_{R_1 \rightarrow R_0}$ est définie comme la matrice qui transforme les coordonnées d'un vecteur de la base $R_1$ vers la base $R_0$. Si $V_{R_1}$ sont les coordonnées d'un vecteur dans $R_1$ et $V_{R_0}$ ses coordonnées dans $R_0$, alors :
+                    $$ V_{R_0} = P_{R_1 \rightarrow R_0} V_{R_1} $$
+                    Les colonnes de $P_{R_1 \rightarrow R_0}$ sont formées par les composantes des vecteurs de base de $R_1$ (par ex., $\vec{i_1}, \vec{j_1}, \vec{k_1}$) exprimées dans la base $R_0$.
                 </li>
-                <li><strong>Exemple de rotation (2D autour de Z) :</strong>
-                    Si $R_{glob}$ est obtenu par rotation de $R_{loc}$ d'un angle $\alpha$ autour de $GZ=GZ'$ (l'axe $GX_{glob}$ fait un angle $\alpha$ avec $GX'_{loc}$):
-                    <ul>
-                        <li>L'axe $GX'_{loc}$ ($\vec{i}'$) fait un angle $-\alpha$ par rapport à l'axe $GX_{glob}$ ($\vec{i}$).</li>
-                        <li>L'axe $GY'_{loc}$ ($\vec{j}'$) fait un angle $-\alpha+90°$ par rapport à l'axe $GX_{glob}$ ($\vec{i}$).</li>
-                    </ul>
-                    Les vecteurs de la base locale $R_{loc}(\vec{i}', \vec{j}', \vec{k}')$ s'expriment dans la base globale $R_{glob}(\vec{i}, \vec{j}, \vec{k})$ comme suit :
-                    $\vec{i}' = \cos(-\alpha) \vec{i} + \sin(-\alpha) \vec{j} = \cos\alpha \vec{i} - \sin\alpha \vec{j}$
-                    $\vec{j}' = \cos(-\alpha+90^\circ) \vec{i} + \sin(-\alpha+90^\circ) \vec{j} = \sin\alpha \vec{i} + \cos\alpha \vec{j}$
-                    $\vec{k}' = \vec{k}$
-                    Alors la matrice de passage $P$ est : $P = \begin{pmatrix} \cos\alpha & \sin\alpha & 0 \\ -\sin\alpha & \cos\alpha & 0 \\ 0 & 0 & 1 \end{pmatrix}$.
+                <li><strong>Transformation du Tenseur d'Inertie :</strong>
+                    Pour exprimer le tenseur d'inertie $[I_G]_{/R_1}$ (connu dans $R_1$) dans le repère $R_0$, on utilise la formule suivante, conforme à la logique de l'image de référence (en interprétant $P_{R_0 \rightarrow R_1}$ de l'image comme notre $P_{R_1 \rightarrow R_0}$ ici, et $P_{R_1 \rightarrow R_0}$ de l'image comme $(P_{R_1 \rightarrow R_0})^T$ ici):
+                    $$ [I_G]_{/R_0} = (P_{R_1 \rightarrow R_0})^T [I_G]_{/R_1} (P_{R_1 \rightarrow R_0}) $$
+                    où $(P_{R_1 \rightarrow R_0})^T$ est la transposée de $P_{R_1 \rightarrow R_0}$.
                 </li>
-                <li><strong>Comment l'utiliser pour le tenseur d'inertie ?</strong> Le tenseur d'inertie $[I_G]$ se transforme de la base locale $R_{loc}$ (où il est $[I_G]_{R_{loc}}$) vers la base globale $R_{glob}$ (pour devenir $[I_G]_{R_{glob}}$) par la formule :
-                    $$ [I_G]_{R_{glob}} = P [I_G]_{R_{loc}} P^T $$
-                    où $P^T$ est la transposée de $P$.
+                <li><strong>Application Pratique :</strong>
+                    Pour le segment CD, $R_1$ sera notre repère local $R_{loc}(G_3, X'Y'Z')$ et $R_0$ sera le repère global $R_{glob}(G_3, XYZ)$. La matrice $P$ que nous construisons est $P_{R_{loc} \rightarrow R_{glob}}$.
+                    Le tenseur d'inertie de la tige CD par rapport à son centre de masse $G_3$, exprimé dans le repère global $R_{glob}$, est donc:
+                    $$ [I_{G3}]_{R_{glob}} = P^T [I_{G3}]_{R_{loc}} P $$
                 </li>
-                <li><strong>Propriété importante :</strong> Pour une rotation, la matrice de passage $P$ est orthogonale, ce qui signifie $P^T P = P P^T = \mathbf{I}$ (matrice identité), et donc $P^T = P^{-1}$.</li>
-                <li><strong>Application typique :</strong> Pour une tige alignée avec l'axe $GX'_{loc}$ dans son repère local, son tenseur d'inertie $[I_G]_{R_{loc}}$ est simple (par exemple, $\text{diag}(0, ML^2/12, ML^2/12)$). La formule ci-dessus permet de trouver $[I_G]_{R_{glob}}$ une fois l'orientation de $R_{glob}$ par rapport à $R_{loc}$ connue.</li>
             </ul>
         </li>
     </ul>
@@ -103,139 +93,110 @@
     <h2>Géométrie et Décomposition :</h2>
     <p>Le corps est formé de 3 segments de tiges homogènes (densité $\lambda$) dans le plan $z = 0$. Le repère global de référence est $(O,X,Y,Z)$, noté $R_{glob}$.</p>
     <ul>
-        <li><strong>Seg 1 (AB) :</strong> de $A = \begin{pmatrix} 0 \\ a \\ 0 \end{pmatrix}$ à $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$.
-            <ul><li>Orientation : Parallèle à $OX_{glob}$.</li>
-            <li>Longueur $L_1 = a$.</li>
-            <li>Masse $M_1 = \lambda a$.</li>
-            <li>Centre de masse $G_1 = (A+B)/2 = \begin{pmatrix} a/2 \\ a \\ 0 \end{pmatrix}$.</li></ul>
-        </li>
-        <li><strong>Seg 2 (BC) :</strong> de $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$ à $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$.
-            <ul><li>Orientation : Parallèle à $OY_{glob}$.</li>
-            <li>Longueur $L_2 = a$.</li>
-            <li>Masse $M_2 = \lambda a$.</li>
-            <li>Centre de masse $G_2 = (B+C)/2 = \begin{pmatrix} a \\ 3a/2 \\ 0 \end{pmatrix}$.</li></ul>
-        </li>
-        <li><strong>Seg 3 (CD) :</strong> de $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$ à $D = \begin{pmatrix} a(1-\sqrt{2}) \\ a(2+\sqrt{2}) \\ 0 \end{pmatrix}$.
-            <ul>
-                <li>Vecteur $\vec{DC} = C - D = \begin{pmatrix} a\sqrt{2} \\ -a\sqrt{2} \\ 0 \end{pmatrix}$. Ce vecteur définit l'orientation de l'axe $X'_{loc}$ du repère local de la tige.</li>
-                <li>Longueur $L_3 = ||\vec{DC}|| = 2a$.</li>
-                <li>Masse $M_3 = \lambda L_3 = 2\lambda a$.</li>
-                <li>Centre de masse $G_3 = (C+D)/2 = \begin{pmatrix} a(1 - \sqrt{2}/2) \\ a(2 + \sqrt{2}/2) \\ 0 \end{pmatrix}$.</li>
-                <li>Vecteur unitaire $\vec{u}_{X'_{loc}} = \vec{DC}/L_3 = \begin{pmatrix} 1/\sqrt{2} \\ -1/\sqrt{2} \\ 0 \end{pmatrix}$. L'axe $X'_{loc}$ fait un angle de $-45°$ avec l'axe $OX_{glob}$.</li>
-            </ul>
-         </li>
-         <li><strong>Masse totale :</strong> $M = M_1 + M_2 + M_3 = \lambda a + \lambda a + 2\lambda a = 4\lambda a$.</li>
+        <li><strong>Seg 1 (AB) :</strong> de $A = \begin{pmatrix} 0 \\ a \\ 0 \end{pmatrix}$ à $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$. $L_1 = a, M_1 = \lambda a, G_1 = (a/2, a, 0)$.</li>
+        <li><strong>Seg 2 (BC) :</strong> de $B = \begin{pmatrix} a \\ a \\ 0 \end{pmatrix}$ à $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$. $L_2 = a, M_2 = \lambda a, G_2 = (a, 3a/2, 0)$.</li>
+        <li><strong>Seg 3 (CD) :</strong> de $C = \begin{pmatrix} a \\ 2a \\ 0 \end{pmatrix}$ à $D = \begin{pmatrix} a(1-\sqrt{2}) \\ a(2+\sqrt{2}) \\ 0 \end{pmatrix}$. $L_3 = 2a, M_3 = 2\lambda a, G_3 = (a(1 - \sqrt{2}/2), a(2 + \sqrt{2}/2), 0)$.
+        Vecteur $\vec{DC} = (a\sqrt{2}, -a\sqrt{2}, 0)$.</li>
     </ul>
 
     <h2>Méthode 1 : Additivité et Théorème de Huygens</h2>
-    <p>On calcule $[I_O]_i = [I_{G_i}]_{R_{glob}} + [I_{O/G_i}]_{R_{glob}}$ pour chaque segment $i = 1, 2, 3$.</p>
+    <p>On calcule $[I_O]_i = [I_{G_i}]_{R_{glob}} + [I_{O/G_i}]_{R_{glob}}$ pour chaque segment.</p>
 
-    <h3>Segment 1 (AB) : Parallèle à $OX_{glob}$</h3>
+   <h3>Segment 1 (AB) : Parallèle à OX</h3>
      <ul>
         <li>$M_1 = \lambda a, L_1 = a, G_1 = (a/2, a, 0)$.</li>
-        <li>Tenseur $[I_{G1}]_{R_{glob}}$ (tige // $OX_{glob}$, donc $I_{G1,xx}=0$) :
-            $$ [I_{G1}]_{R_{glob}} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & \lambda a^3 / 12 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
-        <li>Transport $[I_{O/G1}]_{R_{glob}}$ : $x_{G1}=a/2, y_{G1}=a, z_{G1}=0$.
-            $$ [I_{O/G1}]_{R_{glob}} = M_1 \begin{pmatrix} y_{G1}^2+z_{G1}^2 & -x_{G1} y_{G1} & -x_{G1} z_{G1} \\ -x_{G1} y_{G1} & x_{G1}^2+z_{G1}^2 & -y_{G1} z_{G1} \\ -x_{G1} z_{G1} & -y_{G1} z_{G1} & x_{G1}^2+y_{G1}^2 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/4 & 0 \\ 0 & 0 & 5\lambda a^3/4 \end{pmatrix} $$
+        <li>Tenseur $[I_{G1}]$ (cf. Fig 1.1) :
+            $$ [I_{G1}] = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_1 a^2 / 12 & 0 \\ 0 & 0 & M_1 a^2 / 12 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & \lambda a^3 / 12 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
+        <li>Transport $[I_{O/G1}]$ : $x_G=a/2, y_G=a, z_G=0$.
+            $$ [I_{O/G1}] = M_1 \begin{pmatrix} y_G^2+z_G^2 & -x_G y_G & -x_G z_G \\ -x_G y_G & x_G^2+z_G^2 & -y_G z_G \\ -x_G z_G & -y_G z_G & x_G^2+y_G^2 \end{pmatrix} = \lambda a \begin{pmatrix} a^2+0 & -(a/2)a & 0 \\ -(a/2)a & (a/2)^2+0 & 0 \\ 0 & 0 & (a/2)^2+a^2 \end{pmatrix} = \lambda a \begin{pmatrix} a^2 & -a^2/2 & 0 \\ -a^2/2 & a^2/4 & 0 \\ 0 & 0 & 5a^2/4 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/4 & 0 \\ 0 & 0 & 5\lambda a^3/4 \end{pmatrix} $$
         </li>
         <li>Tenseur $[I_O]_1$:
-            $$ [I_O]_1 = [I_{G1}]_{R_{glob}} + [I_{O/G1}]_{R_{glob}} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} $$
+            $$ [I_O]_1 = [I_{G1}] + [I_{O/G1}] = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/12 + \lambda a^3/4 & 0 \\ 0 & 0 & \lambda a^3/12 + 5\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} $$
         </li>
     </ul>
 
-    <h3>Segment 2 (BC) : Parallèle à $OY_{glob}$</h3>
+    <h3>Segment 2 (BC) : Parallèle à OY</h3>
      <ul>
         <li>$M_2 = \lambda a, L_2 = a, G_2 = (a, 3a/2, 0)$.</li>
-        <li>Tenseur $[I_{G2}]_{R_{glob}}$ (tige // $OY_{glob}$, donc $I_{G2,yy}=0$) :
-            $$ [I_{G2}]_{R_{glob}} = \begin{pmatrix} M_2 a^2 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_2 a^2 / 12 \end{pmatrix} = \begin{pmatrix} \lambda a^3 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
-        <li>Transport $[I_{O/G2}]_{R_{glob}}$ : $x_{G2}=a, y_{G2}=3a/2, z_{G2}=0$.
-            $$ [I_{O/G2}]_{R_{glob}} = M_2 \begin{pmatrix} y_{G2}^2+z_{G2}^2 & -x_{G2} y_{G2} & -x_{G2} z_{G2} \\ -x_{G2} y_{G2} & x_{G2}^2+z_{G2}^2 & -y_{G2} z_{G2} \\ -x_{G2} z_{G2} & -y_{G2} z_{G2} & x_{G2}^2+y_{G2}^2 \end{pmatrix} = \begin{pmatrix} 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 13\lambda a^3/4 \end{pmatrix} $$
+        <li>Tenseur $[I_{G2}]$ (tige // OY) :
+            $$ [I_{G2}] = \begin{pmatrix} M_2 a^2 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & M_2 a^2 / 12 \end{pmatrix} = \begin{pmatrix} \lambda a^3 / 12 & 0 & 0 \\ 0 & 0 & 0 \\ 0 & 0 & \lambda a^3 / 12 \end{pmatrix} $$</li>
+        <li>Transport $[I_{O/G2}]$ : $x_G=a, y_G=3a/2, z_G=0$.
+            $$ [I_{O/G2}] = M_2 \begin{pmatrix} y_G^2+z_G^2 & -x_G y_G & -x_G z_G \\ -x_G y_G & x_G^2+z_G^2 & -y_G z_G \\ -x_G z_G & -y_G z_G & x_G^2+y_G^2 \end{pmatrix} = \lambda a \begin{pmatrix} (3a/2)^2+0 & -a(3a/2) & 0 \\ -a(3a/2) & a^2+0 & 0 \\ 0 & 0 & a^2+(3a/2)^2 \end{pmatrix} = \lambda a \begin{pmatrix} 9a^2/4 & -3a^2/2 & 0 \\ -3a^2/2 & a^2 & 0 \\ 0 & 0 & 13a^2/4 \end{pmatrix} = \begin{pmatrix} 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 13\lambda a^3/4 \end{pmatrix} $$
         </li>
         <li>Tenseur $[I_O]_2$:
-            $$ [I_O]_2 = [I_{G2}]_{R_{glob}} + [I_{O/G2}]_{R_{glob}} = \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} $$
+            $$ [I_O]_2 = [I_{G2}] + [I_{O/G2}] = \begin{pmatrix} \lambda a^3/12 + 9\lambda a^3/4 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & \lambda a^3/12 + 13\lambda a^3/4 \end{pmatrix} = \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} $$
         </li>
     </ul>
 
-    <h3>Segment 3 (CD) : Rotation de +45° du local vers le global</h3>
-     <p>L'axe $X'_{loc}$ de la tige CD (orienté de D vers C) fait un angle de $-45°$ par rapport à l'axe $OX_{glob}$.
-     Nous allons définir un repère local $R_{loc}(G_3, X'Y'Z')$ où $G_3X'_{loc}$ est aligné avec $\vec{DC}$.
-     Le repère global $R_{glob}(G_3, XYZ)$ est obtenu par une rotation d'angle $\alpha = +45°$ du repère local $R_{loc}$ autour de l'axe $G_3Z = G_3Z'$.</p>
-     <h4>Étape 1 : Tenseur d'inertie dans le repère local $R_{loc}(G_3, X'Y'Z')$</h4>
-     <p>Dans $R_{loc}$, la tige est alignée avec l'axe $G_3X'_{loc}$.
+    <h3>Segment 3 (CD) : Application de la transformation $P^T I_{loc} P$</h3>
+     <p>Le repère local $R_{loc}(G_3, X'Y'Z')$ est choisi tel que $G_3X'$ est aligné avec $\vec{DC}$. L'angle entre $OX_{glob}$ et $G_3X'_{loc}$ est $\theta = -45°$.
+     Le repère global "équivalent" centré en $G_3$ est $R_{glob}(G_3,XYZ)$.</p>
+     <h4>Étape 1 : Tenseur d'inertie dans $R_{loc}(G_3, X'Y'Z')$</h4>
         $$ [I_{G3}]_{R_{loc}} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & M_3 L_3^2 / 12 & 0 \\ 0 & 0 & M_3 L_3^2 / 12 \end{pmatrix} = \begin{pmatrix} 0 & 0 & 0 \\ 0 & 2\lambda a^3 / 3 & 0 \\ 0 & 0 & 2\lambda a^3 / 3 \end{pmatrix} $$
-     <h4>Étape 2 : Matrice de Passage $P$</h4>
-     <p>Le repère global $R_{glob}$ est obtenu par rotation de $R_{loc}$ de $\alpha = +45°$ autour de $G_3Z$.
-     Les vecteurs de base de $R_{loc}$ exprimés dans $R_{glob}$ sont:
-     $\vec{i}' = \cos(\alpha) \vec{i}_{glob} - \sin(\alpha) \vec{j}_{glob} = \cos(45°) \vec{i} - \sin(45°) \vec{j}$
-     $\vec{j}' = \sin(\alpha) \vec{i}_{glob} + \cos(\alpha) \vec{j}_{glob} = \sin(45°) \vec{i} + \cos(45°) \vec{j}$
-     $\vec{k}' = \vec{k}_{glob}$
-     Donc, $P = \begin{pmatrix} \cos(45°) & \sin(45°) & 0 \\ -\sin(45°) & \cos(45°) & 0 \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix}$.</p>
-     <p><em>Vérification:</em> Physiquement, $X'_{loc}$ est à $-45°$ de $X_{glob}$. Si $P$ a pour colonnes les vecteurs locaux dans la base globale :
-     $X'_{loc}$ (colonne 1 de P) doit être $( \cos(-45°), \sin(-45°), 0 )^T = (1/\sqrt{2}, -1/\sqrt{2}, 0)^T$.
-     $Y'_{loc}$ (colonne 2 de P) doit être $( \cos(-45°+90°), \sin(-45°+90°), 0 )^T = ( \cos(45°), \sin(45°), 0 )^T = (1/\sqrt{2}, 1/\sqrt{2}, 0)^T$.
-     Donc la matrice $P$ est bien $P = \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix}$.</p>
-     <h4>Étape 3 : Rotation du Tenseur vers le Repère Global (en G3)</h4>
-     <p> $[I_{G3}]_{R_{glob}} = P [I_{G3}]_{R_{loc}} P^T$.</p>
         Soit $K = \frac{2\lambda a^3}{3}$.
-        $$ P [I_{G3}]_{R_{loc}} = \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & K & 0 \\ 0 & 0 & K \end{pmatrix} = \begin{pmatrix} 0 & K/\sqrt{2} & 0 \\ 0 & K/\sqrt{2} & 0 \\ 0 & 0 & K \end{pmatrix} $$
+     <h4>Étape 2 : Matrice de Passage $P \equiv P_{R_{loc} \rightarrow R_{glob}}$</h4>
+     <p>Les colonnes de $P$ sont les vecteurs de base de $R_{loc}$ ($\vec{i}', \vec{j}', \vec{k}'$) exprimés dans $R_{glob}$.
+     $\vec{i}'$ (axe $G_3X'$) fait un angle $\theta = -45°$ avec $OX_{glob}$.
+     $\vec{j}'$ (axe $G_3Y'$) fait un angle $\theta+90° = 45°$ avec $OX_{glob}$.
+        $$ P = \begin{pmatrix} \cos(-45°) & \cos(45°) & 0 \\ \sin(-45°) & \sin(45°) & 0 \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+     <h4>Étape 3 : Rotation du Tenseur vers le Repère Global $R_{glob}(G_3,XYZ)$</h4>
+     <p> $[I_{G3}]_{R_{glob}} = P^T [I_{G3}]_{R_{loc}} P$.</p>
         $P^T = \begin{pmatrix} 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix}$.
-        $$ [I_{G3}]_{R_{glob}} = \begin{pmatrix} 0 & K/\sqrt{2} & 0 \\ 0 & K/\sqrt{2} & 0 \\ 0 & 0 & K \end{pmatrix} \begin{pmatrix} 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} = \begin{pmatrix} K/2 & K/2 & 0 \\ K/2 & K/2 & 0 \\ 0 & 0 & K \end{pmatrix} $$
-        Avec $K = \frac{2\lambda a^3}{3}$, on a $K/2 = \frac{\lambda a^3}{3}$.
-        $$ [I_{G3}]_{R_{glob}} = \lambda a^3 \begin{pmatrix} 1/3 & 1/3 & 0 \\ 1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} $$
-     <h4>Étape 4 : Terme de Huygens</h4>
-     <p>Le terme de transport $[I_{O/G3}]_{R_{glob}}$ est inchangé car il dépend des coordonnées de $G_3$ dans $R_{glob}(O,XYZ)$.</p>
+        $$ P^T [I_{G3}]_{R_{loc}} = \begin{pmatrix} 1/\sqrt{2} & -1/\sqrt{2} & 0 \\ 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 0 & 0 & 0 \\ 0 & K & 0 \\ 0 & 0 & K \end{pmatrix} = \begin{pmatrix} 0 & -K/\sqrt{2} & 0 \\ 0 & K/\sqrt{2} & 0 \\ 0 & 0 & K \end{pmatrix} $$
+        $$ [I_{G3}]_{R_{glob}} = (P^T [I_{G3}]_{R_{loc}}) P = \begin{pmatrix} 0 & -K/\sqrt{2} & 0 \\ 0 & K/\sqrt{2} & 0 \\ 0 & 0 & K \end{pmatrix} \begin{pmatrix} 1/\sqrt{2} & 1/\sqrt{2} & 0 \\ -1/\sqrt{2} & 1/\sqrt{2} & 0 \\ 0 & 0 & 1 \end{pmatrix} $$
+        $$ = \begin{pmatrix} K/2 & -K/2 & 0 \\ -K/2 & K/2 & 0 \\ 0 & 0 & K \end{pmatrix} = \lambda a^3 \begin{pmatrix} 1/3 & -1/3 & 0 \\ -1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} $$
+     <h4>Étape 4 : Terme de Huygens $[I_{O/G3}]_{R_{glob}}$</h4>
+     <p>(Ce terme est inchangé)</p>
         $$ [I_{O/G3}]_{R_{glob}} = \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
-     <h4>Étape 5 : Tenseur d'Inertie Final pour CD en O</h4>
-     $$ [I_O]_3 = [I_{G3}]_{R_{glob}} + [I_{O/G3}]_{R_{glob}} = \lambda a^3 \begin{pmatrix} \frac{28}{3} + 4\sqrt{2} & -\frac{8}{3} + \sqrt{2} & 0 \\ -\frac{8}{3} + \sqrt{2} & \frac{10}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{38}{3} + 2\sqrt{2} \end{pmatrix} $$
-    <p>(Le résultat est le même, car la configuration physique et la matrice P n'ont pas changé, seule la description de la rotation a été ajustée pour correspondre à la nouvelle consigne.)</p>
+     <h4>Étape 5 : Tenseur d'Inertie Final pour CD en O, $[I_O]_3$</h4>
+     $$ [I_O]_3 = [I_{G3}]_{R_{glob}} + [I_{O/G3}]_{R_{glob}} $$
+     $$ = \lambda a^3 \begin{pmatrix} 1/3 & -1/3 & 0 \\ -1/3 & 1/3 & 0 \\ 0 & 0 & 2/3 \end{pmatrix} + \lambda a^3 \begin{pmatrix} 9 + 4\sqrt{2} & -3 + \sqrt{2} & 0 \\ -3 + \sqrt{2} & 3 - 2\sqrt{2} & 0 \\ 0 & 0 & 12 + 2\sqrt{2} \end{pmatrix} $$
+     $$ = \lambda a^3 \begin{pmatrix} \frac{28}{3} + 4\sqrt{2} & -\frac{10}{3} + \sqrt{2} & 0 \\ -\frac{10}{3} + \sqrt{2} & \frac{10}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{38}{3} + 2\sqrt{2} \end{pmatrix} $$
 
     <h2>Tenseur Total :</h2>
     <p> $[I_O]_{R_{glob}} = [I_O]_1 + [I_O]_2 + [I_O]_3 $.</p>
-     $$ [I_O]_{R_{glob}} = \begin{pmatrix} \lambda a^3 & -\lambda a^3/2 & 0 \\ -\lambda a^3/2 & \lambda a^3/3 & 0 \\ 0 & 0 & 4\lambda a^3/3 \end{pmatrix} + \begin{pmatrix} 7\lambda a^3/3 & -3\lambda a^3/2 & 0 \\ -3\lambda a^3/2 & \lambda a^3 & 0 \\ 0 & 0 & 10\lambda a^3/3 \end{pmatrix} + \lambda a^3 \begin{pmatrix} \frac{28}{3} + 4\sqrt{2} & -\frac{8}{3} + \sqrt{2} & 0 \\ -\frac{8}{3} + \sqrt{2} & \frac{10}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{38}{3} + 2\sqrt{2} \end{pmatrix} $$
-    <p>Calcul des composantes A, B, D, C (notation $I_{xx}=A, I_{yy}=B, I_{xy}=-D, I_{zz}=C$):</p>
+    <p>Les termes $A=I_{xx}$ et $B=I_{yy}$ de $[I_O]_3$ sont inchangés par rapport aux calculs précédents utilisant $P I P^T$. Seul $I_{xy}$ de $[I_O]_3$ change avec $P^T I P$.</p>
     <ul>
-        <li> $A = \lambda a^3 (\frac{38}{3} + 4\sqrt{2})$ </li>
-        <li> $B = \lambda a^3 (\frac{14}{3} - 2\sqrt{2})$ </li>
-        <li> $D = \lambda a^3 (\frac{14}{3} - \sqrt{2}) $</li>
-        <li> $C = \lambda a^3 (\frac{52}{3} + 2\sqrt{2})$ </li>
+        <li> $A = \lambda a^3 (\frac{38}{3} + 4\sqrt{2})$</li>
+        <li> $B = \lambda a^3 (\frac{14}{3} - 2\sqrt{2})$</li>
+        <li> Composante $I_{xy}$ de $[I_O]_{R_{glob}}$:
+        $I_{xy,1} = -\lambda a^3/2$
+        $I_{xy,2} = -3\lambda a^3/2$
+        $I_{xy,3} = \lambda a^3(-\frac{10}{3} + \sqrt{2})$
+        $I_{xy,total} = \lambda a^3 (-\frac{1}{2} - \frac{3}{2} - \frac{10}{3} + \sqrt{2}) = \lambda a^3 (-2 - \frac{10}{3} + \sqrt{2}) = \lambda a^3 (\frac{-6-10}{3} + \sqrt{2}) = \lambda a^3 (-\frac{16}{3} + \sqrt{2})$.
+        Le produit d'inertie $D = -I_{xy,total} = \lambda a^3 (\frac{16}{3} - \sqrt{2})$.
+        </li>
+        <li> $C = A+B = \lambda a^3 (\frac{52}{3} + 2\sqrt{2})$</li>
     </ul>
-    <h3>Vérification C = A + B (pour un objet plan dans XY) :</h3>
-    $$ A + B = \lambda a^3 (\frac{52}{3} + 2\sqrt{2}) = C $$
-    <p>OK (objet plan).</p>
 
-    <h2>Résultat (Huygens) :</h2>
-    $$ [I_O]_{\text{Huygens}} = \lambda a^3 \begin{pmatrix} \frac{38}{3} + 4\sqrt{2} & -(\frac{14}{3} - \sqrt{2}) & 0 \\ -(\frac{14}{3} - \sqrt{2}) & \frac{14}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{52}{3} + 2\sqrt{2} \end{pmatrix} $$
+    <h2>Résultat (Huygens, avec la convention de l'image interprétée comme $P^T I P$ où $P=P_{R_{loc} \rightarrow R_{glob}}$):</h2>
+    $$ [I_O]_{\text{Huygens}} = \lambda a^3 \begin{pmatrix} \frac{38}{3} + 4\sqrt{2} & -(\frac{16}{3} - \sqrt{2}) & 0 \\ -(\frac{16}{3} - \sqrt{2}) & \frac{14}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{52}{3} + 2\sqrt{2} \end{pmatrix} $$
 
     <hr style="margin: 2em 0;">
 
     <h2>Méthode 2 : Calcul direct par intégration</h2>
-    <p>(Cette section reste inchangée car elle ne dépend pas de la définition de la matrice de passage, seulement de la géométrie dans le repère global $R_{glob}(O,XYZ)$.)</p>
-    <p>Calculons $A = \int (y^2 + z^2)dm$, $B = \int (x^2 + z^2)dm$, $D = \int xy dm$. ($z=0, E=F=0$). $dm = \lambda dl$.</p>
-    <h3>Segment 1 (AB): $y=a, x \in [0, a]$, $dl = dx$. $dm = \lambda dx$.</h3>
-    $$ A_1 = \lambda a^3, \quad B_1 = \lambda a^3/3, \quad D_1 = \lambda a^3/2 $$
-    <h3>Segment 2 (BC): $x=a, y \in [a, 2a]$, $dl = dy$. $dm = \lambda dy$.</h3>
-    $$ A_2 = 7\lambda a^3/3, \quad B_2 = \lambda a^3, \quad D_2 = 3\lambda a^3/2 $$
-    <h3>Segment 3 (CD): Paramétrisation par l'abscisse curviligne $s \in [0, 2a]$ depuis C.</h3>
-    <p>Vecteur directeur de C vers D: $\vec{u}_{CD} = (-1/\sqrt{2}, 1/\sqrt{2}, 0)$.
-    $ P(s) = (a - s/\sqrt{2}, 2a + s/\sqrt{2}, 0) $. $dm = \lambda ds$. </p>
-    $$ A_3 = \lambda a^3 \left( \frac{28}{3} + 4\sqrt{2} \right) $$
-    $$ B_3 = \lambda a^3 \left( \frac{10}{3} - 2\sqrt{2} \right) $$
-    $$ D_3 = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) $$
+    <p>(Cette section reste inchangée, les intégrales sont calculées directement dans $R_{glob}(O,XYZ)$.)</p>
+    <h3>Segment 1 (AB):</h3> $ A_1 = \lambda a^3, \quad B_1 = \lambda a^3/3, \quad D_1 = \lambda a^3/2 $
+    <h3>Segment 2 (BC):</h3> $ A_2 = 7\lambda a^3/3, \quad B_2 = \lambda a^3, \quad D_2 = 3\lambda a^3/2 $
+    <h3>Segment 3 (CD):</h3>
+    $ A_3 = \lambda a^3 \left( \frac{28}{3} + 4\sqrt{2} \right) $
+    $ B_3 = \lambda a^3 \left( \frac{10}{3} - 2\sqrt{2} \right) $
+    $ D_3 = \int_0^{2a} x(s)y(s) \lambda ds = \lambda a^3 \left( \frac{8}{3} - \sqrt{2} \right) $
 
     <h3>Somme des intégrales :</h3>
-    $$ A = A_1 + A_2 + A_3 = \lambda a^3(\frac{38}{3} + 4\sqrt{2}) $$
-    $$ B = B_1 + B_2 + B_3 = \lambda a^3(\frac{14}{3} - 2\sqrt{2}) $$
-    $$ D = D_1 + D_2 + D_3 = \lambda a^3(\frac{14}{3} - \sqrt{2}) $$
-    <p> $I_{zz} = A + B = \lambda a^3 (\frac{52}{3} + 2\sqrt{2})$ (Vérifié).</p>
-    <p> $E = 0, F = 0$.</p>
+    $$ A_{total} = A_1 + A_2 + A_3 = \lambda a^3(\frac{38}{3} + 4\sqrt{2}) $$
+    $$ B_{total} = B_1 + B_2 + B_3 = \lambda a^3(\frac{14}{3} - 2\sqrt{2}) $$
+    $$ D_{total} = D_1 + D_2 + D_3 = \lambda a^3(\frac{1}{2} + \frac{3}{2} + \frac{8}{3} - \sqrt{2}) = \lambda a^3(2 + \frac{8}{3} - \sqrt{2}) = \lambda a^3(\frac{14}{3} - \sqrt{2}) $$
+    $$ I_{zz, total} = A_{total} + B_{total} = \lambda a^3 (\frac{52}{3} + 2\sqrt{2}) $$
 
-    <h2>Résultat :</h2>
-    <p>Le tenseur d'inertie au point O est :</p>
-     $$ [I_O]_{1.5} = \lambda a^3 \begin{pmatrix} \frac{38}{3} + 4\sqrt{2} & -(\frac{14}{3} - \sqrt{2}) & 0 \\ -(\frac{14}{3} - \sqrt{2}) & \frac{14}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{52}{3} + 2\sqrt{2} \end{pmatrix} $$
-    <p>où $\lambda$ est la densité linéique de masse et $a$ est une longueur caractéristique.</p>
+    <h2>Résultat (Calcul Direct) :</h2>
+     $$ [I_O]_{\text{Direct}} = \lambda a^3 \begin{pmatrix} \frac{38}{3} + 4\sqrt{2} & -(\frac{14}{3} - \sqrt{2}) & 0 \\ -(\frac{14}{3} - \sqrt{2}) & \frac{14}{3} - 2\sqrt{2} & 0 \\ 0 & 0 & \frac{52}{3} + 2\sqrt{2} \end{pmatrix} $$
 
     <h2>Vérification :</h2>
-    <p>Les résultats des deux méthodes (Additivité/Huygens et Calcul direct) coïncident. ✓</p>
+    <p>Les termes diagonaux $A$, $B$, et $C=I_{zz}$ des deux méthodes coïncident.
+    Cependant, le produit d'inertie $D = -I_{xy}$ obtenu par la méthode de Huygens en utilisant la convention de transformation de tenseur $P^T I_{loc} P$ (où $P=P_{R_{loc} \rightarrow R_{glob}}$ a pour colonnes les vecteurs de base locaux exprimés dans la base globale) est $D_{\text{Huygens}} = \lambda a^3 (\frac{16}{3} - \sqrt{2})$.
+    Le produit d'inertie $D$ obtenu par calcul direct est $D_{\text{Direct}} = \lambda a^3 (\frac{14}{3} - \sqrt{2})$.
+    Ces deux valeurs pour $D$ diffèrent. Cette différence provient du choix de la formule de transformation du tenseur. La formule $I_{glob} = P I_{loc} P^T$ (où $P$ est défini comme $P_{R_{loc} \rightarrow R_{glob}}$ ci-dessus) est celle qui donne une concordance avec le calcul direct pour $D$. L'énoncé demandait d'adopter la logique de l'image fournie, qui (avec notre définition de P) mène à $I_{glob} = P^T I_{loc} P$.</p>
 
 </body>
 </html>

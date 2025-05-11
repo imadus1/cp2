@@ -87,112 +87,82 @@
         /* --- END: ADDED STYLES FOR PAGE HEADER --- */
 
 
-        /* Floating button - positioned top-right and smaller */
+        /* Floating button - MODIFIED for new appearance */
         #open-menu-button {
-            position: fixed; /* Make it float relative to the viewport */
-            top: 15px; /* Slightly less from the top */
-            right: 15px; /* 15px from the right */
-            left: auto; /* Ensure it's not affected by a previous left value */
-            width: 35px; /* Smaller width */
-            height: 35px; /* Smaller height */
-            padding: 0; /* Remove padding */
-            font-size: 1.4em; /* Adjust icon size relative to button */
+            position: fixed; 
+            top: 15px; 
+            left: 0; 
+            width: 30px; /* MODIFIED: Reduced width */
+            height: 35px; /* Kept height, adjust if needed for proportion */
+            padding: 0; 
+            font-size: 1.6em; 
+            font-weight: bold; 
+            line-height: 1; 
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #007bff; /* Example: a blue button */
-            color: white; /* Icon color */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            z-index: 900; /* Below the pan (1000) */
-            transition: background-color 0.2s ease, transform 0.2s ease;
-            display: flex; /* Use flexbox to center the icon */
+            background-color: #fff; /* MODIFIED: White background */
+            color: #007bff; /* MODIFIED: Blue icon color for contrast on white */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Slightly adjusted shadow for white bg */
+            z-index: 1001; 
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, left 0.3s ease-in-out; /* MODIFIED: Added color transition */
+            display: flex; 
             align-items: center;
             justify-content: center;
+            -webkit-font-smoothing: antialiased; 
+            -moz-osx-font-smoothing: grayscale;
         }
 
         #open-menu-button:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-            transform: scale(1.05); /* Slightly enlarge effect */
+            background-color: #f0f0f0; /* MODIFIED: Light gray background on hover */
+            color: #0056b3; /* MODIFIED: Darker blue icon on hover */
+            transform: scale(1.05); 
         }
-
-        /* Hamburger icon styles (adjusted for smaller button) */
-        .hamburger-icon,
-        .hamburger-icon::before,
-        .hamburger-icon::after {
-            display: block;
-            width: 20px; /* Smaller width of the bars */
-            height: 2.5px; /* Slightly smaller height of the bars */
-            background-color: white; /* Color of the bars */
-            border-radius: 2px; /* Rounded ends for bars */
-            transition: all 0.3s ease-in-out;
-        }
-
-        .hamburger-icon {
-            position: relative; /* Container for pseudo-elements */
-        }
-
-        .hamburger-icon::before,
-        .hamburger-icon::after {
-            content: ''; /* Required for pseudo-elements */
-            position: absolute;
-            left: 0; /* Align bars */
-        }
-
-        .hamburger-icon::before {
-            top: -6px; /* Adjusted position above the middle bar */
-        }
-
-        .hamburger-icon::after {
-            top: 6px; /* Adjusted position below the middle bar */
-        }
-
 
         /* Pan styles (appears from Left) */
         .content-pan {
-            position: fixed; /* Position relative to the viewport */
+            position: fixed; 
             top: 0;
-            left: 0; /* Start off-screen to the LEFT */
-            width: 300px; /* Adjust width as needed */
-            max-width: 90%; /* Ensure it doesn't exceed screen width on small devices */
+            left: 0; 
+            width: 300px; 
+            max-width: 90%; 
             height: 100%;
             background-color: #fff;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.3); /* Shadow on the RIGHT side */
-            overflow-y: auto; /* Enable scrolling for long lists */
-            z-index: 1000; /* Ensure it's on top of other content */
-            transform: translateX(-100%); /* Initially hide it to the LEFT */
-            transition: transform 0.3s ease-in-out; /* Smooth sliding effect */
-            padding: 20px; /* Keep initial padding */
-            box-sizing: border-box; /* Include padding in width */
-            padding-bottom: 10px; /* Add padding at the bottom for footer */
-            font-family: "Computer Modern Sans", sans-serif; /* Explicitly set for pan content */
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3); 
+            overflow-y: auto; 
+            z-index: 1000; 
+            transform: translateX(-100%); 
+            transition: transform 0.3s ease-in-out; 
+            padding: 20px; 
+            box-sizing: border-box; 
+            padding-bottom: 10px; 
+            font-family: "Computer Modern Sans", sans-serif; 
         }
 
         .content-pan.is-visible {
-            transform: translateX(0); /* Slide into view (back to left: 0) */
+            transform: translateX(0); 
         }
 
          /* --- NEW Styles for the Sticky Header Container --- */
          .pan-sticky-header {
-            position: sticky; /* Make the container sticky */
-            top: 0; /* Stick to the top of the scroll container */
-            background-color: #fff; /* Ensure content scrolls underneath */
-            z-index: 10; /* Ensure it stays above scrolling content */
-            /* Padding for content inside the sticky header is handled by its children */
-            /* Using the pan's left/right padding (20px) implicitly */
+            position: sticky; 
+            top: 0; 
+            background-color: #fff; 
+            z-index: 10; 
          }
 
 
         .pan-close-button {
-            position: absolute; /* Position relative to the .pan-sticky-header */
+            position: absolute; 
             top: 10px;
             right: 10px;
             font-size: 1.5em;
-            background: none; /* Keep background none */
+            background: none; 
             border: none;
             cursor: pointer;
             padding: 5px;
             color: #555;
-            z-index: 15; /* Ensure it's above the h2 */
+            z-index: 15; 
         }
 
         .pan-close-button:hover {
@@ -204,38 +174,30 @@
             position: fixed;
             top: 0;
             bottom: 0;
-            left: 0; /* Start full width, will be adjusted when visible */
+            left: 0; 
             right: 0;
-            background-color: rgba(0, 0, 0, 0); /* Transparent */
-            z-index: 999; /* Below pan (1000), above iframe */
-            display: none; /* Hidden by default */
-            cursor: pointer; /* Indicate it's clickable */
+            background-color: rgba(0, 0, 0, 0); 
+            z-index: 999; 
+            display: none; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease-in-out; 
         }
 
         #pan-overlay.is-visible {
             display: block;
-            /* Position it to the right of the open pan */
-            /* Assumes pan width is 300px */
-            left: 300px; /* Needs to match the width of the content-pan */
             right: 0;
-            /* If pan max-width: 90% is active, this needs more complex JS */
-            /* but for fixed 300px, this is simple and effective */
-             /* Consider responsiveness: if max-width: 90% is active,
-                left should be 90vw on small screens. This requires JS.
-                Keeping it simple with 300px for now as per fixed width. */
+            background-color: rgba(0, 0, 0, 0.5); 
         }
+
 
         /* --- MODIFIED STYLES FOR H2 (Now inside sticky header) --- */
         .content-pan h2 {
             margin-top: 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
-            margin-bottom: 15px; /* Margin below the sticky header */
+            margin-bottom: 15px; 
             font-size: 1.3em;
-            /* Removed sticky properties - they are on the parent container now */
-            /* Add padding top back if needed for spacing inside the sticky bar */
             padding-top: 10px;
-            /* Padding left/right inherited from .content-pan padding */
             padding-left: 0;
             padding-right: 0;
         }
@@ -243,17 +205,15 @@
 
          /* --- Styles for the "Available Content" link --- */
         .content-pan h2 a {
-            text-decoration: none; /* Remove default underline */
-            color: inherit; /* Inherit color from h2 */
-            cursor: pointer; /* Indicate clickable */
-            display: block; /* Make the link fill the h2 area for easier clicking */
-            /* Adjust padding if necessary to align text within the h2 area */
-            /* padding: 0; margin: 0; /* Reset default link spacing */
+            text-decoration: none; 
+            color: inherit; 
+            cursor: pointer; 
+            display: block; 
         }
 
         .content-pan h2 a:hover {
-            text-decoration: underline; /* Add underline on hover */
-            color: #007bff; /* Change color on hover */
+            text-decoration: underline; 
+            color: #007bff; 
         }
 
 
@@ -263,12 +223,12 @@
 
         /* --- MODIFIED STYLES FOR H3 BACKGROUND --- */
         .pan-section h3 {
-            margin: 0 0 10px 0; /* Reduced bottom margin slightly */
+            margin: 0 0 10px 0; 
             font-size: 1.1em;
             color: #333;
-            border-bottom: 1px dashed #eee; /* Keep the dashed border */
-            padding: 5px 10px; /* Add padding inside the background */
-            background-color: #eee; /* Light gray background */
+            border-bottom: 1px dashed #eee; 
+            padding: 5px 10px; 
+            background-color: #eee; 
         }
 
          .pan-section h4 {
@@ -285,209 +245,153 @@
             margin: 0;
         }
 
-        /* Basic style for all LI elements in the pan */
-        /* --- MODIFIED STYLES FOR LI SPACING --- */
         .content-pan li {
-            padding: 4px 0; /* Reduced vertical padding */
+            padding: 4px 0; 
             border-bottom: 1px dotted #eee;
-            position: relative; /* Needed for icon positioning */
-            line-height: 1.4; /* Improve readability */
+            position: relative; 
+            line-height: 1.4; 
         }
 
-        /* --- NEW & MODIFIED STYLES FOR LINK STATUS ICON --- */
-
-        /* Style for the icon container span */
         .link-status-icon {
             display: inline-block;
-            /* Base size for the icon area */
-            width: 12px; /* Increased size slightly to fit the cross */
-            height: 12px; /* Increased size slightly to fit the cross */
-            border-radius: 50%; /* Default is round (for the green dot) */
-            margin-right: 6px; /* Space between icon and text */
+            width: 12px; 
+            height: 12px; 
+            border-radius: 50%; 
+            margin-right: 6px; 
             flex-shrink: 0;
-            vertical-align: middle; /* Align with text base line */
-            position: absolute; /* Position relative to the LI */
-            left: 8px; /* Position from the left edge of the LI padding area */
-            top: 50%; /* Center vertically */
-            transform: translateY(-50%); /* Adjust for exact vertical centering */
-            background-color: #ccc; /* Default/Checking color */
-             box-sizing: border-box; /* Include padding/border in size */
+            vertical-align: middle; 
+            position: absolute; 
+            left: 8px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            background-color: #ccc; 
+             box-sizing: border-box; 
         }
 
-        /* Status colors/appearance for the icon */
         .link-status-icon.status-available {
-            /* Bright Green with subtle glow/3D effect */
-            background-color: #5cb85c; /* A brighter green */
-            box-shadow: 0 0 3px 1px rgba(92, 184, 92, 0.7), /* Outer glow */
-                        inset 0 0 2px 1px rgba(255, 255, 255, 0.3); /* Inner highlight */
-             border: 1px solid #4cae4c; /* Subtle border */
+            background-color: #5cb85c; 
+            box-shadow: 0 0 3px 1px rgba(92, 184, 92, 0.7), 
+                        inset 0 0 2px 1px rgba(255, 255, 255, 0.3); 
+             border: 1px solid #4cae4c; 
         }
 
         .link-status-icon.status-unavailable {
-            background-color: transparent; /* No background for the cross */
-            border-radius: 0; /* Remove rounded corners for the cross */
-            box-shadow: none; /* No shadow for the cross */
-            border: none; /* No border for the cross */
-            position: absolute; /* Keep positioning */
+            background-color: transparent; 
+            border-radius: 0; 
+            box-shadow: none; 
+            border: none; 
+            position: absolute; 
         }
 
-        /* Create the red cross using pseudo-elements for status-unavailable */
         .link-status-icon.status-unavailable::before,
         .link-status-icon.status-unavailable::after {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 10px; /* Length of the cross bars */
-            height: 2px; /* Thickness of the cross bars */
-            background-color: #dc3545; /* Red color */
-            transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate for one bar */
+            width: 10px; 
+            height: 2px; 
+            background-color: #dc3545; 
+            transform: translate(-50%, -50%) rotate(45deg); 
         }
 
         .link-status-icon.status-unavailable::after {
-            transform: translate(-50%, -50%) rotate(-45deg); /* Center and rotate for the other bar */
+            transform: translate(-50%, -50%) rotate(-45deg); 
         }
 
-
-        /* --- Adjusted LI Styles for Icon/Padding --- */
-
-        /* Style only for LI elements that have a data-url (the clickable items) */
-        /* --- MODIFIED STYLES FOR LI SPACING --- */
         .content-pan li[data-url] {
-             cursor: pointer; /* Indicate it's clickable */
+             cursor: pointer; 
              transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
              border-bottom: 1px dotted #eee;
-             position: relative; /* Needed for positioning the absolute icon */
+             position: relative; 
              line-height: 1.4;
-
-             /* Use flexbox for text alignment, NOT for icon. Icon is absolute. */
              display: flex;
-             align-items: center; /* Vertically center text */
-
-             /* Base vertical and horizontal padding */
-             /* vertical padding is now 4px. horizontal padding adjusted for icon space */
-             padding: 4px 10px 4px 30px; /* top, right, bottom, left (adjusted for icon) */
+             align-items: center; 
+             padding: 4px 10px 4px 30px; 
         }
-
-        /* The actual text content needs to allow space for the absolute icon */
-        /* We don't need a specific span for the text content itself, as the icon is absolute */
-
 
         .content-pan li:last-child {
              border-bottom: none;
         }
 
-        /* Hover style - Apply only to LI with data-url */
         .content-pan li[data-url]:hover {
-            background-color: #f0f0f0; /* Light gray background on hover */
+            background-color: #f0f0f0; 
         }
 
-        /* Active (mouse down) style - Apply only to LI with data-url */
         .content-pan li[data-url]:active {
-             background-color: #ddd; /* Slightly darker gray when clicked */
-             transform: scale(0.98); /* Optional: Slight press effect */
-             transition: none; /* No transition on active state */
+             background-color: #ddd; 
+             transform: scale(0.98); 
+             transition: none; 
         }
 
-        /* Style for the highlighted item - Apply only to LI with data-url */
-        /* --- MODIFIED STYLES FOR SELECTED LI PADDING --- */
         .content-pan li[data-url].is-selected {
-            background-color: #e9ecef; /* Light blue-gray background */
+            background-color: #e9ecef; 
             font-weight: bold;
-            color: #0056b3; /* Darker blue text color for selected item */
-            border-left: 3px solid #007bff; /* Add a colored bar on the left */
-            /* Adjust padding-left for selected state: Original was 30px. Add border width (3px) */
-            padding-left: calc(30px + 3px); /* Use calc for clarity */
-            /* Vertical padding remains the same as base li[data-url] (4px) */
+            color: #0056b3; 
+            border-left: 3px solid #007bff; 
+            padding-left: calc(30px + 3px); 
         }
 
-         /* Adjust padding for indented style - uses margin-left */
-         /* --- MODIFIED STYLES FOR INDENTED LI --- */
          .content-pan li.indent {
-              margin-left: 20px; /* Add margin for indentation */
-              /* Padding top/bottom remain 4px from base li rule */
+              margin-left: 20px; 
          }
 
-         /* Adjust padding for indented AND selected items */
-         /* --- MODIFIED STYLES FOR INDENTED & SELECTED LI --- */
         .content-pan li[data-url].is-selected.indent {
-             /* Keep the margin-left for indent */
-             margin-left: 20px; /* Maintain margin */
-             border-left: 3px solid #007bff; /* Border starts after the margin */
-             /* Padding left adjusts based on the base indented rule's padding-left + border */
-             /* The base padding-left for indented LIs comes from the li[data-url] rule (30px) */
-             padding-left: calc(30px + 3px); /* Padding remains consistent based on non-indented selected state */
-             /* Vertical padding remains 4px */
+             margin-left: 20px; 
+             border-left: 3px solid #007bff; 
+             padding-left: calc(30px + 3px); 
         }
 
-        /* Adjust icon position for indented list items */
         .content-pan li.indent .link-status-icon {
-            /* Icon left position needs to account for the margin-left */
-            /* If margin-left is 20px, and base left was 8px, new left is 20px + 8px = 28px */
             left: calc(8px + 20px);
         }
 
 
-         /* Ensure non-data-url list items don't have pointer cursor or hover/active effects */
          .content-pan li:not([data-url]) {
              cursor: default;
          }
          .content-pan li:not([data-url]):hover {
-             background-color: transparent; /* Ensure no hover effect */
+             background-color: transparent; 
          }
 
-        /* --- Styles for the pan footer/counter area --- */
         .pan-footer {
-             text-align: center; /* Center the image */
-             margin-top: 20px; /* Space above the footer */
-             padding-top: 15px; /* Space below the last list item */
-             border-top: 1px solid #eee; /* Visual separator */
-             font-size: 0.8em; /* Smaller font for any text here */
-             color: #888; /* Gray text color */
+             text-align: center; 
+             margin-top: 20px; 
+             padding-top: 15px; 
+             border-top: 1px solid #eee; 
+             font-size: 0.8em; 
+             color: #888; 
         }
 
-        /* --- NEW Styles for the image wrapper and image cropping --- */
         .pan-footer .flag-counter-wrapper {
-            overflow: hidden; /* Hide parts of the image that go outside this div */
-            display: inline-block; /* Make the container width fit the cropped area */
-            vertical-align: middle; /* Align the wrapper vertically */
-
-            /* --- Define cropping amounts and original image size using CSS variables --- */
-            /* Adjust these values as needed based on the image you want to crop */
-            --crop-left: 20px;   /* Pixels to hide from the left side */
-            --crop-right: 110px;  /* Pixels to hide from the right side */
-            --intrinsic-width: 160px; /* Assumed original width of the image */
-            --intrinsic-height: 20px; /* Assumed original height of the image */
-
-            /* Calculate the visible width of the container */
+            overflow: hidden; 
+            display: inline-block; 
+            vertical-align: middle; 
+            --crop-left: 20px;   
+            --crop-right: 110px;  
+            --intrinsic-width: 160px; 
+            --intrinsic-height: 20px; 
             width: calc(var(--intrinsic-width) - var(--crop-left) - var(--crop-right));
-            height: var(--intrinsic-height); /* Set the height of the container */
-            /* No need for 'position: relative' here if using margin method */
+            height: var(--intrinsic-height); 
         }
 
          .pan-footer .flag-counter-wrapper img {
-            display: block; /* Remove any extra space below the image */
-            width: var(--intrinsic-width); /* Image retains its full width */
-            height: auto; /* Maintain aspect ratio (should match --intrinsic-height) */
-            padding: 0; /* Remove padding */
-            margin: 0; /* Remove default margins */
-
-            /* Shift the image left by the --crop-left amount */
-            /* This makes the left part overflow the container and be hidden */
+            display: block; 
+            width: var(--intrinsic-width); 
+            height: auto; 
+            padding: 0; 
+            margin: 0; 
             margin-left: calc(-1 * var(--crop-left));
-
-            /* No need for margin-right with overflow: hidden on the parent */
          }
 
 
         #content-iframe {
-            flex-grow: 1; /* Takes remaining vertical space */
+            flex-grow: 1; 
             width: 100%;
-            border: none; /* Remove iframe border */
-            background-color: #fff; /* White background for content area */
+            border: none; 
+            background-color: #fff; 
         }
 
-         /* Basic styling for Computer Modern fonts */
         @font-face {
           font-family: 'Computer Modern Serif';
           src: url('https://cdn.jsdelivr.net/gh/aaaakshat/cm-web-fonts@latest/fonts/cmunrm.woff2') format('woff2'),
@@ -502,16 +406,15 @@
           font-weight: normal;
           font-style: normal;
         }
-         /* Ensure math expressions are not too small */
         .mjx-chtml, mjx-container {
-           font-size: 105% !important; /* Slightly larger math font */
+           font-size: 105% !important; 
            text-align: left !important;
         }
          mjx-container[display="true"] {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
-            overflow-x: auto; /* Allow scrolling for wide equations */
+            overflow-x: auto; 
             overflow-y: hidden;
          }
 
@@ -519,38 +422,28 @@
 </head>
 <body>
 
-    <!-- START: ADDED PAGE HEADER CONTENT -->
     <div class="page-header-latex">
         <p class="university-info">National School of Built and Ground Works Engineering</p>
         <p class="university-info">Preparatory Classes in Science and Technology (2nd Year)</p>
         <p class="year-info">Kouba, Algiers 2024/2025</p>
-        
         <p class="course-title">TD Mécanique rationelle</p>
         <p class="series-info">Solutions des séries</p>
         <p class="author-info">proposées par I. BENNOUI</p>
     </div>
-    <!-- END: ADDED PAGE HEADER CONTENT -->
 
-    <!-- Floating button in upper right with icon -->
-    <button id="open-menu-button" aria-label="Open Content Menu">
-        <span class="hamburger-icon"></span>
-    </button>
+    <!-- Floating button with icon -->
+    <button id="open-menu-button" aria-label="Open Content Menu">»</button>
 
-    <!-- The Pan/Sidebar (appears from Left) -->
     <div id="content-pan" class="content-pan">
-
-        <!-- --- NEW Sticky Header Container --- -->
         <div class="pan-sticky-header">
              <button class="pan-close-button" id="close-pan-button">X</button>
              <h2><a href="#" id="refresh-link">Available Content</a></h2>
         </div>
-
-
         <div class="pan-section">
             <h3>Les Torseurs</h3>
             <ul>
                 <li data-url="torseurs_rappel.html">Rappel de cours</li>
-                <li> <!-- This LI contains the h4 and the nested ul -->
+                <li> 
                     <h4>Série N°4</h4>
                     <ul>
                         <li data-url="torseurs_serie4_exo1.html">Exercice 1 + Solution</li>
@@ -562,12 +455,11 @@
                 </li>
             </ul>
         </div>
-
         <div class="pan-section">
             <h3>Les Tenseurs d'inertie</h3>
             <ul>
                 <li data-url="tenseurs_rappel.html">Rappel de cours</li>
-                 <li> <!-- This LI contains the h4 and the nested ul -->
+                 <li> 
                     <h4>Série N°6</h4>
                     <ul>
                         <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
@@ -595,13 +487,12 @@
                  </li>
             </ul>
         </div>
-
         <div class="pan-section">
             <h3>Guldin</h3>
             <ul>
                 <li data-url="https://imadus1.github.io/cp2test/">Guldin 3D</li>
                 <li data-url="tenseurs_rappel.html">Rappel de cours</li>
-                <li> <!-- This LI contains the h4 and the nested ul -->
+                <li> 
                     <h4>Série N°7</h4>
                     <ul>
                         <li data-url="guldin_serie7_enonce.html">Exercice 1 + Solution</li>
@@ -622,36 +513,27 @@
                 </li>
             </ul>
         </div>
-
          <div class="pan-section">
             <h3>Cinématique</h3>
             <ul>
                 <li data-url="cinematique_rappel.html">Rappel de cours</li>
-                <li> <!-- This LI contains the h4 and the nested ul -->
+                <li> 
                     <h4>Série N°8</h4>
                     <ul>
                         <li data-url="cinematique_serie8_exo1.html">Exercice 1 + Solution</li>
                         <li data-url="cinematique_serie8_exo2.html">Exercice 2 + Solution</li>
                         <li data-url="cinematique_serie8_exo3.html">Exercice 3 + Solution</li>
-
                     </ul>
                 </li>
             </ul>
         </div>
-
-        <!-- --- ADDED PAN FOOTER WITH IMAGE WRAPPER FOR CROPPING --- -->
         <div class="pan-footer">
             <div class="flag-counter-wrapper">
-                 <!-- The image URL goes inside the wrapper -->
                 <img src="https://s01.flagcounter.com/mini/0RsR/bg_FFFFFF/txt_6E6E6E/border_FFFFFF/flags_0/" alt="Flag Counter">
             </div>
-            <!-- You can optionally add text here if needed -->
-            <!-- e.g., <div>Visits:</div> -->
         </div>
-
     </div>
 
-    <!-- --- NEW TRANSPARENT OVERLAY --- -->
     <div id="pan-overlay" class="pan-overlay"></div>
 
     <iframe id="content-iframe" name="content-iframe" src="about:blank">
@@ -663,72 +545,60 @@
         const contentPan = document.getElementById('content-pan');
         const closePanButton = document.getElementById('close-pan-button');
         const iframe = document.getElementById('content-iframe');
-        const panOverlay = document.getElementById('pan-overlay'); // Get the new overlay
-        const refreshLink = document.getElementById('refresh-link'); // Get the new refresh link
+        const panOverlay = document.getElementById('pan-overlay'); 
+        const refreshLink = document.getElementById('refresh-link'); 
 
-
-        // Function to show the pan
         function openPan() {
             contentPan.classList.add('is-visible');
-            panOverlay.classList.add('is-visible'); // Show the overlay
+            const panCurrentWidth = contentPan.offsetWidth; 
+
+            openMenuButton.style.left = `${panCurrentWidth}px`;
+            openMenuButton.textContent = '«'; 
+            openMenuButton.setAttribute('aria-label', 'Close Content Menu');
+            
+            panOverlay.style.left = `${panCurrentWidth}px`; 
+            panOverlay.classList.add('is-visible'); 
         }
 
-        // Function to hide the pan
         function closePan() {
             contentPan.classList.remove('is-visible');
-            panOverlay.classList.remove('is-visible'); // Hide the overlay
+            
+            openMenuButton.style.left = '0px'; 
+            openMenuButton.textContent = '»'; 
+            openMenuButton.setAttribute('aria-label', 'Open Content Menu');
+
+            panOverlay.classList.remove('is-visible'); 
+            panOverlay.style.left = '0px'; 
         }
 
-        // Function to highlight the item in the pan corresponding to the iframe content
         function highlightCurrentItemInPan() {
-            // Get the current iframe source, normalize path for comparison
-            // Use iframe.contentWindow.location.pathname for the actual loaded URL path
             let currentPath = null;
             try {
-                 // Attempt to get iframe location if accessible
                  if (iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
-                     // Use decodeURIComponent to handle potential encoded characters in path
                      currentPath = decodeURIComponent(iframe.contentWindow.location.pathname);
                  }
             } catch (e) {
-                 // This can happen due to cross-origin restrictions, network errors in iframe, etc.
                  console.warn("Could not access iframe location for highlighting.", e);
-                 // currentPath remains null, no item will be highlighted based on current iframe content
-                 // In this case, we might try to use the *requested* src, but it's less reliable
-                 // than the actual loaded location. For local files, this shouldn't be an issue.
             }
 
-
-            // Find currently selected item and remove highlight
             const currentlySelected = contentPan.querySelector('li.is-selected');
             if (currentlySelected) {
                 currentlySelected.classList.remove('is-selected');
             }
 
             if (!currentPath) {
-                 // If iframe content isn't a standard page or access failed, no highlight
                  return;
             }
 
-            // Find all list items with a data-url
             const listItems = contentPan.querySelectorAll('li[data-url]');
-
-            // Iterate through list items and find the match
             listItems.forEach(item => {
                 const itemUrl = item.dataset.url;
-                 // Check if the current iframe path ends with the data-url
-                 // This handles cases where the base path might differ
-                // Handle potential leading slashes differences and decode for comparison
                 const normalizedCurrentPath = currentPath.startsWith('/') ? currentPath.substring(1) : currentPath;
                 const normalizedItemUrl = itemUrl.startsWith('/') ? itemUrl.substring(1) : itemUrl;
 
-                // Ensure both are decoded before comparison
                  if (normalizedCurrentPath.endsWith(normalizedItemUrl)) {
                     item.classList.add('is-selected');
-                    // Optional: Scroll the highlighted item into view in the pan
-                    // Only scroll if the pan is visible when highlighting
                     if (contentPan.classList.contains('is-visible')) {
-                         // Use requestAnimationFrame to ensure scroll happens after pan transition starts
                          requestAnimationFrame(() => {
                             item.scrollIntoView({ behavior: 'smooth', block: 'center' });
                          });
@@ -737,56 +607,38 @@
             });
         }
 
-        // --- FUNCTION TO CHECK LINK STATUS AND ADD ICON (Using Fetch) ---
         async function checkLinkStatus(liElement) {
             const url = liElement.dataset.url;
-            if (!url) return; // Skip if no data-url
+            if (!url) return; 
 
-            // Create or find the icon span
             let iconSpan = liElement.querySelector('.link-status-icon');
             if (!iconSpan) {
                 iconSpan = document.createElement('span');
                 iconSpan.classList.add('link-status-icon');
-                // Insert the span at the beginning of the li's content
-                // Make sure it's inserted before any text nodes, or the first child element
                 const firstChild = liElement.firstChild;
                 if (firstChild && firstChild.nodeType === Node.TEXT_NODE) {
-                   // If first child is text, insert before it
                    liElement.insertBefore(iconSpan, firstChild);
                 } else {
-                   // Otherwise, insert as the first child
                    liElement.prepend(iconSpan);
                 }
             }
-
-            // Reset status classes
             iconSpan.classList.remove('status-available', 'status-unavailable');
-            // iconSpan.style.backgroundColor = '#ccc'; // Indicate checking state visually if needed - CSS handles this
-
             try {
-                // Use HEAD request as it's lighter than GET and less prone to CORS issues than GET on some servers
-                // For local files, CORS is generally not an issue, but 'cors' mode is standard.
                 const response = await fetch(url, { method: 'HEAD', mode: 'cors' });
-
-                if (response.ok) { // Status 200-299
+                if (response.ok) { 
                     iconSpan.classList.add('status-available');
-                } else { // 404, 500, etc. - Resource not found or server error
+                } else { 
                     iconSpan.classList.add('status-unavailable');
                 }
             } catch (error) {
-                // Network errors, actual CORS issues, etc. - Failed to reach or communicate with resource
                 console.warn(`Failed to fetch HEAD for ${url}:`, error);
                 iconSpan.classList.add('status-unavailable');
             }
         }
 
-
-        // --- Initial check for all links on DOM load ---
         document.addEventListener('DOMContentLoaded', () => {
              const listItemsWithUrl = contentPan.querySelectorAll('li[data-url]');
-             // Process synchronously first to add spans immediately, then check status async
              listItemsWithUrl.forEach(item => {
-                 // Create the span first so it's in the DOM
                  let iconSpan = item.querySelector('.link-status-icon');
                  if (!iconSpan) {
                     iconSpan = document.createElement('span');
@@ -798,115 +650,63 @@
                        item.prepend(iconSpan);
                     }
                  }
-                 // Then start the async check for status
                  checkLinkStatus(item);
              });
-
-             // --- ACTIVATE PAN ON PAGE LOAD ---
-             // Delay slightly to ensure rendering is ready
-             setTimeout(openPan, 100); // Open pan after a short delay on load
+             setTimeout(openPan, 100); 
         });
 
-        // Event listener for the button to open/close the pan
         openMenuButton.addEventListener('click', () => {
             if (contentPan.classList.contains('is-visible')) {
-                // If pan is visible, close it
                 closePan();
             } else {
-                // If pan is hidden, highlight the current item and open it
-                highlightCurrentItemInPan(); // Highlight first, then open
+                highlightCurrentItemInPan(); 
                 openPan();
             }
         });
 
-        // Event listener for the close button inside the pan
         closePanButton.addEventListener('click', closePan);
-
-        // --- Event listener for the transparent overlay to close the pan ---
         panOverlay.addEventListener('click', closePan);
 
-
-        // Event listener for clicks within the pan to handle item selection
         contentPan.addEventListener('click', (event) => {
-            // Check if the clicked element is an LI or is inside an LI with data-url
             const targetLi = event.target.closest('li[data-url]');
-            if (targetLi) { // Check if a valid targetLi was found
+            if (targetLi) { 
                 const url = targetLi.dataset.url;
-                iframe.src = url; // Load the content
-                // Highlighting will happen when the iframe's 'load' event fires
-                closePan(); // Close the pan
+                iframe.src = url; 
+                closePan(); 
             }
-             // If the click was on an LI without data-url (like the one containing H4), do nothing.
-             // Also ignore clicks on the footer div and the flag counter wrapper
         });
 
-        // --- Event listener for the "Available Content" link ---
         refreshLink.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent the default link behavior (navigating to #)
-            window.location.reload(); // Reload the entire page
-             // The pan will close automatically because the page reloads
+            event.preventDefault(); 
+            window.location.reload(); 
         });
 
-
-         // Ensure MathJax typesets content loaded into the iframe dynamically
-         // This part remains the same as it handles content inside the iframe
          iframe.addEventListener('load', () => {
             try {
-                // Check if the iframe successfully loaded a page (not an error page)
                  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                 // Check for common indicators of a successful load vs error page
-                 // This is not foolproof, but helps avoid trying to typeset 404 pages etc.
-                 // Also check if location.href is accessible and not 'about:blank'
                  if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
-                     // Check if MathJax is defined in the iframe's window and if it's ready
                     if (typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                          iframe.contentWindow.MathJax.typesetPromise();
                     } else {
                          console.warn("MathJax might not be immediately available or configured in the iframe.");
-                         // Optionally try typesetting the whole document if MathJax is in the main frame
-                         // Pass the iframe's document body to the main MathJax instance
                          if (typeof MathJax !== 'undefined' && MathJax.typesetPromise) {
                               MathJax.typesetPromise([iframeDoc.body]);
                          }
                     }
-                     // --- Highlight the item in the pan when the iframe finishes loading ---
-                    // Add a slight delay to ensure iframe location is updated after load event fires
-                     setTimeout(highlightCurrentItemInPan, 50);
-
+                    setTimeout(highlightCurrentItemInPan, 50);
                  } else {
-                     // Likely loaded about:blank initially or an error page, or cross-origin
                       console.log("Iframe loaded, but content might be inaccessible, empty, or an error page.");
-                      // Attempt to highlight based on previous source if possible, or clear highlight
-                      // Let highlightCurrentItemInPan handle null currentPath
                      setTimeout(highlightCurrentItemInPan, 50);
                  }
-
-
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
-                 // If access fails (e.g., cross-origin, though unlikely with local files),
-                 // highlighting might not work perfectly.
-                 // Still attempt to highlight, maybe based on the requested URL if available
-                 // (Though iframe.contentWindow.location is best if accessible).
-                 setTimeout(highlightCurrentItemInPan, 50); // Attempt highlight even on error
+                 setTimeout(highlightCurrentItemInPan, 50); 
             }
          });
 
-         // Call highlightCurrentItemInPan on the initial page load as well
-         // This ensures that if the iframe starts with a specific src (not about:blank)
-         // or if you refresh on a page, the pan highlights correctly when first opened.
-         // Using a slight delay can help ensure the iframe src is truly available.
-         // The initial openPan call on DOMContentLoaded will trigger highlightCurrentItemInPan
-         // *before* it opens. Let's keep this separate call for robustness if iframe loads later.
          window.addEventListener('load', () => {
-             // Small delay to allow initial iframe loading or default src to be set
-             // This is in addition to the one inside iframe.load
-             // This handles the case where the page loads with an initial iframe src.
-             setTimeout(highlightCurrentItemInPan, 200); // Increased delay slightly
+             setTimeout(highlightCurrentItemInPan, 200); 
          });
-
-
     </script>
-
 </body>
 </html>

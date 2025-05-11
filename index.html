@@ -22,14 +22,20 @@
       </script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" id="MathJax-script"></script>
     <style>
+        /* Universal reset for html/body - place at top of <style> block */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%; /* Ensures that body can take 100% of the viewport height */
+            box-sizing: border-box; /* Good practice to avoid padding/border issues with height */
+        }
+
         body {
             font-family: "Computer Modern Sans", sans-serif;
             line-height: 1.6;
-            margin: 0;
-            padding: 0;
             display: flex;
             flex-direction: column;
-            height: 100vh; /* Full viewport height */
+            height: 100%; /* Changed from 100vh to 100% for better mobile consistency */
             background-color: #f4f4f4;
             overflow: hidden; /* Prevent body scroll when pan is open */
             position: relative; /* Necessary for potential positioning contexts */
@@ -496,11 +502,6 @@
           font-weight: normal;
           font-style: normal;
         }
-        /*
-        body {
-           font-family: "Computer Modern Sans", sans-serif; /* Default to Sans for UI - ALREADY SET AT THE TOP */
-        }
-        */
          /* Ensure math expressions are not too small */
         .mjx-chtml, mjx-container {
            font-size: 105% !important; /* Slightly larger math font */
@@ -520,15 +521,6 @@
 
     <!-- START: ADDED PAGE HEADER CONTENT -->
     <div class="page-header-latex">
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
-        <p class="university-info"> </p>
         <p class="university-info">National School of Built and Ground Works Engineering</p>
         <p class="university-info">Preparatory Classes in Science and Technology (2nd Year)</p>
         <p class="year-info">Kouba, Algiers 2024/2025</p>

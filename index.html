@@ -35,6 +35,52 @@
             position: relative; /* Necessary for potential positioning contexts */
         }
 
+        /* --- START: ADDED STYLES FOR PAGE HEADER WITH LATEX FONT --- */
+        .page-header-latex {
+            font-family: "Computer Modern Serif", serif; /* Force LaTeX font (roman) */
+            text-align: center;
+            padding: 10px 20px; /* Adjust padding */
+            color: #333;
+            flex-shrink: 0; /* Prevent shrinking */
+            border-bottom: 1px solid #ccc;
+            background-color: #fff; /* Give it a background distinct from body */
+        }
+
+        .page-header-latex p {
+            margin: 3px 0; /* Tighter spacing */
+            line-height: 1.3;
+        }
+
+        .page-header-latex .university-info {
+            font-size: 0.95em; /* Slightly larger for readability */
+            color: #444;
+        }
+         .page-header-latex .year-info {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 8px; /* Space after year */
+        }
+
+        .page-header-latex .course-title {
+            font-size: 1.7em; /* Adjusted size */
+            font-weight: bold; /* Browser bold for CM Serif */
+            margin-top: 8px;
+            margin-bottom: 4px;
+            color: #000;
+        }
+
+        .page-header-latex .series-info {
+            font-size: 1.2em; /* Adjusted size */
+            margin-bottom: 4px;
+        }
+
+        .page-header-latex .author-info {
+            font-size: 1em;
+            font-style: italic;
+        }
+        /* --- END: ADDED STYLES FOR PAGE HEADER --- */
+
+
         /* Floating button - positioned top-right and smaller */
         #open-menu-button {
             position: fixed; /* Make it float relative to the viewport */
@@ -112,6 +158,7 @@
             padding: 20px; /* Keep initial padding */
             box-sizing: border-box; /* Include padding in width */
             padding-bottom: 10px; /* Add padding at the bottom for footer */
+            font-family: "Computer Modern Sans", sans-serif; /* Explicitly set for pan content */
         }
 
         .content-pan.is-visible {
@@ -449,9 +496,11 @@
           font-weight: normal;
           font-style: normal;
         }
+        /*
         body {
-           font-family: "Computer Modern Sans", sans-serif; /* Default to Sans for UI */
+           font-family: "Computer Modern Sans", sans-serif; /* Default to Sans for UI - ALREADY SET AT THE TOP */
         }
+        */
          /* Ensure math expressions are not too small */
         .mjx-chtml, mjx-container {
            font-size: 105% !important; /* Slightly larger math font */
@@ -468,6 +517,18 @@
     </style>
 </head>
 <body>
+
+    <!-- START: ADDED PAGE HEADER CONTENT -->
+    <div class="page-header-latex">
+        <p class="university-info">National School of Built and Ground Works Engineering</p>
+        <p class="university-info">Preparatory Classes in Science and Technology (2nd Year)</p>
+        <p class="year-info">Kouba, Algiers 2024/2025</p>
+        
+        <p class="course-title">TD Mécanique rationelle</p>
+        <p class="series-info">Solution des séries</p>
+        <p class="author-info">proposées par I. BENNOUI</p>
+    </div>
+    <!-- END: ADDED PAGE HEADER CONTENT -->
 
     <!-- Floating button in upper right with icon -->
     <button id="open-menu-button" aria-label="Open Content Menu">

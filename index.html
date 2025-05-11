@@ -50,6 +50,24 @@
             flex-shrink: 0; /* Prevent shrinking */
             border-bottom: 1px solid #ccc;
             background-color: #fff; /* Give it a background distinct from body */
+            /* Add transition for smooth collapse */
+            transition: height 0.3s ease-out,
+                        padding-top 0.3s ease-out,
+                        padding-bottom 0.3s ease-out,
+                        border-bottom-width 0.3s ease-out,
+                        opacity 0.3s ease-out,
+                        margin-bottom 0.3s ease-out; /* If you ever add margin-bottom */
+        }
+
+        /* NEW CLASS to hide the header */
+        .page-header-latex.is-hidden {
+            height: 0px !important;
+            padding-top: 0px !important;
+            padding-bottom: 0px !important;
+            border-bottom-width: 0px !important;
+            margin-bottom: 0px !important; /* In case it ever gets a margin */
+            overflow: hidden !important;
+            opacity: 0 !important; /* For a fade-out effect */
         }
 
         .page-header-latex p {
@@ -89,80 +107,80 @@
 
         /* Floating button - MODIFIED for new appearance */
         #open-menu-button {
-            position: fixed; 
-            top: 15px; 
-            left: 0; 
+            position: fixed;
+            top: 15px;
+            left: 0;
             width: 30px; /* MODIFIED: Reduced width */
             height: 35px; /* Kept height, adjust if needed for proportion */
-            padding: 0; 
-            font-size: 1.6em; 
-            font-weight: bold; 
-            line-height: 1; 
+            padding: 0;
+            font-size: 1.6em;
+            font-weight: bold;
+            line-height: 1;
             cursor: pointer;
             border: 1px solid #ccc;
             border-radius: 5px;
             background-color: #fff; /* MODIFIED: White background */
             color: #007bff; /* MODIFIED: Blue icon color for contrast on white */
             box-shadow: 0 2px 5px rgba(0,0,0,0.15); /* Slightly adjusted shadow for white bg */
-            z-index: 1001; 
+            z-index: 1001;
             transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, left 0.3s ease-in-out; /* MODIFIED: Added color transition */
-            display: flex; 
+            display: flex;
             align-items: center;
             justify-content: center;
-            -webkit-font-smoothing: antialiased; 
+            -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
 
         #open-menu-button:hover {
             background-color: #f0f0f0; /* MODIFIED: Light gray background on hover */
             color: #0056b3; /* MODIFIED: Darker blue icon on hover */
-            transform: scale(1.05); 
+            transform: scale(1.05);
         }
 
         /* Pan styles (appears from Left) */
         .content-pan {
-            position: fixed; 
+            position: fixed;
             top: 0;
-            left: 0; 
-            width: 300px; 
-            max-width: 90%; 
+            left: 0;
+            width: 300px;
+            max-width: 90%;
             height: 100%;
             background-color: #fff;
-            box-shadow: 2px 0 5px rgba(0,0,0,0.3); 
-            overflow-y: auto; 
-            z-index: 1000; 
-            transform: translateX(-100%); 
-            transition: transform 0.3s ease-in-out; 
-            padding: 20px; 
-            box-sizing: border-box; 
-            padding-bottom: 10px; 
-            font-family: "Computer Modern Sans", sans-serif; 
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
+            overflow-y: auto;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            padding: 20px;
+            box-sizing: border-box;
+            padding-bottom: 10px;
+            font-family: "Computer Modern Sans", sans-serif;
         }
 
         .content-pan.is-visible {
-            transform: translateX(0); 
+            transform: translateX(0);
         }
 
          /* --- NEW Styles for the Sticky Header Container --- */
          .pan-sticky-header {
-            position: sticky; 
-            top: 0; 
-            background-color: #fff; 
-            z-index: 10; 
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+            z-index: 10;
          }
 
 
         .pan-close-button {
-            position: absolute; 
+            position: absolute;
             top: 10px;
             right: 10px;
             font-size: 1.5em;
-            background: none; 
+            background: none;
             border: none;
             cursor: pointer;
             padding: 5px;
             color: #555;
-            z-index: 15; 
+            z-index: 15;
         }
 
         .pan-close-button:hover {
@@ -174,19 +192,19 @@
             position: fixed;
             top: 0;
             bottom: 0;
-            left: 0; 
+            left: 0;
             right: 0;
-            background-color: rgba(0, 0, 0, 0); 
-            z-index: 999; 
-            display: none; 
-            cursor: pointer; 
-            transition: background-color 0.3s ease-in-out; 
+            background-color: rgba(0, 0, 0, 0);
+            z-index: 999;
+            display: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
         }
 
         #pan-overlay.is-visible {
             display: block;
             right: 0;
-            background-color: rgba(0, 0, 0, 0.5); 
+            background-color: rgba(0, 0, 0, 0.5);
         }
 
 
@@ -195,7 +213,7 @@
             margin-top: 0;
             border-bottom: 1px solid #eee;
             padding-bottom: 10px;
-            margin-bottom: 15px; 
+            margin-bottom: 15px;
             font-size: 1.3em;
             padding-top: 10px;
             padding-left: 0;
@@ -205,15 +223,15 @@
 
          /* --- Styles for the "Available Content" link --- */
         .content-pan h2 a {
-            text-decoration: none; 
-            color: inherit; 
-            cursor: pointer; 
-            display: block; 
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+            display: block;
         }
 
         .content-pan h2 a:hover {
-            text-decoration: underline; 
-            color: #007bff; 
+            text-decoration: underline;
+            color: #007bff;
         }
 
 
@@ -223,12 +241,12 @@
 
         /* --- MODIFIED STYLES FOR H3 BACKGROUND --- */
         .pan-section h3 {
-            margin: 0 0 10px 0; 
+            margin: 0 0 10px 0;
             font-size: 1.1em;
             color: #333;
-            border-bottom: 1px dashed #eee; 
-            padding: 5px 10px; 
-            background-color: #eee; 
+            border-bottom: 1px dashed #eee;
+            padding: 5px 10px;
+            background-color: #eee;
         }
 
          .pan-section h4 {
@@ -246,41 +264,41 @@
         }
 
         .content-pan li {
-            padding: 4px 0; 
+            padding: 4px 0;
             border-bottom: 1px dotted #eee;
-            position: relative; 
-            line-height: 1.4; 
+            position: relative;
+            line-height: 1.4;
         }
 
         .link-status-icon {
             display: inline-block;
-            width: 12px; 
-            height: 12px; 
-            border-radius: 50%; 
-            margin-right: 6px; 
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
             flex-shrink: 0;
-            vertical-align: middle; 
-            position: absolute; 
-            left: 8px; 
-            top: 50%; 
-            transform: translateY(-50%); 
-            background-color: #ccc; 
-             box-sizing: border-box; 
+            vertical-align: middle;
+            position: absolute;
+            left: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #ccc;
+             box-sizing: border-box;
         }
 
         .link-status-icon.status-available {
-            background-color: #5cb85c; 
-            box-shadow: 0 0 3px 1px rgba(92, 184, 92, 0.7), 
-                        inset 0 0 2px 1px rgba(255, 255, 255, 0.3); 
-             border: 1px solid #4cae4c; 
+            background-color: #5cb85c;
+            box-shadow: 0 0 3px 1px rgba(92, 184, 92, 0.7),
+                        inset 0 0 2px 1px rgba(255, 255, 255, 0.3);
+             border: 1px solid #4cae4c;
         }
 
         .link-status-icon.status-unavailable {
-            background-color: transparent; 
-            border-radius: 0; 
-            box-shadow: none; 
-            border: none; 
-            position: absolute; 
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+            position: absolute;
         }
 
         .link-status-icon.status-unavailable::before,
@@ -289,25 +307,25 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 10px; 
-            height: 2px; 
-            background-color: #dc3545; 
-            transform: translate(-50%, -50%) rotate(45deg); 
+            width: 10px;
+            height: 2px;
+            background-color: #dc3545;
+            transform: translate(-50%, -50%) rotate(45deg);
         }
 
         .link-status-icon.status-unavailable::after {
-            transform: translate(-50%, -50%) rotate(-45deg); 
+            transform: translate(-50%, -50%) rotate(-45deg);
         }
 
         .content-pan li[data-url] {
-             cursor: pointer; 
+             cursor: pointer;
              transition: background-color 0.2s ease, color 0.2s ease, font-weight 0.2s ease;
              border-bottom: 1px dotted #eee;
-             position: relative; 
+             position: relative;
              line-height: 1.4;
              display: flex;
-             align-items: center; 
-             padding: 4px 10px 4px 30px; 
+             align-items: center;
+             padding: 4px 10px 4px 30px;
         }
 
         .content-pan li:last-child {
@@ -315,31 +333,31 @@
         }
 
         .content-pan li[data-url]:hover {
-            background-color: #f0f0f0; 
+            background-color: #f0f0f0;
         }
 
         .content-pan li[data-url]:active {
-             background-color: #ddd; 
-             transform: scale(0.98); 
-             transition: none; 
+             background-color: #ddd;
+             transform: scale(0.98);
+             transition: none;
         }
 
         .content-pan li[data-url].is-selected {
-            background-color: #e9ecef; 
+            background-color: #e9ecef;
             font-weight: bold;
-            color: #0056b3; 
-            border-left: 3px solid #007bff; 
-            padding-left: calc(30px + 3px); 
+            color: #0056b3;
+            border-left: 3px solid #007bff;
+            padding-left: calc(30px + 3px);
         }
 
          .content-pan li.indent {
-              margin-left: 20px; 
+              margin-left: 20px;
          }
 
         .content-pan li[data-url].is-selected.indent {
-             margin-left: 20px; 
-             border-left: 3px solid #007bff; 
-             padding-left: calc(30px + 3px); 
+             margin-left: 20px;
+             border-left: 3px solid #007bff;
+             padding-left: calc(30px + 3px);
         }
 
         .content-pan li.indent .link-status-icon {
@@ -351,45 +369,45 @@
              cursor: default;
          }
          .content-pan li:not([data-url]):hover {
-             background-color: transparent; 
+             background-color: transparent;
          }
 
         .pan-footer {
-             text-align: center; 
-             margin-top: 20px; 
-             padding-top: 15px; 
-             border-top: 1px solid #eee; 
-             font-size: 0.8em; 
-             color: #888; 
+             text-align: center;
+             margin-top: 20px;
+             padding-top: 15px;
+             border-top: 1px solid #eee;
+             font-size: 0.8em;
+             color: #888;
         }
 
         .pan-footer .flag-counter-wrapper {
-            overflow: hidden; 
-            display: inline-block; 
-            vertical-align: middle; 
-            --crop-left: 20px;   
-            --crop-right: 110px;  
-            --intrinsic-width: 160px; 
-            --intrinsic-height: 20px; 
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: middle;
+            --crop-left: 20px;
+            --crop-right: 110px;
+            --intrinsic-width: 160px;
+            --intrinsic-height: 20px;
             width: calc(var(--intrinsic-width) - var(--crop-left) - var(--crop-right));
-            height: var(--intrinsic-height); 
+            height: var(--intrinsic-height);
         }
 
          .pan-footer .flag-counter-wrapper img {
-            display: block; 
-            width: var(--intrinsic-width); 
-            height: auto; 
-            padding: 0; 
-            margin: 0; 
+            display: block;
+            width: var(--intrinsic-width);
+            height: auto;
+            padding: 0;
+            margin: 0;
             margin-left: calc(-1 * var(--crop-left));
          }
 
 
         #content-iframe {
-            flex-grow: 1; 
+            flex-grow: 1;
             width: 100%;
-            border: none; 
-            background-color: #fff; 
+            border: none;
+            background-color: #fff;
         }
 
         @font-face {
@@ -407,14 +425,14 @@
           font-style: normal;
         }
         .mjx-chtml, mjx-container {
-           font-size: 105% !important; 
+           font-size: 105% !important;
            text-align: left !important;
         }
          mjx-container[display="true"] {
             display: block;
             margin-top: 1em;
             margin-bottom: 1em;
-            overflow-x: auto; 
+            overflow-x: auto;
             overflow-y: hidden;
          }
 
@@ -443,7 +461,7 @@
             <h3>Les Torseurs</h3>
             <ul>
                 <li data-url="torseurs_rappel.html">Rappel de cours</li>
-                <li> 
+                <li>
                     <h4>Série N°4</h4>
                     <ul>
                         <li data-url="torseurs_serie4_exo1.html">Exercice 1 + Solution</li>
@@ -459,7 +477,7 @@
             <h3>Les Tenseurs d'inertie</h3>
             <ul>
                 <li data-url="tenseurs_rappel.html">Rappel de cours</li>
-                 <li> 
+                 <li>
                     <h4>Série N°6</h4>
                     <ul>
                         <li data-url="tenseurs_serie6_exo1_enonce.html">Exercice 1 (Énoncé)</li>
@@ -492,7 +510,7 @@
             <ul>
                 <li data-url="https://imadus1.github.io/cp2test/">Guldin 3D</li>
                 <li data-url="tenseurs_rappel.html">Rappel de cours</li>
-                <li> 
+                <li>
                     <h4>Série N°7</h4>
                     <ul>
                         <li data-url="guldin_serie7_enonce.html">Exercice 1 + Solution</li>
@@ -517,7 +535,7 @@
             <h3>Cinématique</h3>
             <ul>
                 <li data-url="cinematique_rappel.html">Rappel de cours</li>
-                <li> 
+                <li>
                     <h4>Série N°8</h4>
                     <ul>
                         <li data-url="cinematique_serie8_exo1.html">Exercice 1 + Solution</li>
@@ -545,30 +563,32 @@
         const contentPan = document.getElementById('content-pan');
         const closePanButton = document.getElementById('close-pan-button');
         const iframe = document.getElementById('content-iframe');
-        const panOverlay = document.getElementById('pan-overlay'); 
-        const refreshLink = document.getElementById('refresh-link'); 
+        const panOverlay = document.getElementById('pan-overlay');
+        const refreshLink = document.getElementById('refresh-link');
+        const pageHeader = document.querySelector('.page-header-latex'); // Reference to the header
+        let panItemClicked = false; // Flag to indicate a pan item was clicked
 
         function openPan() {
             contentPan.classList.add('is-visible');
-            const panCurrentWidth = contentPan.offsetWidth; 
+            const panCurrentWidth = contentPan.offsetWidth;
 
             openMenuButton.style.left = `${panCurrentWidth}px`;
-            openMenuButton.textContent = '«'; 
+            openMenuButton.textContent = '«';
             openMenuButton.setAttribute('aria-label', 'Close Content Menu');
-            
-            panOverlay.style.left = `${panCurrentWidth}px`; 
-            panOverlay.classList.add('is-visible'); 
+
+            panOverlay.style.left = `${panCurrentWidth}px`;
+            panOverlay.classList.add('is-visible');
         }
 
         function closePan() {
             contentPan.classList.remove('is-visible');
-            
-            openMenuButton.style.left = '0px'; 
-            openMenuButton.textContent = '»'; 
+
+            openMenuButton.style.left = '0px';
+            openMenuButton.textContent = '»';
             openMenuButton.setAttribute('aria-label', 'Open Content Menu');
 
-            panOverlay.classList.remove('is-visible'); 
-            panOverlay.style.left = '0px'; 
+            panOverlay.classList.remove('is-visible');
+            panOverlay.style.left = '0px';
         }
 
         function highlightCurrentItemInPan() {
@@ -609,7 +629,7 @@
 
         async function checkLinkStatus(liElement) {
             const url = liElement.dataset.url;
-            if (!url) return; 
+            if (!url) return;
 
             let iconSpan = liElement.querySelector('.link-status-icon');
             if (!iconSpan) {
@@ -625,9 +645,9 @@
             iconSpan.classList.remove('status-available', 'status-unavailable');
             try {
                 const response = await fetch(url, { method: 'HEAD', mode: 'cors' });
-                if (response.ok) { 
+                if (response.ok) {
                     iconSpan.classList.add('status-available');
-                } else { 
+                } else {
                     iconSpan.classList.add('status-unavailable');
                 }
             } catch (error) {
@@ -652,14 +672,14 @@
                  }
                  checkLinkStatus(item);
              });
-             setTimeout(openPan, 100); 
+             setTimeout(openPan, 100);
         });
 
         openMenuButton.addEventListener('click', () => {
             if (contentPan.classList.contains('is-visible')) {
                 closePan();
             } else {
-                highlightCurrentItemInPan(); 
+                highlightCurrentItemInPan();
                 openPan();
             }
         });
@@ -669,22 +689,53 @@
 
         contentPan.addEventListener('click', (event) => {
             const targetLi = event.target.closest('li[data-url]');
-            if (targetLi) { 
+            if (targetLi) {
                 const url = targetLi.dataset.url;
-                iframe.src = url; 
-                closePan(); 
+                iframe.src = url;
+                panItemClicked = true; // Set flag when a pan item is clicked
+                closePan();
             }
         });
 
         refreshLink.addEventListener('click', (event) => {
-            event.preventDefault(); 
-            window.location.reload(); 
+            event.preventDefault();
+            window.location.reload();
         });
 
          iframe.addEventListener('load', () => {
+            let isIframeLoadedWithRealSrc = false;
+            try {
+                // Check if iframe has loaded actual content (not about:blank or about:srcdoc)
+                if (iframe.contentWindow && iframe.contentWindow.location &&
+                    iframe.contentWindow.location.href !== 'about:blank' &&
+                    iframe.contentWindow.location.href !== 'about:srcdoc' &&
+                    iframe.contentWindow.location.href !== '') { // Also check for empty string
+                    isIframeLoadedWithRealSrc = true;
+                }
+            } catch (e) {
+                // Cross-origin or other access issue, try to infer from src attribute
+                const currentSrcAttr = iframe.getAttribute('src');
+                if (currentSrcAttr && currentSrcAttr !== 'about:blank' && currentSrcAttr !== 'about:srcdoc' && currentSrcAttr !== '') {
+                    isIframeLoadedWithRealSrc = true;
+                } else {
+                    isIframeLoadedWithRealSrc = false;
+                }
+                console.warn("Could not directly access iframe location, used src attribute as fallback for header logic.", e);
+            }
+
+
+            // Logic to hide header if a pan item was clicked and iframe loaded content
+            if (panItemClicked && isIframeLoadedWithRealSrc) {
+                if (pageHeader) {
+                    pageHeader.classList.add('is-hidden');
+                }
+                panItemClicked = false; // Reset the flag
+            }
+
+            // Existing iframe load logic (MathJax, highlighting)
             try {
                  const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                 if (iframeDoc && iframeDoc.body && iframe.contentWindow && iframe.contentWindow.location && iframe.contentWindow.location.href !== 'about:blank') {
+                 if (isIframeLoadedWithRealSrc && iframeDoc && iframeDoc.body) {
                     if (typeof iframe.contentWindow.MathJax !== 'undefined' && iframe.contentWindow.MathJax.typesetPromise) {
                          iframe.contentWindow.MathJax.typesetPromise();
                     } else {
@@ -694,18 +745,22 @@
                          }
                     }
                     setTimeout(highlightCurrentItemInPan, 50);
+                 } else if (!isIframeLoadedWithRealSrc) {
+                     // If iframe is about:blank, still try to highlight (e.g. initial load or error)
+                     console.log("Iframe loaded 'about:blank' or similar. MathJax/Highlighting skipped for this content.");
+                     setTimeout(highlightCurrentItemInPan, 50);
                  } else {
-                      console.log("Iframe loaded, but content might be inaccessible, empty, or an error page.");
+                      console.log("Iframe loaded, but content might be inaccessible, empty, or an error page. MathJax/Highlighting may be affected.");
                      setTimeout(highlightCurrentItemInPan, 50);
                  }
             } catch (e) {
                 console.error("Error accessing iframe content or MathJax:", e);
-                 setTimeout(highlightCurrentItemInPan, 50); 
+                 setTimeout(highlightCurrentItemInPan, 50);
             }
          });
 
          window.addEventListener('load', () => {
-             setTimeout(highlightCurrentItemInPan, 200); 
+             setTimeout(highlightCurrentItemInPan, 200);
          });
     </script>
 </body>

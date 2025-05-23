@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Résumé Détaillé - Exercice N°2 : Tenseur d'inertie d'un segment de disque</title>
+<script>
+MathJax = {
+tex: {
+inlineMath: [['\\(', '\\)']],
+displayMath: [['\\[', '\\]']],
+macros: {
+vec: ["{\\overrightarrow{#1}}", 1],
+mat: ["{\\mathbf{#1}}", 1],
+matrice: ["{\\begin{pmatrix}#1\\end{pmatrix}}", 1]
+}
+},
+svg: {
+fontCache: 'global'
+}
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
+</script>
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/dreampulse/computer-modern-web-font/master/fonts.css">
+<style>
+body {
+font-family: "Computer Modern Sans", sans-serif;
+line-height: 1.6;
+margin: 2em;
+color: #333;
+}
+h1 {
+font-family: "Computer Modern Serif", serif;
+font-size: 1.8em;
+text-align: center;
+color: #003366;
+border-bottom: 2px solid #003366;
+margin-bottom: 1em;
+padding-bottom: 0.3em;
+}
+h2 {
+font-family: "Computer Modern Serif", serif;
+font-size: 1.5em;
+color: #0055A4;
+margin-top: 1.5em;
+margin-bottom: 0.5em;
+border-bottom: 1px solid #ccc;
+padding-bottom: 0.2em;
+}
+h3 {
+font-family: "Computer Modern Serif", serif;
+font-size: 1.2em;
+color: #D2691E;
+margin-top: 1em;
+margin-bottom: 0.3em;
+}
+ul {
+list-style-type: disc;
+margin-left: 20px;
+padding-left: 10px;
+}
+li {
+margin-bottom: 0.5em;
+}
+p {
+margin-bottom: 0.8em;
+}
+.math-display {
+margin-top: 1em;
+margin-bottom: 1em;
+padding: 0.5em;
+background-color: #f8f8f8;
+border: 1px solid #eee;
+border-radius: 4px;
+overflow-x: auto;
+}
+mjx-container {
+font-size: 105% !important;
+text-align: left !important;
+margin-top: 0.5em;
+margin-bottom: 0.5em;
+}
+strong {
+color: #003366;
+}
+.figure-placeholder { display: block; margin: 1em auto; max-width: 500px; width: 90%; min-height: 50px; border: 1px solid #ccc; text-align: center; padding: 10px; background-color: #f0f0f0; font-style: italic;}
+.caption { text-align:center; margin-top: -0.5em; margin-bottom:1.5em; font-style: italic; font-size: 0.9em; }
+</style>
+</head>
+<body>
+
+<h1>Solution de l'Exercice N°2 – Tenseur d'inertie d'un segment de disque</h1>
+<h1>Exo2: Q1(0.5+0.5+0.5+0.5), Q2(0.5+0.5), Q3(0.5+0.5+0.5+0.5), Q4(1+1)</h1>
+
+<div class="figure-placeholder">
+    <p></p>
+</div>
+<p class="caption">FIGURE - Segment de disque et repères de l'énoncé</p>
+
+<p></p>
+
+<h2>1. Simplification de la matrice d'inertie \( [I_G]_{Gx_2y_2z_2} \)</h2>
+<p>La matrice d'inertie initiale en G dans le repère \(R_2\) est \( [I_G]_{R_2} = \matrice{A_G & -D_G & -E_G \\ -D_G & B_G & -F_G \\ -E_G & -F_G & C_G} \).</p>
+<ul>
+    <li><strong>Propriété de planéité :</strong> Le segment S est plan (dans le plan \(Gx_2y_2\), i.e., \(z_2=0\)).
+        <ul>
+            <li>Les produits d'inertie \(E_G = \iint x_2 z_2 dm\) et \(F_G = \iint y_2 z_2 dm\) sont nuls.</li>
+            <li>Le moment d'inertie \(C_G = \iint (x_2^2+y_2^2) dm = A_G + B_G\) (théorème du solide plan), où \(A_G = \iint y_2^2 dm\) et \(B_G = \iint x_2^2 dm\).</li>
+        </ul>
+    </li>
+    <li><strong>Propriété de symétrie :</strong> L'axe \(Gx_2\) est un axe de symétrie pour S.
+        <ul>
+            <li>Le plan \((Gx_2z_2)\) est un plan de symétrie, donc le produit d'inertie \(D_G = \iint x_2 y_2 dm\) est nul.</li>
+        </ul>
+    </li>
+</ul>
+<p>La matrice simplifiée est donc diagonale par blocs (et diagonale si on considère les axes principaux) :
+\( [I_G]_{Gx_2y_2z_2} = \matrice{A_G & 0 & 0 \\ 0 & B_G & 0 \\ 0 & 0 & A_G+B_G} \).
+</p>
+
+<h2>2. Calcul de la matrice d'inertie \( [I_G]_{Gx_1y_1z_1} \)</h2>
+<p>On utilise la formule de changement de base \( [I_G]_{R_1} = \mat{P}_{2 \to 1} [I_G]_{R_2} \mat{P}_{2 \to 1}^T \), avec la matrice de passage \( \mat{P}_{2 \to 1} \) donnée par l'énoncé (rotation de -45° autour de \(Gz_1\)):
+\( \mat{P}_{2 \to 1} = \matrice{s & s & 0 \\ -s & s & 0 \\ 0 & 0 & 1} \), où \( s = \sqrt{2}/2 \).
+</p>
+<p>Après calcul matriciel :</p>
+<ul>
+    <li>Termes diagonaux :
+        <ul>
+            <li>\( I'_{x_1x_1} = s^2(A_G+B_G) = \frac{1}{2}(A_G+B_G) \)</li>
+            <li>\( I'_{y_1y_1} = s^2(A_G+B_G) = \frac{1}{2}(A_G+B_G) \)</li>
+            <li>\( I'_{z_1z_1} = A_G+B_G \)</li>
+        </ul>
+    </li>
+    <li>Produits d'inertie (termes hors diagonale) :
+        <ul>
+            <li>\( -I'_{x_1y_1} = s^2(B_G-A_G) = \frac{1}{2}(B_G-A_G) \)</li>
+            <li>Les autres produits d'inertie (\(-I'_{x_1z_1}\), \(-I'_{y_1z_1}\)) sont nuls.</li>
+        </ul>
+    </li>
+</ul>
+<p>La matrice d'inertie dans \(R_1\) est :
+\( [I_G]_{Gx_1y_1z_1} = \matrice{ \frac{1}{2}(A_G+B_G) & \frac{1}{2}(B_G-A_G) & 0 \\ \frac{1}{2}(B_G-A_G) & \frac{1}{2}(A_G+B_G) & 0 \\ 0 & 0 & A_G+B_G } \).
+</p>
+
+<h2>3. Calcul des coordonnées du centre d'inertie G \((x_G, y_G)\) dans \(R_0\)</h2>
+<ul>
+    <li><strong>Aire du segment de disque S (\( \mathcal{A}(S) \)) :</strong>
+        <ul>
+            <li>Calculée comme la différence entre l'aire du secteur circulaire OCP (centré en C, angle \(\pi/2\), rayon R) et l'aire du triangle OCP.</li>
+            <li>\( \mathcal{A}_{secteur OCP} = \frac{\pi R^2}{4} \)</li>
+            <li>\( \mathcal{A}_{\triangle OCP} = \frac{R^2}{2} \)</li>
+            <li>\( \mathcal{A}(S) = \mathcal{A}_{secteur OCP} - \mathcal{A}_{\triangle OCP} = \frac{R^2(\pi-2)}{4} \)</li>
+        </ul>
+    </li>
+    <li><strong>Volume engendré par rotation de S autour de \(Oy_0\) (\(V_{rev}(S)\)) :</strong>
+        <ul>
+            <li>Selon l'indication "un demi sphere - un cone" (interprétée comme \(V_{demi-sphère}\) pour le quart de disque de rayon R centré en O, moins \(V_{cône}\) pour le triangle OPP').</li>
+            <li>\( V_{demi-sphère} = \frac{2}{3}\pi R^3 \)</li>
+            <li>\( V_{cône} = \frac{1}{3}\pi R^3 \)</li>
+            <li>\( V_{rev}(S) = \frac{2}{3}\pi R^3 - \frac{1}{3}\pi R^3 = \frac{1}{3}\pi R^3 \). </li>
+        </ul>
+    </li>
+    <li><strong>Calcul de \(x_G\) (distance de G à l'axe \(Oy_0\)) :</strong>
+        <ul>
+            <li>Par le théorème de Guldin: \( V_{rev}(S) = 2\pi x_G \mathcal{A}(S) \).</li>
+            <li>\( \frac{1}{3}\pi R^3 = 2\pi x_G \cdot \frac{R^2(\pi-2)}{4} \implies x_G = \frac{2R}{3(\pi-2)} \).</li>
+        </ul>
+    </li>
+    <li><strong>Déduction de \(y_G\) (distance de G à l'axe \(Ox_0\)) :</strong>
+        <ul>
+            <li>G se trouve sur l'axe de symétrie du segment S, qui est la droite \(y_0 = -x_0 + R\).</li>
+            <li>Donc, \( y_G = -x_G + R = R - \frac{2R}{3(\pi-2)} = R \frac{3\pi-8}{3(\pi-2)} \).</li>
+        </ul>
+    </li>
+</ul>
+<p>Les coordonnées du centre d'inertie G sont : \( (x_G, y_G, 0) = \left( \frac{2R}{3(\pi-2)}, R \frac{3\pi-8}{3(\pi-2)}, 0 \right) \).</p>
+
+<h2>4. Expression de la matrice d'inertie \( [I_O]_{Ox_0y_0z_0} \)</h2>
+<p>On utilise le théorème de Huygens-Steiner : \( [I_O]_{R_0} = [I_G]_{R_1} + \mat{M}_{transport} \), où \(R_1\) est parallèle à \(R_0\).
+La matrice de transport est \( \mat{M}_{transport} = M \matrice{y_G^2 & -x_G y_G & 0 \\ -x_G y_G & x_G^2 & 0 \\ 0 & 0 & x_G^2+y_G^2} \) (car \(z_G=0\)).
+</p>
+<p>En additionnant les matrices :
+\( [I_O]_{Ox_0y_0z_0} = \matrice{ \frac{1}{2}(A_G+B_G) + My_G^2 & \frac{1}{2}(B_G-A_G) - Mx_G y_G & 0 \\ \frac{1}{2}(B_G-A_G) - Mx_G y_G & \frac{1}{2}(A_G+B_G) + Mx_G^2 & 0 \\ 0 & 0 & (A_G+B_G) + M(x_G^2+y_G^2) } \).
+</p>
+<p>Les termes \(A_G\) et \(B_G\) sont les moments d'inertie du segment S par rapport à ses axes principaux \(Gx_2\) et \(Gy_2\) respectivement.</p>
+
+</body>
+</html>
